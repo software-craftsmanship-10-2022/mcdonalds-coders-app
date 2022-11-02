@@ -1,6 +1,12 @@
-# Getting Started with Create React App
+# Mcdonalds Coders App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the boilerplate for McDonalds Coders App.
+
+The app is deployed in [https://mcdonalds-coders-10-2022.netlify.app/](https://mcdonalds-coders-10-2022.netlify.app/)
+
+The app is connected to sonar for code quality validation
+
+[https://sonarcloud.io/project/overview?id=software-craftsmanship-10-2022_mcdonalds-coders-app](https://sonarcloud.io/project/overview?id=software-craftsmanship-10-2022_mcdonalds-coders-app)
 
 ## Available Scripts
 

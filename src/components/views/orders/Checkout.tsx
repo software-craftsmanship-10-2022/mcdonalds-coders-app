@@ -1,16 +1,16 @@
-import './Checkout.css';
-import {URLS, STORAGE, PAYMENT_TYPE} from '../../../config';
-import UserForm from '../../form/UserForm';
-import McButton from '../../buttons/McButton';
-import InfoModal from '../../modal/InfoModal';
-import PaymentInputs from '../../form/PaymentInputs';
-import {Form, FormGroup, Label, Input} from 'reactstrap';
-import useLocalStorage from '../../../hooks/useLocalStorage';
-import useFormat from '../../../hooks/useFormat';
-import {useNavigate} from 'react-router-dom';
-import {useEffect, useState} from 'react';
-import {useOrderContext} from '../../../context/OrderContext';
-import {OrderType} from '../../../@types/order';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Form, FormGroup, Input, Label } from "reactstrap";
+import { OrderType } from "../../../@types/order";
+import { PAYMENT_TYPE, STORAGE, URLS } from "../../../config";
+import { useOrderContext } from "../../../context/OrderContext";
+import useFormat from "../../../hooks/useFormat";
+import useLocalStorage from "../../../hooks/useLocalStorage";
+import McButton from "../../buttons/McButton";
+import PaymentInputs from "../../form/PaymentInputs";
+import UserForm from "../../form/UserForm";
+import InfoModal from "../../modal/InfoModal";
+import "./Checkout.css";
 
 type CardDetailsType = {
   number: string;
@@ -23,21 +23,21 @@ type DetailProps = {
   confirmOrder: (payMethod: string, details: CardDetailsType) => void;
 };
 
-const Detail = ({order, confirmOrder}: DetailProps) => {
+const Detail = ({ order, confirmOrder }: DetailProps) => {
   const addressTitle = order.details.isDelivery
-    ? 'Domicilio'
-    : 'Dirección de retiro en el local';
+    ? "Domicilio"
+    : "Dirección de retiro en el local";
   const [selectedMethod, setSelectedMethod] = useState(PAYMENT_TYPE.CASH);
   const [currencyFormatter] = useFormat();
   // Card information
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardDate, setCardDate] = useState('');
-  const [cardCVC, setCardCVC] = useState('');
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardDate, setCardDate] = useState("");
+  const [cardCVC, setCardCVC] = useState("");
   // Card validation check
   const [cardIsValid, setCardIsValid] = useState(false);
 
   // Warning modal
-  const [modalMessage, setModalMessage] = useState('');
+  const [modalMessage, setModalMessage] = useState("");
   const toggleModal = () => setShowModal(!showModal);
   const [showModal, setShowModal] = useState(false);
 
@@ -47,57 +47,57 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
   };
 
   return (
-    <div className='Detail'>
-      <div className='detail-box'>
-        <h1 className='title'>
+    <div className="Detail">
+      <div className="detail-box">
+        <h1 className="title">
           <strong>Detalle del pedido</strong>
         </h1>
-        <div className='address'>
+        <div className="address">
           <h3>
             <strong>{addressTitle}</strong>
           </h3>
           <h3>{order.details.address}</h3>
         </div>
-        <div className='items'>
+        <div className="items">
           <h3>
             <strong>Resumen</strong>
           </h3>
           {order.items.map((value, index) => (
-            <div className='item' key={index}>
-              <p className='name'>{value.name}</p>
-              <p>{'x' + value.quantity}</p>
+            <div className="item" key={index}>
+              <p className="name">{value.name}</p>
+              <p>{"x" + value.quantity}</p>
               <p>
                 {currencyFormatter().format(
-                  value.pricePerUnit * value.quantity,
+                  value.pricePerUnit * value.quantity
                 )}
               </p>
             </div>
           ))}
         </div>
         <Form>
-          <FormGroup tag='fieldset'>
+          <FormGroup tag="fieldset">
             <h1>
               <strong>Método de pago</strong>
             </h1>
-            <div className='radio-group'>
+            <div className="radio-group">
               <FormGroup check>
-                <Label check className='pay-method-label'>
+                <Label check className="pay-method-label">
                   <Input
-                    type='radio'
+                    type="radio"
                     defaultChecked={true}
-                    name='paymethod'
-                    className='pay-method-radio'
+                    name="paymethod"
+                    className="pay-method-radio"
                     onClick={() => setSelectedMethod(PAYMENT_TYPE.CASH)}
                   />
                   {PAYMENT_TYPE.CASH}
                 </Label>
               </FormGroup>
               <FormGroup check>
-                <Label check className='pay-method-label'>
+                <Label check className="pay-method-label">
                   <Input
-                    type='radio'
-                    name='paymethod'
-                    className='pay-method-radio'
+                    type="radio"
+                    name="paymethod"
+                    className="pay-method-radio"
                     onClick={() => setSelectedMethod(PAYMENT_TYPE.DEBIT)}
                   />
                   {PAYMENT_TYPE.DEBIT}
@@ -115,15 +115,15 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
           />
         )}
       </div>
-      <div className='detail-total'>
+      <div className="detail-total">
         <p>Total</p>
         <p>{currencyFormatter().format(order.total)}</p>
       </div>
       <McButton
-        text={'Enviar pedido'}
+        text={"Enviar pedido"}
         onClick={() => {
           if (selectedMethod === PAYMENT_TYPE.DEBIT && !cardIsValid) {
-            handleCardWarning('La información de la tarjeta es inválida');
+            handleCardWarning("La información de la tarjeta es inválida");
           } else {
             confirmOrder(selectedMethod, {
               number: cardNumber,
@@ -137,7 +137,7 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
       <InfoModal
         toggle={toggleModal}
         isOpen={showModal}
-        title='Atención'
+        title="Atención"
         message={modalMessage}
       />
     </div>
@@ -148,8 +148,8 @@ const Checkout = () => {
   const navigate = useNavigate();
   // User validation check
   const [isValidated, setIsValidated] = useState(false);
-  const {order, updateOrder} = useOrderContext();
-  const {getStorageItem} = useLocalStorage();
+  const { order, updateOrder } = useOrderContext();
+  const { getStorageItem } = useLocalStorage();
 
   useEffect(() => {
     // Exit if there is no order in the state
@@ -164,14 +164,13 @@ const Checkout = () => {
   }, [order]);
 
   const confirmOrder = (payMethod: string, details: CardDetailsType) => {
-    // eslint-disable-next-line
-    updateOrder({ ...order, ["confirmed"]: true, ["paymentType"]: payMethod });
+    updateOrder({ ...order, confirmed: true, paymentType: payMethod });
     console.log(details);
     navigate(URLS.ROOT);
   };
 
   return (
-    <div className='Checkout'>
+    <div className="Checkout">
       {!isValidated && <UserForm setIsValidated={setIsValidated} />}
       {isValidated && <Detail order={order} confirmOrder={confirmOrder} />}
     </div>

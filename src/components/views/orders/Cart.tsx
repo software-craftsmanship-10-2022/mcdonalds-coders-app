@@ -1,14 +1,14 @@
-import './Cart.css';
-import {IMG_PATH, URLS} from '../../../config';
-import McButton from '../../buttons/McButton';
-import useFormat from '../../../hooks/useFormat';
-import {useNavigate} from 'react-router-dom';
-import {useCallback, useEffect} from 'react';
-import {useOrderContext} from '../../../context/OrderContext';
+import { useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { IMG_PATH, URLS } from "../../../config";
+import { useOrderContext } from "../../../context/OrderContext";
+import useFormat from "../../../hooks/useFormat";
+import McButton from "../../buttons/McButton";
+import "./Cart.css";
 
 const Cart = () => {
   const navigate = useNavigate();
-  const {order, updateOrder} = useOrderContext();
+  const { order, updateOrder } = useOrderContext();
   const [currencyFormatter] = useFormat();
 
   const getTotal = useCallback(() => {
@@ -27,45 +27,39 @@ const Cart = () => {
       navigate(-1);
     }
     // Change order stored if the item list changed
-    // eslint-disable-next-line
-    updateOrder({ ...order, ["total"]: getTotal() });
-
+    updateOrder({ ...order, total: getTotal() });
   }, [order.items]);
 
   // Delete selected item from the order
   const deleteItem = (item: number) => {
     const list = order.items.filter((element, index) => index !== item);
-    // eslint-disable-next-line
-    updateOrder({ ...order, ["items"]: list });
+    updateOrder({ ...order, items: list });
   };
 
   return (
-    <div className='Cart'>
+    <div className="Cart">
       {order.items.map((item, index) => (
-        <div className='item' key={index}>
-          <img src={IMG_PATH + item.img} alt='' />
-          <div className='item-info'>
+        <div className="item" key={index}>
+          <img src={IMG_PATH + item.img} alt="" />
+          <div className="item-info">
             <p>{item.name}</p>
-            <p>{'Cantidad: ' + item.quantity}</p>
+            <p>{"Cantidad: " + item.quantity}</p>
             <p>
               {currencyFormatter().format(item.pricePerUnit)}
-              <button
-                className='delete-btn'
-                onClick={() => deleteItem(index)}
-              >
-                  Eliminar
+              <button className="delete-btn" onClick={() => deleteItem(index)}>
+                Eliminar
               </button>
             </p>
           </div>
         </div>
       ))}
-      <div className='cart-info'>
-        <div className='cart-total'>
+      <div className="cart-info">
+        <div className="cart-total">
           <p>Total</p>
           <p>{currencyFormatter().format(getTotal())}</p>
         </div>
         <McButton
-          text={'Pagar con la app'}
+          text={"Pagar con la app"}
           onClick={() => navigate(URLS.ORDERS_CHECKOUT)}
         />
       </div>

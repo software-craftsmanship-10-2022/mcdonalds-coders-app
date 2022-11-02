@@ -19,7 +19,6 @@
   padding: 20px 20px;
   text-decoration: none;
   border-bottom: 1px solid #ccc;
-  text-decoration: none !important;
 }
 
 .category-arrow {
@@ -28,13 +27,13 @@
   width: auto !important;
 }
 
-.category-link > img {
+.category-link>img {
   width: 30%;
   height: auto;
   padding: 10px 10px;
 }
 
-.category-link > p {
+.category-link>p {
   margin: 0 !important;
   font-size: 24px;
   width: 70%;
@@ -47,10 +46,12 @@
     width: 90%;
     padding: 10px 10px;
   }
-  .category-link > img {
+
+  .category-link>img {
     width: 35%;
   }
-  .category-link > p {
+
+  .category-link>p {
     font-size: 20px;
   }
 }

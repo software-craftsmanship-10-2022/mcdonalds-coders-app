@@ -10,10 +10,6 @@
   position: absolute;
   padding: 10px;
   pointer-events: none;
-}
-
-/* align icon */
-.Searchbar .glyphicon {
   left: 0px;
 }
 

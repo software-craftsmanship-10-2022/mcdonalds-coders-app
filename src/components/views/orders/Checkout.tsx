@@ -161,7 +161,7 @@ const Checkout = () => {
     if (user) {
       setIsValidated(true);
     }
-  }, [order]);
+  }, [order, navigate, getStorageItem]);
 
   const confirmOrder = (payMethod: string, details: CardDetailsType) => {
     updateOrder({ ...order, confirmed: true, paymentType: payMethod });

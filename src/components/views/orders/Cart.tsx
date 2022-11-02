@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { OrderType } from "../../../@types/order";
 import { IMG_PATH, URLS } from "../../../config";
 import { useOrderContext } from "../../../context/OrderContext";
 import useFormat from "../../../hooks/useFormat";
@@ -27,8 +28,11 @@ const Cart = () => {
       navigate(-1);
     }
     // Change order stored if the item list changed
-    updateOrder({ ...order, total: getTotal() });
-  }, [order.items]);
+    updateOrder((prevOrder: OrderType) => ({
+      ...prevOrder,
+      total: getTotal(),
+    }));
+  }, [order.items, navigate, getTotal, updateOrder]);
 
   // Delete selected item from the order
   const deleteItem = (item: number) => {

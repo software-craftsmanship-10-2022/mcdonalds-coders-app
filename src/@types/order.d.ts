@@ -23,6 +23,6 @@ export type OrderAddressDetailsType = {
 
 export type OrderContextType = {
   order: OrderType;
-  updateOrder: (order: OrderType) => void;
+  updateOrder: React.Dispatch<React.SetStateAction<OrderType>>;
   resetOrder: () => void;
 };

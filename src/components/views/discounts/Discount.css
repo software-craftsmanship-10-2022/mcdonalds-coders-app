@@ -1,0 +1,27 @@
+.Discount {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 60px;
+  margin-bottom: 80px;
+}
+
+.Discount .slides {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+}
+
+.Discount .slides .slider-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.Discount .slides .slider-container > p {
+  font-weight: bold;
+  font-size: 22px;
+  color: rgb(100, 100, 100);
+  padding-left: 1em;
+}

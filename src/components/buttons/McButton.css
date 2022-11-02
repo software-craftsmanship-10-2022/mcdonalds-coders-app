@@ -1,0 +1,27 @@
+.McButton {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background: var(--mc-yellow);
+  color: black;
+  font-size: 18px;
+  transition: all 0.15s;
+}
+
+.McButton.fixed {
+  position: fixed;
+  bottom: 60px;
+  z-index: 501;
+}
+
+.McButton:active {
+  opacity: 0.8;
+}
+
+.McButton > img {
+  width: 140px;
+  height: auto;
+}

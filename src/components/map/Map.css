@@ -1,0 +1,24 @@
+.Map {
+  width: 100%;
+  height: 512px;
+  z-index: 500;
+}
+
+.leaflet-popup-content {
+  font-size: 12px;
+}
+
+.leaflet-control-geocoder {
+  font-size: 14px;
+}
+
+@media screen and (max-width: 768px) {
+  .Map {
+    height: 400px;
+  }
+}
+
+img.leaflet-marker-icon {
+  filter: brightness(0) saturate(100%) invert(26%) sepia(70%) saturate(2605%)
+    hue-rotate(346deg) brightness(84%) contrast(104%);
+}

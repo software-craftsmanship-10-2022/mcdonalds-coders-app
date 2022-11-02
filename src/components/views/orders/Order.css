@@ -1,0 +1,117 @@
+.Order {
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+.Order .title {
+  font-size: xx-large;
+  text-align: left;
+  font-weight: bold;
+}
+
+.mode-button-container {
+  width: 200px;
+  height: fit-content;
+  border-radius: 20px;
+  border: 1px solid gray;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin: 30px 0;
+}
+
+.mode-button {
+  color: rgb(100, 100, 100);
+  border-radius: 20px;
+  text-align: center;
+  font-size: 16px;
+  width: 50%;
+  text-decoration: none !important;
+  border: none;
+  background-color: transparent;
+}
+
+.mode-button:hover {
+  color: inherit;
+}
+
+.mode-button.selected {
+  background-color: var(--mc-yellow);
+  font-weight: bold;
+  color: black;
+}
+
+.Pickup {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 80px;
+}
+
+.Pickup .marker > img {
+  height: 40%;
+  width: auto;
+}
+
+.marker {
+  width: 100%;
+  cursor: pointer;
+  display: flex;
+  height: 100px;
+  flex-direction: row;
+  align-items: center;
+  column-gap: 20px;
+  text-decoration: none !important;
+  border-bottom: 1px solid #ccc;
+  overflow: hidden;
+  padding-left: 10px;
+}
+
+.marker-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.marker-list .title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.marker-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  row-gap: 5px;
+}
+
+.marker-info .title {
+  font-size: 14px;
+  color: rgb(100, 100, 100);
+}
+
+.marker-info .location {
+  font-size: 12px;
+  color: gray;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
+.Delivery {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 120px;
+  height: fit-content;
+}

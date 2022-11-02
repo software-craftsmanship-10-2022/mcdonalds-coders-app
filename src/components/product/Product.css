@@ -1,0 +1,47 @@
+.Product {
+  width: 60%;
+  height: fit-content;
+  padding: 30px 30px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffff;
+  box-shadow: 0 3px 13px 1px rgb(0 0 0 /9%);
+}
+.Product > img {
+  height: auto;
+  width: 40%;
+  padding: 10px 10px;
+}
+.Product-info {
+  text-align: center;
+  width: 60%;
+  padding: 10px 10px;
+}
+
+.Product-title {
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.Product-text {
+  font-size: 18px;
+}
+
+@media screen and (max-width: 768px) {
+  .Product {
+    flex-direction: column;
+    width: 90%;
+  }
+  .Product > img {
+    width: 60%;
+  }
+  .Product-info {
+    width: 80%;
+  }
+  .Product-text {
+    font-size: 14px;
+  }
+}

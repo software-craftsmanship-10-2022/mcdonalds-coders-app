@@ -7,7 +7,7 @@ const HOME_LINKS = [
     href: 'https://countdown.mcdonalds.com.ar/login',
   },
   {
-    title: 'Un McDonald\'s en tu mano',
+    title: "Un McDonald's en tu mano",
     img: 'mcPediyRetira.png',
     href: URLS.orders,
   },

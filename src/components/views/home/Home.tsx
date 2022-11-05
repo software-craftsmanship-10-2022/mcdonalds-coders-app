@@ -12,14 +12,14 @@ const Home = () => {
   const {order} = useOrderContext();
 
   return (
-    <div className='Home'>
+    <div className="Home">
       <Carousel items={HOME_SLIDES} />
-      <div className='home-list'>
+      <div className="home-list">
         {HOME_LINKS.map((value, index) => (
-          <div key={index} className='home-link'>
-            <p className='title'>{value.title}</p>
+          <div key={index} className="home-link">
+            <p className="title">{value.title}</p>
             <a href={value.href}>
-              <img src={IMG_PATH + value.img} alt='' />
+              <img src={IMG_PATH + value.img} alt="" />
             </a>
           </div>
         ))}
@@ -28,7 +28,9 @@ const Home = () => {
         <McButton
           text={'Pedido en curso >>>'}
           img={'order-bag-nobg.png'}
-          onClick={() => { navigate(URLS.ordersCurrent); }}
+          onClick={() => {
+            navigate(URLS.ordersCurrent);
+          }}
           fixed
         />
       )}

@@ -17,17 +17,17 @@ const Header = () => {
   }, [location]);
 
   return (
-    <div className='div-header'>
+    <div className="div-header">
       <button
         className={showButton ? 'go-back-btn' : 'go-back-btn hidden'}
         onClick={() => {
           handleNavigate();
         }}
       >
-        <img src={IMG_PATH + 'left-arrow.png'} alt='' />
+        <img src={IMG_PATH + 'left-arrow.png'} alt="" />
         Volver
       </button>
-      <img className='logo' src={IMG_PATH + 'logo-plain.png'} alt='Mcdonalds main logo' />
+      <img className="logo" src={IMG_PATH + 'logo-plain.png'} alt="Mcdonalds main logo" />
     </div>
   );
 };

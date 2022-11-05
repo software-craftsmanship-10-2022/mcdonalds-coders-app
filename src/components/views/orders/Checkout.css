@@ -124,13 +124,13 @@
   width: 40px;
   height: 40px;
   display: flex;
-  content: "\2713";
+  content: '\2713';
   font-size: 25px;
   font-weight: bold;
   position: absolute;
   align-items: center;
   justify-content: center;
-  font-family: "Font Awesome 5 Free", sans-serif;
+  font-family: 'Font Awesome 5 Free', sans-serif;
 }
 
 .Detail .pay-method-radio:checked::after {
@@ -138,7 +138,7 @@
   -moz-animation: click-wave 0.65s;
   animation: click-wave 0.65s;
   background: #4bb543;
-  content: "";
+  content: '';
   display: block;
   position: relative;
   z-index: 100;

@@ -14,10 +14,13 @@ const useLocalStorage = () => {
     return null;
   };
 
-  const setStorageItem = (key: string, value: Record<string, unknown>): void =>
-    { localStorage.setItem(key, JSON.stringify(value)); };
+  const setStorageItem = (key: string, value: Record<string, unknown>): void => {
+    localStorage.setItem(key, JSON.stringify(value));
+  };
 
-  const removeStorageItem = (key: string): void => { localStorage.removeItem(key); };
+  const removeStorageItem = (key: string): void => {
+    localStorage.removeItem(key);
+  };
 
   return {getStorageItem, setStorageItem, removeStorageItem};
 };

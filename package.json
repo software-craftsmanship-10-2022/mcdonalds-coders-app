@@ -83,6 +83,7 @@
       "^~components/(.*)$": "<rootDir>/src/components/$1",
       "^~public/(.*)$": "<rootDir>/public/$1",
       "^~types/(.*)$": "<rootDir>/src/@types/$1"
-    }
+    },
+    "resetMocks": false
   }
 }

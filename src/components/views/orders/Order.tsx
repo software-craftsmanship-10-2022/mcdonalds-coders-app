@@ -36,7 +36,7 @@ const Pickup = ({ query, handleStoreSelect }: PickupProps) => {
           <NavLink
             key={index}
             className={"marker"}
-            to={URLS.ORDERS_ADD}
+            to={URLS.ordersAdd}
             onClick={() =>
               { handleStoreSelect(value.title, value.location, value.img, false); }
             }
@@ -69,17 +69,19 @@ const Delivery = ({ location, handleStoreSelect }: DeliveryProps) => {
   const navigate = useNavigate();
   const shortLocation = location?.split(",").slice(0, 3).join(", ");
 
-  const toggleModal = () => { setShowModal(!showModal); };
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   const handleSubmit = () => {
     if (!location || location === "") {
-      alert("Seleccione una dirección");
+      alert("Seleccione una dirección"); // eslint-disable-line no-alert
       return;
     }
 
     handleStoreSelect(shortLocation!, location, "delivery.png", true);
 
-    navigate(URLS.ORDERS_ADD);
+    navigate(URLS.ordersAdd);
   };
 
   return (
@@ -117,12 +119,12 @@ const Order = ({ toggleOrderModal }: OrderProps) => {
   // Restrict access when an order is in place
   if (order.confirmed) {
     toggleOrderModal();
-    return <Navigate to={URLS.ROOT} replace />;
+    return <Navigate to={URLS.root} replace />;
   }
 
   const changeMode = (mode: boolean) => {
     setActiveMode(mode);
-    !mode ? setMapMarkers([]) : setMapMarkers(MARKERS);
+    setMapMarkers(mode ? MARKERS : []);
   };
 
   const handleStoreSelect = (
@@ -155,7 +157,7 @@ const Order = ({ toggleOrderModal }: OrderProps) => {
         </button>
         <button
           type="button"
-          className={!activeMode ? "mode-button selected" : "mode-button"}
+          className={activeMode ? "mode-button" : "mode-button selected"}
           onClick={() => { changeMode(false); }}
         >
           McDelivery

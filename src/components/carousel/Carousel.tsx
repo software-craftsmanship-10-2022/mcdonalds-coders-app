@@ -13,13 +13,13 @@ const Carousel = ({items}: CarouselProps) => (
       data-bs-ride='carousel'
     >
       <ol className='carousel-indicators'>
-        {items.map((element, index) => (
+        {items.map((_, index) => (
           <li
             key={index}
             className={index === 0 ? 'active' : ''}
             data-bs-target='#carouselExampleIndicators'
             data-bs-slide-to={index}
-            aria-label={'Slide ' + Number(index + 1)}
+            aria-label={`Slide ${Number(index) + 1}`}
             aria-current={index === 0 ? 'true' : 'false'}
           ></li>
         ))}

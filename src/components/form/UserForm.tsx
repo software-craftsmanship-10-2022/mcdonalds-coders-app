@@ -48,7 +48,7 @@ const UserForm = ({ setIsValidated }: UserFormProps) => {
       return;
     }
 
-    setStorageItem(STORAGE.USER, formData);
+    setStorageItem(STORAGE.users, formData);
     setIsValidated(true);
   };
 

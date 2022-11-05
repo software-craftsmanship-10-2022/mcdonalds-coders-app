@@ -8,10 +8,11 @@ const Header = () => {
   const navigate = useNavigate();
   const [showButton, setShowButton] = useState(false);
 
-  const handleNavigate = () => { location.pathname === URLS.ROOT ? false : navigate(-1); };
+  // @TODO Wtf??
+  const handleNavigate = () => {location.pathname === URLS.root ? false : navigate(-1); }; // eslint-disable-line
 
   useEffect(() => {
-    setShowButton(location.pathname !== URLS.ROOT);
+    setShowButton(location.pathname !== URLS.root);
   }, [location]);
 
   return (

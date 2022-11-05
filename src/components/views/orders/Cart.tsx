@@ -37,7 +37,7 @@ const Cart = () => {
 
   // Delete selected item from the order
   const deleteItem = (item: number) => {
-    const list = order.items.filter((element, index) => index !== item);
+    const list = order.items.filter((_, index) => index !== item);
     updateOrder({ ...order, items: list });
   };
 
@@ -48,7 +48,7 @@ const Cart = () => {
           <img src={IMG_PATH + item.img} alt="" />
           <div className="item-info">
             <p>{item.name}</p>
-            <p>{"Cantidad: " + item.quantity}</p>
+            <p>{`Cantidad: ${item.quantity}`}</p>
             <p>
               {currencyFormatter().format(item.pricePerUnit)}
               <button className="delete-btn" onClick={() => { deleteItem(index); }}>
@@ -65,7 +65,7 @@ const Cart = () => {
         </div>
         <McButton
           text={"Pagar con la app"}
-          onClick={() => { navigate(URLS.ORDERS_CHECKOUT); }}
+          onClick={() => { navigate(URLS.ordersCheckout); }}
         />
       </div>
     </div>

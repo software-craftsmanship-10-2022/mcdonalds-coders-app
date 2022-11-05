@@ -19,7 +19,7 @@ const AddItem = () => {
   const priceTag = itemData ? currencyFormatter().format(itemData.price) : "";
 
   if (!itemData) {
-    return <Navigate to={URLS.ORDERS_ADD} replace />;
+    return <Navigate to={URLS.ordersAdd} replace />;
   }
 
   // Add selected qty of this item and adds them to the order
@@ -54,7 +54,7 @@ const AddItem = () => {
   return (
     <div className="AddItem">
       <p className="title">{itemData?.title}</p>
-      <img src={IMG_PATH + itemData?.img} alt="" />
+      <img src={`${IMG_PATH}${itemData.img}`} alt="" />
       <p className="price">{priceTag}</p>
       <div className="counter-container">
         <button onClick={() => { setCount(count === 1 ? count : count - 1); }}>

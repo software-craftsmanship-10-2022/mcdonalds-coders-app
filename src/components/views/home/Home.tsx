@@ -24,11 +24,11 @@ const Home = () => {
           </div>
         ))}
       </div>
-      {order && order.confirmed && (
+      {order?.confirmed && (
         <McButton
           text={'Pedido en curso >>>'}
           img={'order-bag-nobg.png'}
-          onClick={() => { navigate(URLS.ORDERS_CURRENT); }}
+          onClick={() => { navigate(URLS.ordersCurrent); }}
           fixed
         />
       )}

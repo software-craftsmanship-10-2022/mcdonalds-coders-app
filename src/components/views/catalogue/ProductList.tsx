@@ -11,7 +11,7 @@ const ProductList = () => {
   );
 
   if (!categoryData) {
-    return <Navigate to={URLS.CATALOGUE} replace />;
+    return <Navigate to={URLS.catalogue} replace />;
   }
 
   return (

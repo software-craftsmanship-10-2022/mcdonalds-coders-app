@@ -27,7 +27,7 @@ const Detail = ({ order, confirmOrder }: DetailProps) => {
   const addressTitle = order.details.isDelivery
     ? "Domicilio"
     : "Dirección de retiro en el local";
-  const [selectedMethod, setSelectedMethod] = useState(PAYMENT_TYPE.CASH);
+  const [selectedMethod, setSelectedMethod] = useState(PAYMENT_TYPE.cash);
   const [currencyFormatter] = useFormat();
   // Card information
   const [cardNumber, setCardNumber] = useState("");
@@ -38,8 +38,10 @@ const Detail = ({ order, confirmOrder }: DetailProps) => {
 
   // Warning modal
   const [modalMessage, setModalMessage] = useState("");
-  const toggleModal = () => { setShowModal(!showModal); };
   const [showModal, setShowModal] = useState(false);
+  const toggleModal = () => { 
+    setShowModal(!showModal); 
+  };
 
   const handleCardWarning = (message: string) => {
     setModalMessage(message);
@@ -65,7 +67,7 @@ const Detail = ({ order, confirmOrder }: DetailProps) => {
           {order.items.map((value, index) => (
             <div className="item" key={index}>
               <p className="name">{value.name}</p>
-              <p>{"x" + value.quantity}</p>
+              <p>{`x${value.quantity}`}</p>
               <p>
                 {currencyFormatter().format(
                   value.pricePerUnit * value.quantity
@@ -87,9 +89,9 @@ const Detail = ({ order, confirmOrder }: DetailProps) => {
                     defaultChecked={true}
                     name="paymethod"
                     className="pay-method-radio"
-                    onClick={() => { setSelectedMethod(PAYMENT_TYPE.CASH); }}
+                    onClick={() => { setSelectedMethod(PAYMENT_TYPE.cash); }}
                   />
-                  {PAYMENT_TYPE.CASH}
+                  {PAYMENT_TYPE.cash}
                 </Label>
               </FormGroup>
               <FormGroup check>
@@ -98,15 +100,15 @@ const Detail = ({ order, confirmOrder }: DetailProps) => {
                     type="radio"
                     name="paymethod"
                     className="pay-method-radio"
-                    onClick={() => { setSelectedMethod(PAYMENT_TYPE.DEBIT); }}
+                    onClick={() => { setSelectedMethod(PAYMENT_TYPE.debit); }}
                   />
-                  {PAYMENT_TYPE.DEBIT}
+                  {PAYMENT_TYPE.debit}
                 </Label>
               </FormGroup>
             </div>
           </FormGroup>
         </Form>
-        {selectedMethod === PAYMENT_TYPE.DEBIT && (
+        {selectedMethod === PAYMENT_TYPE.debit && (
           <PaymentInputs
             setCardCVC={setCardCVC}
             setCardDate={setCardDate}
@@ -122,7 +124,7 @@ const Detail = ({ order, confirmOrder }: DetailProps) => {
       <McButton
         text={"Enviar pedido"}
         onClick={() => {
-          if (selectedMethod === PAYMENT_TYPE.DEBIT && !cardIsValid) {
+          if (selectedMethod === PAYMENT_TYPE.debit && !cardIsValid) {
             handleCardWarning("La información de la tarjeta es inválida");
           } else {
             confirmOrder(selectedMethod, {
@@ -154,10 +156,11 @@ const Checkout = () => {
   useEffect(() => {
     // Exit if there is no order in the state
     if (order.items.length <= 0) {
-      navigate(URLS.ROOT);
+      navigate(URLS.root);
     }
 
-    const user = getStorageItem(STORAGE.USER);
+    // @TODO refactor localstorage
+    const user = getStorageItem(STORAGE.users); // eslint-disable-line
     if (user) {
       setIsValidated(true);
     }
@@ -166,7 +169,7 @@ const Checkout = () => {
   const confirmOrder = (payMethod: string, details: CardDetailsType) => {
     updateOrder({ ...order, confirmed: true, paymentType: payMethod });
     console.log(details);
-    navigate(URLS.ROOT);
+    navigate(URLS.root);
   };
 
   return (

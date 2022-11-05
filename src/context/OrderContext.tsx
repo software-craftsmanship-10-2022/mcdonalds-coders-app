@@ -3,10 +3,10 @@ import type { OrderContextType, OrderType } from "../@types/order";
 import { STORAGE } from "../config";
 import useLocalStorage from "../hooks/useLocalStorage";
 
-const OrderContext = createContext<OrderContextType | undefined>(null);
+const ORDER_CONTEXT = createContext<OrderContextType | undefined>(undefined);
 
 export const useOrderContext = () =>
-  useContext(OrderContext)!;
+  useContext(ORDER_CONTEXT)!;
 
 type OrderProviderProps = {
   children?: React.ReactNode;
@@ -29,11 +29,11 @@ export const OrderProvider = ({ children }: OrderProviderProps) => {
   });
 
   const getInitialState = () => {
-    const order = getStorageItem(STORAGE.ORDER) as OrderType;
+    const order = getStorageItem(STORAGE.orders) as OrderType;
 
     if (!order) {
-      setStorageItem(STORAGE.ORDER, getNewOrder());
-      return getStorageItem(STORAGE.ORDER) as OrderType;
+      setStorageItem(STORAGE.orders, getNewOrder());
+      return getStorageItem(STORAGE.orders) as OrderType;
     }
 
     return order;
@@ -46,14 +46,16 @@ export const OrderProvider = ({ children }: OrderProviderProps) => {
       setOrder(getNewOrder());
     }
 
-    setStorageItem(STORAGE.ORDER, order);
+    setStorageItem(STORAGE.orders, order);
   }, [order, setStorageItem]);
 
-  const resetOrder = () => { setOrder(getNewOrder()); };
+  const resetOrder = () => { 
+    setOrder(getNewOrder()); 
+  };
 
   return (
-    <OrderContext.Provider value={{ order, updateOrder: setOrder, resetOrder }}>
+    <ORDER_CONTEXT.Provider value={{ order, updateOrder: setOrder, resetOrder }}>
       {children}
-    </OrderContext.Provider>
+    </ORDER_CONTEXT.Provider>
   );
 };

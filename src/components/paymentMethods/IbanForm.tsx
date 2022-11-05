@@ -121,7 +121,7 @@ export default function IbanForm({
             {/* Display mandate acceptance text. */}
             <div className="mandate-acceptance">
               By providing your payment information and confirming this payment,
-              you authorise (A) Rocket Rides and Stripe, our payment service
+              you authorise (A) MC-Rata and Stripe, our payment service
               provider, to send instructions to your bank to debit your account
               and (B) your bank to debit your account in accordance with those
               instructions. As part of your rights, you are entitled to a refund

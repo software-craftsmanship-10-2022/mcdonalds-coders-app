@@ -174,7 +174,7 @@ const Checkout = () => {
     <div className="Checkout">
       {!isValidated && <UserForm setIsValidated={setIsValidated} />}
       {isValidated && <Detail order={order} confirmOrder={confirmOrder} />}
-      <PaymentsWrapper />
+      {isValidated && <PaymentsWrapper />}
     </div>
   );
 };

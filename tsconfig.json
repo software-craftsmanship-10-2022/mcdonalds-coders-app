@@ -35,6 +35,7 @@
     "incremental": true
   },
   "include": [
-    "src"
+    "src",
+    "lib.d.ts"
   ]
 }

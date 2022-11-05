@@ -10,6 +10,7 @@ import McButton from "../../buttons/McButton";
 import PaymentInputs from "../../form/PaymentInputs";
 import UserForm from "../../form/UserForm";
 import InfoModal from "../../modal/InfoModal";
+import { PaymentsWrapper } from "../../paymentMethods/PaymentsWrapper";
 import "./Checkout.css";
 
 type CardDetailsType = {
@@ -173,6 +174,7 @@ const Checkout = () => {
     <div className="Checkout">
       {!isValidated && <UserForm setIsValidated={setIsValidated} />}
       {isValidated && <Detail order={order} confirmOrder={confirmOrder} />}
+      <PaymentsWrapper />
     </div>
   );
 };

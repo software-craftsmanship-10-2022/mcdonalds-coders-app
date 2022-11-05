@@ -29,6 +29,7 @@ const UserForm = ({ setIsValidated }: UserFormProps) => {
 
   const handleValidation = () => {
     if (!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/.test(formData.email)) {
+      console.log(formData.email);
       toggleModal("Correo inválido");
       return;
     }

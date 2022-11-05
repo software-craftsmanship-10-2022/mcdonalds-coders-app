@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2018",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
@@ -22,20 +18,13 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@components/*": [
-        "./src/components/*"
-      ],
-      "@public/*": [
-        "./public/*"
-      ],
-      "@api/*": [
-        "./src/api/*"
-      ]
+      "@components/*": ["./src/components/*"],
+      "@public/*": ["./public/*"],
+      "@api/*": ["./src/api/*"],
+
+      "@types/*": ["./src/@types/*"]
     },
     "incremental": true
   },
-  "include": [
-    "src",
-    "lib.d.ts"
-  ]
+  "include": ["src", "lib.d.ts"]
 }

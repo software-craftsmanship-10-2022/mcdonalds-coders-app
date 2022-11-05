@@ -9,22 +9,22 @@ const HOME_LINKS = [
   {
     title: 'Un McDonald\'s en tu mano',
     img: 'mcPediyRetira.png',
-    href: URLS.ORDERS,
+    href: URLS.orders,
   },
   {
     title: 'Pedí, nosotros te lo llevamos',
     img: 'mcDelivery.png',
-    href: URLS.ORDERS,
+    href: URLS.orders,
   },
   {
     title: 'Ofertas Especiales',
     img: 'mcOferta.png',
-    href: URLS.DISCOUNTS,
+    href: URLS.discounts,
   },
   {
     title: 'Mis Cupones',
     img: 'mcCupones.png',
-    href: URLS.COUPONS,
+    href: URLS.coupons,
   },
   {
     title: 'Stickers',

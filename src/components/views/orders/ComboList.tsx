@@ -24,12 +24,12 @@ const ComboList = () => {
             <Slider
               items={value.items}
               showPrice={true}
-              link={URLS.ORDERS_ADD + value.id + '/'}
+              link={URLS.ordersAdd + value.id + '/'}
             />
           </div>
         ))}
         {order && order.items.length > 0 && (
-          <NavLink className='view-order-link' to={URLS.ORDERS_CART}>
+          <NavLink className='view-order-link' to={URLS.ordersCart}>
             <img src={IMG_PATH + 'order-bag.png'} alt='' />
             <div className='order-qty'>{order.items.length}</div>
           </NavLink>

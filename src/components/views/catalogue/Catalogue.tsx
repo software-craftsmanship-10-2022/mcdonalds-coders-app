@@ -11,7 +11,7 @@ const Catalogue = () => (
         <NavLink
           key={index}
           className={'category-link'}
-          to={URLS.CATALOGUE + value.id}
+          to={URLS.catalogue + value.id}
         >
           <img src={IMG_PATH + value.items[0].img} alt='' />
           <p>{value.category}</p>

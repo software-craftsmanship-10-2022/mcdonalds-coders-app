@@ -19,14 +19,14 @@ const Searchbar = ({
   setQuery,
 }: SearchbarProps) => (
   <div className='Searchbar'>
-    <i className={'glyphicon ' + icontype}></i>
+    <i className={`glyphicon ${String(icontype)}`}></i>
     <Input
       type='text'
       name={name}
       id={id}
       placeholder={placeholder}
       value={query}
-      onChange={e => setQuery(e.target.value)}
+      onChange={e => { setQuery(e.target.value); }}
     />
   </div>
 );

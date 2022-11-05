@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { CouponType } from "../../../@types/coupon";
+import type { CouponType } from "../../../@types/coupon";
 import { IMG_PATH, LOCALE, STORAGE, URLS } from "../../../config";
 import useFormat from "../../../hooks/useFormat";
 import useLocalStorage from "../../../hooks/useLocalStorage";
@@ -18,33 +18,30 @@ const Coupon = () => {
   const [currencyFormatter] = useFormat();
   const date = new Date();
 
-  let coupons = getStorageItem(STORAGE.COUPONS) as CouponType[];
+  let coupons = getStorageItem(STORAGE.coupons) as CouponType[];
 
   if (!coupons) {
     coupons = [];
-    setStorageItem(STORAGE.COUPONS, coupons);
+    // @TODO refactor storage
+    setStorageItem(STORAGE.coupons, coupons as unknown as Record<string, unknown>);
   }
 
   const activeCoupons: CouponAndIndexType[] = [];
   const inactiveCoupons: CouponAndIndexType[] = [];
 
   for (const [i, coupon] of coupons.entries()) {
-    new Date(coupon.validDate) > date
-      ? activeCoupons.push({ ...coupon, parentIndex: i })
-      : inactiveCoupons.push({ ...coupon, parentIndex: i });
+    new Date(coupon.validDate) > date 
+    && activeCoupons.push({ ...coupon, parentIndex: i })
+    || inactiveCoupons.push({ ...coupon, parentIndex: i });
   }
 
   useEffect(() => {
     // Display default view when there is no coupons to
     // display in the current selected section
     if (active) {
-      activeCoupons.length <= 0
-        ? setNothingToDisplay(true)
-        : setNothingToDisplay(false);
+      setNothingToDisplay(activeCoupons.length <= 0)
     } else {
-      inactiveCoupons.length <= 0
-        ? setNothingToDisplay(true)
-        : setNothingToDisplay(false);
+      setNothingToDisplay(inactiveCoupons.length <= 0)
     }
   }, [active, activeCoupons.length, inactiveCoupons.length]);
 
@@ -70,7 +67,7 @@ const Coupon = () => {
   }: CouponCardProps) => (
     <Link
       className="coupon-card"
-      to={disabled ? " " : URLS.COUPONS + parentIndex}
+      to={disabled ? " " : `${URLS.coupons}${parentIndex}`}
     >
       <img src={IMG_PATH + img} alt="" />
       <div className="info">
@@ -88,14 +85,14 @@ const Coupon = () => {
         <button
           type="button"
           className={active ? "mode-button selected" : "mode-button"}
-          onClick={() => setActive(true)}
+          onClick={() => { setActive(true); }}
         >
           Activos
         </button>
         <button
           type="button"
-          className={!active ? "mode-button selected" : "mode-button"}
-          onClick={() => setActive(false)}
+          className={active ? "mode-button" : "mode-button selected"}
+          onClick={() => { setActive(false); }}
         >
           Inactivos
         </button>

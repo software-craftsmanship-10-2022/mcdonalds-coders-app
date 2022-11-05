@@ -13,12 +13,12 @@ const CurrentOrder = () => {
 
   // Restrict access when an order is in place
   if (!order || !order.confirmed) {
-    return <Navigate to={URLS.ROOT} replace />;
+    return <Navigate to={URLS.root} replace />;
   }
 
   const cancelOrder = () => {
     resetOrder();
-    navigate(URLS.ROOT);
+    navigate(URLS.root);
   };
 
   const addressTitle = order.details.isDelivery
@@ -58,7 +58,7 @@ const CurrentOrder = () => {
       <McButton
         text={"Cancelar pedido"}
         color="#da291c"
-        onClick={() => cancelOrder()}
+        onClick={() => { cancelOrder(); }}
         fixed
       />
     </div>

@@ -17,15 +17,15 @@ const Slider = ({items, link, showPrice}: SliderProps) => {
         <NavLink
           className='slide'
           key={index}
-          to={link ? link + index : ''}
+          to={link ? `${link}${index}` : ''}
           state={{
-            name: value.title,
-            img: value.img,
-            price: value.price ?? null,
+            name: value.title as string,
+            img: value.img as string,
+            price: (value?.price || "") as number|string,
           }}
         >
-          <img src={IMG_PATH + value.img} alt=''></img>
-          <p className='title' title={value.title}>
+          <img src={`${IMG_PATH}${String(value.img)}`} alt=''></img>
+          <p className='title' title={value.title as string}>
             {value.title}
           </p>
           {showPrice && (

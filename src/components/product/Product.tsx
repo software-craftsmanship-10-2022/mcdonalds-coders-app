@@ -1,6 +1,6 @@
 import './Product.css';
 import {IMG_PATH} from '../../config';
-import {ProductType} from '../../@types/product';
+import type {ProductType} from '../../@types/product';
 
 const Product = ({img, title, description}: ProductType) => (
   <div className='Product'>

@@ -1,15 +1,25 @@
-import { ReportHandler } from 'web-vitals';
+import type { ReportHandler } from 'web-vitals';
 
-const reportWebVitals = (onPerfEntry?: ReportHandler) => {
+class ImportError extends Error {
+  constructor(lib: string, error: string) {
+      super(`error importing "${lib}" lib. Original error: ${error}`);
+  }
+}
+
+const reportWebVitals = async (onPerfEntry?: ReportHandler) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
-    import('web-vitals').then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {
+    try {
+      const {getCLS, getFID, getFCP, getLCP, getTTFB} = await import('web-vitals');
       getCLS(onPerfEntry);
       getFID(onPerfEntry);
       getFCP(onPerfEntry);
       getLCP(onPerfEntry);
       getTTFB(onPerfEntry);
-    });
+    } catch (error: unknown) {
+      throw new ImportError('web-vitals', error as string);
+    }
   }
 };
 
 export default reportWebVitals;
+export {ImportError}

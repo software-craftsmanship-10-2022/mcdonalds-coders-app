@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import { CouponType } from "../../../@types/coupon";
+import type { CouponType } from "../../../@types/coupon";
 import { IMG_PATH, STORAGE, URLS } from "../../../config";
 import DISCOUNTS from "../../../data/discounts";
 import useLocalStorage from "../../../hooks/useLocalStorage";
@@ -16,7 +16,7 @@ const AddCoupon = () => {
   )?.items[Number(id)];
 
   const { getStorageItem, setStorageItem } = useLocalStorage();
-  let coupons = getStorageItem(STORAGE.COUPONS) as CouponType[];
+  let coupons = getStorageItem(STORAGE.coupons) as CouponType[];
 
   // Get date 30 days from now
   const date = new Date();
@@ -24,9 +24,11 @@ const AddCoupon = () => {
 
   // Modal open state
   const [modal, setModal] = useState(false);
-  // Toggle for Modal
-  const toggleModal = () => setModal(!modal);
   const [added, setAdded] = useState(false);
+  // Toggle for Modal
+  const toggleModal = () => {
+    setModal(!modal);
+  };
 
   const randomString = useRandom(9);
   const code = useMemo(
@@ -36,7 +38,7 @@ const AddCoupon = () => {
   );
 
   if (!couponData) {
-    return <Navigate to={URLS.DISCOUNTS} replace />;
+    return <Navigate to={URLS.discounts} replace />;
   }
 
   const handleAddCoupon = () => {
@@ -54,7 +56,8 @@ const AddCoupon = () => {
       }
 
       coupons.push(coupon);
-      setStorageItem(STORAGE.COUPONS, coupons);
+      // @TODO refacto localstorage
+      setStorageItem(STORAGE.coupons, coupons as unknown as Record<string, unknown>);
       setAdded(true);
     }
 
@@ -63,7 +66,7 @@ const AddCoupon = () => {
 
   return (
     <div className="AddCoupon">
-      <img src={IMG_PATH + couponData?.img} alt="" />
+      <img src={IMG_PATH + couponData.img} alt="" />
       <p className="warning">
         🇦🇷 Este cupón solo es válido para la República Argentina.
       </p>

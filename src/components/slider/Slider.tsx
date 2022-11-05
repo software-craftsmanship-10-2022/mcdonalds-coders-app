@@ -12,25 +12,23 @@ type SliderProps = {
 const Slider = ({items, link, showPrice}: SliderProps) => {
   const [currencyFormatter] = useFormat();
   return (
-    <div className='Slider'>
+    <div className="Slider">
       {items.map((value, index) => (
         <NavLink
-          className='slide'
+          className="slide"
           key={index}
           to={link ? `${link}${index}` : ''}
           state={{
             name: value.title as string,
             img: value.img as string,
-            price: (value?.price || "") as number|string,
+            price: (value?.price || '') as number | string,
           }}
         >
-          <img src={`${IMG_PATH}${String(value.img)}`} alt=''></img>
-          <p className='title' title={value.title as string}>
+          <img src={`${IMG_PATH}${String(value.img)}`} alt=""></img>
+          <p className="title" title={value.title as string}>
             {value.title}
           </p>
-          {showPrice && (
-            <p className='price'>{currencyFormatter().format(value.price)}</p>
-          )}
+          {showPrice && <p className="price">{currencyFormatter().format(value.price)}</p>}
         </NavLink>
       ))}
     </div>

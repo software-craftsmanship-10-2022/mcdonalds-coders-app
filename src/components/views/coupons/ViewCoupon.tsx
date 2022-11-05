@@ -8,7 +8,7 @@ import type {CouponType} from '../../../@types/coupon';
 
 const ViewCoupon = () => {
   // Coupon data
-  const {id} = useParams<{ id?: string }>();
+  const {id} = useParams<{id?: string}>();
   const {getStorageItem} = useLocalStorage();
   const coupons = getStorageItem(STORAGE.coupons) as CouponType[];
   const data = coupons[Number(id)];
@@ -28,14 +28,12 @@ const ViewCoupon = () => {
   }
 
   return (
-    <div className='ViewCoupon'>
-      <img src={IMG_PATH + data.img} alt='' />
-      <p className='warning'>
-        🇦🇷 Este cupón solo es válido para la República Argentina.
-      </p>
-      <p className='title'>{data.title}</p>
-      <button className='button' onClick={toggleModal}>
-        <img src={IMG_PATH + 'qr-icon.png'} alt='' />
+    <div className="ViewCoupon">
+      <img src={IMG_PATH + data.img} alt="" />
+      <p className="warning">🇦🇷 Este cupón solo es válido para la República Argentina.</p>
+      <p className="title">{data.title}</p>
+      <button className="button" onClick={toggleModal}>
+        <img src={IMG_PATH + 'qr-icon.png'} alt="" />
         Utilizar QR
       </button>
       <CouponModal

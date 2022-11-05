@@ -1,10 +1,10 @@
-import * as L from "leaflet";
-import Geocoder, { geocoders } from "leaflet-control-geocoder";
-import "leaflet-control-geocoder/dist/Control.Geocoder.css";
-import "leaflet-control-geocoder/dist/Control.Geocoder.js";
-import { useEffect } from "react";
-import { useMap } from "react-leaflet";
-import MarkerIcon from "./MarkerIcon";
+import * as L from 'leaflet';
+import Geocoder, {geocoders} from 'leaflet-control-geocoder';
+import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
+import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
+import {useEffect} from 'react';
+import {useMap} from 'react-leaflet';
+import MarkerIcon from './MarkerIcon';
 
 // Init the empty layerGroup used to control search markers
 const layerGroup = L.layerGroup();
@@ -14,14 +14,12 @@ type LeafletControlGeocoderProps = {
 };
 
 // Geocode Wrapper function for the Leaflet Map
-const LeafletControlGeocoder = ({
-  setLocation,
-}: LeafletControlGeocoderProps) => {
+const LeafletControlGeocoder = ({setLocation}: LeafletControlGeocoderProps) => {
   const map = useMap();
   const geocoder = geocoders.nominatim({
     geocodingQueryParams: {
       limit: 3,
-      countrycodes: "ar",
+      countrycodes: 'ar',
     },
   });
 
@@ -29,39 +27,35 @@ const LeafletControlGeocoder = ({
   // because we need to remove those when the user
   // changes back to pickup view.
   useEffect(() => {
-    map.on("click", (e) => {
+    map.on('click', (e) => {
       // Clear the layerGroup from previous stored circle and marker
       layerGroup.clearLayers();
 
-      geocoder.reverse(
-        e.latlng,
-        map.options.crs!.scale(map.getZoom()),
-        (results) => {
-          const result = results[0];
-          if (result) {
-            const marker = L.marker(result.center, {
-              icon: MarkerIcon,
-            })
-              .addTo(layerGroup)
-              .bindPopup(result.name);
+      geocoder.reverse(e.latlng, map.options.crs!.scale(map.getZoom()), (results) => {
+        const result = results[0];
+        if (result) {
+          const marker = L.marker(result.center, {
+            icon: MarkerIcon,
+          })
+            .addTo(layerGroup)
+            .bindPopup(result.name);
 
-            // Here add the layerGroup to the map
-            map.addLayer(layerGroup);
-            marker.openPopup();
-            map.flyTo(result.center, map.getZoom());
-            setLocation(result.name);
-          }
+          // Here add the layerGroup to the map
+          map.addLayer(layerGroup);
+          marker.openPopup();
+          map.flyTo(result.center, map.getZoom());
+          setLocation(result.name);
         }
-      );
+      });
     });
 
     const control = new Geocoder({
-      query: "",
-      placeholder: "Buscar dirección...",
+      query: '',
+      placeholder: 'Buscar dirección...',
       defaultMarkGeocode: false,
       geocoder,
     })
-      .on("markgeocode", (e) => {
+      .on('markgeocode', (e) => {
         // Clear the layerGroup from previous stored circle and marker
         layerGroup.clearLayers();
         // Send location name to parent
@@ -84,9 +78,9 @@ const LeafletControlGeocoder = ({
     // Cleanup function (removes the search element & control)
     return () => {
       map.removeControl(control);
-      map.removeEventListener("click");
+      map.removeEventListener('click');
       layerGroup.clearLayers();
-      setLocation("");
+      setLocation('');
     };
   }, [map, geocoder, setLocation]);
 

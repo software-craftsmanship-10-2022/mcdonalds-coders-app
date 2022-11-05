@@ -3,11 +3,11 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: ["xo", "prettier"],
+  extends: ['xo', 'prettier'],
   overrides: [
     {
-      extends: ['plugin:react/recommended', "xo-typescript", "prettier"],
-      files: ["*.ts", "*.tsx"],
+      extends: ['plugin:react/recommended', 'xo', 'xo-typescript', 'plugin:prettier/recommended'],
+      files: ['*.ts', '*.tsx'],
       settings: {
         react: {
           version: 'detect',
@@ -16,7 +16,7 @@ module.exports = {
       rules: {
         'react/react-in-jsx-scope': 'off',
         '@typescript-eslint/naming-convention': [
-          "error",
+          'error',
           {
             selector: 'default',
             format: ['camelCase'],
@@ -38,7 +38,7 @@ module.exports = {
           },
           {
             selector: 'variable',
-            types: ["function"],
+            types: ['function'],
             format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
             leadingUnderscore: 'allow',
             trailingUnderscore: 'allow',
@@ -49,18 +49,18 @@ module.exports = {
             format: ['PascalCase'],
           },
         ],
-        "@typescript-eslint/no-unused-expressions": [
-          "error",
+        '@typescript-eslint/no-unused-expressions': [
+          'error',
           {
-            "allowShortCircuit": true
-          }
-        ]
+            allowShortCircuit: true,
+          },
+        ],
       },
     },
   ],
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
   rules: {},
-}
+};

@@ -1,15 +1,15 @@
-import { useCallback, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import type { OrderType } from "../../../@types/order";
-import { IMG_PATH, URLS } from "../../../config";
-import { useOrderContext } from "../../../context/OrderContext";
-import useFormat from "../../../hooks/useFormat";
-import McButton from "../../buttons/McButton";
-import "./Cart.css";
+import {useCallback, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import type {OrderType} from '../../../@types/order';
+import {IMG_PATH, URLS} from '../../../config';
+import {useOrderContext} from '../../../context/OrderContext';
+import useFormat from '../../../hooks/useFormat';
+import McButton from '../../buttons/McButton';
+import './Cart.css';
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { order, updateOrder } = useOrderContext();
+  const {order, updateOrder} = useOrderContext();
   const [currencyFormatter] = useFormat();
 
   const getTotal = useCallback(() => {
@@ -38,7 +38,7 @@ const Cart = () => {
   // Delete selected item from the order
   const deleteItem = (item: number) => {
     const list = order.items.filter((_, index) => index !== item);
-    updateOrder({ ...order, items: list });
+    updateOrder({...order, items: list});
   };
 
   return (
@@ -51,7 +51,12 @@ const Cart = () => {
             <p>{`Cantidad: ${item.quantity}`}</p>
             <p>
               {currencyFormatter().format(item.pricePerUnit)}
-              <button className="delete-btn" onClick={() => { deleteItem(index); }}>
+              <button
+                className="delete-btn"
+                onClick={() => {
+                  deleteItem(index);
+                }}
+              >
                 Eliminar
               </button>
             </p>
@@ -64,8 +69,10 @@ const Cart = () => {
           <p>{currencyFormatter().format(getTotal())}</p>
         </div>
         <McButton
-          text={"Pagar con la app"}
-          onClick={() => { navigate(URLS.ordersCheckout); }}
+          text={'Pagar con la app'}
+          onClick={() => {
+            navigate(URLS.ordersCheckout);
+          }}
         />
       </div>
     </div>

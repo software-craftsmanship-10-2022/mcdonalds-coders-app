@@ -1,8 +1,8 @@
-import type { ReportHandler } from 'web-vitals';
+import type {ReportHandler} from 'web-vitals';
 
 class ImportError extends Error {
   constructor(lib: string, error: string) {
-      super(`error importing "${lib}" lib. Original error: ${error}`);
+    super(`error importing "${lib}" lib. Original error: ${error}`);
   }
 }
 
@@ -22,4 +22,4 @@ const reportWebVitals = async (onPerfEntry?: ReportHandler) => {
 };
 
 export default reportWebVitals;
-export {ImportError}
+export {ImportError};

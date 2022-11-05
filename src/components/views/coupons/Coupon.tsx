@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import type { CouponType } from "../../../@types/coupon";
-import { IMG_PATH, LOCALE, STORAGE, URLS } from "../../../config";
-import useFormat from "../../../hooks/useFormat";
-import useLocalStorage from "../../../hooks/useLocalStorage";
-import "./Coupon.css";
+import {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+import type {CouponType} from '../../../@types/coupon';
+import {IMG_PATH, LOCALE, STORAGE, URLS} from '../../../config';
+import useFormat from '../../../hooks/useFormat';
+import useLocalStorage from '../../../hooks/useLocalStorage';
+import './Coupon.css';
 
 // Local types
 type CouponAndIndexType = CouponType & {
@@ -14,7 +14,7 @@ type CouponAndIndexType = CouponType & {
 const Coupon = () => {
   const [nothingToDisplay, setNothingToDisplay] = useState(false);
   const [active, setActive] = useState(true);
-  const { getStorageItem, setStorageItem } = useLocalStorage();
+  const {getStorageItem, setStorageItem} = useLocalStorage();
   const [currencyFormatter] = useFormat();
   const date = new Date();
 
@@ -30,50 +30,38 @@ const Coupon = () => {
   const inactiveCoupons: CouponAndIndexType[] = [];
 
   for (const [i, coupon] of coupons.entries()) {
-    new Date(coupon.validDate) > date 
-    && activeCoupons.push({ ...coupon, parentIndex: i })
-    || inactiveCoupons.push({ ...coupon, parentIndex: i });
+    (new Date(coupon.validDate) > date && activeCoupons.push({...coupon, parentIndex: i})) ||
+      inactiveCoupons.push({...coupon, parentIndex: i});
   }
 
   useEffect(() => {
     // Display default view when there is no coupons to
     // display in the current selected section
     if (active) {
-      setNothingToDisplay(activeCoupons.length <= 0)
+      setNothingToDisplay(activeCoupons.length <= 0);
     } else {
-      setNothingToDisplay(inactiveCoupons.length <= 0)
+      setNothingToDisplay(inactiveCoupons.length <= 0);
     }
   }, [active, activeCoupons.length, inactiveCoupons.length]);
 
   const DefaultView = () => (
     <div className="default-view">
-      <img src={IMG_PATH + "logo-plain.png"} alt="" />
+      <img src={IMG_PATH + 'logo-plain.png'} alt="" />
       <h2>
         <strong>No existen cupones para mostrar</strong>
       </h2>
     </div>
   );
 
-  type CouponCardProps = Omit<CouponAndIndexType, "title" | "code"> & {
+  type CouponCardProps = Omit<CouponAndIndexType, 'title' | 'code'> & {
     disabled?: boolean;
   };
 
-  const CouponCard = ({
-    validDate,
-    disabled,
-    parentIndex,
-    img,
-    price,
-  }: CouponCardProps) => (
-    <Link
-      className="coupon-card"
-      to={disabled ? " " : `${URLS.coupons}${parentIndex}`}
-    >
+  const CouponCard = ({validDate, disabled, parentIndex, img, price}: CouponCardProps) => (
+    <Link className="coupon-card" to={disabled ? ' ' : `${URLS.coupons}${parentIndex}`}>
       <img src={IMG_PATH + img} alt="" />
       <div className="info">
-        <span className="date">
-          {"Vence el " + new Date(validDate).toLocaleDateString(LOCALE)}
-        </span>
+        <span className="date">{'Vence el ' + new Date(validDate).toLocaleDateString(LOCALE)}</span>
         <span className="price">{currencyFormatter().format(price)}</span>
       </div>
     </Link>
@@ -84,15 +72,19 @@ const Coupon = () => {
       <div className="mode-button-container">
         <button
           type="button"
-          className={active ? "mode-button selected" : "mode-button"}
-          onClick={() => { setActive(true); }}
+          className={active ? 'mode-button selected' : 'mode-button'}
+          onClick={() => {
+            setActive(true);
+          }}
         >
           Activos
         </button>
         <button
           type="button"
-          className={active ? "mode-button" : "mode-button selected"}
-          onClick={() => { setActive(false); }}
+          className={active ? 'mode-button' : 'mode-button selected'}
+          onClick={() => {
+            setActive(false);
+          }}
         >
           Inactivos
         </button>

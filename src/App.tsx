@@ -1,34 +1,34 @@
-import { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {useState} from 'react';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 /* VIEWS */
-import Catalogue from "./components/views/catalogue/Catalogue";
-import ProductList from "./components/views/catalogue/ProductList";
-import Coupon from "./components/views/coupons/Coupon";
-import ViewCoupon from "./components/views/coupons/ViewCoupon";
-import AddCoupon from "./components/views/discounts/AddCoupon";
-import Discount from "./components/views/discounts/Discount";
-import Home from "./components/views/home/Home";
-import AddItem from "./components/views/orders/AddItem";
-import Cart from "./components/views/orders/Cart";
-import Checkout from "./components/views/orders/Checkout";
-import ComboList from "./components/views/orders/ComboList";
-import CurrentOrder from "./components/views/orders/CurrentOrder";
-import Order from "./components/views/orders/Order";
+import Catalogue from './components/views/catalogue/Catalogue';
+import ProductList from './components/views/catalogue/ProductList';
+import Coupon from './components/views/coupons/Coupon';
+import ViewCoupon from './components/views/coupons/ViewCoupon';
+import AddCoupon from './components/views/discounts/AddCoupon';
+import Discount from './components/views/discounts/Discount';
+import Home from './components/views/home/Home';
+import AddItem from './components/views/orders/AddItem';
+import Cart from './components/views/orders/Cart';
+import Checkout from './components/views/orders/Checkout';
+import ComboList from './components/views/orders/ComboList';
+import CurrentOrder from './components/views/orders/CurrentOrder';
+import Order from './components/views/orders/Order';
 /* COMMON COMPONENTS */
-import Scroll from "./components/common/Scroll";
-import Header from "./components/header/Header";
-import InfoModal from "./components/modal/InfoModal";
-import Navigation from "./components/navbar/Navigation";
-import { OrderProvider } from "./context/OrderContext";
+import Scroll from './components/common/Scroll';
+import Header from './components/header/Header';
+import InfoModal from './components/modal/InfoModal';
+import Navigation from './components/navbar/Navigation';
+import {OrderProvider} from './context/OrderContext';
 
-import { URLS } from "./config";
+import {URLS} from './config';
 
 const App = () => {
   // Order warning
   const [showOrderModal, setShowOrderModal] = useState(false);
 
-  const toggleOrderModal = () => { 
-    setShowOrderModal(!showOrderModal); 
+  const toggleOrderModal = () => {
+    setShowOrderModal(!showOrderModal);
   };
 
   return (
@@ -40,18 +40,12 @@ const App = () => {
             <Routes>
               <Route path={URLS.root} element={<Home />} />
               <Route path={URLS.orders}>
-                <Route
-                  index
-                  element={<Order toggleOrderModal={toggleOrderModal} />}
-                />
+                <Route index element={<Order toggleOrderModal={toggleOrderModal} />} />
                 <Route path={URLS.ordersCart} element={<Cart />} />
                 <Route path={URLS.ordersCheckout} element={<Checkout />} />
                 <Route path={URLS.ordersCurrent} element={<CurrentOrder />} />
                 <Route path={URLS.ordersAdd} element={<ComboList />} />
-                <Route
-                  path={URLS.ordersAdd + ":category/:id"}
-                  element={<AddItem />}
-                />
+                <Route path={URLS.ordersAdd + ':category/:id'} element={<AddItem />} />
               </Route>
               <Route path={URLS.discounts}>
                 <Route index element={<Discount />} />

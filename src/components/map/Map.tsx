@@ -14,10 +14,10 @@ const Map = ({markers, setLocation, locateCurrent}: MapProps) => (
   <MapContainer
     center={{lat: -34.7355251653576, lng: -58.391348921321224}}
     zoom={9}
-    className='Map'
+    className="Map"
   >
     <TileLayer
-      url='https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png'
+      url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     />
     {markers.map((value, index) => (

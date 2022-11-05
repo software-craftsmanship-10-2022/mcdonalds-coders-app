@@ -104,8 +104,7 @@ const PRODUCTS: ProductCategoryType[] = [
       {
         img: 'mc_pollo.png',
         title: 'McPollo',
-        description:
-          'El auténtico sabor del pollo lo encontrás en nuestro clásico McPollo.',
+        description: 'El auténtico sabor del pollo lo encontrás en nuestro clásico McPollo.',
       },
       {
         img: 'mc_pollo_2.png',
@@ -218,7 +217,7 @@ const PRODUCTS: ProductCategoryType[] = [
         img: 'Super-Cono.png',
         title: 'Super Cono',
         description:
-          'Como el tradicional, pero con mas helado! Deliciosa mezcla de helado McDonald\'s en sabor dulce de leche, vainilla o combinado, dentro del exquisito cono de siempre.',
+          "Como el tradicional, pero con mas helado! Deliciosa mezcla de helado McDonald's en sabor dulce de leche, vainilla o combinado, dentro del exquisito cono de siempre.",
       },
       {
         img: 'sundae-chocolate.png',
@@ -265,8 +264,7 @@ const PRODUCTS: ProductCategoryType[] = [
       {
         img: 'YogurKid.png',
         title: 'YogurKid',
-        description:
-          'Yogur endulzado parcialmente descremado sabor a vainilla natural',
+        description: 'Yogur endulzado parcialmente descremado sabor a vainilla natural',
       },
     ],
   },

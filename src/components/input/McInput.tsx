@@ -21,7 +21,7 @@ const McInput = ({
   placeholder,
   onChange,
 }: McInputProps) => (
-  <div className='McInput' style={{width}}>
+  <div className="McInput" style={{width}}>
     <label htmlFor={id}>{label}</label>
     <input
       id={id}

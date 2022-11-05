@@ -38,25 +38,23 @@ const Navigation = () => {
   }, [location]);
 
   return (
-    <nav className='nav-container'>
-      <ul className='nav-list'>
-        {NAV_BUTTONS.map(value =>
+    <nav className="nav-container">
+      <ul className="nav-list">
+        {NAV_BUTTONS.map((value) => (
           // Load all buttons listed before
-          (
-            <li
-              className={
-                // If key is the actual active key, set active class
-                active === value.path ? 'nav-list-item active' : 'nav-list-item'
-              }
-              key={value.path}
-            >
-              <NavLink to={value.path} className='nav-link'>
-                <img src={IMG_PATH + value.img} alt='' />
-                {value.text}
-              </NavLink>
-            </li>
-          ),
-        )}
+          <li
+            className={
+              // If key is the actual active key, set active class
+              active === value.path ? 'nav-list-item active' : 'nav-list-item'
+            }
+            key={value.path}
+          >
+            <NavLink to={value.path} className="nav-link">
+              <img src={IMG_PATH + value.img} alt="" />
+              {value.text}
+            </NavLink>
+          </li>
+        ))}
       </ul>
     </nav>
   );

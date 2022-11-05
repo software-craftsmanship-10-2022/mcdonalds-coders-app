@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { CouponType } from "../../../@types/coupon";
+import type { CouponType } from "../../../@types/coupon";
 import { IMG_PATH, LOCALE, STORAGE, URLS } from "../../../config";
 import useFormat from "../../../hooks/useFormat";
 import useLocalStorage from "../../../hooks/useLocalStorage";
@@ -88,14 +88,14 @@ const Coupon = () => {
         <button
           type="button"
           className={active ? "mode-button selected" : "mode-button"}
-          onClick={() => setActive(true)}
+          onClick={() => { setActive(true); }}
         >
           Activos
         </button>
         <button
           type="button"
           className={!active ? "mode-button selected" : "mode-button"}
-          onClick={() => setActive(false)}
+          onClick={() => { setActive(false); }}
         >
           Inactivos
         </button>

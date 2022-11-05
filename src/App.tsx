@@ -27,7 +27,9 @@ const App = () => {
   // Order warning
   const [showOrderModal, setShowOrderModal] = useState(false);
 
-  const toggleOrderModal = () => setShowOrderModal(!showOrderModal);
+  const toggleOrderModal = () => { 
+    setShowOrderModal(!showOrderModal); 
+  };
 
   return (
     <div className="App">

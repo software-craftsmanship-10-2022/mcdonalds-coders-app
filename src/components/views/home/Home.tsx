@@ -28,7 +28,7 @@ const Home = () => {
         <McButton
           text={'Pedido en curso >>>'}
           img={'order-bag-nobg.png'}
-          onClick={() => navigate(URLS.ORDERS_CURRENT)}
+          onClick={() => { navigate(URLS.ORDERS_CURRENT); }}
           fixed
         />
       )}

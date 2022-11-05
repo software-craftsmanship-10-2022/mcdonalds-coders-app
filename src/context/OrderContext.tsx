@@ -1,12 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { OrderContextType, OrderType } from "../@types/order";
+import type { OrderContextType, OrderType } from "../@types/order";
 import { STORAGE } from "../config";
 import useLocalStorage from "../hooks/useLocalStorage";
 
-const OrderContext = createContext<OrderContextType | null>(null);
+const OrderContext = createContext<OrderContextType | undefined>(null);
 
 export const useOrderContext = () =>
-  useContext(OrderContext) as OrderContextType;
+  useContext(OrderContext)!;
 
 type OrderProviderProps = {
   children?: React.ReactNode;
@@ -49,7 +49,7 @@ export const OrderProvider = ({ children }: OrderProviderProps) => {
     setStorageItem(STORAGE.ORDER, order);
   }, [order, setStorageItem]);
 
-  const resetOrder = () => setOrder(getNewOrder());
+  const resetOrder = () => { setOrder(getNewOrder()); };
 
   return (
     <OrderContext.Provider value={{ order, updateOrder: setOrder, resetOrder }}>

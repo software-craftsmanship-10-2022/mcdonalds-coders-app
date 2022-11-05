@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { OrderItemType } from "../../../@types/order";
+import type { OrderItemType } from "../../../@types/order";
 import { IMG_PATH, URLS } from "../../../config";
 import { useOrderContext } from "../../../context/OrderContext";
 import COMBOS from "../../../data/combos";
@@ -57,17 +57,17 @@ const AddItem = () => {
       <img src={IMG_PATH + itemData?.img} alt="" />
       <p className="price">{priceTag}</p>
       <div className="counter-container">
-        <button onClick={() => setCount(count === 1 ? count : count - 1)}>
+        <button onClick={() => { setCount(count === 1 ? count : count - 1); }}>
           <img src={IMG_PATH + "minus.png"} alt="" />
         </button>
         <p>{count}</p>
-        <button onClick={() => setCount(count >= 5 ? count : count + 1)}>
+        <button onClick={() => { setCount(count >= 5 ? count : count + 1); }}>
           <img src={IMG_PATH + "plus.png"} alt="" />
         </button>
       </div>
       <McButton
         text={"Agregar al pedido"}
-        onClick={() => handleClick()}
+        onClick={() => { handleClick(); }}
         fixed
       />
     </div>

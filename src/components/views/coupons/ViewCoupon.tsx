@@ -4,7 +4,7 @@ import {IMG_PATH, STORAGE, URLS} from '../../../config';
 import './ViewCoupon.css';
 import CouponModal from '../../modal/CouponModal';
 import useLocalStorage from '../../../hooks/useLocalStorage';
-import {CouponType} from '../../../@types/coupon';
+import type {CouponType} from '../../../@types/coupon';
 
 const ViewCoupon = () => {
   // Coupon data
@@ -18,7 +18,7 @@ const ViewCoupon = () => {
   const [modal, setModal] = useState(false);
 
   // Toggle for Modal
-  const toggleModal = () => setModal(!modal);
+  const toggleModal = () => { setModal(!modal); };
 
   // Deny access if its not an active coupon
   if (new Date(data.validDate) < date) {

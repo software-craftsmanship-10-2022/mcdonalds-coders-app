@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
-import { CouponType } from "../../../@types/coupon";
+import type { CouponType } from "../../../@types/coupon";
 import { IMG_PATH, STORAGE, URLS } from "../../../config";
 import DISCOUNTS from "../../../data/discounts";
 import useLocalStorage from "../../../hooks/useLocalStorage";
@@ -25,7 +25,7 @@ const AddCoupon = () => {
   // Modal open state
   const [modal, setModal] = useState(false);
   // Toggle for Modal
-  const toggleModal = () => setModal(!modal);
+  const toggleModal = () => { setModal(!modal); };
   const [added, setAdded] = useState(false);
 
   const randomString = useRandom(9);

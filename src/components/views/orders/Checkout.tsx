@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Form, FormGroup, Input, Label } from "reactstrap";
-import { OrderType } from "../../../@types/order";
+import type { OrderType } from "../../../@types/order";
 import { PAYMENT_TYPE, STORAGE, URLS } from "../../../config";
 import { useOrderContext } from "../../../context/OrderContext";
 import useFormat from "../../../hooks/useFormat";
@@ -38,7 +38,7 @@ const Detail = ({ order, confirmOrder }: DetailProps) => {
 
   // Warning modal
   const [modalMessage, setModalMessage] = useState("");
-  const toggleModal = () => setShowModal(!showModal);
+  const toggleModal = () => { setShowModal(!showModal); };
   const [showModal, setShowModal] = useState(false);
 
   const handleCardWarning = (message: string) => {
@@ -87,7 +87,7 @@ const Detail = ({ order, confirmOrder }: DetailProps) => {
                     defaultChecked={true}
                     name="paymethod"
                     className="pay-method-radio"
-                    onClick={() => setSelectedMethod(PAYMENT_TYPE.CASH)}
+                    onClick={() => { setSelectedMethod(PAYMENT_TYPE.CASH); }}
                   />
                   {PAYMENT_TYPE.CASH}
                 </Label>
@@ -98,7 +98,7 @@ const Detail = ({ order, confirmOrder }: DetailProps) => {
                     type="radio"
                     name="paymethod"
                     className="pay-method-radio"
-                    onClick={() => setSelectedMethod(PAYMENT_TYPE.DEBIT)}
+                    onClick={() => { setSelectedMethod(PAYMENT_TYPE.DEBIT); }}
                   />
                   {PAYMENT_TYPE.DEBIT}
                 </Label>

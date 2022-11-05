@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { OrderType } from "../../../@types/order";
+import type { OrderType } from "../../../@types/order";
 import { IMG_PATH, URLS } from "../../../config";
 import { useOrderContext } from "../../../context/OrderContext";
 import useFormat from "../../../hooks/useFormat";
@@ -27,6 +27,7 @@ const Cart = () => {
     if (order.items.length <= 0) {
       navigate(-1);
     }
+
     // Change order stored if the item list changed
     updateOrder((prevOrder: OrderType) => ({
       ...prevOrder,
@@ -50,7 +51,7 @@ const Cart = () => {
             <p>{"Cantidad: " + item.quantity}</p>
             <p>
               {currencyFormatter().format(item.pricePerUnit)}
-              <button className="delete-btn" onClick={() => deleteItem(index)}>
+              <button className="delete-btn" onClick={() => { deleteItem(index); }}>
                 Eliminar
               </button>
             </p>
@@ -64,7 +65,7 @@ const Cart = () => {
         </div>
         <McButton
           text={"Pagar con la app"}
-          onClick={() => navigate(URLS.ORDERS_CHECKOUT)}
+          onClick={() => { navigate(URLS.ORDERS_CHECKOUT); }}
         />
       </div>
     </div>

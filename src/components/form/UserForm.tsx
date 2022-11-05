@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UserType } from "../../@types/user";
+import type { UserType } from "../../@types/user";
 import { STORAGE } from "../../config";
 import useLocalStorage from "../../hooks/useLocalStorage";
 import McButton from "../buttons/McButton";
@@ -129,12 +129,12 @@ const UserForm = ({ setIsValidated }: UserFormProps) => {
         </div>
       </div>
       <InfoModal
-        toggle={() => toggleModal()}
+        toggle={() => { toggleModal(); }}
         isOpen={showModal}
         title="Atención"
         message={modalMessage}
       />
-      <McButton text={"Aceptar"} onClick={() => handleValidation()} fixed />
+      <McButton text={"Aceptar"} onClick={() => { handleValidation(); }} fixed />
     </div>
   );
 };

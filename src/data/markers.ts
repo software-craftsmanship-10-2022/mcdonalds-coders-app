@@ -1,4 +1,4 @@
-import {MarkerType} from '../@types/marker';
+import type {MarkerType} from '../@types/marker';
 
 const MARKERS: MarkerType[] = [
   {

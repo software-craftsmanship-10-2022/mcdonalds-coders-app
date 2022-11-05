@@ -8,7 +8,7 @@ const Header = () => {
   const navigate = useNavigate();
   const [showButton, setShowButton] = useState(false);
 
-  const handleNavigate = () => location.pathname === URLS.ROOT ? false : navigate(-1);
+  const handleNavigate = () => { location.pathname === URLS.ROOT ? false : navigate(-1); };
 
   useEffect(() => {
     setShowButton(location.pathname !== URLS.ROOT);

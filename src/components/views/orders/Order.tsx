@@ -38,7 +38,7 @@ const Pickup = ({ query, handleStoreSelect }: PickupProps) => {
             className={"marker"}
             to={URLS.ORDERS_ADD}
             onClick={() =>
-              handleStoreSelect(value.title, value.location, value.img, false)
+              { handleStoreSelect(value.title, value.location, value.img, false); }
             }
           >
             <img src={IMG_PATH + value.img} alt="" />
@@ -69,7 +69,7 @@ const Delivery = ({ location, handleStoreSelect }: DeliveryProps) => {
   const navigate = useNavigate();
   const shortLocation = location?.split(",").slice(0, 3).join(", ");
 
-  const toggleModal = () => setShowModal(!showModal);
+  const toggleModal = () => { setShowModal(!showModal); };
 
   const handleSubmit = () => {
     if (!location || location === "") {
@@ -84,7 +84,7 @@ const Delivery = ({ location, handleStoreSelect }: DeliveryProps) => {
 
   return (
     <div className="Delivery">
-      <McButton text={"Aceptar"} onClick={() => handleSubmit()} />
+      <McButton text={"Aceptar"} onClick={() => { handleSubmit(); }} />
       <InfoModal
         toggle={toggleModal}
         isOpen={showModal}
@@ -149,14 +149,14 @@ const Order = ({ toggleOrderModal }: OrderProps) => {
         <button
           type="button"
           className={activeMode ? "mode-button selected" : "mode-button"}
-          onClick={() => changeMode(true)}
+          onClick={() => { changeMode(true); }}
         >
           Pickup
         </button>
         <button
           type="button"
           className={!activeMode ? "mode-button selected" : "mode-button"}
-          onClick={() => changeMode(false)}
+          onClick={() => { changeMode(false); }}
         >
           McDelivery
         </button>

@@ -1,6 +1,6 @@
 // Manage values stored in local storage
 const useLocalStorage = () => {
-  const getStorageItem = (key: string): {} | string | null => {
+  const getStorageItem = (key: string): Record<string, unknown> | string | undefined => {
     const value = localStorage.getItem(key);
 
     // Return value if exists & is valid
@@ -11,10 +11,10 @@ const useLocalStorage = () => {
     return null;
   };
 
-  const setStorageItem = (key: string, value: {}): void =>
-    localStorage.setItem(key, JSON.stringify(value));
+  const setStorageItem = (key: string, value: Record<string, unknown>): void =>
+    { localStorage.setItem(key, JSON.stringify(value)); };
 
-  const removeStorageItem = (key: string): void => localStorage.removeItem(key);
+  const removeStorageItem = (key: string): void => { localStorage.removeItem(key); };
 
   return {getStorageItem, setStorageItem, removeStorageItem};
 };

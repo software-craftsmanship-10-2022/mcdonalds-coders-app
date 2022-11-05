@@ -58,7 +58,7 @@ const CurrentOrder = () => {
       <McButton
         text={"Cancelar pedido"}
         color="#da291c"
-        onClick={() => cancelOrder()}
+        onClick={() => { cancelOrder(); }}
         fixed
       />
     </div>

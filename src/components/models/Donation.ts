@@ -1,4 +1,4 @@
-const POSITIVE_ERROR = "Amount must be a positive number";
+import { DONATION_ERRORS } from "../../errorMessages";
 
 class Donation {
   amount: number;
@@ -8,7 +8,7 @@ class Donation {
   }
 
   checkAmountValue() {
-    if (this.amount < 0) throw new Error(POSITIVE_ERROR);
+    if (this.amount < 0) throw new Error(DONATION_ERRORS.POSITIVE_NUMBER);
   }
   amountValue(): number {
     this.checkAmountValue();

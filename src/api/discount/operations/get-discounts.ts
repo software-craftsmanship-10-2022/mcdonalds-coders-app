@@ -1,6 +1,6 @@
-import { CouponType } from "../../../@types/coupon";
+import type {CouponType} from '../../../@types/coupon';
 
-type CouponRequestType = Pick<CouponType, "title" | "img" | "price">;
+type CouponRequestType = Pick<CouponType, 'title' | 'img' | 'price'>;
 
 export type GenericPromiseType = {
   json(): Promise<any>;
@@ -9,22 +9,21 @@ export type GenericPromiseType = {
 export type DiscountType = {
   category: string;
   id: string;
-  items: Array<CouponRequestType>;
+  items: CouponRequestType[];
 };
 
-function getDiscounts() {
-  return fetch("src/data/discounts")
-  .then(response => response.json())
-  .then(discounts => discounts)
-  .catch(error => {
-    return {
-      error: {
-        name: error.name,
-        message: error.message,
-      },
-      discounts: [],
-    };
-  })
+function getDiscounts(): Promise<any> {
+  return fetch('src/data/discounts')
+    .then((response) => response.json())
+    .then((discounts) => discounts)
+    .catch((error: any) => {
+      return {
+        error: {
+          name: error.name,
+          message: error.message,
+        },
+        discounts: [],
+      };
+    });
 }
-
 export default getDiscounts;

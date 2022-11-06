@@ -15,7 +15,7 @@ const McButton = ({fixed, color, img, text, onClick}: McButtonProps) => (
     onClick={onClick}
     style={{background: color}}
   >
-    {img && <img src={IMG_PATH + img} alt='' />}
+    {img && <img src={IMG_PATH + img} alt="" />}
     {text}
   </button>
 );

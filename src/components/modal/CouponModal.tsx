@@ -11,22 +11,14 @@ type CouponModalProps = {
   code: string;
 };
 
-const CouponModal = ({
-  modal,
-  toggleModal,
-  title,
-  validDate,
-  code,
-}: CouponModalProps) => (
+const CouponModal = ({modal, toggleModal, title, validDate, code}: CouponModalProps) => (
   <Modal isOpen={modal} toggle={toggleModal} centered={true}>
-    <p className='title'>{title}</p>
+    <p className="title">{title}</p>
     <div>
-      <QRCode value='https://mcdapp.vercel.app' size={256} />
-      <p className='warning'>
-          Válido hasta el {new Date(validDate).toLocaleDateString(LOCALE)}
-      </p>
+      <QRCode value="https://mcdapp.vercel.app" size={256} />
+      <p className="warning">Válido hasta el {new Date(validDate).toLocaleDateString(LOCALE)}</p>
     </div>
-    <div className='coupon-code'>{code}</div>
+    <div className="coupon-code">{code}</div>
   </Modal>
 );
 

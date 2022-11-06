@@ -12,7 +12,7 @@ describe('given a coupons request', () => {
   }) as jest.Mock;
 
   beforeEach(() => {
-    fetch.mockClear();
+    jest.clearAllMocks();
   });
 
   test('when promise is resolved then a list of discounts should be returned', async () => {

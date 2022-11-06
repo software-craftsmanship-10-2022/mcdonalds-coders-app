@@ -62,15 +62,15 @@ describe('Check class Order', () => {
 describe('Test function `createEmptyOrder`', () => {
   let order: Order;
 
-  beforeEach(async () => {
-    order = await createEmptyOrder();
+  beforeEach(() => {
+    order = createEmptyOrder();
   });
 
-  it('gets a Order instance', async () => {
+  it('gets a Order instance', () => {
     expect(order).toBeInstanceOf(Order);
   });
 
-  it('gets an Order it is empty', async () => {
+  it('gets an Order it is empty', () => {
     expect(order.getId()).toBe(0);
     expect(order.isItemsEmpty()).toBe(true);
     expect(order.getPayment()).toBe(PaymentMethod.cash);

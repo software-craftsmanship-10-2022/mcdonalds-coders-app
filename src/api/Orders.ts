@@ -1,4 +1,4 @@
-import {PaymentMethodType} from '~types/order';
+import {PaymentMethod, OrderStatus} from '~types/order';
 import type {NewOrderAddressDetailsType, NewOrderType} from '~types/order';
 import type {MenuType} from '~types/product';
 
@@ -14,22 +14,6 @@ class Order {
    */
   getId(): number {
     return this.order.id;
-  }
-
-  /**
-   * Change the `confirm` flag in the order.
-   *
-   * @param value new value.
-   */
-  confirm(value: boolean): void {
-    this.order.confirmed = value;
-  }
-
-  /**
-   * Check if the order is confirmed.
-   */
-  hasConfirm(): boolean {
-    return this.order.confirmed;
   }
 
   /**
@@ -51,7 +35,7 @@ class Order {
   /**
    * Get the order payment.
    */
-  getPayment(): PaymentMethodType {
+  getPayment(): PaymentMethod {
     return this.order.payment;
   }
 
@@ -60,8 +44,15 @@ class Order {
    *
    * @param newPayment New payment method.
    */
-  setPayment(newPayment: PaymentMethodType): void {
+  setPayment(newPayment: PaymentMethod): void {
     this.order.payment = newPayment;
+  }
+
+  /**
+   * Get the status of the order.
+   */
+  getStatus(): OrderStatus {
+    return this.order.status;
   }
 
   /**
@@ -72,40 +63,25 @@ class Order {
   }
 }
 
-// @TODO Temporal id generator
-let counter = 1;
-
-// @TODO Temporal function that simulate js sleep
-const sleep = async (time: number) =>
-  new Promise((resolve) => {
-    setTimeout(resolve, time);
-  });
-
 /**
- * Creates in back a new empty order.
- *
- * @TODO Now the function simulates a back connection.
+ * Create a new empty order.
  *
  * @return new created empty order.
  */
 async function createEmptyOrder(): Promise<Order> {
   const details: NewOrderAddressDetailsType = {
-    id: counter++,
+    id: 0,
     name: '',
     address: '',
     image: '',
-    isDelivery: false,
   };
-
-  // @TODO simulate delay
-  await sleep(100);
 
   return new Order({
     details,
-    id: counter++,
+    id: 0,
     items: [],
-    confirmed: false,
-    payment: PaymentMethodType.cash,
+    payment: PaymentMethod.cash,
+    status: OrderStatus.pending,
   });
 }
 

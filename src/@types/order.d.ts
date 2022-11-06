@@ -28,17 +28,23 @@ export type OrderContextType = {
 
 /// NEW TYPES
 // @TODO Replace in future the *New* types by the Old types
-export enum PaymentMethodType {
+export enum PaymentMethod {
   cash,
   debit,
+}
+
+export enum OrderStatus {
+  pending,
+  preparing,
+  delivering,
 }
 
 export type NewOrderType = {
   id: number;
   details: NewOrderAddressDetailsType;
   items: MenuType[];
-  confirmed: boolean;
-  payment: PaymentMethodType;
+  payment: PaymentMethod;
+  status: OrderStatus;
 };
 
 export type NewOrderAddressDetailsType = {
@@ -46,5 +52,4 @@ export type NewOrderAddressDetailsType = {
   name: string;
   address: string;
   image: string;
-  isDelivery: boolean;
 };

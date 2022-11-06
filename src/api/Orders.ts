@@ -66,7 +66,7 @@ class Order {
 /**
  * Create a new empty order.
  *
- * @return new created empty order.
+ * @return new order.
  */
 async function createEmptyOrder(): Promise<Order> {
   const details: NewOrderAddressDetailsType = {

@@ -1,4 +1,4 @@
-const OVER_0_ERROR = "Order amount must be greater than 0";
+import { ORDER_ERRORS } from "../../errorMessages";
 
 class Order {
   amount: number;
@@ -8,7 +8,7 @@ class Order {
   }
 
   checkAmountValue() {
-    if (this.amount <= 0) throw new Error(OVER_0_ERROR);
+    if (this.amount <= 0) throw new Error(ORDER_ERRORS.OVER_0_NUMBER);
   }
   totalAmount(): number {
     this.checkAmountValue();

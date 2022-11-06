@@ -1,3 +1,4 @@
+import { ORDER_ERRORS } from "../../errorMessages";
 import Order from "./Order";
 
 describe("Given a Order class", () => {
@@ -5,16 +6,12 @@ describe("Given a Order class", () => {
     const order = new Order(44);
     expect(order.totalAmount).toBeInstanceOf(Function);
   });
-  it("total amount should be a positive number", () => {
+  it("should throw an error when total amount is negative", () => {
     const order = new Order(-50);
-    expect(() => order.totalAmount()).toThrowError(
-      "Order amount must be greater than 0"
-    );
+    expect(() => order.totalAmount()).toThrowError(ORDER_ERRORS.OVER_0_NUMBER);
   });
-  it("total amount should be greater than 0", () => {
+  it("should throw an error when total amount is 0", () => {
     const order = new Order(0);
-    expect(() => order.totalAmount()).toThrowError(
-      "Order amount must be greater than 0"
-    );
+    expect(() => order.totalAmount()).toThrowError(ORDER_ERRORS.OVER_0_NUMBER);
   });
 });

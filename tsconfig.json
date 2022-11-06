@@ -17,12 +17,6 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "paths": {
-      "~components/*": ["./src/components/*"],
-      "~public/*": ["./public/*"],
-      "~api/*": ["./src/api/*"],
-      "~types/*": ["./src/@types/*"]
-    },
     "incremental": true
   },
   "include": ["src", "lib.d.ts"]

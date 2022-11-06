@@ -1,3 +1,5 @@
+import type {Order} from '~api/Orders';
+
 export type OrderType = {
   details: OrderAddressDetailsType;
   items: OrderItemType[];

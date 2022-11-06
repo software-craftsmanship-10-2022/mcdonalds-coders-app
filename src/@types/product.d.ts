@@ -1,5 +1,12 @@
 // @types.product.ts
 
+export type MenuType = {
+  name: string;
+  img: string;
+  price: number;
+  products: ProductType[];
+};
+
 export type ProductType = {
   img: string;
   title: string;

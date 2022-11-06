@@ -1,23 +1,21 @@
-// @types.order.ts
-export type OrderType = {
-  details: OrderAddressDetailsType;
-  items: OrderItemType[];
-  total: number;
-  confirmed: boolean;
-  paymentType: string;
-};
+export enum PaymentMethodType {
+  cash,
+  debit,
+}
 
-export type OrderItemType = {
-  quantity: number;
-  name: string;
-  img: string;
-  pricePerUnit: number;
+export type OrderType = {
+  id: number;
+  details?: OrderAddressDetailsType;
+  items: MenuType[];
+  confirmed: boolean;
+  payment: PaymentMethodType;
 };
 
 export type OrderAddressDetailsType = {
+  id: number;
   name: string;
   address: string;
-  img: string;
+  image: string;
   isDelivery: boolean;
 };
 

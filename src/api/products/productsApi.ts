@@ -1,12 +1,14 @@
-import PRODUCTS from "src/data/products";
+import PRODUCTS from 'src/data/products';
+import type {ProductCategoryType} from '~types/product';
 
-const getAllProducts = () => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
+const getAllProducts = async (): Promise<ProductCategoryType[]> => {
+  const promise: Promise<ProductCategoryType[]> = new Promise<ProductCategoryType[]>(
+    (resolve, reject) => {
       resolve(PRODUCTS);
-    }, 100);
-  });
+    },
+  );
+
+  return promise;
 };
 
-export { getAllProducts };
-
+export {getAllProducts};

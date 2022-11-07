@@ -4,21 +4,25 @@ export const MOCK_DISCOUNTS = [
     id: 'burgers',
     items: [
       {
+        id: '8XUu0dMqsP',
         title: '2 McCombos Cuarto de Libra',
         img: 'PROMOCIONE2McCombosMedianosCuartodeLibraconQueso.png',
         price: 1250,
       },
       {
+        id: 'GLq1PiKg8v',
         title: '2 McCombos Cuarto de Libra Mediano',
         img: 'Promocion20.png',
         price: 1590,
       },
       {
+        id: 'zaNOARwp7w',
         title: 'Menu Ensalada Deli Pollo + Bebida',
         img: 'Promocion18.png',
         price: 599,
       },
       {
+        id: 'iaIyirjSbb',
         title: '2 McCombos Triple Queso Medianos',
         img: 'Promocion19.png',
         price: 1590,
@@ -30,16 +34,19 @@ export const MOCK_DISCOUNTS = [
     id: 'dessert',
     items: [
       {
+        id: '7tHe7EKPg4',
         title: '2 McFlurry Oreo',
         img: 'Promocion15.png',
         price: 599,
       },
       {
+        id: 'OI99KBayO3',
         title: '2 Sundae',
         img: 'Promocion16.png',
         price: 300,
       },
       {
+        id: 'j6o9i3qNRv',
         title: '2 Conos de helado',
         img: 'Promocion12.png',
         price: 150,
@@ -51,20 +58,45 @@ export const MOCK_DISCOUNTS = [
     id: 'coffee',
     items: [
       {
+        id: 'SKr0l4zPv7',
         title: 'Cappuccino chico + 1 croissant',
         img: 'Promocion5.png',
         price: 300,
       },
       {
+        id: 'mgBWQLyEph',
         title: '2 Cafes + 4 medialunas',
         img: 'Promocion7.png',
         price: 390,
       },
       {
+        id: 'ZMcLldGYEt',
         title: 'Cappuccino chico + 2 medialunas',
         img: 'Promocion6.png',
         price: 300,
       },
     ],
+  },
+];
+
+export const MOCK_ACTIVE_COUPON = {
+  id: '8XUu0dMqsP',
+  title: '2 McCombos Cuarto de Libra',
+  img: 'PROMOCIONE2McCombosMedianosCuartodeLibraconQueso.png',
+  price: 1250,
+  code: 'URY-XJG-15Q',
+  validDate: new Date('2022-12-07T12:14:32.637Z'),
+};
+
+export const MOCK_COUPON_ID = '8XUu0dMqsP';
+
+export const MOCK_ACTIVE_COUPONS = [
+  {
+    id: '8XUu0dMqsP',
+    title: '2 McCombos Cuarto de Libra',
+    img: 'PROMOCIONE2McCombosMedianosCuartodeLibraconQueso.png',
+    price: 1250,
+    code: 'URY-XJG-15Q',
+    validDate: '2022-12-07T12:14:32.637Z',
   },
 ];

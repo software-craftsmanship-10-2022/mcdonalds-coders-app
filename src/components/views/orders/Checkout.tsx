@@ -161,7 +161,6 @@ const Checkout = () => {
 
   const confirmOrder = (payMethod: string, details: CardDetailsType) => {
     updateOrder({...order, confirmed: true, paymentType: payMethod});
-    console.log(details);
     navigate(URLS.root);
   };
 

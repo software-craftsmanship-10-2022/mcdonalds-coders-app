@@ -1,18 +1,20 @@
-import {Navigate, useParams} from 'react-router-dom';
 import {useState} from 'react';
+import {Navigate, useParams} from 'react-router-dom';
+import type {CouponType} from '~types/coupon';
 import {IMG_PATH, STORAGE, URLS} from '../../../config';
-import './ViewCoupon.css';
-import CouponModal from '../../modal/CouponModal';
 import useLocalStorage from '../../../hooks/useLocalStorage';
-import type {CouponType} from '../../../@types/coupon';
+import CouponModal from '../../modal/CouponModal';
+import './ViewCoupon.css';
 
 const ViewCoupon = () => {
   // Coupon data
-  const {id} = useParams<{id?: string}>();
+  const {id} = useParams<{id: string}>();
   const {getStorageItem} = useLocalStorage();
-  const coupons = getStorageItem(STORAGE.coupons) as CouponType[];
-  const data = coupons[Number(id)];
-  const date = new Date();
+  const activeCoupons = getStorageItem(STORAGE.activeCoupons) as CouponType[];
+  const data = activeCoupons.find((coupon) => coupon.id === id);
+  if (!data) {
+    return <Navigate to={URLS.coupons} replace />;
+  }
 
   // Modal open state
   const [modal, setModal] = useState(false);
@@ -21,11 +23,6 @@ const ViewCoupon = () => {
   const toggleModal = () => {
     setModal(!modal);
   };
-
-  // Deny access if its not an active coupon
-  if (new Date(data.validDate) < date) {
-    return <Navigate to={URLS.coupons} replace />;
-  }
 
   return (
     <div className="ViewCoupon">

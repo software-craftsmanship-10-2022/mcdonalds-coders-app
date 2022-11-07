@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import type {CouponType} from '../../../@types/coupon';
+import deactivateCoupon from '../../../api/coupons/operations/deactivate-coupon';
 import {IMG_PATH, LOCALE, STORAGE, URLS} from '../../../config';
 import useFormat from '../../../hooks/useFormat';
 import useLocalStorage from '../../../hooks/useLocalStorage';
@@ -18,21 +19,28 @@ const Coupon = () => {
   const [currencyFormatter] = useFormat();
   const date = new Date();
 
-  let coupons = getStorageItem(STORAGE.coupons) as CouponType[];
+  let activeCoupons: CouponType[] = getStorageItem(STORAGE.activeCoupons) as CouponType[];
+  let inactiveCoupons: CouponType[] = getStorageItem(STORAGE.inactiveCoupons) as CouponType[];
 
-  if (!coupons) {
-    coupons = [];
-    // @TODO refactor storage
-    setStorageItem(STORAGE.coupons, coupons as unknown as Record<string, unknown>);
+  if (!activeCoupons) {
+    activeCoupons = [];
   }
 
-  const activeCoupons: CouponAndIndexType[] = [];
-  const inactiveCoupons: CouponAndIndexType[] = [];
-
-  for (const [i, coupon] of coupons.entries()) {
-    (new Date(coupon.validDate) > date && activeCoupons.push({...coupon, parentIndex: i})) ||
-      inactiveCoupons.push({...coupon, parentIndex: i});
+  if (!inactiveCoupons) {
+    inactiveCoupons = [];
   }
+
+  const handleInactiveCoupon = async (coupon: CouponType) => {
+    await deactivateCoupon(coupon.id);
+  };
+
+  activeCoupons.forEach((coupon) => {
+    if (new Date(coupon.validDate) < date) {
+      handleInactiveCoupon(coupon).catch((e) => {
+        console.log(e);
+      });
+    }
+  });
 
   useEffect(() => {
     // Display default view when there is no coupons to
@@ -53,12 +61,16 @@ const Coupon = () => {
     </div>
   );
 
-  type CouponCardProps = Omit<CouponAndIndexType, 'title' | 'code'> & {
+  type CouponCardProps = {
+    validDate: Date;
+    img: string;
+    price: number;
+    id: string;
     disabled?: boolean;
   };
 
-  const CouponCard = ({validDate, disabled, parentIndex, img, price}: CouponCardProps) => (
-    <Link className="coupon-card" to={disabled ? ' ' : `${URLS.coupons}${parentIndex}`}>
+  const CouponCard = ({validDate, disabled, img, price, id}: CouponCardProps) => (
+    <Link className="coupon-card" to={disabled ? ' ' : `${URLS.coupons}${id}`}>
       <img src={IMG_PATH + img} alt="" />
       <div className="info">
         <span className="date">{'Vence el ' + new Date(validDate).toLocaleDateString(LOCALE)}</span>
@@ -95,9 +107,9 @@ const Coupon = () => {
         activeCoupons.map((element, index) => (
           <CouponCard
             key={index}
-            parentIndex={element.parentIndex}
             validDate={element.validDate}
             img={element.img}
+            id={element.id}
             price={element.price}
           />
         ))}
@@ -107,9 +119,9 @@ const Coupon = () => {
           <CouponCard
             disabled={true}
             key={index}
-            parentIndex={element.parentIndex}
             validDate={element.validDate}
             img={element.img}
+            id={element.id}
             price={element.price}
           />
         ))}

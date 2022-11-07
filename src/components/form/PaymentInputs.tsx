@@ -29,15 +29,10 @@ const PaymentInputs = ({
     invalidCVC: 'El código de seguridad es inválido',
   };
 
-  const {
-    wrapperProps,
-    getCardImageProps,
-    getCardNumberProps,
-    getExpiryDateProps,
-    getCVCProps,
-  } = usePaymentInputs({
-    errorMessages: ERROR_MESSAGES,
-  });
+  const {wrapperProps, getCardImageProps, getCardNumberProps, getExpiryDateProps, getCVCProps} =
+    usePaymentInputs({
+      errorMessages: ERROR_MESSAGES,
+    });
 
   useEffect(() => {
     setCardIsValid(!wrapperProps.error);

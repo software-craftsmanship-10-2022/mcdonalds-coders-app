@@ -4,13 +4,13 @@ import {IMG_PATH, STORAGE, URLS} from '../../../config';
 import './ViewCoupon.css';
 import CouponModal from '../../modal/CouponModal';
 import useLocalStorage from '../../../hooks/useLocalStorage';
-import {CouponType} from '../../../@types/coupon';
+import type {CouponType} from '../../../@types/coupon';
 
 const ViewCoupon = () => {
   // Coupon data
-  const {id} = useParams<{ id?: string }>();
+  const {id} = useParams<{id?: string}>();
   const {getStorageItem} = useLocalStorage();
-  const coupons = getStorageItem(STORAGE.COUPONS) as CouponType[];
+  const coupons = getStorageItem(STORAGE.coupons) as CouponType[];
   const data = coupons[Number(id)];
   const date = new Date();
 
@@ -18,22 +18,22 @@ const ViewCoupon = () => {
   const [modal, setModal] = useState(false);
 
   // Toggle for Modal
-  const toggleModal = () => setModal(!modal);
+  const toggleModal = () => {
+    setModal(!modal);
+  };
 
   // Deny access if its not an active coupon
   if (new Date(data.validDate) < date) {
-    return <Navigate to={URLS.COUPONS} replace />;
+    return <Navigate to={URLS.coupons} replace />;
   }
 
   return (
-    <div className='ViewCoupon'>
-      <img src={IMG_PATH + data.img} alt='' />
-      <p className='warning'>
-        🇦🇷 Este cupón solo es válido para la República Argentina.
-      </p>
-      <p className='title'>{data.title}</p>
-      <button className='button' onClick={toggleModal}>
-        <img src={IMG_PATH + 'qr-icon.png'} alt='' />
+    <div className="ViewCoupon">
+      <img src={IMG_PATH + data.img} alt="" />
+      <p className="warning">🇦🇷 Este cupón solo es válido para la República Argentina.</p>
+      <p className="title">{data.title}</p>
+      <button className="button" onClick={toggleModal}>
+        <img src={IMG_PATH + 'qr-icon.png'} alt="" />
         Utilizar QR
       </button>
       <CouponModal

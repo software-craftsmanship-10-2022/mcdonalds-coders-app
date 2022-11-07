@@ -4,11 +4,11 @@ import {useState, useEffect} from 'react';
 import {NavLink, useLocation} from 'react-router-dom';
 
 const NAV_BUTTONS = [
-  {text: 'Home', img: 'logo-black.png', path: URLS.ROOT},
-  {text: 'Pedidos', img: 'fries.png', path: URLS.ORDERS},
-  {text: 'Ofertas', img: 'ticket.png', path: URLS.DISCOUNTS},
-  {text: 'Cupones', img: 'coupon.png', path: URLS.COUPONS},
-  {text: 'Menú', img: 'more.png', path: URLS.CATALOGUE},
+  {text: 'Home', img: 'logo-black.png', path: URLS.root},
+  {text: 'Pedidos', img: 'fries.png', path: URLS.orders},
+  {text: 'Ofertas', img: 'ticket.png', path: URLS.discounts},
+  {text: 'Cupones', img: 'coupon.png', path: URLS.coupons},
+  {text: 'Menú', img: 'more.png', path: URLS.catalogue},
 ];
 
 const Navigation = () => {
@@ -19,12 +19,12 @@ const Navigation = () => {
   useEffect(() => {
     // Returns the root section of a route, as route
     const toRoot = (route: string) => {
-      if (route === URLS.ROOT) {
-        return URLS.ROOT;
+      if (route === URLS.root) {
+        return URLS.root;
       }
 
       for (const button of NAV_BUTTONS) {
-        if (button.path === URLS.ROOT) {
+        if (button.path === URLS.root) {
           continue;
         }
 
@@ -38,25 +38,23 @@ const Navigation = () => {
   }, [location]);
 
   return (
-    <nav className='nav-container'>
-      <ul className='nav-list'>
-        {NAV_BUTTONS.map(value =>
+    <nav className="nav-container">
+      <ul className="nav-list">
+        {NAV_BUTTONS.map((value) => (
           // Load all buttons listed before
-          (
-            <li
-              className={
-                // If key is the actual active key, set active class
-                active === value.path ? 'nav-list-item active' : 'nav-list-item'
-              }
-              key={value.path}
-            >
-              <NavLink to={value.path} className='nav-link'>
-                <img src={IMG_PATH + value.img} alt='' />
-                {value.text}
-              </NavLink>
-            </li>
-          ),
-        )}
+          <li
+            className={
+              // If key is the actual active key, set active class
+              active === value.path ? 'nav-list-item active' : 'nav-list-item'
+            }
+            key={value.path}
+          >
+            <NavLink to={value.path} className="nav-link">
+              <img src={IMG_PATH + value.img} alt="" />
+              {value.text}
+            </NavLink>
+          </li>
+        ))}
       </ul>
     </nav>
   );

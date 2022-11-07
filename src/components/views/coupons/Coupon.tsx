@@ -1,10 +1,11 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
+import type {UserCoupons} from 'src/api/coupons/operations/get-user-coupons';
+import getUserCoupons from 'src/api/coupons/operations/get-user-coupons';
 import type {CouponType} from '../../../@types/coupon';
 import deactivateCoupon from '../../../api/coupons/operations/deactivate-coupon';
-import {IMG_PATH, LOCALE, STORAGE, URLS} from '../../../config';
+import {IMG_PATH, LOCALE, URLS} from '../../../config';
 import useFormat from '../../../hooks/useFormat';
-import useLocalStorage from '../../../hooks/useLocalStorage';
 import './Coupon.css';
 
 // Local types
@@ -19,13 +20,19 @@ const Coupon = () => {
   const [inactiveCoupons, setInactiveCoupons] = useState<CouponType[]>([]);
   const [currencyFormatter] = useFormat();
   const date = new Date();
-  const {getStorageItem} = useLocalStorage();
-  useEffect(() => {
-    const activeCoupons: CouponType[] = getStorageItem(STORAGE.activeCoupons) as CouponType[];
-    const inactiveCoupons: CouponType[] = getStorageItem(STORAGE.inactiveCoupons) as CouponType[];
 
-    activeCoupons && setActiveCoupons(activeCoupons);
-    inactiveCoupons && setInactiveCoupons(inactiveCoupons);
+  const handleUserCoupons = async () => {
+    await getUserCoupons().then((userCoupons: UserCoupons) => {
+      const {activeCoupons, inactiveCoupons} = userCoupons;
+      setActiveCoupons(activeCoupons);
+      setInactiveCoupons(inactiveCoupons);
+    });
+  };
+
+  useEffect(() => {
+    handleUserCoupons().catch((error) => {
+      setNothingToDisplay(true);
+    });
   }, []);
 
   const handleInactiveCoupon = async (coupon: CouponType) => {

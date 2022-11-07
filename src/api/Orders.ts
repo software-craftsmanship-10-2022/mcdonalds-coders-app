@@ -86,35 +86,51 @@ export function createEmptyOrder(): Order {
   });
 }
 
-/**
- * Storage key used to read/write the current order
- */
-export const ORDER_STORAGE_KEY = 'currentOrder';
+export type UseOrderStorageType = {
+  storageKey: string;
+  setOrder: (_: Order) => Promise<void>;
+  getOrder: () => Promise<Order | undefined>;
+  removeOrder: () => Promise<void>;
+};
 
-/**
- * Set in the cache system, the `order` order.
- *
- * @param order Order to store.
- */
-export async function setOrderInStorage(order: Order): Promise<void> {
-  await cache.setItem<Order>(ORDER_STORAGE_KEY, order);
-}
+export function useOrderStorage(): UseOrderStorageType {
+  /**
+   * Storage key used to read/write the current order
+   */
+  const storageKey = 'currentOrder';
 
-type OrderInStorageType = {order: NewOrderType} | undefined;
+  /**
+   * Set in the cache system, the `order` order.
+   *
+   * @param order Order to store.
+   */
+  async function setOrder(order: Order): Promise<void> {
+    await cache.setItem<Order>(storageKey, order);
+  }
 
-/**
- * Get from the cache system the stored order.
- *
- * @return Order instance.
- */
-export async function getOrderFromStorage(): Promise<Order | undefined> {
-  const order: OrderInStorageType = await cache.getItem<OrderInStorageType>(ORDER_STORAGE_KEY);
-  return order === undefined ? undefined : new Order(order.order);
-}
+  type OrderInStorageType = {order: NewOrderType} | undefined;
 
-/**
- * Remove the order from cache system.
- */
-export async function removeOrderFromStorage(): Promise<void> {
-  await cache.removeItem(ORDER_STORAGE_KEY);
+  /**
+   * Get from the cache system the stored order.
+   *
+   * @return Order instance.
+   */
+  async function getOrder(): Promise<Order | undefined> {
+    const order: OrderInStorageType = await cache.getItem<OrderInStorageType>(storageKey);
+    return order === undefined ? undefined : new Order(order.order);
+  }
+
+  /**
+   * Remove the order from cache system.
+   */
+  async function removeOrder(): Promise<void> {
+    await cache.removeItem(storageKey);
+  }
+
+  return {
+    storageKey,
+    setOrder,
+    getOrder,
+    removeOrder,
+  };
 }

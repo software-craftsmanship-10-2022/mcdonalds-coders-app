@@ -1,14 +1,9 @@
 import {clearAll, getItem, setItem} from '../hooks/cacheSystem';
 import {OrderStatus, PaymentMethod} from '../@types/order.d';
 import type {MenuType} from '../@types/product.d';
-import {
-  createEmptyOrder,
-  Order,
-  ORDER_STORAGE_KEY,
-  setOrderInStorage,
-  getOrderFromStorage,
-  removeOrderFromStorage,
-} from './Orders';
+import {createEmptyOrder, Order, useOrderStorage} from './Orders';
+
+const {storageKey, getOrder, setOrder, removeOrder} = useOrderStorage();
 
 describe('Check class Order', () => {
   let order: Order;
@@ -101,27 +96,27 @@ describe('Manipulate the Order object in cache system', () => {
   });
 
   it('writes the order in the cache system', async () => {
-    await setOrderInStorage(order);
-    expect(await getItem<Order>(ORDER_STORAGE_KEY)).toEqual(order);
+    await setOrder(order);
+    expect(await getItem<Order>(storageKey)).toEqual(order);
   });
 
   it("tries to read the order when it wasn't created", async () => {
-    expect(await getOrderFromStorage()).toBe(undefined);
+    expect(await getOrder()).toBe(undefined);
   });
 
   it('reads an object it is instance of Order', async () => {
-    await setItem<Order>(ORDER_STORAGE_KEY, order);
-    expect(await getOrderFromStorage()).toBeInstanceOf(Order);
+    await setItem<Order>(storageKey, order);
+    expect(await getOrder()).toBeInstanceOf(Order);
   });
 
   it('checks the object in cache system is an Order instance.', async () => {
-    await setItem<Order>(ORDER_STORAGE_KEY, order);
-    expect(await getOrderFromStorage()).toEqual(order);
+    await setItem<Order>(storageKey, order);
+    expect(await getOrder()).toEqual(order);
   });
 
   it('Remove the object from cache system', async () => {
-    await setItem<Order>(ORDER_STORAGE_KEY, order);
-    await removeOrderFromStorage();
-    expect(await getOrderFromStorage()).toBe(undefined);
+    await setItem<Order>(storageKey, order);
+    await removeOrder();
+    expect(await getOrder()).toBe(undefined);
   });
 });

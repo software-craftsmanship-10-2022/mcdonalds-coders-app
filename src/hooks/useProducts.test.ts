@@ -24,8 +24,8 @@ describe('Given an useProducts hook', () => {
   test('when we call findProductsByCategory, then if the param is not a string throw an Error', () => {
     const {findProductsByCategory} = useProducts();
 
-    expect(() => findProductsByCategory(1) as any).toThrowError('The category must be a string');
-    expect(() => findProductsByCategory(true) as any).toThrowError('The category must be a string');
+    expect(() => findProductsByCategory(1 as any)).toThrowError('The category must be a string');
+    expect(() => findProductsByCategory(true as any)).toThrowError('The category must be a string');
   });
 
   test('when we call findProductsByCategory with a category, then it returns the products with the category id', () => {

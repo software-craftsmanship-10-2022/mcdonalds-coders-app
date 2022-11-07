@@ -39,7 +39,7 @@ describe('given a coupons request', () => {
       return Promise.reject(new Error('API failure'));
     });
     try {
-      const discounts: Discounts = await getDiscounts();
+      await getDiscounts();
     } catch (e: unknown) {
       expect(e).toBeInstanceOf(Error);
       expect(getErrorMessage(e)).toEqual('API failure');

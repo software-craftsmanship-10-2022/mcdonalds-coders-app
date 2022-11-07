@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react';
-import type {Categories, Discounts} from '~types/discount';
+import type {Categories, Discounts} from 'src/@types/discount';
+
+import {getDiscounts} from '../../../api/coupons';
 import {getErrorMessage} from '../../../api/errorHandling/errorHandler';
-import {getDiscounts} from '../../../api/Payment/coupons';
 import {URLS} from '../../../config';
 import DISCOUNT_SLIDES from '../../../data/discountSlides';
 import Carousel from '../../carousel/Carousel';

@@ -1,8 +1,9 @@
+import type {CouponType} from 'src/@types/coupon';
+import {getErrorMessage} from 'src/api/errorHandling/errorHandler';
 import {STORAGE} from 'src/config';
-import useLocalStorage from 'src/hooks/useLocalStorage';
-import {getErrorMessage} from '~api/errorHandling/errorHandler';
-import type {CouponType} from '~types/coupon';
-import * as APIFunctions from '../../shared/functions';
+import {getFromDDBB} from '../../shared/couponsDDBBFunctions';
+
+import * as CouponUtils from '../../shared/couponUtils';
 import {default as activateCoupon} from '../activate-coupon';
 import deactivateCoupon from '../deactivate-coupon';
 import getDiscounts from '../get-discounts';
@@ -36,14 +37,14 @@ describe('given a deactivateCoupon request', () => {
   });
 
   test('when request to deactivate coupon is successful it should delete the coupon from active coupons in local storage and add it to inactive coupons', async () => {
-    jest.spyOn(APIFunctions, 'getDate').mockReturnValueOnce(new Date(MOCK_ACTIVE_COUPON.validDate));
-    jest.spyOn(APIFunctions, 'getCode').mockReturnValueOnce(MOCK_ACTIVE_COUPON.code);
+    jest.spyOn(CouponUtils, 'getDate').mockReturnValueOnce(new Date(MOCK_ACTIVE_COUPON.validDate));
+    jest.spyOn(CouponUtils, 'getCode').mockReturnValueOnce(MOCK_ACTIVE_COUPON.code);
     await getDiscounts();
     await activateCoupon(MOCK_COUPON_ID);
     await deactivateCoupon(MOCK_COUPON_ID);
-    const {getStorageItem} = useLocalStorage();
-    const activeCoupons = getStorageItem(STORAGE.activeCoupons) as CouponType[];
-    const inactiveCoupons = getStorageItem(STORAGE.inactiveCoupons) as CouponType[];
+
+    const activeCoupons = getFromDDBB(STORAGE.activeCoupons) as CouponType[];
+    const inactiveCoupons = getFromDDBB(STORAGE.inactiveCoupons) as CouponType[];
 
     expect(activeCoupons).toEqual([]);
     expect(inactiveCoupons).toEqual(MOCK_ACTIVE_COUPONS);

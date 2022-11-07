@@ -1,11 +1,11 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import type {Discounts} from 'src/@types/discount';
+import {getErrorMessage} from 'src/api/errorHandling/errorHandler';
 import {STORAGE} from 'src/config';
 import DISCOUNTS from 'src/data/discounts';
 import useLocalStorage from 'src/hooks/useLocalStorage';
-import {getErrorMessage} from '~api/errorHandling/errorHandler';
-import {getDiscounts} from '~api/Payment/coupons';
-import type {Discounts} from '~types/discount';
+import getDiscounts from '../get-discounts';
+
 import {MOCK_DISCOUNTS} from '../mocks/mocks';
 describe('given a coupons request', () => {
   globalThis.fetch = jest.fn(async () => {

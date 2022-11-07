@@ -1,6 +1,6 @@
+import type {Discounts} from 'src/@types/discount';
 import {STORAGE} from 'src/config';
-import useLocalStorage from 'src/hooks/useLocalStorage';
-import type {Discounts} from '~types/discount';
+import {saveInDDBB} from '../shared/couponsDDBBFunctions';
 
 async function getDiscounts(): Promise<any> {
   return fetch('/data/discounts.json')
@@ -8,8 +8,7 @@ async function getDiscounts(): Promise<any> {
       return response.json();
     })
     .then((discounts: Discounts) => {
-      const {setStorageItem} = useLocalStorage();
-      setStorageItem(STORAGE.discounts, discounts);
+      saveInDDBB(STORAGE.discounts, discounts);
       return discounts;
     })
     .catch((error: Error) => {

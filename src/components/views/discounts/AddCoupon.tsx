@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {useEffect, useState} from 'react';
 import {Navigate, useParams} from 'react-router-dom';
-import type {CouponType} from '~types/coupon';
-import type {DiscountItem} from '~types/discount';
-import activateCoupon from '../../../api/Payment/coupons/operations/activate-coupon';
-import {retrieveCouponFromFakeDDBB} from '../../../api/Payment/coupons/shared/functions';
+import type {CouponType} from 'src/@types/coupon';
+import type {DiscountItem} from 'src/@types/discount';
+
+import activateCoupon from '../../../api/coupons/operations/activate-coupon';
+import {retrieveCouponFromFakeDDBB} from '../../../api/coupons/shared/couponsDDBBFunctions';
 import {IMG_PATH, URLS} from '../../../config';
 import CouponModal from '../../modal/CouponModal';
 import './AddCoupon.css';
@@ -36,7 +36,7 @@ const AddCoupon = () => {
   };
 
   const handleAddCoupon = async () => {
-    const activeCoupon = await activateCoupon(id);
+    const activeCoupon: CouponType = await activateCoupon(id);
     setActiveCoupon(activeCoupon);
     toggleModal();
   };
@@ -56,15 +56,14 @@ const AddCoupon = () => {
             <CouponModal
               modal={modal}
               toggleModal={toggleModal}
-              title={activeCoupon?.title}
-              code={activeCoupon?.code}
-              validDate={activeCoupon?.validDate}
+              title={coupon?.title}
+              code={activeCoupon.code}
+              validDate={activeCoupon.validDate}
             />
           )}
         </div>
       ) : (
-        // TODO: loader
-        <div className="AddCoupon">Loading ...</div>
+        <div>Loading...</div>
       )}
     </>
   );

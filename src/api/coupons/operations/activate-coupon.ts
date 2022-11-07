@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import type {CouponType} from 'src/@types/coupon';
+import type {DiscountItem} from 'src/@types/discount';
 import {STORAGE} from 'src/config';
-import useLocalStorage from 'src/hooks/useLocalStorage';
-import type {DiscountItem} from '~types/discount';
-import {getErrorMessage} from '../../../errorHandling/errorHandler';
-import {getCode, getDate, retrieveCouponFromFakeDDBB} from '../shared/functions';
+import {getErrorMessage} from '../../errorHandling/errorHandler';
+import {getFromDDBB, retrieveCouponFromFakeDDBB, saveInDDBB} from '../shared/couponsDDBBFunctions';
+import {getCode, getDate} from '../shared/couponUtils';
 
 const formatCouponData = (couponData: DiscountItem) => {
   return {
@@ -16,15 +17,14 @@ const formatCouponData = (couponData: DiscountItem) => {
   };
 };
 
-async function activateCoupon(id: string): Promise<any> {
+async function activateCoupon(id: string): Promise<CouponType> {
   if (!id || !id.length) throw new TypeError('Item id is not defined');
-  const {setStorageItem, getStorageItem} = useLocalStorage();
   try {
-    const couponData = retrieveCouponFromFakeDDBB(id);
-    const activeCoupon = couponData && formatCouponData(couponData);
-    const activeCoupons = getStorageItem(STORAGE.activeCoupons);
+    const couponData = retrieveCouponFromFakeDDBB(id)!;
+    const activeCoupon: CouponType = formatCouponData(couponData);
+    const activeCoupons = getFromDDBB(STORAGE.activeCoupons);
     const updatedCoupons = activeCoupons ? [...activeCoupons, activeCoupon] : [activeCoupon];
-    setStorageItem(STORAGE.activeCoupons, updatedCoupons);
+    saveInDDBB(STORAGE.activeCoupons, updatedCoupons);
     return activeCoupon;
   } catch (error: unknown) {
     throw new Error(getErrorMessage(error));

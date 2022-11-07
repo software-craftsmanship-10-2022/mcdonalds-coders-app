@@ -1,15 +1,14 @@
+import type {CouponType} from 'src/@types/coupon';
 import {STORAGE} from 'src/config';
-import useLocalStorage from 'src/hooks/useLocalStorage';
-import type {CouponType} from '~types/coupon';
+import {getFromDDBB} from '../shared/couponsDDBBFunctions';
 
 export type UserCoupons = {
   activeCoupons: CouponType[];
   inactiveCoupons: CouponType[];
 };
 async function getUserCoupons(): Promise<UserCoupons> {
-  const {getStorageItem} = useLocalStorage();
-  const activeCoupons = getStorageItem(STORAGE.activeCoupons) as CouponType[];
-  const inactiveCoupons = getStorageItem('inactiveCoupons') as CouponType[];
+  const activeCoupons = getFromDDBB(STORAGE.activeCoupons) as CouponType[];
+  const inactiveCoupons = getFromDDBB('inactiveCoupons') as CouponType[];
   return {activeCoupons: activeCoupons || [], inactiveCoupons: inactiveCoupons || []};
 }
 

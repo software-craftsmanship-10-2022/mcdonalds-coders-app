@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {Navigate, useParams} from 'react-router-dom';
-import type {CouponType} from '~types/coupon';
+import type {CouponType} from 'src/@types/coupon';
+
 import {IMG_PATH, STORAGE, URLS} from '../../../config';
 import useLocalStorage from '../../../hooks/useLocalStorage';
 import CouponModal from '../../modal/CouponModal';

@@ -1,4 +1,4 @@
-import * as APIFunctions from '../../shared/functions';
+import * as CouponUtils from '../../shared/couponUtils';
 import activateCoupon from '../activate-coupon';
 import getDiscounts from '../get-discounts';
 import type {UserCoupons} from '../get-user-coupons';
@@ -27,8 +27,8 @@ describe('given an item id and a status', () => {
     expect(userCoupons).toEqual({activeCoupons: [], inactiveCoupons: []});
   });
   test('when user has active coupons returns active coupons in activeCoupons array', async () => {
-    jest.spyOn(APIFunctions, 'getDate').mockReturnValueOnce(MOCK_ACTIVE_COUPON.validDate);
-    jest.spyOn(APIFunctions, 'getCode').mockReturnValueOnce(MOCK_ACTIVE_COUPON.code);
+    jest.spyOn(CouponUtils, 'getDate').mockReturnValueOnce(MOCK_ACTIVE_COUPON.validDate);
+    jest.spyOn(CouponUtils, 'getCode').mockReturnValueOnce(MOCK_ACTIVE_COUPON.code);
     await getDiscounts();
     await activateCoupon(MOCK_COUPON_ID);
     const userCoupons: UserCoupons = await getUserCoupons();

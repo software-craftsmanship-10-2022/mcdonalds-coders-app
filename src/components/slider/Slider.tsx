@@ -1,13 +1,19 @@
 import {NavLink} from 'react-router-dom';
-import type {DiscountItem} from '~types/discount';
+
 import {IMG_PATH} from '../../config';
 import useFormat from '../../hooks/useFormat';
 import './Slider.css';
 
 type SliderProps = {
-  items: any[];
+  items: SliderItem[];
   link?: string;
   showPrice?: boolean;
+};
+type SliderItem = {
+  id: string;
+  title: string;
+  img: string;
+  price: number;
 };
 
 const Slider = ({items, link, showPrice}: SliderProps) => {
@@ -15,10 +21,10 @@ const Slider = ({items, link, showPrice}: SliderProps) => {
 
   return (
     <div className="Slider">
-      {items.map((value: DiscountItem, index) => (
+      {items.map((value: SliderItem, index) => (
         <NavLink
           className="slide"
-          key={index}
+          key={value.id}
           to={link ? `${link}${value.id}` : ''}
           state={{
             name: value.title,

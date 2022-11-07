@@ -1,1 +1,1 @@
-import * as reactScripts from "react-scripts";
+import * as reactScripts from 'react-scripts';

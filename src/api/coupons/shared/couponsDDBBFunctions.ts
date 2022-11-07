@@ -1,18 +1,7 @@
+import type {CouponType} from 'src/@types/coupon';
+import type {Categories, DiscountItem, Discounts} from 'src/@types/discount';
 import {STORAGE} from 'src/config';
 import useLocalStorage from 'src/hooks/useLocalStorage';
-import useRandom from 'src/hooks/useRandom';
-import type {Categories, DiscountItem, Discounts} from '~types/discount';
-
-export function getDate() {
-  const date = new Date();
-  date.setDate(date.getDate() + 30);
-  return date;
-}
-
-export function getCode() {
-  const randomString = useRandom(9);
-  return randomString.match(/.{1,3}/g)!.join('-');
-}
 
 export function retrieveCouponFromFakeDDBB(id: string): DiscountItem | undefined {
   const {getStorageItem} = useLocalStorage();
@@ -35,3 +24,17 @@ export function retrieveCouponFromFakeDDBB(id: string): DiscountItem | undefined
 
   return coupon;
 }
+
+export const saveInDDBB = (key: string, element: CouponType[] | Discounts): void => {
+  localStorage.setItem(key, JSON.stringify(element));
+};
+
+export const getFromDDBB = (key: string): any => {
+  const value = localStorage.getItem(key);
+  // Return value if exists & is valid
+  if (value && value !== 'undefined') {
+    return JSON.parse(value);
+  }
+
+  return undefined;
+};

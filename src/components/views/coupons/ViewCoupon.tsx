@@ -13,12 +13,12 @@ const ViewCoupon = () => {
   const {getStorageItem} = useLocalStorage();
   const activeCoupons = getStorageItem(STORAGE.activeCoupons) as CouponType[];
   const data = activeCoupons.find((coupon) => coupon.id === id);
+  // Modal open state
+  const [modal, setModal] = useState(false);
+
   if (!data) {
     return <Navigate to={URLS.coupons} replace />;
   }
-
-  // Modal open state
-  const [modal, setModal] = useState(false);
 
   // Toggle for Modal
   const toggleModal = () => {

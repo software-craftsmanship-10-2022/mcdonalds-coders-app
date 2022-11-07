@@ -19,9 +19,8 @@ const Coupon = () => {
   const [inactiveCoupons, setInactiveCoupons] = useState<CouponType[]>([]);
   const [currencyFormatter] = useFormat();
   const date = new Date();
-
+  const {getStorageItem} = useLocalStorage();
   useEffect(() => {
-    const {getStorageItem} = useLocalStorage();
     const activeCoupons: CouponType[] = getStorageItem(STORAGE.activeCoupons) as CouponType[];
     const inactiveCoupons: CouponType[] = getStorageItem(STORAGE.inactiveCoupons) as CouponType[];
 

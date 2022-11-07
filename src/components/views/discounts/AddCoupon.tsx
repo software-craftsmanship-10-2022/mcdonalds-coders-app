@@ -16,16 +16,13 @@ const AddCoupon = () => {
   const [activeCoupon, setActiveCoupon] = useState<CouponType | undefined>(undefined);
   const [coupon, setCoupon] = useState<DiscountItem | undefined>(undefined);
   // Coupon couponData
-  const {category, id} = useParams<{category: string; id: string}>();
-  if (!category || !id) {
-    return <Navigate to={URLS.discounts} replace />;
-  }
+  const {category, id} = useParams<{category: string; id: string}>() as {
+    category: string;
+    id: string;
+  };
 
   useEffect(() => {
     const couponData = retrieveCouponFromFakeDDBB(id);
-    if (!couponData) {
-      <Navigate to={URLS.discounts} replace />;
-    }
 
     setCoupon(couponData);
   }, []);
@@ -40,6 +37,14 @@ const AddCoupon = () => {
     setActiveCoupon(activeCoupon);
     toggleModal();
   };
+
+  if (!category || !id) {
+    return <Navigate to={URLS.discounts} replace />;
+  }
+
+  if (!coupon) {
+    return <Navigate to={URLS.discounts} replace />;
+  }
 
   return (
     <>

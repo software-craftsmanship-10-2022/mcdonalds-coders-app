@@ -52,7 +52,7 @@ describe('given a activateCoupon request', () => {
     jest.spyOn(CouponUtils, 'getDate').mockReturnValueOnce(MOCK_ACTIVE_COUPON.validDate);
     jest.spyOn(CouponUtils, 'getCode').mockReturnValueOnce(MOCK_ACTIVE_COUPON.code);
 
-    const response = (await activateCoupon(MOCK_COUPON_ID)) as CouponType;
+    const response = await activateCoupon(MOCK_COUPON_ID);
 
     expect(response).toEqual(MOCK_ACTIVE_COUPON);
   });

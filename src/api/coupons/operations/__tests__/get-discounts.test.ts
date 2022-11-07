@@ -2,7 +2,6 @@
 import type {Discounts} from 'src/@types/discount';
 import {getErrorMessage} from 'src/api/errorHandling/errorHandler';
 import {STORAGE} from 'src/config';
-import DISCOUNTS from 'src/data/discounts';
 import useLocalStorage from 'src/hooks/useLocalStorage';
 import getDiscounts from '../get-discounts';
 
@@ -26,7 +25,7 @@ describe('given a coupons request', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(fetch).toHaveBeenCalledWith('/data/discounts.json');
     expect(discounts).toBeInstanceOf(Array);
-    expect(discounts).toEqual(DISCOUNTS);
+    expect(discounts).toEqual(MOCK_DISCOUNTS);
     expect(discounts.length).toBeTruthy();
   });
   test('when request is successful it should save the response in local Storage', async () => {

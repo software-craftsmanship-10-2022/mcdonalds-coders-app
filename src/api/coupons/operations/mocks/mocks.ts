@@ -78,6 +78,7 @@ export const MOCK_DISCOUNTS = [
     ],
   },
 ];
+export const MOCK_COUPON_ID = '8XUu0dMqsP';
 
 export const MOCK_ACTIVE_COUPON = {
   id: '8XUu0dMqsP',
@@ -87,8 +88,6 @@ export const MOCK_ACTIVE_COUPON = {
   code: 'URY-XJG-15Q',
   validDate: new Date('2022-12-07T12:14:32.637Z'),
 };
-
-export const MOCK_COUPON_ID = '8XUu0dMqsP';
 
 export const MOCK_ACTIVE_COUPONS = [
   {

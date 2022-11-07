@@ -1,5 +1,5 @@
-import Donation from "./Donation";
-import Order from "./Order";
+import Donation from "../Donation/Donation";
+import Order from "../Order/Order";
 import Payment from "./Payment";
 
 describe("Given a Payment class", () => {

@@ -1,11 +1,11 @@
 import {
   ACCOUNT_ERRORS,
   DONATION_ERRORS,
-  ORDER_ERRORS,
+  ORDER_ERRORS
 } from "../../errorMessages";
-import Account from "./Account";
-import Donation from "./Donation";
-import Order from "./Order";
+import Account from "../Account/Account";
+import Donation from "../Donation/Donation";
+import Order from "../Order/Order";
 import Transfer from "./Transfer";
 
 describe("Given a Transfer class", () => {

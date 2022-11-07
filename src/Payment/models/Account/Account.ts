@@ -1,5 +1,5 @@
 import { ACCOUNT_ERRORS } from "../../errorMessages";
-import IValidate from "./IValidate";
+import IValidate from "../IValidate";
 
 const REGEX_FULL_NAME = new RegExp("^[a-zA-Z]+( [a-zA-Z]+)+$");
 

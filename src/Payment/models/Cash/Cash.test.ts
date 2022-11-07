@@ -1,7 +1,7 @@
 import { DONATION_ERRORS, ORDER_ERRORS } from "../../errorMessages";
+import Donation from "../Donation/Donation";
+import Order from "../Order/Order";
 import Cash from "./Cash";
-import Donation from "./Donation";
-import Order from "./Order";
 
 describe("Given a Cash class", () => {
   it("should contain a pay method", () => {

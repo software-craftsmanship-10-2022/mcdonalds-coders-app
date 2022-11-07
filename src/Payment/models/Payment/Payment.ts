@@ -1,5 +1,5 @@
-import Donation from "./Donation";
-import Order from "./Order";
+import Donation from "../Donation/Donation";
+import Order from "../Order/Order";
 
 const NO_ORDER_ERROR = "Order is required";
 const NO_DONATION_ERROR = "Donation is required";

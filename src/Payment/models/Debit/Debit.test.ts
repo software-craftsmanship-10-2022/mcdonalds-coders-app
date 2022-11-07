@@ -1,12 +1,12 @@
 import {
   CARD_ERRORS,
   DONATION_ERRORS,
-  ORDER_ERRORS,
+  ORDER_ERRORS
 } from "../../errorMessages";
-import Card from "./Card";
+import Card from "../Card/Card";
+import Donation from "../Donation/Donation";
+import Order from "../Order/Order";
 import Debit from "./Debit";
-import Donation from "./Donation";
-import Order from "./Order";
 
 describe("Given a Debit class", () => {
   it("should contain a pay method", () => {

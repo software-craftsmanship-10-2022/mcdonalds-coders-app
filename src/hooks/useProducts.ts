@@ -1,25 +1,27 @@
+import {useEffect, useState} from 'react';
 import type {ProductCategoryType} from '~types/product';
 import {getAllProducts} from '../api/products/productsApi';
 
 export const useProducts = () => {
-  /*   Let products: any = useLocalStorage().getStorageItem('products'); */
-  const products = getAllProducts();
+  // Const {getStorageItem, setStorageItem} = useLocalStorage();
+  const [products, setProducts] = useState<ProductCategoryType[]>([]);
 
-  /*   If (!products) {
-    products = getAllProducts();
-    useLocalStorage().setStorageItem('products', products);
-  } */
+  useEffect(() => {
+    getAllProducts()
+      .then((result) => {
+        setProducts(result);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [products]);
 
   const findProductsByCategory = (category: string) => {
     if (typeof category !== 'string') {
       throw new Error('The category must be a string');
     }
 
-    const foundCategory: ProductCategoryType = products.find(
-      (productsCategory: ProductCategoryType) => productsCategory.id === category,
-    );
-
-    return foundCategory;
+    return products.find((productCategory) => productCategory.id === category);
   };
 
   return {

@@ -1,5 +1,5 @@
-interface IValidate {
-    isValid(): boolean
-}
+type IValidate = {
+  isValid(): boolean;
+};
 
-export default IValidate
+export default IValidate;

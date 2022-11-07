@@ -1,15 +1,12 @@
-import { DONATION_ERRORS } from "../../errorMessages";
+import {DONATION_ERRORS} from '../../errorMessages';
 
 class Donation {
-  amount: number;
-
-  constructor(amount: number) {
-    this.amount = amount;
-  }
+  constructor(private readonly amount: number) {}
 
   checkAmountValue() {
-    if (this.amount < 0) throw new Error(DONATION_ERRORS.POSITIVE_NUMBER);
+    if (this.amount < 0) throw new Error(DONATION_ERRORS.positiveNumber);
   }
+
   amountValue(): number {
     this.checkAmountValue();
     return this.amount;

@@ -1,14 +1,11 @@
-import Account from "./Account";
-import Donation from "./Donation";
-import Order from "./Order";
-import Payment from "./Payment";
+import type Account from '../Account/Account';
+import type Donation from '../Donation/Donation';
+import type Order from '../Order/Order';
+import Payment from '../Payment/Payment';
 
 class Transfer extends Payment {
-  account: Account;
-
-  constructor(order: Order, donation: Donation, account: Account) {
+  constructor(order: Order, donation: Donation, private readonly account: Account) {
     super(order, donation);
-    this.account = account;
   }
 
   pay() {

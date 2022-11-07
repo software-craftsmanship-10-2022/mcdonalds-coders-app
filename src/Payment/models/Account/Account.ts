@@ -1,22 +1,16 @@
-import { ACCOUNT_ERRORS } from "../../errorMessages";
-import IValidate from "../IValidate";
-
-const REGEX_FULL_NAME = new RegExp("^[a-zA-Z]+( [a-zA-Z]+)+$");
+import {ACCOUNT_ERRORS} from '../../errorMessages';
+import type IValidate from '../IValidate';
 
 class Account implements IValidate {
-  fullName;
-  swift;
-
-  constructor(fullName: string, swift: string) {
-    this.fullName = fullName;
-    this.swift = swift;
+  private get regexFullName() {
+    return /^[a-zA-Z]+( [a-zA-Z]+)+$/;
   }
 
+  constructor(private readonly fullName: string, private readonly swift: string) {}
+
   isValid(): boolean {
-    if (!REGEX_FULL_NAME.test(this.fullName))
-      throw new Error(ACCOUNT_ERRORS.FULL_NAME_FORMAT);
-    if (this.swift.length !== 11)
-      throw new Error(ACCOUNT_ERRORS.SWIFT_VALIDATION);
+    if (!this.regexFullName.test(this.fullName)) throw new Error(ACCOUNT_ERRORS.fullNameFormat);
+    if (this.swift.length !== 11) throw new Error(ACCOUNT_ERRORS.swiftValidation);
     return true;
   }
 }

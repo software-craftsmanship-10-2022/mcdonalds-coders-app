@@ -1,15 +1,15 @@
-import { useCallback, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { OrderType } from "../../../@types/order";
-import { IMG_PATH, URLS } from "../../../config";
-import { useOrderContext } from "../../../context/OrderContext";
-import useFormat from "../../../hooks/useFormat";
-import McButton from "../../buttons/McButton";
-import "./Cart.css";
+import {useCallback, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
+import type {OrderType} from '../../../@types/order';
+import {IMG_PATH, URLS} from '../../../config';
+import {useOrderContext} from '../../../context/OrderContext';
+import useFormat from '../../../hooks/useFormat';
+import McButton from '../../buttons/McButton';
+import './Cart.css';
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { order, updateOrder } = useOrderContext();
+  const {order, updateOrder} = useOrderContext();
   const [currencyFormatter] = useFormat();
 
   const getTotal = useCallback(() => {
@@ -27,6 +27,7 @@ const Cart = () => {
     if (order.items.length <= 0) {
       navigate(-1);
     }
+
     // Change order stored if the item list changed
     updateOrder((prevOrder: OrderType) => ({
       ...prevOrder,
@@ -36,8 +37,8 @@ const Cart = () => {
 
   // Delete selected item from the order
   const deleteItem = (item: number) => {
-    const list = order.items.filter((element, index) => index !== item);
-    updateOrder({ ...order, items: list });
+    const list = order.items.filter((_, index) => index !== item);
+    updateOrder({...order, items: list});
   };
 
   return (
@@ -47,10 +48,15 @@ const Cart = () => {
           <img src={IMG_PATH + item.img} alt="" />
           <div className="item-info">
             <p>{item.name}</p>
-            <p>{"Cantidad: " + item.quantity}</p>
+            <p>{`Cantidad: ${item.quantity}`}</p>
             <p>
               {currencyFormatter().format(item.pricePerUnit)}
-              <button className="delete-btn" onClick={() => deleteItem(index)}>
+              <button
+                className="delete-btn"
+                onClick={() => {
+                  deleteItem(index);
+                }}
+              >
                 Eliminar
               </button>
             </p>
@@ -63,8 +69,10 @@ const Cart = () => {
           <p>{currencyFormatter().format(getTotal())}</p>
         </div>
         <McButton
-          text={"Pagar con la app"}
-          onClick={() => navigate(URLS.ORDERS_CHECKOUT)}
+          text={'Pagar con la app'}
+          onClick={() => {
+            navigate(URLS.ordersCheckout);
+          }}
         />
       </div>
     </div>

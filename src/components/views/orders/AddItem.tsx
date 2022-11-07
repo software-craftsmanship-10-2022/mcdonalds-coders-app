@@ -11,7 +11,9 @@ import './AddItem.css';
 const AddItem = () => {
   const {category, id} = useParams<{category: string; id: string}>();
   const navigate = useNavigate();
-  const itemData = COMBOS.find((comboCategory) => comboCategory.id === category)?.items[Number(id)];
+  const itemCategory = COMBOS.find((comboCategory) => comboCategory.id === category);
+  const itemData = itemCategory?.items.find((item) => item.id === id);
+
   const [count, setCount] = useState(1);
   const {order, updateOrder} = useOrderContext();
   const [currencyFormatter] = useFormat();

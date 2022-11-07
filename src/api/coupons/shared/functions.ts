@@ -16,8 +16,7 @@ export function getCode() {
 
 export function retrieveCouponFromFakeDDBB(id: string): DiscountItem | undefined {
   const {getStorageItem} = useLocalStorage();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const discounts: Discounts = getStorageItem(STORAGE.discounts);
+  const discounts: Discounts = getStorageItem(STORAGE.discounts) as Discounts;
   if (!discounts) {
     throw new Error('No discounts available');
   }

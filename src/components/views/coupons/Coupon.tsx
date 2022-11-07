@@ -13,34 +13,35 @@ type CouponAndIndexType = CouponType & {
 };
 
 const Coupon = () => {
-  const [nothingToDisplay, setNothingToDisplay] = useState(false);
-  const [active, setActive] = useState(true);
-  const {getStorageItem, setStorageItem} = useLocalStorage();
+  const [nothingToDisplay, setNothingToDisplay] = useState<boolean>(false);
+  const [active, setActive] = useState<boolean>(true);
+  const [activeCoupons, setActiveCoupons] = useState<CouponType[]>([]);
+  const [inactiveCoupons, setInactiveCoupons] = useState<CouponType[]>([]);
   const [currencyFormatter] = useFormat();
   const date = new Date();
 
-  let activeCoupons: CouponType[] = getStorageItem(STORAGE.activeCoupons) as CouponType[];
-  let inactiveCoupons: CouponType[] = getStorageItem(STORAGE.inactiveCoupons) as CouponType[];
+  useEffect(() => {
+    const {getStorageItem} = useLocalStorage();
+    const activeCoupons: CouponType[] = getStorageItem(STORAGE.activeCoupons) as CouponType[];
+    const inactiveCoupons: CouponType[] = getStorageItem(STORAGE.inactiveCoupons) as CouponType[];
 
-  if (!activeCoupons) {
-    activeCoupons = [];
-  }
-
-  if (!inactiveCoupons) {
-    inactiveCoupons = [];
-  }
+    activeCoupons && setActiveCoupons(activeCoupons);
+    inactiveCoupons && setInactiveCoupons(inactiveCoupons);
+  }, []);
 
   const handleInactiveCoupon = async (coupon: CouponType) => {
     await deactivateCoupon(coupon.id);
   };
 
-  activeCoupons.forEach((coupon) => {
-    if (new Date(coupon.validDate) < date) {
-      handleInactiveCoupon(coupon).catch((e) => {
-        console.log(e);
-      });
-    }
-  });
+  useEffect(() => {
+    activeCoupons.forEach((coupon) => {
+      if (new Date(coupon.validDate) < date) {
+        handleInactiveCoupon(coupon).catch((e) => {
+          console.log(e);
+        });
+      }
+    });
+  }, [activeCoupons]);
 
   useEffect(() => {
     // Display default view when there is no coupons to

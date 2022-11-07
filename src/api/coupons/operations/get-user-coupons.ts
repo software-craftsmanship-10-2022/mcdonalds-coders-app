@@ -8,10 +8,8 @@ export type UserCoupons = {
 };
 async function getUserCoupons(): Promise<UserCoupons> {
   const {getStorageItem} = useLocalStorage();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const activeCoupons: CouponType[] = getStorageItem(STORAGE.activeCoupons);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const inactiveCoupons: CouponType[] = getStorageItem('inactiveCoupons');
+  const activeCoupons = getStorageItem(STORAGE.activeCoupons) as CouponType[];
+  const inactiveCoupons = getStorageItem('inactiveCoupons') as CouponType[];
   return {activeCoupons: activeCoupons || [], inactiveCoupons: inactiveCoupons || []};
 }
 

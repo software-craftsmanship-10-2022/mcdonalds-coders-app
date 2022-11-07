@@ -31,6 +31,7 @@ const Discount = () => {
 
   return (
     <>
+      {/* // TODO: loader */}
       {isLoading && <div className="Discount">Loading...</div>}
       {error && <div className="Discount">Error: {getErrorMessage(error)}</div>}
       {discounts && (

@@ -2,7 +2,7 @@
 import {STORAGE} from 'src/config';
 import useLocalStorage from 'src/hooks/useLocalStorage';
 import type {DiscountItem} from '~types/discount';
-import {getErrorMessage} from '../../errorHandling/errorHandler';
+import {getErrorMessage} from '../../../errorHandling/errorHandler';
 import {getCode, getDate, retrieveCouponFromFakeDDBB} from '../shared/functions';
 
 const formatCouponData = (couponData: DiscountItem) => {

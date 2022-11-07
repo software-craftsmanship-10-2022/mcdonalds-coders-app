@@ -3,8 +3,8 @@
 import {STORAGE} from 'src/config';
 import DISCOUNTS from 'src/data/discounts';
 import useLocalStorage from 'src/hooks/useLocalStorage';
-import {getDiscounts} from '~api/coupons';
 import {getErrorMessage} from '~api/errorHandling/errorHandler';
+import {getDiscounts} from '~api/Payment/coupons';
 import type {Discounts} from '~types/discount';
 import {MOCK_DISCOUNTS} from '../mocks/mocks';
 describe('given a coupons request', () => {

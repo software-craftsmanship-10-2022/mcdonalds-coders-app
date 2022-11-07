@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import type {CouponType} from '../../../@types/coupon';
-import deactivateCoupon from '../../../api/coupons/operations/deactivate-coupon';
+import deactivateCoupon from '../../../api/Payment/coupons/operations/deactivate-coupon';
 import {IMG_PATH, LOCALE, STORAGE, URLS} from '../../../config';
 import useFormat from '../../../hooks/useFormat';
 import useLocalStorage from '../../../hooks/useLocalStorage';

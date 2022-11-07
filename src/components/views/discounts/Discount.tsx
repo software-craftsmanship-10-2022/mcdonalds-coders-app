@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-
 import {useEffect, useState} from 'react';
 import type {Categories, Discounts} from '~types/discount';
-import {getDiscounts} from '../../../api/coupons';
 import {getErrorMessage} from '../../../api/errorHandling/errorHandler';
+import {getDiscounts} from '../../../api/Payment/coupons';
 import {URLS} from '../../../config';
 import DISCOUNT_SLIDES from '../../../data/discountSlides';
 import Carousel from '../../carousel/Carousel';
@@ -31,7 +29,6 @@ const Discount = () => {
 
   return (
     <>
-      {/* // TODO: loader */}
       {isLoading && <div className="Discount">Loading...</div>}
       {error && <div className="Discount">Error: {getErrorMessage(error)}</div>}
       {discounts && (

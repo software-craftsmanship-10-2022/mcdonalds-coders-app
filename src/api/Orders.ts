@@ -1,7 +1,7 @@
 import type {MenuType} from '../@types/product.d';
 import {PaymentMethod, OrderStatus} from '../@types/order.d';
 import type {NewOrderAddressDetailsType, NewOrderType} from '../@types/order.d';
-import {setItem, getItem, removeItem} from 'src/hooks/cacheSystem';
+import {cacheHandler as cache} from 'src/hooks/cacheSystem';
 
 export class Order {
   // @TODO calisthenics: this.order.items: use first-class collections
@@ -97,7 +97,7 @@ export const ORDER_STORAGE_KEY = 'currentOrder';
  * @param order Order to store.
  */
 export async function setOrderInStorage(order: Order): Promise<void> {
-  await setItem<Order>(ORDER_STORAGE_KEY, order);
+  await cache.setItem<Order>(ORDER_STORAGE_KEY, order);
 }
 
 type OrderInStorageType = {order: NewOrderType} | undefined;
@@ -108,7 +108,7 @@ type OrderInStorageType = {order: NewOrderType} | undefined;
  * @return Order instance.
  */
 export async function getOrderFromStorage(): Promise<Order | undefined> {
-  const order: OrderInStorageType = await getItem<OrderInStorageType>(ORDER_STORAGE_KEY);
+  const order: OrderInStorageType = await cache.getItem<OrderInStorageType>(ORDER_STORAGE_KEY);
   return order === undefined ? undefined : new Order(order.order);
 }
 
@@ -116,5 +116,5 @@ export async function getOrderFromStorage(): Promise<Order | undefined> {
  * Remove the order from cache system.
  */
 export async function removeOrderFromStorage(): Promise<void> {
-  await removeItem(ORDER_STORAGE_KEY);
+  await cache.removeItem(ORDER_STORAGE_KEY);
 }

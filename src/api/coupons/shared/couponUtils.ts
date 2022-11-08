@@ -2,7 +2,7 @@ import useRandom from 'src/hooks/useRandom';
 
 export const DAYS_AS_THRESHOLD = 30;
 
-export function getDate() {
+export function getThirtyDaysLaterDate(): Date {
   const date = new Date();
   date.setDate(date.getDate() + DAYS_AS_THRESHOLD);
   return date;

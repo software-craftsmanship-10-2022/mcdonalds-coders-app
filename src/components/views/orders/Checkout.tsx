@@ -54,15 +54,17 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
     setShowModal(!showModal);
   };
 
+  const [donationForm, setDonationForm] = useState(false);
+
   const handleCardWarning = (message: string) => {
     setModalMessage(message);
     toggleModal();
   };
 
   const radios = [
-    {label: '0€', value: 0},
     {label: '1€', value: 1},
     {label: '5€', value: 5},
+    {label: '10€', value: 10},
   ];
 
   const handleOnClick = () => {
@@ -185,7 +187,16 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
           <TransferInputs setFullName={setFullName} setSWIFT={setSWIFT} />
         )}
       </div>
-      <McRadio radios={radios} />
+      <FormGroup check>
+        <Input
+          type="checkbox"
+          onChange={(e) => {
+            setDonationForm(e.target.checked);
+          }}
+        />
+        <Label check>Wanna Donate?</Label>
+      </FormGroup>
+      {donationForm && <McRadio radios={radios} />}
       <div className="detail-total">
         <p>Total</p>
         <p>{currencyFormatter().format(order.total)}</p>

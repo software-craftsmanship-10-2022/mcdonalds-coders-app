@@ -5,7 +5,11 @@ const NO_ORDER_ERROR = 'Order is required';
 const NO_DONATION_ERROR = 'Donation is required';
 
 class Payment {
-  constructor(protected order: Order, protected donation: Donation) {}
+  constructor(
+    protected paymentType: string,
+    protected order: Order,
+    protected donation: Donation,
+  ) {}
 
   pay() {
     if (!this.order) throw new Error(NO_ORDER_ERROR);

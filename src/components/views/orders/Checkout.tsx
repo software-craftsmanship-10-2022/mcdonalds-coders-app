@@ -2,6 +2,14 @@ import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Form, FormGroup, Input, Label} from 'reactstrap';
 import TransferInputs from 'src/components/form/TransferInputs';
+import Account from 'src/Payment/models/Account/Account';
+import Card from 'src/Payment/models/Card/Card';
+import Cash from 'src/Payment/models/Cash/Cash';
+import Debit from 'src/Payment/models/Debit/Debit';
+import Donation from 'src/Payment/models/Donation/Donation';
+import Order from 'src/Payment/models/Order/Order';
+import type Payment from 'src/Payment/models/Payment/Payment';
+import Transfer from 'src/Payment/models/Transfer/Transfer';
 import type {OrderType} from '../../../@types/order';
 import {PAYMENT_TYPE, STORAGE, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
@@ -21,7 +29,7 @@ type CardDetailsType = {
 
 type DetailProps = {
   order: OrderType;
-  confirmOrder: (payMethod: string, details: CardDetailsType) => void;
+  confirmOrder: (payment: Payment) => void;
 };
 
 const Detail = ({order, confirmOrder}: DetailProps) => {
@@ -48,6 +56,41 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
   const handleCardWarning = (message: string) => {
     setModalMessage(message);
     toggleModal();
+  };
+
+  const handleOnClick = () => {
+    let payment;
+    try {
+      switch (selectedMethod) {
+        case PAYMENT_TYPE.debit: {
+          const card = new Card(cardNumber, cardDate, Number(cardCVC));
+          if (card.isValid()) {
+            payment = new Debit(new Order(order.total), new Donation(0), card);
+          }
+
+          break;
+        }
+
+        case PAYMENT_TYPE.transfer:
+          {
+            const account = new Account(fullName, swift);
+            if (account.isValid()) {
+              payment = new Transfer(new Order(order.total), new Donation(0), account);
+            }
+          }
+
+          break;
+        default:
+          payment = new Cash(new Order(order.total), new Donation(0));
+          break;
+      }
+
+      if (payment) confirmOrder(payment);
+    } catch (error: unknown) {
+      let message = 'Unknown Error';
+      if (error instanceof Error) message = error.message;
+      handleCardWarning(message);
+    }
   };
 
   return (
@@ -142,15 +185,7 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
       <McButton
         text={'Enviar pedido'}
         onClick={() => {
-          if (selectedMethod === PAYMENT_TYPE.debit && !cardIsValid) {
-            handleCardWarning('La información de la tarjeta es inválida');
-          } else {
-            confirmOrder(selectedMethod, {
-              number: cardNumber,
-              date: cardDate,
-              cvc: cardCVC,
-            });
-          }
+          handleOnClick();
         }}
         fixed
       />
@@ -179,9 +214,11 @@ const Checkout = () => {
     }
   }, [order, navigate, getStorageItem]);
 
-  const confirmOrder = (payMethod: string, details: CardDetailsType) => {
-    updateOrder({...order, confirmed: true, paymentType: payMethod});
-    console.log(details);
+  const confirmOrder = (payment: Payment) => {
+    // UpdateOrder({...order, confirmed: true, paymentType: payMethod});
+    console.log(payment);
+    payment.pay();
+    // Console.log(details);
     navigate(URLS.root);
   };
 

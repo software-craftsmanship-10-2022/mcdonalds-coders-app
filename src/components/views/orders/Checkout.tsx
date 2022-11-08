@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Form, FormGroup, Input, Label} from 'reactstrap';
+import TransferInputs from 'src/components/form/TransferInputs';
 import type {OrderType} from '../../../@types/order';
 import {PAYMENT_TYPE, STORAGE, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
@@ -33,6 +34,9 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
   const [cardCVC, setCardCVC] = useState('');
   // Card validation check
   const [cardIsValid, setCardIsValid] = useState(false);
+  // Bank information
+  const [fullName, setFullName] = useState('');
+  const [swift, setSWIFT] = useState('');
 
   // Warning modal
   const [modalMessage, setModalMessage] = useState('');
@@ -103,6 +107,19 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
                   {PAYMENT_TYPE.debit}
                 </Label>
               </FormGroup>
+              <FormGroup check>
+                <Label check className="pay-method-label">
+                  <Input
+                    type="radio"
+                    name="paymethod"
+                    className="pay-method-radio"
+                    onClick={() => {
+                      setSelectedMethod(PAYMENT_TYPE.transfer);
+                    }}
+                  />
+                  {PAYMENT_TYPE.transfer}
+                </Label>
+              </FormGroup>
             </div>
           </FormGroup>
         </Form>
@@ -113,6 +130,9 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
             setCardNumber={setCardNumber}
             setCardIsValid={setCardIsValid}
           />
+        )}
+        {selectedMethod === PAYMENT_TYPE.transfer && (
+          <TransferInputs setFullName={setFullName} setSWIFT={setSWIFT} />
         )}
       </div>
       <div className="detail-total">

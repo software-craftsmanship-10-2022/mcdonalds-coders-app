@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Form, FormGroup, Input, Label} from 'reactstrap';
 import TransferInputs from 'src/components/form/TransferInputs';
+import McRadio from 'src/components/radio/McRadio';
 import Account from 'src/Payment/models/Account/Account';
 import Card from 'src/Payment/models/Card/Card';
 import Cash from 'src/Payment/models/Cash/Cash';
@@ -57,6 +58,12 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
     setModalMessage(message);
     toggleModal();
   };
+
+  const radios = [
+    {label: '0€', value: 0},
+    {label: '1€', value: 1},
+    {label: '5€', value: 5},
+  ];
 
   const handleOnClick = () => {
     let payment;
@@ -178,6 +185,7 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
           <TransferInputs setFullName={setFullName} setSWIFT={setSWIFT} />
         )}
       </div>
+      <McRadio radios={radios} />
       <div className="detail-total">
         <p>Total</p>
         <p>{currencyFormatter().format(order.total)}</p>

@@ -18,8 +18,7 @@ const ViewCoupon = () => {
   const [modal, setModal] = useState(false);
 
   const handleUserCoupon = async () => {
-    await getUserCoupons().then((userCoupons: UserCoupons) => {
-      const {activeCoupons} = userCoupons;
+    await getUserCoupons().then(({activeCoupons}: UserCoupons) => {
       const coupon = activeCoupons.find((coupon) => coupon.id === id);
       setCouponData(coupon);
       setIsLoading(false);

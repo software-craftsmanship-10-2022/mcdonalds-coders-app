@@ -1,8 +1,8 @@
 import type {CouponType} from 'src/@types/coupon';
 import {getErrorMessage} from 'src/api/errorHandling/errorHandler';
 import {STORAGE} from 'src/config';
+import {getFromDDBB} from '../../shared/couponsDDBBFunctions';
 
-import * as DDBBFunctions from '../../shared/couponsDDBBFunctions';
 import * as CouponUtils from '../../shared/couponUtils';
 import {default as activateCoupon} from '../activate-coupon';
 import getDiscounts from '../get-discounts';
@@ -24,6 +24,7 @@ describe('given a activateCoupon request', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+    localStorage.clear();
   });
 
   test('when id is not defined then an TypeError is thrown', async () => {
@@ -47,17 +48,22 @@ describe('given a activateCoupon request', () => {
     }
   });
   test('when request to activate coupon is resolved then an active coupon should be returned', async () => {
-    await getDiscounts();
-
     jest.spyOn(CouponUtils, 'getDate').mockReturnValueOnce(MOCK_ACTIVE_COUPON.validDate);
     jest.spyOn(CouponUtils, 'getCode').mockReturnValueOnce(MOCK_ACTIVE_COUPON.code);
 
+    await getDiscounts();
     const response = await activateCoupon(MOCK_COUPON_ID);
 
     expect(response).toEqual(MOCK_ACTIVE_COUPON);
   });
   test('when request to activate coupon is successful then an active coupon should be stored in active coupons in local storage', async () => {
-    const localCoupons = DDBBFunctions.getFromDDBB(STORAGE.activeCoupons) as CouponType[];
+    jest.spyOn(CouponUtils, 'getDate').mockReturnValueOnce(MOCK_ACTIVE_COUPON.validDate);
+    jest.spyOn(CouponUtils, 'getCode').mockReturnValueOnce(MOCK_ACTIVE_COUPON.code);
+
+    await getDiscounts();
+    await activateCoupon(MOCK_COUPON_ID);
+
+    const localCoupons = getFromDDBB(STORAGE.activeCoupons) as CouponType[];
 
     expect(localCoupons).toEqual(MOCK_ACTIVE_COUPONS);
   });

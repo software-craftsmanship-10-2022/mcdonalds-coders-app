@@ -3,15 +3,9 @@ import {Link} from 'react-router-dom';
 import type {UserCoupons} from 'src/api/coupons/operations/get-user-coupons';
 import getUserCoupons from 'src/api/coupons/operations/get-user-coupons';
 import type {CouponType} from '../../../@types/coupon';
-import deactivateCoupon from '../../../api/coupons/operations/deactivate-coupon';
 import {IMG_PATH, LOCALE, URLS} from '../../../config';
 import useFormat from '../../../hooks/useFormat';
 import './Coupon.css';
-
-// Local types
-type CouponAndIndexType = CouponType & {
-  parentIndex: number;
-};
 
 const Coupon = () => {
   const [nothingToDisplay, setNothingToDisplay] = useState<boolean>(false);
@@ -19,7 +13,6 @@ const Coupon = () => {
   const [activeCoupons, setActiveCoupons] = useState<CouponType[]>([]);
   const [inactiveCoupons, setInactiveCoupons] = useState<CouponType[]>([]);
   const [currencyFormatter] = useFormat();
-  const date = new Date();
 
   const handleUserCoupons = async () => {
     await getUserCoupons().then((userCoupons: UserCoupons) => {
@@ -34,20 +27,6 @@ const Coupon = () => {
       setNothingToDisplay(true);
     });
   }, []);
-
-  const handleInactiveCoupon = async (coupon: CouponType) => {
-    await deactivateCoupon(coupon.id);
-  };
-
-  useEffect(() => {
-    activeCoupons.forEach((coupon) => {
-      if (new Date(coupon.validDate) < date) {
-        handleInactiveCoupon(coupon).catch((e) => {
-          console.log(e);
-        });
-      }
-    });
-  }, [activeCoupons]);
 
   useEffect(() => {
     // Display default view when there is no coupons to

@@ -24,6 +24,7 @@ describe('given a deactivateCoupon request', () => {
 
   afterEach(() => {
     jest.clearAllMocks();
+    localStorage.clear();
   });
 
   test('when id is not defined then an TypeError is thrown', async () => {

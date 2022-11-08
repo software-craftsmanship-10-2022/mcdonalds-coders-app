@@ -19,7 +19,7 @@ const ViewCoupon = () => {
 
   const handleUserCoupon = async () => {
     await getUserCoupons().then((userCoupons: UserCoupons) => {
-      const {activeCoupons, inactiveCoupons} = userCoupons;
+      const {activeCoupons} = userCoupons;
       const coupon = activeCoupons.find((coupon) => coupon.id === id);
       setCouponData(coupon);
       setIsLoading(false);

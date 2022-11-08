@@ -15,8 +15,9 @@ describe('given a coupons request', () => {
     });
   }) as jest.Mock;
 
-  beforeEach(() => {
+  afterEach(() => {
     jest.clearAllMocks();
+    localStorage.clear();
   });
 
   test('when promise is resolved then a list of coupons should be returned', async () => {

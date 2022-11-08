@@ -38,7 +38,9 @@ describe('given a deactivateCoupon request', () => {
   });
 
   test('when request to deactivate coupon is successful it should delete the coupon from active coupons in local storage and add it to inactive coupons', async () => {
-    jest.spyOn(CouponUtils, 'getDate').mockReturnValueOnce(new Date(MOCK_ACTIVE_COUPON.validDate));
+    jest
+      .spyOn(CouponUtils, 'getThirtyDaysLaterDate')
+      .mockReturnValueOnce(new Date(MOCK_ACTIVE_COUPON.validDate));
     jest.spyOn(CouponUtils, 'getCode').mockReturnValueOnce(MOCK_ACTIVE_COUPON.code);
     await getDiscounts();
     await activateCoupon(MOCK_COUPON_ID);

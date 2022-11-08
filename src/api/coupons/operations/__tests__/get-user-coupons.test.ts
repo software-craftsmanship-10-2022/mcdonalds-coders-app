@@ -31,7 +31,9 @@ describe('given an item id and a status', () => {
     expect(userCoupons).toEqual({activeCoupons: [], inactiveCoupons: []});
   });
   test('when user has active coupons returns active coupons in activeCoupons array', async () => {
-    jest.spyOn(CouponUtils, 'getDate').mockReturnValueOnce(MOCK_ACTIVE_COUPON.validDate);
+    jest
+      .spyOn(CouponUtils, 'getThirtyDaysLaterDate')
+      .mockReturnValueOnce(MOCK_ACTIVE_COUPON.validDate);
     jest.spyOn(CouponUtils, 'getCode').mockReturnValueOnce(MOCK_ACTIVE_COUPON.code);
     await getDiscounts();
     await activateCoupon(MOCK_COUPON_ID);
@@ -39,7 +41,7 @@ describe('given an item id and a status', () => {
     expect(userCoupons).toEqual({activeCoupons: MOCK_ACTIVE_COUPONS, inactiveCoupons: []});
   });
   test('when getting user coupons, if activeCoupon is expired, move it into inactiveCoupons', async () => {
-    jest.spyOn(CouponUtils, 'getDate').mockReturnValueOnce(EXPIRED_DATE);
+    jest.spyOn(CouponUtils, 'getThirtyDaysLaterDate').mockReturnValueOnce(EXPIRED_DATE);
     jest.spyOn(CouponUtils, 'getCode').mockReturnValueOnce(MOCK_ACTIVE_COUPON.code);
     await getDiscounts();
     await activateCoupon(MOCK_COUPON_ID);

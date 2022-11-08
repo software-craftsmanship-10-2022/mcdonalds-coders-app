@@ -4,7 +4,7 @@ import type {DiscountItem} from 'src/@types/discount';
 import {STORAGE} from 'src/config';
 import {getErrorMessage} from '../../errorHandling/errorHandler';
 import {getFromDDBB, retrieveCouponFromFakeDDBB, saveInDDBB} from '../shared/couponsDDBBFunctions';
-import {getCode, getDate} from '../shared/couponUtils';
+import {getCode, getThirtyDaysLaterDate} from '../shared/couponUtils';
 
 const formatCouponData = (couponData: DiscountItem) => {
   return {
@@ -13,7 +13,7 @@ const formatCouponData = (couponData: DiscountItem) => {
     img: couponData?.img,
     price: couponData?.price,
     code: getCode(),
-    validDate: getDate(),
+    validDate: getThirtyDaysLaterDate(),
   };
 };
 

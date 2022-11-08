@@ -1,3 +1,4 @@
+import {DONATION_ERRORS} from '../../errorMessages';
 import Donation from './Donation';
 
 describe('Given a Donation class', () => {
@@ -7,6 +8,6 @@ describe('Given a Donation class', () => {
   });
   it('should throw an error when amount is negative', () => {
     const donation = new Donation(-3);
-    expect(() => donation.amountValue()).toThrowError('Amount must be a positive number');
+    expect(() => donation.amountValue()).toThrowError(DONATION_ERRORS.positiveNumber);
   });
 });

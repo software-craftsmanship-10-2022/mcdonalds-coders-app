@@ -5,7 +5,7 @@ import {MOCK_DISCOUNTS} from '../../operations/mocks/mocks';
 import {saveInDDBB} from '../couponsDDBBFunctions';
 
 describe('given an id', () => {
-  const {getStorageItem, setStorageItem} = useLocalStorage();
+  const {getStorageItem} = useLocalStorage();
 
   afterEach(() => {
     localStorage.clear();

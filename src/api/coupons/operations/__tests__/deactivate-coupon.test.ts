@@ -8,10 +8,11 @@ import {default as activateCoupon} from '../activate-coupon';
 import deactivateCoupon from '../deactivate-coupon';
 import getDiscounts from '../get-discounts';
 import {
-  MOCK_ACTIVE_COUPON,
   MOCK_ACTIVE_COUPONS,
+  MOCK_COUPON_CODE,
   MOCK_COUPON_ID,
   MOCK_DISCOUNTS,
+  MOCK_VALID_DATE,
 } from '../mocks/mocks';
 describe('given a deactivateCoupon request', () => {
   globalThis.fetch = jest.fn(async () => {
@@ -32,14 +33,16 @@ describe('given a deactivateCoupon request', () => {
       await deactivateCoupon('');
     } catch (error: unknown) {
       const message = getErrorMessage(error);
+
       expect(error).toBeInstanceOf(TypeError);
       expect(message).toEqual('Item id is not defined');
     }
   });
 
   test('when request to deactivate coupon is successful it should delete the coupon from active coupons in local storage and add it to inactive coupons', async () => {
-    jest.spyOn(CouponUtils, 'getDate').mockReturnValueOnce(new Date(MOCK_ACTIVE_COUPON.validDate));
-    jest.spyOn(CouponUtils, 'getCode').mockReturnValueOnce(MOCK_ACTIVE_COUPON.code);
+    jest.spyOn(CouponUtils, 'getDate').mockReturnValueOnce(MOCK_VALID_DATE);
+    jest.spyOn(CouponUtils, 'getCode').mockReturnValueOnce(MOCK_COUPON_CODE);
+
     await getDiscounts();
     await activateCoupon(MOCK_COUPON_ID);
     await deactivateCoupon(MOCK_COUPON_ID);

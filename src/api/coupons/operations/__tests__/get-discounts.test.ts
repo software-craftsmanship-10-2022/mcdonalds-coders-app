@@ -29,10 +29,12 @@ describe('given a coupons request', () => {
     expect(discounts).toEqual(MOCK_DISCOUNTS);
     expect(discounts.length).toBeTruthy();
   });
+
   test('when request is successful it should save the response in local Storage', async () => {
     await getDiscounts();
     const {getStorageItem} = useLocalStorage();
     const localStorageDiscounts = getStorageItem(STORAGE.discounts);
+
     expect(localStorageDiscounts).toEqual(MOCK_DISCOUNTS);
   });
   test('when promise is rejected then expected info error', async () => {

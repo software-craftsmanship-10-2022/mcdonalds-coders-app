@@ -20,6 +20,7 @@ const ProductList = () => {
       {categoryData.items.map((value, index) => (
         // Load all products of this category
         <Product
+          id={value.id}
           key={index}
           img={value.img}
           title={value.title}

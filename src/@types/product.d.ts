@@ -1,6 +1,7 @@
 // @types.product.ts
 
 export type ProductType = {
+  id: string;
   img: string;
   title: string;
   description: string;

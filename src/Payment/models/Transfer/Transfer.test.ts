@@ -5,7 +5,7 @@ import Order from '../Order/Order';
 import Transfer from './Transfer';
 
 describe('Given a Transfer class', () => {
-  it('should contain a pay method', () => {
+  it('when an instance is created then pay method should be defined', () => {
     const account = new Account('1234432112344321', '12/24');
     const order = new Order(200);
     const donation = new Donation(0);

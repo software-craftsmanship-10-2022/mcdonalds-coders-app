@@ -30,11 +30,12 @@ export const saveInDDBB = (key: string, element: CouponType[] | Discounts): void
 };
 
 export const getFromDDBB = (key: string): any => {
-  const value = localStorage.getItem(key);
+  const {getStorageItem} = useLocalStorage();
+  const value: unknown = getStorageItem(key);
   // Return value if exists & is valid
   if (value && value !== 'undefined') {
-    return JSON.parse(value);
+    return value;
   }
 
-  return undefined;
+  return null;
 };

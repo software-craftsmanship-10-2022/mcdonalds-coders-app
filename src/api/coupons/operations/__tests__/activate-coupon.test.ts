@@ -54,7 +54,7 @@ describe('given a activateCoupon request', () => {
   });
 
   test('when request to activate coupon is resolved then an active coupon should be returned', async () => {
-    jest.spyOn(CouponUtils, 'getDate').mockReturnValueOnce(MOCK_VALID_DATE);
+    jest.spyOn(CouponUtils, 'getThirtyDaysLaterDate').mockReturnValueOnce(MOCK_VALID_DATE);
     jest.spyOn(CouponUtils, 'getCode').mockReturnValueOnce(MOCK_COUPON_CODE);
 
     await getDiscounts();
@@ -64,7 +64,7 @@ describe('given a activateCoupon request', () => {
   });
 
   test('when request to activate coupon is successful then an active coupon should be stored in active coupons in local storage', async () => {
-    jest.spyOn(CouponUtils, 'getDate').mockReturnValueOnce(MOCK_VALID_DATE);
+    jest.spyOn(CouponUtils, 'getThirtyDaysLaterDate').mockReturnValueOnce(MOCK_VALID_DATE);
     jest.spyOn(CouponUtils, 'getCode').mockReturnValueOnce(MOCK_COUPON_CODE);
 
     await getDiscounts();

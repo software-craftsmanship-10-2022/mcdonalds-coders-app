@@ -43,7 +43,7 @@ describe('Given a Transfer class', () => {
     }).toThrowError(DONATION_ERRORS.positiveNumber);
   });
 
-  it('should throw an error when account fullName is not valid', () => {
+  it('when account fullName is not valid then an error should be thrown', () => {
     const order = new Order(200);
     const donation = new Donation(0);
     const account = new Account('john', 'SECTARB1XXX');

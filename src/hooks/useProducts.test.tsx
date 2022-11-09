@@ -1,61 +1,61 @@
+import {fireEvent, render, screen} from '@testing-library/react';
+import {useEffect} from 'react';
 import PRODUCTS from 'src/data/products';
-import {getAllProductsFromApi} from '../api/products/productsApi';
-import {useProducts} from '../hooks/useProducts';
+import '../api/products/productsApi';
+import {useProducts} from './useProducts';
 
-jest.mock('../api/products/productsApi');
+// Actualmente el hook está llamando a las funciones de la api real seria necesario mockearlas
+// Jest.mock('../api/products/productsApi', () => ({
+//   ...jest.requireActual('../api/products/productsApi'),
+//   getAllProductsFromApi: jest.fn(),
+//   getProductsByCategoryFromApi: jest.fn(),
+// }));
 
+const CATEGORIES_LENGTH = 'Categories: ';
+const CATEGORY_SEARCHED = 'Category searched: ';
+const NOT_SELECTED = 'not selected';
+const CATEGORY_SELECT_BUTTON = 'SELECT CATEGORY';
 const TestComponent = () => {
-  const {products} = useProducts();
+  const {products, categoryProducts, getAllProducts, getProductsByCategory} = useProducts();
+
+  useEffect(() => {
+    getAllProducts();
+  });
+
+  const onClickSelectCategory = () => {
+    getProductsByCategory(PRODUCTS[3].id);
+  };
 
   return (
     <div>
-      <ul>
-        {products.map((category) => (
-          <li key={category.id}>{category.category}</li>
-        ))}
-      </ul>
+      <span>
+        {CATEGORIES_LENGTH}
+        {products.length}
+      </span>
+      <button onClick={onClickSelectCategory}>{CATEGORY_SELECT_BUTTON}</button>
+      <span>
+        {CATEGORY_SEARCHED}
+        {categoryProducts.category || NOT_SELECTED}
+      </span>
     </div>
   );
 };
 
 describe('Given an useProducts hook', () => {
-  beforeEach(() => {
-    (getAllProductsFromApi as jest.Mock).mockReturnValue(PRODUCTS);
+  test('testing component should render', () => {
+    render(<TestComponent />);
   });
 
-  /*   test('when we use products, then it returns an object with the products array', () => {
-    act(() => {
-      render(<TestComponent />);
-      const {products} = useProducts();
-      expect(products).toEqual(PRODUCTS);
-    });
-  }); */
+  test('when render the component then products should be reloaded', async () => {
+    render(<TestComponent />);
+    await screen.findAllByText(CATEGORIES_LENGTH + PRODUCTS.length.toString());
+  });
 
-  // Test('when we call useProducts, then it returns an object with findProductsByCategoryId function', () => {
-  //   const {findProductsByCategoryId} = useProducts();
-
-  //   expect(typeof findProductsByCategoryId).toBe('function');
-  // });
-
-  // test('when we call findProductsByCategoryId, then if the param is not a string throw an Error', () => {
-  //   const {findProductsByCategoryId} = useProducts();
-
-  //   expect(() => findProductsByCategoryId(1 as any)).toThrowError(
-  //     'The categoryId must be a string',
-  //   );
-  //   expect(() => findProductsByCategoryId(true as any)).toThrowError(
-  //     'The categoryId must be a string',
-  //   );
-  // });
-
-  // test('when we call findProductsByCategoryId with a category, then it returns the products with the category id', () => {
-  //   const {findProductsByCategoryId} = useProducts();
-
-  //   const categoryId = 'burgers';
-  //   const products = findProductsByCategoryId(categoryId);
-
-  //   const foundProducts = PRODUCTS.find((productCategory) => productCategory.id === categoryId);
-
-  //   expect(products).toEqual(foundProducts);
-  // });
+  test('when press select category button then should search the data of fourth category', async () => {
+    render(<TestComponent />);
+    screen.getByText(CATEGORY_SEARCHED + NOT_SELECTED);
+    const button = screen.getByText(CATEGORY_SELECT_BUTTON);
+    fireEvent.click(button);
+    await screen.findAllByText(CATEGORY_SEARCHED + PRODUCTS[3].category);
+  });
 });

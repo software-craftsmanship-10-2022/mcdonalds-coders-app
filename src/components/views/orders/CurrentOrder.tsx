@@ -29,6 +29,12 @@ const CurrentOrder = () => {
         <img src={IMG_PATH + 'order-bag-nobg.png'} alt="" />
         Pedido en curso
       </div>
+      <div className="status">
+        <h3>
+          <strong>Estado del pedido:</strong>
+          <h3>Preparando...</h3>
+        </h3>
+      </div>
       <div className="address">
         <h3>
           <strong>{addressTitle}</strong>

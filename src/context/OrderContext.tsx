@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect, useState} from 'react';
-import type {OrderContextType, OrderType} from '../@types/order';
+import {OrderContextType, OrderStatus, OrderType} from '../@types/order';
 import {STORAGE} from '../config';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -25,6 +25,7 @@ export const OrderProvider = ({children}: OrderProviderProps) => {
     total: 0,
     confirmed: false,
     paymentType: '',
+    status: OrderStatus.pending,
   });
 
   const getInitialState = () => {

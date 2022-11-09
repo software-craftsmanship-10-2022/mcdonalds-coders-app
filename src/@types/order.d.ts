@@ -5,7 +5,15 @@ export type OrderType = {
   total: number;
   confirmed: boolean;
   paymentType: string;
+  status: OrderStatus;
 };
+
+export enum OrderStatus {
+  pending = 'PENDING',
+  preparing = 'PREPARING',
+  delivering = 'DELIVERING',
+  finished = 'FINISHED',
+}
 
 export type OrderItemType = {
   quantity: number;

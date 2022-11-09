@@ -1,7 +1,7 @@
 import type {Dispatch, SetStateAction} from 'react';
 import React from 'react';
 import {FormGroup, Input, Label} from 'reactstrap';
-
+import './McRadio.css';
 type Radio = {
   label: string;
   value: number;
@@ -16,7 +16,7 @@ const McRadio: React.FC<McRadioProps> = ({radios, onChange}) => {
   return (
     <>
       {radios.map((radio) => (
-        <FormGroup check key={radio.value}>
+        <FormGroup check key={radio.value} className="McRadio">
           <Input
             name="radio"
             type="radio"

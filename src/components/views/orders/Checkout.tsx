@@ -195,17 +195,28 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
         {selectedMethod === PAYMENT_TYPE.transfer && (
           <TransferInputs setFullName={setFullName} setSWIFT={setSWIFT} />
         )}
+        <FormGroup check className="donation-checkbox">
+          <Input
+            type="checkbox"
+            onChange={(e) => {
+              handleDonationForm(e.target.checked);
+            }}
+          />
+          <Label check>
+            Quieres donar a la <a href="https://fundacionronald.org/">Fundación Ronald McDonald</a>?
+          </Label>
+        </FormGroup>
+        <label className="donation-info">
+          Seleccionando esta opción aceptas los{' '}
+          <a href="https://fundacionronald.org/aviso-legal/">Terminos y condiciones</a>. El Usuario
+          queda informado y acepta que El donativo no supone, en modo alguno, el inicio de una
+          relación comercial con la FUNDACION. Más intormación en{' '}
+          <a href="https://fundacionronald.org/">https://fundacionronald.org/</a>.
+        </label>
+        <div className="donation-options">
+          {donationForm && <McRadio radios={radios} onChange={setDonationValue} />}
+        </div>
       </div>
-      <FormGroup check>
-        <Input
-          type="checkbox"
-          onChange={(e) => {
-            handleDonationForm(e.target.checked);
-          }}
-        />
-        <Label check>Quieres donar a la fundación McDonalds?</Label>
-      </FormGroup>
-      {donationForm && <McRadio radios={radios} onChange={setDonationValue} />}
       <div className="detail-total">
         <p>Total</p>
         <p>{currencyFormatter().format(order.total + donationValue)}</p>

@@ -1,9 +1,10 @@
 import type {ProductCategoryType, ProductType} from 'src/@types/product';
 import {IMG_PATH} from 'src/config';
+import './ProductSelector.css';
 
 type ProductSelectorProps = {
   productCategory: ProductCategoryType;
-  selectedProductTitle: string;
+  selectedProductTitle: string | undefined;
   onSelectProduct: (product: ProductType) => void;
 };
 
@@ -13,7 +14,7 @@ const ProductSelector = ({
   onSelectProduct,
 }: ProductSelectorProps) => {
   return (
-    <div>
+    <div className="product-selector">
       <h3>{productCategory.category}</h3>
       <ProductList
         products={productCategory.items}
@@ -26,15 +27,15 @@ const ProductSelector = ({
 
 type ProductListProps = {
   products: ProductType[];
-  selectedProductTitle: string;
+  selectedProductTitle: string | undefined;
   onSelectProduct: (product: ProductType) => void;
 };
 
 const ProductList = ({products, selectedProductTitle, onSelectProduct}: ProductListProps) => {
   return (
-    <ul>
+    <ul className={'product-selector__product-list'}>
       {products.map((item) => (
-        <li key={item.title}>
+        <li key={item.title} className="product-selector__product-item">
           <ProductItem
             product={item}
             onSelectProduct={onSelectProduct}
@@ -48,7 +49,7 @@ const ProductList = ({products, selectedProductTitle, onSelectProduct}: ProductL
 
 type ProductItemProps = {
   product: ProductType;
-  selectedProductTitle: string;
+  selectedProductTitle: string | undefined;
   onSelectProduct: (product: ProductType) => void;
 };
 
@@ -71,21 +72,14 @@ const ProductItem = ({product, selectedProductTitle, onSelectProduct}: ProductIt
       className={'product-selector__item-button' + selectedCss()}
       aria-label={ariaLabel()}
     >
-      <CheckMark isChecked={checkIsSelected()} />
       <span>{product.title}</span>
-      <img alt={product.title} src={IMG_PATH + product.img} />
+      <img
+        alt={product.title}
+        src={IMG_PATH + product.img}
+        className="product-selector__item-image"
+      />
     </button>
   );
-};
-
-type CheckMarkProps = {
-  isChecked: boolean;
-};
-
-const CheckMark = ({isChecked}: CheckMarkProps) => {
-  const selectedCss = () => (isChecked ? ' --selected' : '');
-
-  return <div className={'product-selector__check-mark' + selectedCss()}></div>;
 };
 
 export default ProductSelector;

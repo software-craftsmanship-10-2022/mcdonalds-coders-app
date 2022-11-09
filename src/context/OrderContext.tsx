@@ -1,6 +1,6 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import type {OrderContextType, OrderType} from '../@types/order';
-import {OrderStatus} from '../@types/order';
+import {OrderStatus} from '../@types/order.d';
 import {STORAGE} from '../config';
 import useLocalStorage from '../hooks/useLocalStorage';
 

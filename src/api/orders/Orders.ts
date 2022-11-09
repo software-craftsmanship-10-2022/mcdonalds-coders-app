@@ -1,7 +1,20 @@
-import type {MenuType} from '../@types/product.d';
-import {PaymentMethod, OrderStatus} from '../@types/order.d';
-import type {NewOrderAddressDetailsType, NewOrderType} from '../@types/order.d';
+import type {MenuType} from '../../@types/product.d';
+import type {NewOrderAddressDetailsType, NewOrderType} from '../../@types/order';
 import {cacheHandler as cache} from 'src/hooks/cacheSystem';
+
+export enum PaymentMethod {
+  cash,
+  debit,
+}
+
+export enum OrderStatus {
+  unconfirmed,
+  pending,
+  preparing,
+  delivering,
+  finished,
+  rejected,
+}
 
 export class Order {
   // @TODO calisthenics: this.order.items: use first-class collections

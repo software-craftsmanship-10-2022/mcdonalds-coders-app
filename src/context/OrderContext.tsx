@@ -16,6 +16,7 @@ export const OrderProvider = ({children}: OrderProviderProps) => {
   const {getStorageItem, setStorageItem} = useLocalStorage();
 
   const getNewOrder = (): OrderType => ({
+    id: '',
     items: [],
     details: {
       name: '',

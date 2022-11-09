@@ -1,5 +1,6 @@
 // @types.order.ts
 export type OrderType = {
+  id: string;
   details: OrderAddressDetailsType;
   items: OrderItemType[];
   total: number;

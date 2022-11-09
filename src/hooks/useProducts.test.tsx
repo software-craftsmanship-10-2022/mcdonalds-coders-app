@@ -3,9 +3,7 @@ import {useEffect} from 'react';
 import PRODUCTS from 'src/data/products';
 import {getAllProductsFromApi, getProductsByCategoryFromApi} from '../api/products/productsApi';
 import {useProducts} from './useProducts';
-import {useSessionStorage} from './useSessionStorage';
-
-const {clearSessionStorage} = useSessionStorage();
+import {clearSessionStorage} from './useSessionStorage';
 
 jest.mock('../api/products/productsApi');
 

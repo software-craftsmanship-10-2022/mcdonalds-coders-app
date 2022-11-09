@@ -1,11 +1,9 @@
-import {useSessionStorage} from './useSessionStorage';
-
-const {
-  getSessionStorageItem,
-  setSessionStorageItem,
-  removeSessionStorageItem,
+import {
   clearSessionStorage,
-} = useSessionStorage();
+  getSessionStorageItem,
+  removeSessionStorageItem,
+  setSessionStorageItem,
+} from './useSessionStorage';
 
 describe('Given a useSessionStorage hook', () => {
   test('when getSessionStorageItem is called, then it should return undefined', () => {

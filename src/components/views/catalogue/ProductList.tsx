@@ -14,7 +14,7 @@ const ProductList = () => {
     if (categoryId) {
       getProductsByCategory(categoryId);
     }
-  }, [categoryId, getProductsByCategory]);
+  }, [categoryId]);
 
   if (!categoryProducts) {
     return <Navigate to={URLS.catalogue} replace />;

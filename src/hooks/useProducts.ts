@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import type {ProductCategoryType} from '../@types/product';
 import {getAllProductsFromApi, getProductsByCategoryFromApi} from '../api/products/productsApi';
-import {useSessionStorage} from './useSessionStorage';
+import {getSessionStorageItem, setSessionStorageItem} from './useSessionStorage';
 
 export const useProducts = () => {
   const [products, setProducts] = useState<ProductCategoryType[]>([]);
@@ -11,11 +11,9 @@ export const useProducts = () => {
     items: [],
   });
 
-  const {getSessionStorageItem, setSessionStorageItem} = useSessionStorage();
-
-  const productsFromCache = getSessionStorageItem<ProductCategoryType[] | undefined>('products');
-
   const getAllProducts = (): void => {
+    const productsFromCache = getSessionStorageItem<ProductCategoryType[] | undefined>('products');
+
     if (productsFromCache) {
       setProducts(productsFromCache);
     }
@@ -31,13 +29,22 @@ export const useProducts = () => {
   };
 
   const getProductsByCategory = (categoryId: string): void => {
-    getProductsByCategoryFromApi(categoryId)
-      .then((response) => {
-        setCategoryProducts(response);
-      })
-      .catch((error: Error) => {
-        console.log(error);
-      });
+    const productsByCategoryFromCache = getSessionStorageItem<ProductCategoryType | undefined>(
+      categoryId,
+    );
+
+    if (productsByCategoryFromCache) {
+      setCategoryProducts(productsByCategoryFromCache);
+    }
+
+    if (!productsByCategoryFromCache) {
+      getProductsByCategoryFromApi(categoryId)
+        .then((productsByCategoryFromApi) => {
+          setCategoryProducts(productsByCategoryFromApi);
+          setSessionStorageItem(categoryId, productsByCategoryFromApi);
+        })
+        .catch(console.error);
+    }
   };
 
   return {products, categoryProducts, getAllProducts, getProductsByCategory};

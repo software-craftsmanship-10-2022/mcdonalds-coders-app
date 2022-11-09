@@ -6,10 +6,10 @@ describe('[updateOrderStatus]', () => {
     expect(updateOrderStatus).toBeInstanceOf(Function);
   });
 
-  it('should throw an error if the order ID and the status are not passed as parameters', () => {
-    expect(async () =>
+  it('should throw an error if the order ID and the status are not passed as parameters', async () => {
+    await expect(() =>
       updateOrderStatus(undefined as unknown as string, undefined as unknown as OrderStatus),
-    ).toThrowError();
+    ).rejects.toThrowError();
   });
 
   it('should return a promise with no content', () => {

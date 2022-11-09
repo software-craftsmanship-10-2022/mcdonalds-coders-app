@@ -1,5 +1,5 @@
 import PRODUCTS from 'src/data/products';
-import type {ProductCategoryType} from '~types/product';
+import type {ProductCategoryType} from '../../@types/product';
 
 const getAllProductsFromApi = async (): Promise<ProductCategoryType[]> => {
   return Promise.resolve(PRODUCTS);

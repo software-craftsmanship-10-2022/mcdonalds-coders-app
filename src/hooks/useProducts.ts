@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import type {ProductCategoryType} from '~types/product';
+import type {ProductCategoryType} from '../@types/product';
 import {getAllProductsFromApi, getProductsByCategoryFromApi} from '../api/products/productsApi';
 import {getItem, setItem} from './cacheSystem';
 

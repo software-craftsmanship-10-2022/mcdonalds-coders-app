@@ -7,7 +7,7 @@ describe('[updateOrderStatus]', () => {
   });
 
   it('should throw an error if the order ID and the status are not passed as parameters', async () => {
-    await expect(() =>
+    await expect(async () =>
       updateOrderStatus(undefined as unknown as string, undefined as unknown as OrderStatus),
     ).rejects.toThrowError();
   });

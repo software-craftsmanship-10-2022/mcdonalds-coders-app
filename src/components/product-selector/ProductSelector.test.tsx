@@ -48,7 +48,13 @@ describe('Given ProductSelector component', () => {
   let onSelectProduct: jest.Mock;
   beforeEach(() => {
     onSelectProduct = jest.fn();
-    render(<ProductSelector productCategory={productCategory} onSelectProduct={onSelectProduct} />);
+    render(
+      <ProductSelector
+        productCategory={productCategory}
+        selectedProductTitle={productCategory.items[3].title}
+        onSelectProduct={onSelectProduct}
+      />,
+    );
   });
 
   afterEach(() => {
@@ -88,5 +94,13 @@ describe('Given ProductSelector component', () => {
       fireEvent.click(buttons[index]);
       expect(onSelectProduct).toHaveBeenLastCalledWith(item);
     });
+  });
+
+  test('when receive an ProductCategory type and with a product selected then should mark product as selected', () => {
+    const buttons = screen.getAllByRole('button');
+    expect(buttons[3]).toHaveAttribute('aria-label', 'seleccionado');
+
+    const notSelected = screen.getAllByLabelText('no seleccionado');
+    expect(notSelected.length).toBe(productCategory.items.length - 1);
   });
 });

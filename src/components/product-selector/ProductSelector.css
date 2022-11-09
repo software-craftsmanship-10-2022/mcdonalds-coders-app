@@ -1,0 +1,26 @@
+.product-selector__product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 5rem);
+}
+
+.product-selector__item-button {
+  background-color: transparent;
+  border: 1px solid #eee;
+  display: flex;
+  gap: 0.2rem;
+}
+
+.product-selector__item-button.--selected {
+  outline: 3px solid yellowgreen;
+}
+
+.product-selector__check-mark {
+  border-radius: 50%;
+  width: 1rem;
+  aspect-ratio: 1;
+  border: 1px solid #eee;
+}
+
+.product-selector__check-mark.--selected {
+  background-color: yellowgreen;
+}

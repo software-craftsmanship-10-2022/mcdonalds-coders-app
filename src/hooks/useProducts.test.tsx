@@ -3,6 +3,9 @@ import {useEffect} from 'react';
 import PRODUCTS from 'src/data/products';
 import {getAllProductsFromApi, getProductsByCategoryFromApi} from '../api/products/productsApi';
 import {useProducts} from './useProducts';
+import {useSessionStorage} from './useSessionStorage';
+
+const {clearSessionStorage} = useSessionStorage();
 
 jest.mock('../api/products/productsApi');
 
@@ -45,6 +48,7 @@ describe('Given an useProducts hook', () => {
     getProductsByCategoryMock = (getProductsByCategoryFromApi as jest.Mock).mockResolvedValue(
       PRODUCTS[3],
     );
+    clearSessionStorage();
   });
 
   test('testing component should render', () => {
@@ -52,18 +56,23 @@ describe('Given an useProducts hook', () => {
   });
 
   test('when render the component then products should be reloaded', async () => {
-    (getAllProductsFromApi as jest.Mock).mockResolvedValue(PRODUCTS);
     render(<TestComponent />);
+
     await screen.findAllByText(CATEGORIES_LENGTH + PRODUCTS.length.toString());
+
     expect(getAllProductsMock).toBeCalledTimes(1);
   });
 
   test('when press select category button then should search the data of fourth category', async () => {
     render(<TestComponent />);
+
     screen.getByText(CATEGORY_SEARCHED + NOT_SELECTED);
+
     const button = screen.getByText(CATEGORY_SELECT_BUTTON);
     fireEvent.click(button);
+
     await screen.findAllByText(CATEGORY_SEARCHED + PRODUCTS[3].category);
+
     expect(getProductsByCategoryMock).toBeCalledTimes(1);
   });
 });

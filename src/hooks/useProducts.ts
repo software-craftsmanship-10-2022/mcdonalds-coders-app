@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import type {ProductCategoryType} from '~types/product';
 import {getAllProductsFromApi, getProductsByCategoryFromApi} from '../api/products/productsApi';
+import {getItem, setItem} from './cacheSystem';
 
 export const useProducts = () => {
   const [products, setProducts] = useState<ProductCategoryType[]>([]);
@@ -11,9 +12,22 @@ export const useProducts = () => {
   });
 
   const getAllProducts = (): void => {
-    getAllProductsFromApi()
-      .then((response) => {
-        setProducts(response);
+    getItem<ProductCategoryType[]>('products')
+      .then((productsFromCache) => {
+        if (productsFromCache) {
+          setProducts(productsFromCache);
+        } else {
+          getAllProductsFromApi()
+            .then((productsFromApi) => {
+              setProducts(productsFromApi);
+              setItem('products', productsFromApi).catch((error) => {
+                console.error(error);
+              });
+            })
+            .catch((error) => {
+              console.log(error);
+            });
+        }
       })
       .catch((error) => {
         console.log(error);

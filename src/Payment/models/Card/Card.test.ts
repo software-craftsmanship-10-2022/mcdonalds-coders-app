@@ -13,7 +13,7 @@ describe('Given a Card class', () => {
     expect(() => card.isValid()).toThrowError(CARD_ERRORS.wrongCardNumber);
   });
 
-  it('Should throw an error when date is not valid', () => {
+  it('when date is not valid then an error should be thrown', () => {
     const card = new Card('1299999999999999', '13/23', 123);
 
     expect(() => card.isValid()).toThrowError(CARD_ERRORS.wrongDate);

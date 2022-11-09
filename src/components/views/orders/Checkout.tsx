@@ -56,11 +56,16 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
 
   // Donation radios
   const [donationForm, setDonationForm] = useState(false);
-  const [donation, setDonation] = useState(0);
+  const [donationValue, setDonationValue] = useState(0);
 
   const handleCardWarning = (message: string) => {
     setModalMessage(message);
     toggleModal();
+  };
+
+  const handleDonationForm = (form: boolean) => {
+    setDonationForm(form);
+    if (!form) setDonationValue(0);
   };
 
   const radios = [
@@ -69,14 +74,16 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
     {label: '10€', value: 10},
   ];
 
-  const handleOnClick = () => {
+  const acceptOrder = () => {
     let payment;
+    const donation = new Donation(donationValue);
+
     try {
       switch (selectedMethod) {
         case PAYMENT_TYPE.debit: {
           const card = new Card(cardNumber, cardDate, Number(cardCVC));
           if (card.isValid()) {
-            payment = new Debit(new Order(order.total), new Donation(0), card);
+            payment = new Debit(new Order(order.total), donation, card);
           }
 
           break;
@@ -86,13 +93,13 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
           {
             const account = new Account(fullName, swift);
             if (account.isValid()) {
-              payment = new Transfer(new Order(order.total), new Donation(0), account);
+              payment = new Transfer(new Order(order.total), donation, account);
             }
           }
 
           break;
         default:
-          payment = new Cash(new Order(order.total), new Donation(0));
+          payment = new Cash(new Order(order.total), donation);
           break;
       }
 
@@ -193,20 +200,20 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
         <Input
           type="checkbox"
           onChange={(e) => {
-            setDonationForm(e.target.checked);
+            handleDonationForm(e.target.checked);
           }}
         />
-        <Label check>Wanna Donate?</Label>
+        <Label check>Quieres donar a la fundación McDonalds?</Label>
       </FormGroup>
-      {donationForm && <McRadio radios={radios} onChange={setDonation} />}
+      {donationForm && <McRadio radios={radios} onChange={setDonationValue} />}
       <div className="detail-total">
         <p>Total</p>
-        <p>{currencyFormatter().format(order.total)}</p>
+        <p>{currencyFormatter().format(order.total + donationValue)}</p>
       </div>
       <McButton
         text={'Enviar pedido'}
         onClick={() => {
-          handleOnClick();
+          acceptOrder();
         }}
         fixed
       />

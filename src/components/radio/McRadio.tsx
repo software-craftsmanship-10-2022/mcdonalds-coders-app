@@ -18,7 +18,7 @@ const McRadio: React.FC<McRadioProps> = ({radios, onChange}) => {
       {radios.map((radio) => (
         <FormGroup check key={radio.value}>
           <Input
-            name="radio2"
+            name="radio"
             type="radio"
             value={radio.value}
             onChange={(e) => {

@@ -15,12 +15,12 @@ describe('given a McRadio component', () => {
     expect(getAllByRole('radio')).toBeDefined();
   });
 
-  it('should render the same radios as the radios array given', () => {
+  it('when an array of radios is passed should render the same amount of radios as the length of the array', () => {
     const {getAllByRole} = render(<McRadio radios={radios} onChange={handleChange} />);
     expect(getAllByRole('radio')).toHaveLength(radios.length);
   });
 
-  it('should call the function handleChange with the value of the radio', () => {
+  it('when a radio is checked should call the function with the value of that radio', () => {
     const {getAllByRole} = render(<McRadio radios={radios} onChange={handleChange} />);
 
     const allRadios = getAllByRole('radio');

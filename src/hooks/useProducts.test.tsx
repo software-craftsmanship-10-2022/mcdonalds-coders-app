@@ -1,15 +1,10 @@
 import {fireEvent, render, screen} from '@testing-library/react';
 import {useEffect} from 'react';
 import PRODUCTS from 'src/data/products';
-import '../api/products/productsApi';
+import {getAllProductsFromApi, getProductsByCategoryFromApi} from '../api/products/productsApi';
 import {useProducts} from './useProducts';
 
-// Actualmente el hook está llamando a las funciones de la api real seria necesario mockearlas
-// Jest.mock('../api/products/productsApi', () => ({
-//   ...jest.requireActual('../api/products/productsApi'),
-//   getAllProductsFromApi: jest.fn(),
-//   getProductsByCategoryFromApi: jest.fn(),
-// }));
+jest.mock('../api/products/productsApi');
 
 const CATEGORIES_LENGTH = 'Categories: ';
 const CATEGORY_SEARCHED = 'Category searched: ';
@@ -20,7 +15,7 @@ const TestComponent = () => {
 
   useEffect(() => {
     getAllProducts();
-  });
+  }, []);
 
   const onClickSelectCategory = () => {
     getProductsByCategory(PRODUCTS[3].id);
@@ -42,13 +37,25 @@ const TestComponent = () => {
 };
 
 describe('Given an useProducts hook', () => {
+  let getAllProductsMock: jest.Mock;
+  let getProductsByCategoryMock: jest.Mock;
+
+  beforeEach(() => {
+    getAllProductsMock = (getAllProductsFromApi as jest.Mock).mockResolvedValue(PRODUCTS);
+    getProductsByCategoryMock = (getProductsByCategoryFromApi as jest.Mock).mockResolvedValue(
+      PRODUCTS[3],
+    );
+  });
+
   test('testing component should render', () => {
     render(<TestComponent />);
   });
 
   test('when render the component then products should be reloaded', async () => {
+    (getAllProductsFromApi as jest.Mock).mockResolvedValue(PRODUCTS);
     render(<TestComponent />);
     await screen.findAllByText(CATEGORIES_LENGTH + PRODUCTS.length.toString());
+    expect(getAllProductsMock).toBeCalledTimes(1);
   });
 
   test('when press select category button then should search the data of fourth category', async () => {
@@ -57,5 +64,6 @@ describe('Given an useProducts hook', () => {
     const button = screen.getByText(CATEGORY_SELECT_BUTTON);
     fireEvent.click(button);
     await screen.findAllByText(CATEGORY_SEARCHED + PRODUCTS[3].category);
+    expect(getProductsByCategoryMock).toBeCalledTimes(1);
   });
 });

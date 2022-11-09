@@ -1,6 +1,5 @@
 import type {MenuType} from '../../@types/product.d';
 import type {NewOrderAddressDetailsType, NewOrderType} from '../../@types/order';
-import {cacheHandler as cache} from 'src/hooks/cacheSystem';
 
 export enum PaymentMethod {
   cash,
@@ -136,56 +135,4 @@ export function createEmptyOrder(): Order {
     payment: PaymentMethod.cash,
     status: OrderStatus.pending,
   });
-}
-
-/**
- * Order storage hook.
- */
-export type UseOrderStorageType = {
-  storageKey: string;
-  setOrder: (_: Order) => Promise<void>;
-  getOrder: () => Promise<Order | undefined>;
-  removeOrder: () => Promise<void>;
-};
-
-export function useOrderStorage(): UseOrderStorageType {
-  /**
-   * Storage key used to read/write the current order
-   */
-  const storageKey = 'currentOrder';
-
-  /**
-   * Set in the cache system, the `order` order.
-   *
-   * @param order Order to store.
-   */
-  async function setOrder(order: Order): Promise<void> {
-    await cache.setItem<Order>(storageKey, order);
-  }
-
-  type OrderInStorageType = {order: NewOrderType} | undefined;
-
-  /**
-   * Get from the cache system the stored order.
-   *
-   * @return Order instance.
-   */
-  async function getOrder(): Promise<Order | undefined> {
-    const order: OrderInStorageType = await cache.getItem<OrderInStorageType>(storageKey);
-    return order === undefined ? undefined : new Order(order.order);
-  }
-
-  /**
-   * Remove the order from cache system.
-   */
-  async function removeOrder(): Promise<void> {
-    await cache.removeItem(storageKey);
-  }
-
-  return {
-    storageKey,
-    setOrder,
-    getOrder,
-    removeOrder,
-  };
 }

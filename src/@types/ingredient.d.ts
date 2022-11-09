@@ -1,5 +1,7 @@
+export type IngredientID = string;
+
 export type IngredientType = {
-  id: string;
+  id: IngredientID;
   title: string;
   img: string;
   extraPrice: number;

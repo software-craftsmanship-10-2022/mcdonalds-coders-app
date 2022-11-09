@@ -6,6 +6,7 @@ import {useProducts} from '../../../hooks/useProducts';
 
 const Catalogue = () => {
   const {products} = useProducts();
+
   return (
     <div className="Catalogue">
       {products.map((value, index) => (

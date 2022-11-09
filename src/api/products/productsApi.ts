@@ -6,9 +6,19 @@ const getAllProducts = async (): Promise<ProductCategoryType[]> => {
 };
 
 const findProductsByCategoryId = async (
-  categoryId: string,
-): Promise<ProductCategoryType | undefined> => {
-  return Promise.resolve(PRODUCTS.find((productCategory) => productCategory.id === categoryId));
+  categoryId: string | undefined,
+): Promise<ProductCategoryType> => {
+  return new Promise((resolve) => {
+    const foundProductsByCategoryId = PRODUCTS.find(
+      (productCategory) => productCategory.id === categoryId,
+    );
+
+    if (foundProductsByCategoryId) {
+      resolve(foundProductsByCategoryId);
+    } else {
+      resolve({category: '', id: '', items: []});
+    }
+  });
 };
 
 export {findProductsByCategoryId, getAllProducts};

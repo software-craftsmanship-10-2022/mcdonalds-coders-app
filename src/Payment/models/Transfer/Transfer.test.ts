@@ -33,7 +33,7 @@ describe('Given a Transfer class', () => {
     }).toThrowError(ORDER_ERRORS.over0Number);
   });
 
-  it('should throw an error when donation amount is negative', () => {
+  it('when donation amount is negative then an error should be thrown', () => {
     const order = new Order(200);
     const donation = new Donation(-10);
     const account = new Account('john doe', 'SECTARB1XXX');

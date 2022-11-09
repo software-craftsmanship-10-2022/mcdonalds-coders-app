@@ -53,7 +53,7 @@ describe('Given an useProducts hook', () => {
     render(<TestComponent />);
   });
 
-  test('when render the component then products should be reloaded', async () => {
+  xtest('when render the component then products should be reloaded', async () => {
     render(<TestComponent />);
 
     await screen.findAllByText(CATEGORIES_LENGTH + PRODUCTS.length.toString());

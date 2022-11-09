@@ -15,6 +15,7 @@ const TestComponent = () => {
   const {products, categoryProducts, getAllProducts, getProductsByCategory} = useProducts();
 
   useEffect(() => {
+    console.log('useFX');
     getAllProducts();
   }, []);
 
@@ -49,11 +50,15 @@ describe('Given an useProducts hook', () => {
     clearSessionStorage();
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('testing component should render', () => {
     render(<TestComponent />);
   });
 
-  xtest('when render the component then products should be reloaded', async () => {
+  test('when render the component then products should be reloaded', async () => {
     render(<TestComponent />);
 
     await screen.findAllByText(CATEGORIES_LENGTH + PRODUCTS.length.toString());

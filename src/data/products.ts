@@ -9,89 +9,104 @@ const PRODUCTS: ProductCategoryType[] = [
       {
         img: 'big_mac.png', // First img used as category image
         title: 'Big Mac',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne', 'salsa-bigmac'],
         description: 'La hamburguesa más famosa del mundo. Un sabor único.',
       },
       {
         img: 'mcnifica.png',
         title: 'McNífica',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'En un mundo donde todos buscan lo nuevo, la McNífica viene a rectificar lo bueno de ser clásico.',
       },
       {
         img: 'Cuarto-Libra-con-queso.png',
         title: 'Cuarto de Libra con Queso',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne', 'queso'],
         description:
           'La belleza radica en la simpleza de las cosas. Una hamburguesa que no se anda con vueltas. La perfecta combinación entre la mejor carne 100% vacuna y dos quesos que lo rodean, junto con el toque del kétchup, mostaza y la cebolla fresca.',
       },
       {
         img: 'Doble-Cuarto-Libra-con-Queso.png',
         title: 'Doble Cuarto de Libra con Queso',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne', 'carne', 'queso'],
         description:
           'Imaginá la sensación del clásico Cuarto de Libra. Imaginalo con un medallón de deliciosa carne 100% vacuna, queso cheddar, cebolla, kétchup y mostaza ¿Listo? Ahora duplicá esa sensación. Ya tenés el Doble Cuarto en la cabeza.',
       },
       {
         img: 'Grande-Doble-McBacon.png',
         title: 'Grande Doble McBacon',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne', 'bacon'],
         description:
           '¡NUEVO PAN! Dos carnes, inigualable queso cheddar, cebolla, kétchup y mostaza, y el increíble ingrediente que lo hace único: bacon premium.',
       },
       {
         img: 'Grande-Tasty-Doble.png',
         title: 'Grande Tasty Doble',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Inigualable pan con semillas de sésamo, dos medallones de carne 100% vacuna, tres fetas de nuestro exclusivo Queso Cheddar, cebolla, lechuga y tomate frescos. Sumado a estos ingredientes la única e inigualable Salsa Tasty, un exclusivo sabor McDonald’s',
       },
       {
         img: 'Grande-Tasty-Triple.png',
         title: 'Grande Tasty Triple',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Inigualable pan con semillas de sésamo, tres medallones de carne 100% vacuna, cuatro fetas de nuestro exclusivo Queso Cheddar, cebolla, lechuga y tomate frescos. Sumado a estos ingredientes la única e inigualable Salsa Tasty, un exclusivo sabor McDonald’s',
       },
       {
         img: 'Grande-Triple-McBacon.png',
         title: 'Grande Triple McBacon',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne', 'bacon'],
         description:
           'I¡NUEVO PAN! Triple carne, inigualable queso cheddar, cebolla, kétchup y mostaza, y el increíble ingrediente que lo hace único: bacon premium.',
       },
       {
         img: 'Hamburguesa-(Cajita-Feliz).png',
         title: 'Hamburguesa(Cajita-Feliz)',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Hamburguesa de carne 100% vacuna sin aditivos ni conservantes , condimentada con una pisca de sal y pimienta.',
       },
       {
         img: 'Hamburguesa.png',
         title: 'Hamburguesa',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'El sabor de la carne 100% vacuna más deliciosa, acompañado del pan más esponjoso, kétchup, mostaza y cebolla triturada.',
       },
       {
         img: 'Mc-Fiesta_JR(Cajita-Feliz).png',
         title: 'McFiestaJR(Cajita-Feliz)',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'La McFiesta Jr. comienza con una carne 100% vacuna sin aditivos ni conservantes, condimentada con una pisca de sal y pimienta, con una rodaja de tomate y lechuga.',
       },
       {
         img: 'Mc-Fiesta.png',
         title: 'McFiesta',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Hamburguesa elaborada con carne 100% de carne vacuna, mayonesa, lechuga, tomate.',
       },
       {
         img: 'McDuo.png',
         title: 'McDuo',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Una hamburguesa exquisita compuesta de dos carnes 100% vacuna, acompañadas del clásico pan, mostaza, kétchup, queso derretido, y un toque de cebolla que la hace única.',
       },
       {
         img: 'Triple-Hamburguesa-con-queso.png',
         title: 'Triple Hamburguesa con queso',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Tres medallones de carne 100% vacuna, queso derretido, mostaza, kétchup y cebolla triturada, es algo que nunca puede fallar.',
       },
       {
         img: 'Triple-Mac.png',
         title: 'TripleMac',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Una hamburguesa que no es para cualquiera. Sólo los más extremos están dispuestos a saborear tres carnes 100% vacuna acompañadas del clásico pan McDonald’s, su característica salsa especial, queso derretido, lechuga fresca, pepino crocante y el toque de cebolla que la hace única.',
       },
@@ -104,34 +119,40 @@ const PRODUCTS: ProductCategoryType[] = [
       {
         img: 'mc_pollo.png',
         title: 'McPollo',
+        ingredients: ['pan-arriba', 'pan-abajo', 'pollo'],
         description: 'El auténtico sabor del pollo lo encontrás en nuestro clásico McPollo.',
       },
       {
         img: 'mc_pollo_2.png',
         title: 'McPollo doble',
+        ingredients: ['pan-arriba', 'pan-abajo', 'pollo'],
         description: 'El clásico McPollo, esta vez con doble sabor.',
       },
       {
         img: 'McNuggets-4-unidades.png',
         title: 'McNuggets 4 unidades',
+        ingredients: ['pan-arriba', 'pan-abajo', 'pollo'],
         description:
           'Ligero sabor a empanado de harina de maíz y trigo frito con notas caramelizadas. Suave sabor a pollo que es ligeramente salado con un toque de pimienta negra y apio en el empanado.',
       },
       {
         img: 'McNuggets-6-unidades.png',
         title: 'McNuggets 6 unidades',
+        ingredients: ['pan-arriba', 'pan-abajo', 'pollo'],
         description:
           'Seis piezas del mejor pollo rebozado sólo para vos. Comelas como quieras: con salsas o solas; todas son igual de deliciosas!',
       },
       {
         img: 'McNuggets-10-unidades.png',
         title: 'McNuggets 10 unidades',
+        ingredients: ['pan-arriba', 'pan-abajo', 'pollo'],
         description:
           'Diez piezas del mejor pollo rebozado. Para comerlas con salsas o solas; todas son igual de deliciosas!',
       },
       {
         img: 'McNuggets-20-unidades.png',
         title: 'McNuggets 20 unidades',
+        ingredients: ['pan-arriba', 'pan-abajo', 'pollo'],
         description:
           'Veinte piezas del mejor pollo rebozado, en su versión ideal para compartir. Con amigos o en pareja; con o sin salsas. Comelas como quieras. Todas son igual de deliciosas!',
       },

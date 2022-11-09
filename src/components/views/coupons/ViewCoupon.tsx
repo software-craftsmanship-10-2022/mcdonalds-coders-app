@@ -3,6 +3,7 @@ import {Navigate, useParams} from 'react-router-dom';
 import type {CouponType} from 'src/@types/coupon';
 import type {UserCoupons} from 'src/api/coupons/operations/get-user-coupons';
 import getUserCoupons from 'src/api/coupons/operations/get-user-coupons';
+import Loader from 'src/components/loader/Loader';
 
 import {IMG_PATH, URLS} from '../../../config';
 
@@ -41,7 +42,7 @@ const ViewCoupon = () => {
   return (
     <>
       {isLoading || !couponData ? (
-        <div className="ViewCoupon"> Loading ... </div>
+        <Loader fullScreen />
       ) : (
         <div className="ViewCoupon">
           <img src={IMG_PATH + couponData.img} alt="" />

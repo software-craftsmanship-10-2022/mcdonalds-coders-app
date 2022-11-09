@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {Navigate, useParams} from 'react-router-dom';
 import type {CouponType} from 'src/@types/coupon';
 import type {DiscountItem} from 'src/@types/discount';
+import Loader from 'src/components/loader/Loader';
 
 import activateCoupon from '../../../api/coupons/operations/activate-coupon';
 import {retrieveCouponFromFakeDDBB} from '../../../api/coupons/shared/couponsDDBBFunctions';
@@ -64,7 +65,7 @@ const AddCoupon = () => {
           )}
         </div>
       ) : (
-        <div>Loading...</div>
+        <Loader fullScreen />
       )}
     </>
   );

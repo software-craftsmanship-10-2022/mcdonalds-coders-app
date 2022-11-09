@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import type {Categories, Discounts} from 'src/@types/discount';
+import Loader from 'src/components/loader/Loader';
 
 import {getDiscounts} from '../../../api/coupons';
 import {getErrorMessage} from '../../../api/errorHandling/errorHandler';
@@ -30,7 +31,7 @@ const Discount = () => {
 
   return (
     <>
-      {isLoading && <div className="Discount">Loading...</div>}
+      {isLoading && <Loader fullScreen />}
       {error && <div className="Discount">Error: {getErrorMessage(error)}</div>}
       {discounts && (
         <div className="Discount">

@@ -1,5 +1,5 @@
 import PRODUCTS from 'src/data/products';
-import type {ProductCategoryType} from '../../@types/product';
+import type {CategoryIds, ProductCategoryType} from '../../@types/product';
 
 const getAllProductsFromApi = async (): Promise<ProductCategoryType[]> => {
   return Promise.resolve(PRODUCTS);
@@ -16,13 +16,17 @@ const getProductsByCategoryFromApi = async (
     if (foundProductsByCategoryId) {
       resolve(foundProductsByCategoryId);
     } else {
-      resolve({category: '', id: '', items: []});
+      resolve({
+        category: '',
+        id: 'burgers',
+        items: [],
+      });
     }
   });
 };
 
 const getMultipleProductsByCategoryFromApi = async (
-  categoryIds: string[],
+  categoryIds: CategoryIds[],
 ): Promise<ProductCategoryType[]> => {
   return new Promise((resolve) => {
     const foundProductsByCategoryIds = PRODUCTS.filter((productCategory) =>

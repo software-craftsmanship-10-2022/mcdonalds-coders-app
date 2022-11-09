@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import type {ProductCategoryType} from '../@types/product';
+import type {CategoryIds, ProductCategoryType} from '../@types/product';
 import {
   getAllProductsFromApi,
   getMultipleProductsByCategoryFromApi,
@@ -11,9 +11,9 @@ export const useProducts = () => {
   const [products, setProducts] = useState<ProductCategoryType[]>([]);
   const [categoryProducts, setCategoryProducts] = useState<ProductCategoryType>({
     category: '',
-    id: '',
+    id: 'burgers',
     items: [],
-  });
+  } as ProductCategoryType);
   const [multipleProductsByCategory, setMultipleProductsByCategory] = useState<
     ProductCategoryType[]
   >([]);
@@ -54,7 +54,7 @@ export const useProducts = () => {
     }
   };
 
-  const getMultipleProductsByCategory = (categoryIds: string[]): void => {
+  const getMultipleProductsByCategory = (categoryIds: CategoryIds[]): void => {
     getMultipleProductsByCategoryFromApi(categoryIds)
       .then((multipleProductsByCategory) => {
         setMultipleProductsByCategory(multipleProductsByCategory);

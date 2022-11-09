@@ -12,8 +12,8 @@ export const useProducts = () => {
 
   const getAllProducts = (): void => {
     getAllProductsFromApi()
-      .then((result) => {
-        setProducts(result);
+      .then((response) => {
+        setProducts(response);
       })
       .catch((error) => {
         console.log(error);
@@ -22,8 +22,8 @@ export const useProducts = () => {
 
   const getProductsByCategory = (categoryId: string): void => {
     getProductsByCategoryFromApi(categoryId)
-      .then((result) => {
-        setCategoryProducts(result);
+      .then((response) => {
+        setCategoryProducts(response);
       })
       .catch((error: Error) => {
         console.log(error);

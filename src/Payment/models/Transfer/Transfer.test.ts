@@ -53,7 +53,7 @@ describe('Given a Transfer class', () => {
     }).toThrowError(ACCOUNT_ERRORS.fullNameFormat);
   });
 
-  it('should throw an error when account SWIFT number is not valid', () => {
+  it('when account SWIFT number is not valid then an error should be thrown', () => {
     const order = new Order(200);
     const donation = new Donation(1);
     const account = new Account('john doe', 'SCTARB1XXX');

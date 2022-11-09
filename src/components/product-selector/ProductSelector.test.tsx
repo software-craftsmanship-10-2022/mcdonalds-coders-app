@@ -1,4 +1,5 @@
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
+import {IMG_PATH} from 'src/config';
 import ProductSelector from './ProductSelector';
 
 const productCategory = {
@@ -83,7 +84,7 @@ describe('Given ProductSelector component', () => {
   test('when receive an ProductCategory type then should render a list with the items images', () => {
     const images = screen.getAllByRole('img');
     productCategory.items.forEach((item, index) => {
-      expect(images[index]).toHaveAttribute('src', item.img);
+      expect(images[index]).toHaveAttribute('src', IMG_PATH + item.img);
       expect(images[index]).toHaveAttribute('alt', item.title);
     });
   });

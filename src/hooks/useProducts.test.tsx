@@ -1,5 +1,6 @@
-import {fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, renderHook, screen} from '@testing-library/react';
 import {useEffect} from 'react';
+
 import PRODUCTS from 'src/data/products';
 import {getAllProductsFromApi, getProductsByCategoryFromApi} from '../api/products/productsApi';
 import {useProducts} from './useProducts';
@@ -11,6 +12,7 @@ const CATEGORIES_LENGTH = 'Categories: ';
 const CATEGORY_SEARCHED = 'Category searched: ';
 const NOT_SELECTED = 'not selected';
 const CATEGORY_SELECT_BUTTON = 'SELECT CATEGORY';
+
 const TestComponent = () => {
   const {products, categoryProducts, getAllProducts, getProductsByCategory} = useProducts();
 
@@ -50,11 +52,15 @@ describe('Given an useProducts hook', () => {
   });
 
   test('testing component should render', () => {
-    render(<TestComponent />);
+    act(() => {
+      renderHook(() => <TestComponent />);
+    });
   });
 
   test('when render the component then products should be reloaded', async () => {
-    render(<TestComponent />);
+    act(() => {
+      render(<TestComponent />);
+    });
 
     await screen.findAllByText(CATEGORIES_LENGTH + PRODUCTS.length.toString());
 
@@ -62,12 +68,16 @@ describe('Given an useProducts hook', () => {
   });
 
   test('when press select category button then should search the data of fourth category', async () => {
-    render(<TestComponent />);
+    act(() => {
+      render(<TestComponent />);
+    });
 
     screen.getByText(CATEGORY_SEARCHED + NOT_SELECTED);
 
     const button = screen.getByText(CATEGORY_SELECT_BUTTON);
-    fireEvent.click(button);
+    act(() => {
+      fireEvent.click(button);
+    });
 
     await screen.findAllByText(CATEGORY_SEARCHED + PRODUCTS[3].category);
 

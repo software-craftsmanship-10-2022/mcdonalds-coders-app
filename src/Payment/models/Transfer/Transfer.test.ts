@@ -13,7 +13,7 @@ describe('Given a Transfer class', () => {
     expect(transfer.pay).toBeInstanceOf(Function);
   });
 
-  it('should throw an error when order total amount is negative', () => {
+  it('when order total amount is negative then an error should be thrown', () => {
     const order = new Order(-50);
     const donation = new Donation(0);
     const account = new Account('john doe', 'SECTARB1XXX');

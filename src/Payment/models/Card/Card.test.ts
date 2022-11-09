@@ -7,7 +7,7 @@ describe('Given a Card class', () => {
     expect(card.isValid).toBeInstanceOf(Function);
   });
 
-  it('Should throw an error with length is not valid', () => {
+  it('when length is not valid then an error should be thrown', () => {
     const card = new Card('231123132', '12/23', 123);
 
     expect(() => card.isValid()).toThrowError(CARD_ERRORS.wrongCardNumber);

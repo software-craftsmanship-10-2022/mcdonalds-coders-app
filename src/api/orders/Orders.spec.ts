@@ -17,7 +17,7 @@ describe('Check class Order', () => {
       },
       items: [],
       payment: PaymentMethod.cash,
-      status: OrderStatus.pending,
+      status: OrderStatus.noConfirmed,
     });
   });
 
@@ -108,7 +108,21 @@ describe('Check class Order', () => {
   });
 
   it('gets order status', () => {
-    expect(order.getStatus()).toBe(OrderStatus.pending);
+    expect(order.getStatus()).toBe(OrderStatus.noConfirmed);
+  });
+
+  it('sets new status', () => {
+    order.setStatus(OrderStatus.delivering);
+    expect(order.getStatus()).toBe(OrderStatus.delivering);
+  });
+
+  it('checks the order status is no confirmed', () => {
+    expect(order.isConfirmed()).toBe(false);
+  });
+
+  it('checks the order status is confirmed', () => {
+    order.setStatus(OrderStatus.pending);
+    expect(order.isConfirmed()).toBe(true);
   });
 
   it('gets the details', () => {
@@ -148,7 +162,7 @@ describe('Test function `createEmptyOrder`', () => {
     expect(order.getId()).toBe(0);
     expect(order.isItemsEmpty()).toBe(true);
     expect(order.getPayment()).toBe(PaymentMethod.cash);
-    expect(order.getStatus()).toBe(OrderStatus.pending);
+    expect(order.isConfirmed()).toBe(false);
     expect(order.getDetails()).toEqual({
       id: 0,
       name: '',

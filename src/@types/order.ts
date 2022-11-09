@@ -37,7 +37,7 @@ export enum PaymentMethod {
 }
 
 export enum OrderStatus {
-  unconfirmed,
+  noConfirmed,
   pending,
   preparing,
   delivering,

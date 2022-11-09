@@ -86,6 +86,22 @@ export class Order {
   }
 
   /**
+   * Sets new order status.
+   *
+   * @param newStatus New status
+   */
+  setStatus(newStatus: OrderStatus): void {
+    this.order.status = newStatus;
+  }
+
+  /**
+   * Check if the order status is not confirmed.
+   */
+  isConfirmed(): boolean {
+    return this.getStatus() !== OrderStatus.noConfirmed;
+  }
+
+  /**
    * Get the order details.
    */
   getDetails(): NewOrderAddressDetailsType {
@@ -120,6 +136,6 @@ export function createEmptyOrder(): Order {
     id: 0,
     items: [],
     payment: PaymentMethod.cash,
-    status: OrderStatus.pending,
+    status: OrderStatus.noConfirmed,
   });
 }

@@ -30,7 +30,7 @@ type CardDetailsType = {
 
 type DetailProps = {
   order: OrderType;
-  confirmOrder: (payment: Payment) => void;
+  confirmOrder: (payment: Payment, selectedMethod: string) => void;
 };
 
 const Detail = ({order, confirmOrder}: DetailProps) => {
@@ -103,7 +103,7 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
           break;
       }
 
-      if (payment) confirmOrder(payment);
+      if (payment) confirmOrder(payment, selectedMethod);
     } catch (error: unknown) {
       let message = 'Unknown Error';
       if (error instanceof Error) message = error.message;
@@ -242,8 +242,8 @@ const Checkout = () => {
     }
   }, [order, navigate, getStorageItem]);
 
-  const confirmOrder = (payment: Payment) => {
-    // UpdateOrder({...order, confirmed: true, paymentType: payMethod});
+  const confirmOrder = (payment: Payment, selectedMethod: string) => {
+    updateOrder({...order, confirmed: true, paymentType: selectedMethod});
     console.log(payment);
     payment.pay();
     // Console.log(details);

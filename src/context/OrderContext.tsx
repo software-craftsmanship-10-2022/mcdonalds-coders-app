@@ -1,9 +1,9 @@
 import {createContext, useContext, useEffect, useState} from 'react';
-import type {OrderContextType, OrderType} from '../@types/order';
-import {STORAGE} from '../config';
-import useLocalStorage from '../hooks/useLocalStorage';
+import {createEmptyOrder, useOrderStorage} from '../api/Orders';
+import type {Order} from '../api/Orders';
+import type {OrderContextType} from '../@types/order';
 
-const ORDER_CONTEXT = createContext<OrderContextType | undefined>(undefined);
+const ORDER_CONTEXT = createContext<OrderContextType>(null as unknown as OrderContextType);
 
 export const useOrderContext = () => useContext(ORDER_CONTEXT)!;
 
@@ -12,45 +12,25 @@ type OrderProviderProps = {
 };
 
 export const OrderProvider = ({children}: OrderProviderProps) => {
-  const {getStorageItem, setStorageItem} = useLocalStorage();
-
-  const getNewOrder = (): OrderType => ({
-    items: [],
-    details: {
-      name: '',
-      address: '',
-      img: '',
-      isDelivery: false,
-    },
-    total: 0,
-    confirmed: false,
-    paymentType: '',
-  });
-
-  const getInitialState = () => {
-    const order = getStorageItem(STORAGE.orders) as OrderType;
-
-    if (!order) {
-      setStorageItem(STORAGE.orders, getNewOrder());
-      return getStorageItem(STORAGE.orders) as OrderType;
-    }
-
-    return order;
-  };
-
-  const [order, setOrder] = useState(getInitialState);
+  const [order, setOrder] = useState<Order>(createEmptyOrder());
+  const storage = useOrderStorage();
 
   useEffect(() => {
-    if (!order) {
-      setOrder(getNewOrder());
-    }
-
-    setStorageItem(STORAGE.orders, order);
-  }, [order, setStorageItem]);
+    (async () => {
+      const order: Order | undefined = await storage.getOrder();
+      order !== undefined && setOrder(order);
+    })();
+  }, [setOrder]);
 
   const resetOrder = () => {
-    setOrder(getNewOrder());
+    setOrder(createEmptyOrder());
   };
+
+  useEffect(() => {
+    (async () => {
+      await storage.setOrder(order);
+    })();
+  }, [order]);
 
   return (
     <ORDER_CONTEXT.Provider value={{order, updateOrder: setOrder, resetOrder}}>

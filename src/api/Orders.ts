@@ -34,6 +34,36 @@ export class Order {
   }
 
   /**
+   * Get all items in the `order.items` list.
+   *
+   * @return
+   */
+  getItems(): MenuType[] {
+    return this.order.items as MenuType[];
+  }
+
+  /**
+   * Remove the item in`index` position from the `order.items` list.
+   *
+   * @param index Item position.
+   * @throws Error The index is out of range.
+   */
+  removeItem(index: number): void {
+    if (index < 0 || index >= this.order.items.length) {
+      throw new Error(`Index ${index} out of range.`);
+    }
+
+    this.order.items.splice(index, 1);
+  }
+
+  /**
+   * Remove all items in  the `order.items` list.
+   */
+  resetItems(): void {
+    this.order.items = [];
+  }
+
+  /**
    * Get the order payment.
    */
   getPayment(): PaymentMethod {
@@ -62,6 +92,15 @@ export class Order {
   getDetails(): NewOrderAddressDetailsType {
     return this.order.details;
   }
+
+  /**
+   * Set new details object.
+   *
+   * @param details new Details.
+   */
+  setDetails(details: NewOrderAddressDetailsType) {
+    this.order.details = details;
+  }
 }
 
 /**
@@ -86,6 +125,9 @@ export function createEmptyOrder(): Order {
   });
 }
 
+/**
+ * Order storage hook.
+ */
 export type UseOrderStorageType = {
   storageKey: string;
   setOrder: (_: Order) => Promise<void>;

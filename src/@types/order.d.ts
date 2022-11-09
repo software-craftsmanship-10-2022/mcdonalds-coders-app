@@ -23,8 +23,8 @@ export type OrderAddressDetailsType = {
 };
 
 export type OrderContextType = {
-  order: OrderType;
-  updateOrder: React.Dispatch<React.SetStateAction<OrderType>>;
+  updateOrder: (_: Order) => void;
+  order: Order;
   resetOrder: () => void;
 };
 
@@ -36,9 +36,12 @@ export enum PaymentMethod {
 }
 
 export enum OrderStatus {
+  unconfirmed,
   pending,
   preparing,
   delivering,
+  finished,
+  rejected,
 }
 
 export type NewOrderType = {

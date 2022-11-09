@@ -15,7 +15,7 @@ export type ProductCategoryType = {
 // New TYPES
 export type MenuType = {
   name: string;
-  img: string;
+  image: string;
   price: number;
   products: ProductType[];
 };

@@ -6,7 +6,7 @@ describe('Given a Donation class', () => {
     const donation = new Donation(3);
     expect(donation.amountValue).toBeInstanceOf(Function);
   });
-  it('should throw an error when amount is negative', () => {
+  it('when amount is negative then an error should be thrown', () => {
     const donation = new Donation(-3);
     expect(() => donation.amountValue()).toThrowError(DONATION_ERRORS.positiveNumber);
   });

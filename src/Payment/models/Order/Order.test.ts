@@ -6,11 +6,11 @@ describe('Given a Order class', () => {
     const order = new Order(44);
     expect(order.totalAmount).toBeInstanceOf(Function);
   });
-  it('should throw an error when total amount is negative', () => {
+  it('when total amount is negative then an error should be thrown', () => {
     const order = new Order(-50);
     expect(() => order.totalAmount()).toThrowError(ORDER_ERRORS.over0Number);
   });
-  it('should throw an error when total amount is 0', () => {
+  it('when total amount is 0 then an error should be thrown', () => {
     const order = new Order(0);
     expect(() => order.totalAmount()).toThrowError(ORDER_ERRORS.over0Number);
   });

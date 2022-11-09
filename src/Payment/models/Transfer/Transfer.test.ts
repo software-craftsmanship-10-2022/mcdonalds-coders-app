@@ -5,7 +5,7 @@ import Order from '../Order/Order';
 import Transfer from './Transfer';
 
 describe('Given a Transfer class', () => {
-  it('should contain a pay method', () => {
+  it('when an instance is created then pay method should be defined', () => {
     const account = new Account('1234432112344321', '12/24');
     const order = new Order(200);
     const donation = new Donation(0);
@@ -13,7 +13,7 @@ describe('Given a Transfer class', () => {
     expect(transfer.pay).toBeInstanceOf(Function);
   });
 
-  it('should throw an error when order total amount is negative', () => {
+  it('when order total amount is negative then an error should be thrown', () => {
     const order = new Order(-50);
     const donation = new Donation(0);
     const account = new Account('john doe', 'SECTARB1XXX');
@@ -23,7 +23,7 @@ describe('Given a Transfer class', () => {
     }).toThrowError(ORDER_ERRORS.over0Number);
   });
 
-  it('should throw an error when order total amount is 0', () => {
+  it('when order total amount is 0 then an error should be thrown', () => {
     const order = new Order(0);
     const donation = new Donation(0);
     const account = new Account('john doe', 'SECTARB1XXX');
@@ -33,7 +33,7 @@ describe('Given a Transfer class', () => {
     }).toThrowError(ORDER_ERRORS.over0Number);
   });
 
-  it('should throw an error when donation amount is negative', () => {
+  it('when donation amount is negative then an error should be thrown', () => {
     const order = new Order(200);
     const donation = new Donation(-10);
     const account = new Account('john doe', 'SECTARB1XXX');
@@ -43,7 +43,7 @@ describe('Given a Transfer class', () => {
     }).toThrowError(DONATION_ERRORS.positiveNumber);
   });
 
-  it('should throw an error when account fullName is not valid', () => {
+  it('when account fullName is not valid then an error should be thrown', () => {
     const order = new Order(200);
     const donation = new Donation(0);
     const account = new Account('john', 'SECTARB1XXX');
@@ -53,7 +53,7 @@ describe('Given a Transfer class', () => {
     }).toThrowError(ACCOUNT_ERRORS.fullNameFormat);
   });
 
-  it('should throw an error when account SWIFT number is not valid', () => {
+  it('when account SWIFT number is not valid then an error should be thrown', () => {
     const order = new Order(200);
     const donation = new Donation(1);
     const account = new Account('john doe', 'SCTARB1XXX');

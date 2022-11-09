@@ -1,5 +1,8 @@
 import {useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
+import type {ProductType} from 'src/@types/product';
+import ProductSelector from 'src/components/product-selector/ProductSelector';
+import PRODUCTS from 'src/data/products';
 import type {OrderItemType} from '../../../@types/order';
 import {IMG_PATH, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
@@ -18,10 +21,32 @@ const AddItem = () => {
   const {order, updateOrder} = useOrderContext();
   const [currencyFormatter] = useFormat();
   const priceTag = itemData ? currencyFormatter().format(itemData.price) : '';
+  const [selectedDrink, setSelectedDrink] = useState<string | undefined>(undefined);
+  const [selectedComplement, setSelectedComplement] = useState<string | undefined>(undefined);
 
   if (!itemData) {
     return <Navigate to={URLS.ordersAdd} replace />;
   }
+
+  const onSelectDrink = (product: ProductType) => {
+    if (product.title === selectedDrink) {
+      console.log(1);
+      setSelectedDrink(undefined);
+    } else {
+      console.log(2);
+      setSelectedDrink(product.title);
+    }
+  };
+
+  const onSelectComplement = (product: ProductType) => {
+    if (product.title === selectedComplement) {
+      console.log(1);
+      setSelectedComplement(undefined);
+    } else {
+      console.log(2);
+      setSelectedComplement(product.title);
+    }
+  };
 
   // Add selected qty of this item and adds them to the order
   const handleClick = () => {
@@ -72,6 +97,19 @@ const AddItem = () => {
           <img src={IMG_PATH + 'plus.png'} alt="" />
         </button>
       </div>
+
+      <ProductSelector
+        productCategory={PRODUCTS.find((category) => category.id === 'complements')!}
+        onSelectProduct={onSelectComplement}
+        selectedProductTitle={selectedComplement}
+      />
+
+      <ProductSelector
+        productCategory={PRODUCTS.find((category) => category.id === 'drinks')!}
+        onSelectProduct={onSelectDrink}
+        selectedProductTitle={selectedDrink}
+      />
+
       <McButton
         text={'Agregar al pedido'}
         onClick={() => {

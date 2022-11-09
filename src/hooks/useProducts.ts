@@ -1,6 +1,10 @@
 import {useState} from 'react';
 import type {ProductCategoryType} from '../@types/product';
-import {getAllProductsFromApi, getProductsByCategoryFromApi} from '../api/products/productsApi';
+import {
+  getAllProductsFromApi,
+  getMultipleProductsByCategoryFromApi,
+  getProductsByCategoryFromApi,
+} from '../api/products/productsApi';
 import {getSessionStorageItem, setSessionStorageItem} from './useSessionStorage';
 
 export const useProducts = () => {
@@ -10,6 +14,9 @@ export const useProducts = () => {
     id: '',
     items: [],
   });
+  const [multipleProductsByCategory, setMultipleProductsByCategory] = useState<
+    ProductCategoryType[]
+  >([]);
 
   const getAllProducts = (): void => {
     const productsFromCache = getSessionStorageItem<ProductCategoryType[] | undefined>('products');
@@ -47,5 +54,20 @@ export const useProducts = () => {
     }
   };
 
-  return {products, categoryProducts, getAllProducts, getProductsByCategory};
+  const getMultipleProductsByCategory = (categoryIds: string[]): void => {
+    getMultipleProductsByCategoryFromApi(categoryIds)
+      .then((multipleProductsByCategory) => {
+        setMultipleProductsByCategory(multipleProductsByCategory);
+      })
+      .catch(console.error);
+  };
+
+  return {
+    products,
+    categoryProducts,
+    multipleProductsByCategory,
+    getAllProducts,
+    getMultipleProductsByCategory,
+    getProductsByCategory,
+  };
 };

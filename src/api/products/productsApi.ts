@@ -21,4 +21,16 @@ const getProductsByCategoryFromApi = async (
   });
 };
 
-export {getProductsByCategoryFromApi, getAllProductsFromApi};
+const getMultipleProductsByCategoryFromApi = async (
+  categoryIds: string[],
+): Promise<ProductCategoryType[]> => {
+  return new Promise((resolve) => {
+    const foundProductsByCategoryIds = PRODUCTS.filter((productCategory) =>
+      categoryIds.includes(productCategory.id),
+    );
+
+    resolve(foundProductsByCategoryIds);
+  });
+};
+
+export {getAllProductsFromApi, getMultipleProductsByCategoryFromApi, getProductsByCategoryFromApi};

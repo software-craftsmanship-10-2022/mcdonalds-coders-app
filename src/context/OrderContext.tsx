@@ -1,5 +1,5 @@
 import {createContext, useContext, useEffect, useState} from 'react';
-import type {OrderContextType, OrderType} from '../@types/order';
+import type {OrderContextType, OrderType} from '../@types/order.d';
 import {OrderStatus} from '../@types/order.d';
 import {STORAGE} from '../config';
 import useLocalStorage from '../hooks/useLocalStorage';
@@ -16,7 +16,7 @@ export const OrderProvider = ({children}: OrderProviderProps) => {
   const {getStorageItem, setStorageItem} = useLocalStorage();
 
   const getNewOrder = (): OrderType => ({
-    id: '',
+    id: '12345',
     items: [],
     details: {
       name: '',
@@ -52,6 +52,8 @@ export const OrderProvider = ({children}: OrderProviderProps) => {
   }, [order, setStorageItem]);
 
   const resetOrder = () => {
+    setStorageItem(STORAGE.orders, getNewOrder());
+
     setOrder(getNewOrder());
   };
 

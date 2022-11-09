@@ -63,7 +63,7 @@ describe('Given a Debit class', () => {
     }).toThrowError(CARD_ERRORS.wrongDate);
   });
 
-  it('should throw an error when CVC number is not valid', () => {
+  it('when CVC is not valid then an error should be thrown', () => {
     const order = new Order(10);
     const donation = new Donation(-10);
     const card = new Card('1234432112344321', '12/24', 12123);

@@ -1,11 +1,11 @@
 import PRODUCTS from 'src/data/products';
 import type {ProductCategoryType} from '~types/product';
 
-const getAllProducts = async (): Promise<ProductCategoryType[]> => {
+const getAllProductsFromApi = async (): Promise<ProductCategoryType[]> => {
   return Promise.resolve(PRODUCTS);
 };
 
-const findProductsByCategoryId = async (
+const getProductsByCategoryFromApi = async (
   categoryId: string | undefined,
 ): Promise<ProductCategoryType> => {
   return new Promise((resolve) => {
@@ -21,4 +21,4 @@ const findProductsByCategoryId = async (
   });
 };
 
-export {findProductsByCategoryId, getAllProducts};
+export {getProductsByCategoryFromApi, getAllProductsFromApi};

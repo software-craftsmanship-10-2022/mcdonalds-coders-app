@@ -1,11 +1,16 @@
 import {IMG_PATH, URLS} from '../../../config';
 import './Catalogue.css';
 
+import {useEffect} from 'react';
 import {NavLink} from 'react-router-dom';
 import {useProducts} from '../../../hooks/useProducts';
 
 const Catalogue = () => {
-  const {products} = useProducts();
+  const {products, getAllProducts} = useProducts();
+
+  useEffect(() => {
+    getAllProducts();
+  }, []);
 
   return (
     <div className="Catalogue">

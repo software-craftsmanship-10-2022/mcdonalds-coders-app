@@ -2,7 +2,7 @@ import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {jest} from '@jest/globals';
 import {createEmptyOrder, Order} from '../api/orders/Orders';
 import {useOrderContext, OrderProvider} from './OrderContext';
-import type {OrderContextType} from '../@types/order.d';
+import type {OrderContextType} from '../@types/order';
 import {storage} from 'src/utils/localStorage';
 import {OrderStatus, PaymentMethod} from 'src/@types/order';
 

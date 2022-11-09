@@ -1,4 +1,5 @@
 import {NavLink} from 'react-router-dom';
+
 import {IMG_PATH} from '../../config';
 import useFormat from '../../hooks/useFormat';
 import './Slider.css';
@@ -17,9 +18,10 @@ type SliderItem = {
 
 const Slider = ({items, link, showPrice}: SliderProps) => {
   const [currencyFormatter] = useFormat();
+
   return (
     <div className="Slider">
-      {items.map((value, index) => (
+      {items.map((value: SliderItem, index) => (
         <NavLink
           className="slide"
           key={value.id}

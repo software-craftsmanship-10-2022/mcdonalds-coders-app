@@ -2,10 +2,17 @@ import type {Dispatch, SetStateAction} from 'react';
 import React from 'react';
 import {FormGroup, Input, Label} from 'reactstrap';
 
-const McRadio: React.FC<{
-  radios: Array<{label: string; value: number}>;
+type Radio = {
+  label: string;
+  value: number;
+};
+
+type McRadioProps = {
+  radios: Radio[];
   onChange: Dispatch<SetStateAction<number>>;
-}> = ({radios, onChange}) => {
+};
+
+const McRadio: React.FC<McRadioProps> = ({radios, onChange}) => {
   return (
     <>
       {radios.map((radio) => (

@@ -77,12 +77,6 @@
   "jest": {
     "transformIgnorePatterns": [
       "/node_modules/(?!@react-leaflet|react-leaflet|leaflet|leaflet-control-geocoder)"
-    ],
-    "moduleNameMapper": {
-      "^~api/(.*)$": "<rootDir>/src/api/$1",
-      "^~components/(.*)$": "<rootDir>/src/components/$1",
-      "^~public/(.*)$": "<rootDir>/public/$1",
-      "^~types/(.*)$": "<rootDir>/src/@types/$1.d"
-    }
+    ]
   }
 }

@@ -1,6 +1,16 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Form, FormGroup, Input, Label} from 'reactstrap';
+import TransferInputs from 'src/components/form/TransferInputs';
+import McRadio from 'src/components/radio/McRadio';
+import Account from 'src/Payment/models/Account/Account';
+import Card from 'src/Payment/models/Card/Card';
+import Cash from 'src/Payment/models/Cash/Cash';
+import Debit from 'src/Payment/models/Debit/Debit';
+import Donation from 'src/Payment/models/Donation/Donation';
+import Order from 'src/Payment/models/Order/Order';
+import type Payment from 'src/Payment/models/Payment/Payment';
+import Transfer from 'src/Payment/models/Transfer/Transfer';
 import type {OrderType} from '../../../@types/order';
 import {PAYMENT_TYPE, STORAGE, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
@@ -20,7 +30,7 @@ type CardDetailsType = {
 
 type DetailProps = {
   order: OrderType;
-  confirmOrder: (payMethod: string, details: CardDetailsType) => void;
+  confirmOrder: (payment: Payment) => void;
 };
 
 const Detail = ({order, confirmOrder}: DetailProps) => {
@@ -33,6 +43,9 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
   const [cardCVC, setCardCVC] = useState('');
   // Card validation check
   const [cardIsValid, setCardIsValid] = useState(false);
+  // Bank information
+  const [fullName, setFullName] = useState('');
+  const [swift, setSWIFT] = useState('');
 
   // Warning modal
   const [modalMessage, setModalMessage] = useState('');
@@ -41,9 +54,61 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
     setShowModal(!showModal);
   };
 
+  // Donation radios
+  const [donationForm, setDonationForm] = useState(false);
+  const [donationValue, setDonationValue] = useState(0);
+
   const handleCardWarning = (message: string) => {
     setModalMessage(message);
     toggleModal();
+  };
+
+  const handleDonationForm = (isFormOpen: boolean) => {
+    setDonationForm(isFormOpen);
+    if (!isFormOpen) setDonationValue(0);
+  };
+
+  const radios = [
+    {label: '1€', value: 1},
+    {label: '5€', value: 5},
+    {label: '10€', value: 10},
+  ];
+
+  const acceptOrder = () => {
+    let payment;
+    const donation = new Donation(donationValue);
+
+    try {
+      switch (selectedMethod) {
+        case PAYMENT_TYPE.debit: {
+          const card = new Card(cardNumber, cardDate, Number(cardCVC));
+          if (card.isValid()) {
+            payment = new Debit(new Order(order.total), donation, card);
+          }
+
+          break;
+        }
+
+        case PAYMENT_TYPE.transfer:
+          {
+            const account = new Account(fullName, swift);
+            if (account.isValid()) {
+              payment = new Transfer(new Order(order.total), donation, account);
+            }
+          }
+
+          break;
+        default:
+          payment = new Cash(new Order(order.total), donation);
+          break;
+      }
+
+      if (payment) confirmOrder(payment);
+    } catch (error: unknown) {
+      let message = 'Unknown Error';
+      if (error instanceof Error) message = error.message;
+      handleCardWarning(message);
+    }
   };
 
   return (
@@ -103,6 +168,19 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
                   {PAYMENT_TYPE.debit}
                 </Label>
               </FormGroup>
+              <FormGroup check>
+                <Label check className="pay-method-label">
+                  <Input
+                    type="radio"
+                    name="paymethod"
+                    className="pay-method-radio"
+                    onClick={() => {
+                      setSelectedMethod(PAYMENT_TYPE.transfer);
+                    }}
+                  />
+                  {PAYMENT_TYPE.transfer}
+                </Label>
+              </FormGroup>
             </div>
           </FormGroup>
         </Form>
@@ -114,23 +192,28 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
             setCardIsValid={setCardIsValid}
           />
         )}
+        {selectedMethod === PAYMENT_TYPE.transfer && (
+          <TransferInputs setFullName={setFullName} setSWIFT={setSWIFT} />
+        )}
       </div>
+      <FormGroup check>
+        <Input
+          type="checkbox"
+          onChange={(e) => {
+            handleDonationForm(e.target.checked);
+          }}
+        />
+        <Label check>Quieres donar a la fundación McDonalds?</Label>
+      </FormGroup>
+      {donationForm && <McRadio radios={radios} onChange={setDonationValue} />}
       <div className="detail-total">
         <p>Total</p>
-        <p>{currencyFormatter().format(order.total)}</p>
+        <p>{currencyFormatter().format(order.total + donationValue)}</p>
       </div>
       <McButton
         text={'Enviar pedido'}
         onClick={() => {
-          if (selectedMethod === PAYMENT_TYPE.debit && !cardIsValid) {
-            handleCardWarning('La información de la tarjeta es inválida');
-          } else {
-            confirmOrder(selectedMethod, {
-              number: cardNumber,
-              date: cardDate,
-              cvc: cardCVC,
-            });
-          }
+          acceptOrder();
         }}
         fixed
       />
@@ -159,9 +242,11 @@ const Checkout = () => {
     }
   }, [order, navigate, getStorageItem]);
 
-  const confirmOrder = (payMethod: string, details: CardDetailsType) => {
-    updateOrder({...order, confirmed: true, paymentType: payMethod});
-    console.log(details);
+  const confirmOrder = (payment: Payment) => {
+    // UpdateOrder({...order, confirmed: true, paymentType: payMethod});
+    console.log(payment);
+    payment.pay();
+    // Console.log(details);
     navigate(URLS.root);
   };
 

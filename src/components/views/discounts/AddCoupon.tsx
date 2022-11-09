@@ -42,10 +42,6 @@ const AddCoupon = () => {
     return <Navigate to={URLS.discounts} replace />;
   }
 
-  if (!coupon) {
-    return <Navigate to={URLS.discounts} replace />;
-  }
-
   return (
     <>
       {coupon ? (

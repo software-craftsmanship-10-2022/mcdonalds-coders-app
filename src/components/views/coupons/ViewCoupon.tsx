@@ -10,7 +10,7 @@ import CouponModal from '../../modal/CouponModal';
 import './ViewCoupon.css';
 
 const ViewCoupon = () => {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   // Coupon data
   const {id} = useParams<{id: string}>();
   const [couponData, setCouponData] = useState<CouponType | undefined>(undefined);
@@ -27,6 +27,8 @@ const ViewCoupon = () => {
 
   useEffect(() => {
     handleUserCoupon().catch((error) => {
+      // @TODO: Error handling
+      console.log(error);
       return <Navigate to={URLS.coupons} replace />;
     });
   }, []);

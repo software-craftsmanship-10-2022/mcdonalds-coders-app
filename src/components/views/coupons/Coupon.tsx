@@ -24,6 +24,8 @@ const Coupon = () => {
 
   useEffect(() => {
     handleUserCoupons().catch((error) => {
+      // @TODO: Error handling
+      console.log(error);
       setNothingToDisplay(true);
     });
   }, []);

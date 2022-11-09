@@ -41,7 +41,7 @@ export enum OrderStatus {
   pending,
   preparing,
   delivering,
-  waiting,
+  ready,
   finished,
   rejected,
 }
@@ -59,4 +59,5 @@ export type NewOrderAddressDetailsType = {
   name: string;
   address: string;
   image: string;
+  isDelivery: boolean,
 };

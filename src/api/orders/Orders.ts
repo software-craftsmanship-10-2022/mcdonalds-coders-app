@@ -129,6 +129,7 @@ export function createEmptyOrder(): Order {
     name: '',
     address: '',
     image: '',
+    isDelivery: false,
   };
 
   return new Order({

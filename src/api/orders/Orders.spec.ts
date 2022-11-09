@@ -14,6 +14,7 @@ describe('Check class Order', () => {
         name: 'user 1',
         address: '123 Fake street',
         image: 'avatar',
+        isDelivery: false,
       },
       items: [],
       payment: PaymentMethod.cash,
@@ -131,6 +132,7 @@ describe('Check class Order', () => {
       name: 'user 1',
       address: '123 Fake street',
       image: 'avatar',
+      isDelivery: false,
     });
   });
 
@@ -140,6 +142,7 @@ describe('Check class Order', () => {
       name: 'New name',
       address: 'New address',
       image: 'New image',
+      isDelivery: true,
     };
 
     order.setDetails(details);
@@ -168,6 +171,7 @@ describe('Test function `createEmptyOrder`', () => {
       name: '',
       address: '',
       image: '',
+      isDelivery: false,
     });
   });
 });

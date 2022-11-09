@@ -1,4 +1,5 @@
 import type {ProductCategoryType, ProductType} from 'src/@types/product';
+import {IMG_PATH} from 'src/config';
 
 type ProductSelectorProps = {
   productCategory: ProductCategoryType;
@@ -72,7 +73,7 @@ const ProductItem = ({product, selectedProductTitle, onSelectProduct}: ProductIt
     >
       <CheckMark isChecked={checkIsSelected()} />
       <span>{product.title}</span>
-      <img alt={product.title} src={product.img} />
+      <img alt={product.title} src={IMG_PATH + product.img} />
     </button>
   );
 };

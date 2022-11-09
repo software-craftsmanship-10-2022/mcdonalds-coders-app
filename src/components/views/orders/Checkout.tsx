@@ -54,7 +54,9 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
     setShowModal(!showModal);
   };
 
+  // Donation radios
   const [donationForm, setDonationForm] = useState(false);
+  const [donation, setDonation] = useState(0);
 
   const handleCardWarning = (message: string) => {
     setModalMessage(message);
@@ -196,7 +198,7 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
         />
         <Label check>Wanna Donate?</Label>
       </FormGroup>
-      {donationForm && <McRadio radios={radios} />}
+      {donationForm && <McRadio radios={radios} onChange={setDonation} />}
       <div className="detail-total">
         <p>Total</p>
         <p>{currencyFormatter().format(order.total)}</p>

@@ -63,9 +63,9 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
     toggleModal();
   };
 
-  const handleDonationForm = (form: boolean) => {
-    setDonationForm(form);
-    if (!form) setDonationValue(0);
+  const handleDonationForm = (isFormOpen: boolean) => {
+    setDonationForm(isFormOpen);
+    if (!isFormOpen) setDonationValue(0);
   };
 
   const radios = [

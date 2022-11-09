@@ -1,4 +1,5 @@
-import type {CacheHandlerType} from '../@types/common.d';
+import type {StorageType} from '../@types/common';
+
 /**
  * Get the item `key` from the local cache.
  *
@@ -6,8 +7,7 @@ import type {CacheHandlerType} from '../@types/common.d';
  * @return cache value or undefined if the item doesn't exist.
  */
 export async function getItem<T>(key: string): Promise<T | undefined> {
-  /* eslint-disable-next-line @typescript-eslint/ban-types */
-  const value: string | null = localStorage?.getItem(key) ?? null;
+  const value: string | null = localStorage?.getItem(key);
 
   if (value === null || value === 'undefined') {
     return undefined;
@@ -42,4 +42,4 @@ export async function clearAll(): Promise<void> {
   localStorage?.clear();
 }
 
-export const cacheHandler: CacheHandlerType = {setItem, getItem, removeItem, clearAll};
+export const storage: StorageType = {setItem, getItem, removeItem, clearAll};

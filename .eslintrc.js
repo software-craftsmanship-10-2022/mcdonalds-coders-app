@@ -55,6 +55,16 @@ module.exports = {
             allowShortCircuit: true,
           },
         ],
+
+        '@typescript-eslint/ban-types': [
+          'error',
+          {
+            extendDefault: true,
+            types: {
+              null: false,
+            },
+          },
+        ],
       },
     },
   ],

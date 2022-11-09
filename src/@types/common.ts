@@ -1,4 +1,4 @@
-export type CacheHandlerType = {
+export type StorageType = {
   getItem<T>(key: string): Promise<T | undefined>;
   setItem<T>(key: string, value: T): Promise<void>;
   removeItem(key: string): Promise<void>;

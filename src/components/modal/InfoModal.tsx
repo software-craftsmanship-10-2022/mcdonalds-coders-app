@@ -10,13 +10,7 @@ type InfoModalProps = {
   link?: string;
 };
 
-const InfoModal = ({
-  isOpen,
-  toggle,
-  title,
-  message,
-  link,
-}: InfoModalProps) => {
+const InfoModal = ({isOpen, toggle, title, message, link}: InfoModalProps) => {
   const navigate = useNavigate();
   return (
     <Modal isOpen={isOpen} toggle={toggle} centered={true}>
@@ -26,7 +20,7 @@ const InfoModal = ({
         <ModalFooter>
           {link && (
             <Button
-              color='danger'
+              color="danger"
               onClick={() => {
                 toggle();
                 navigate(link);
@@ -35,7 +29,7 @@ const InfoModal = ({
               Ver
             </Button>
           )}
-          <Button color='warning' onClick={toggle}>
+          <Button color="warning" onClick={toggle}>
             Ok
           </Button>
         </ModalFooter>

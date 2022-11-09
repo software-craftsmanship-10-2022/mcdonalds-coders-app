@@ -1,31 +1,23 @@
-import { useEffect, useMemo, useState } from "react";
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
-import { IMG_PATH, URLS } from "../../../config";
-import { useOrderContext } from "../../../context/OrderContext";
-import MARKERS from "../../../data/markers";
-import McButton from "../../buttons/McButton";
-import Searchbar from "../../input/Searchbar";
-import Map from "../../map/Map";
-import InfoModal from "../../modal/InfoModal";
-import "./Order.css";
+import {useEffect, useMemo, useState} from 'react';
+import {Navigate, NavLink, useNavigate} from 'react-router-dom';
+import {IMG_PATH, URLS} from '../../../config';
+import {useOrderContext} from '../../../context/OrderContext';
+import MARKERS from '../../../data/markers';
+import McButton from '../../buttons/McButton';
+import Searchbar from '../../input/Searchbar';
+import Map from '../../map/Map';
+import InfoModal from '../../modal/InfoModal';
+import './Order.css';
 
 type PickupProps = {
   query: string;
-  handleStoreSelect: (
-    title: string,
-    location: string,
-    img: string,
-    isDelivery: boolean
-  ) => void;
+  handleStoreSelect: (title: string, location: string, img: string, isDelivery: boolean) => void;
 };
 
-const Pickup = ({ query, handleStoreSelect }: PickupProps) => {
+const Pickup = ({query, handleStoreSelect}: PickupProps) => {
   const filteredMarkers = useMemo(
-    () =>
-      MARKERS.filter((value) =>
-        value.location.toLowerCase().includes(query.toLowerCase())
-      ),
-    [query]
+    () => MARKERS.filter((value) => value.location.toLowerCase().includes(query.toLowerCase())),
+    [query],
   );
 
   return (
@@ -35,11 +27,11 @@ const Pickup = ({ query, handleStoreSelect }: PickupProps) => {
         {filteredMarkers.map((value, index) => (
           <NavLink
             key={index}
-            className={"marker"}
-            to={URLS.ORDERS_ADD}
-            onClick={() =>
-              handleStoreSelect(value.title, value.location, value.img, false)
-            }
+            className={'marker'}
+            to={URLS.ordersAdd}
+            onClick={() => {
+              handleStoreSelect(value.title, value.location, value.img, false);
+            }}
           >
             <img src={IMG_PATH + value.img} alt="" />
             <div className="marker-info">
@@ -55,36 +47,38 @@ const Pickup = ({ query, handleStoreSelect }: PickupProps) => {
 
 type DeliveryProps = {
   location?: string;
-  handleStoreSelect: (
-    title: string,
-    location: string,
-    img: string,
-    isDelivery: boolean
-  ) => void;
+  handleStoreSelect: (title: string, location: string, img: string, isDelivery: boolean) => void;
 };
 
-const Delivery = ({ location, handleStoreSelect }: DeliveryProps) => {
+const Delivery = ({location, handleStoreSelect}: DeliveryProps) => {
   // Delivery Info
   const [showModal, setShowModal] = useState(true);
   const navigate = useNavigate();
-  const shortLocation = location?.split(",").slice(0, 3).join(", ");
+  const shortLocation = location?.split(',').slice(0, 3).join(', ');
 
-  const toggleModal = () => setShowModal(!showModal);
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   const handleSubmit = () => {
-    if (!location || location === "") {
-      alert("Seleccione una dirección");
+    if (!location || location === '') {
+      alert('Seleccione una dirección'); // eslint-disable-line no-alert
       return;
     }
 
-    handleStoreSelect(shortLocation!, location, "delivery.png", true);
+    handleStoreSelect(shortLocation!, location, 'delivery.png', true);
 
-    navigate(URLS.ORDERS_ADD);
+    navigate(URLS.ordersAdd);
   };
 
   return (
     <div className="Delivery">
-      <McButton text={"Aceptar"} onClick={() => handleSubmit()} />
+      <McButton
+        text={'Aceptar'}
+        onClick={() => {
+          handleSubmit();
+        }}
+      />
       <InfoModal
         toggle={toggleModal}
         isOpen={showModal}
@@ -100,12 +94,12 @@ type OrderProps = {
   toggleOrderModal: () => void;
 };
 
-const Order = ({ toggleOrderModal }: OrderProps) => {
+const Order = ({toggleOrderModal}: OrderProps) => {
   const [activeMode, setActiveMode] = useState(true);
   const [mapMarkers, setMapMarkers] = useState(MARKERS);
-  const [query, setQuery] = useState("");
-  const [location, setLocation] = useState("");
-  const { order, updateOrder } = useOrderContext();
+  const [query, setQuery] = useState('');
+  const [location, setLocation] = useState('');
+  const {order, updateOrder} = useOrderContext();
 
   // Set searchbar query from the selected marker
   useEffect(() => {
@@ -117,20 +111,15 @@ const Order = ({ toggleOrderModal }: OrderProps) => {
   // Restrict access when an order is in place
   if (order.confirmed) {
     toggleOrderModal();
-    return <Navigate to={URLS.ROOT} replace />;
+    return <Navigate to={URLS.root} replace />;
   }
 
   const changeMode = (mode: boolean) => {
     setActiveMode(mode);
-    !mode ? setMapMarkers([]) : setMapMarkers(MARKERS);
+    setMapMarkers(mode ? MARKERS : []);
   };
 
-  const handleStoreSelect = (
-    title: string,
-    location: string,
-    img: string,
-    isDelivery: boolean
-  ) => {
+  const handleStoreSelect = (title: string, location: string, img: string, isDelivery: boolean) => {
     updateOrder({
       ...order,
       details: {
@@ -148,40 +137,38 @@ const Order = ({ toggleOrderModal }: OrderProps) => {
       <div className="mode-button-container">
         <button
           type="button"
-          className={activeMode ? "mode-button selected" : "mode-button"}
-          onClick={() => changeMode(true)}
+          className={activeMode ? 'mode-button selected' : 'mode-button'}
+          onClick={() => {
+            changeMode(true);
+          }}
         >
           Pickup
         </button>
         <button
           type="button"
-          className={!activeMode ? "mode-button selected" : "mode-button"}
-          onClick={() => changeMode(false)}
+          className={activeMode ? 'mode-button' : 'mode-button selected'}
+          onClick={() => {
+            changeMode(false);
+          }}
         >
           McDelivery
         </button>
       </div>
-      <Map
-        markers={mapMarkers}
-        locateCurrent={!activeMode}
-        setLocation={setLocation}
-      />
+      <Map markers={mapMarkers} locateCurrent={!activeMode} setLocation={setLocation} />
       {activeMode && (
         <>
           <Searchbar
-            placeholder={"Buscar por direccion..."}
-            icontype={"glyphicon-search"}
-            name={"search"}
-            id={"search"}
+            placeholder={'Buscar por direccion...'}
+            icontype={'glyphicon-search'}
+            name={'search'}
+            id={'search'}
             query={query}
             setQuery={setQuery}
           />
           <Pickup query={query} handleStoreSelect={handleStoreSelect} />
         </>
       )}
-      {!activeMode && (
-        <Delivery location={location} handleStoreSelect={handleStoreSelect} />
-      )}
+      {!activeMode && <Delivery location={location} handleStoreSelect={handleStoreSelect} />}
     </div>
   );
 };

@@ -27,13 +27,13 @@
   width: auto !important;
 }
 
-.category-link>img {
+.category-link > img {
   width: 30%;
   height: auto;
   padding: 10px 10px;
 }
 
-.category-link>p {
+.category-link > p {
   margin: 0 !important;
   font-size: 24px;
   width: 70%;
@@ -47,11 +47,11 @@
     padding: 10px 10px;
   }
 
-  .category-link>img {
+  .category-link > img {
     width: 35%;
   }
 
-  .category-link>p {
+  .category-link > p {
     font-size: 20px;
   }
 }

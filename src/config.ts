@@ -3,26 +3,26 @@ export const CURRENCY = 'ARS';
 export const IMG_PATH = '/img/';
 
 export const URLS = {
-  ROOT: '/',
-  ORDERS: '/orders/',
-  ORDERS_CART: '/orders/cart/',
-  ORDERS_CHECKOUT: '/orders/checkout/',
-  ORDERS_CURRENT: '/orders/current/',
-  ORDERS_ADD: '/orders/add/',
-  DISCOUNTS: '/discounts/',
-  COUPONS: '/coupons/',
-  CATALOGUE: '/catalogue/',
+  root: '/',
+  orders: '/orders/',
+  ordersCart: '/orders/cart/',
+  ordersCheckout: '/orders/checkout/',
+  ordersCurrent: '/orders/current/',
+  ordersAdd: '/orders/add/',
+  discounts: '/discounts/',
+  coupons: '/coupons/',
+  catalogue: '/catalogue/',
 };
 
 export const STORAGE = {
-  USER: 'user',
-  ORDER: 'order',
-  COUPONS: 'coupons',
+  users: 'user',
+  orders: 'order',
+  coupons: 'coupons',
 };
 
 export const PAYMENT_TYPE = {
-  DEBIT: 'DEBITO',
-  CASH: 'EFECTIVO',
+  debit: 'DEBITO',
+  cash: 'EFECTIVO',
 };
 
 export const DIGITS = [

@@ -1,21 +1,18 @@
-import './Discount.css';
-import Slider from '../../slider/Slider';
-import Carousel from '../../carousel/Carousel';
+import {URLS} from '../../../config';
 import DISCOUNTS from '../../../data/discounts';
 import DISCOUNT_SLIDES from '../../../data/discountSlides';
-import {URLS} from '../../../config';
+import Carousel from '../../carousel/Carousel';
+import Slider from '../../slider/Slider';
+import './Discount.css';
 
 const Discount = () => (
-  <div className='Discount'>
+  <div className="Discount">
     <Carousel items={DISCOUNT_SLIDES} />
-    <div className='slides'>
+    <div className="slides">
       {DISCOUNTS.map((value, index) => (
-        <div className='slider-container' key={index}>
+        <div className="slider-container" key={index}>
           <p>{value.category}</p>
-          <Slider
-            items={value.items}
-            link={URLS.DISCOUNTS + value.id + '/'}
-          />
+          <Slider items={value.items} link={URLS.discounts + value.id + '/'} />
         </div>
       ))}
     </div>

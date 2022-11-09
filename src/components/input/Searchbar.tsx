@@ -10,23 +10,18 @@ type SearchbarProps = {
   setQuery: (e: string) => void;
 };
 
-const Searchbar = ({
-  name,
-  id,
-  icontype,
-  placeholder,
-  query,
-  setQuery,
-}: SearchbarProps) => (
-  <div className='Searchbar'>
-    <i className={'glyphicon ' + icontype}></i>
+const Searchbar = ({name, id, icontype, placeholder, query, setQuery}: SearchbarProps) => (
+  <div className="Searchbar">
+    <i className={`glyphicon ${String(icontype)}`}></i>
     <Input
-      type='text'
+      type="text"
       name={name}
       id={id}
       placeholder={placeholder}
       value={query}
-      onChange={e => setQuery(e.target.value)}
+      onChange={(e) => {
+        setQuery(e.target.value);
+      }}
     />
   </div>
 );

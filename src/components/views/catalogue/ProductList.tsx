@@ -1,23 +1,29 @@
-import { Navigate, useParams } from "react-router-dom";
-import { URLS } from "../../../config";
-import PRODUCTS from "../../../data/products";
-import Product from "../../product/Product";
-import "./ProductList.css";
+import { useEffect } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
+import { URLS } from '../../../config';
+import { useProducts } from '../../../hooks/useProducts';
+import Product from '../../product/Product';
+
+import './ProductList.css';
 
 const ProductList = () => {
-  const { category } = useParams<{ category?: string }>();
-  const categoryData = PRODUCTS.find(
-    (productCategory) => productCategory.id === category
-  );
+  const {category: categoryId} = useParams<{category?: string}>();
+  const {categoryProducts, getProductsByCategory} = useProducts();
 
-  if (!categoryData) {
-    return <Navigate to={URLS.CATALOGUE} replace />;
+  useEffect(() => {
+    if (categoryId) {
+      getProductsByCategory(categoryId);
+    }
+  }, [categoryId]);
+
+  if (!categoryProducts) {
+    return <Navigate to={URLS.catalogue} replace />;
   }
 
   return (
     <div className="ProductList">
-      <p>{categoryData.category}</p>
-      {categoryData.items.map((value, index) => (
+      <p>{categoryProducts.category}</p>
+      {categoryProducts.items.map((value, index) => (
         // Load all products of this category
         <Product
           id={value.id}

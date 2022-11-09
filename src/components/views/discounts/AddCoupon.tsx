@@ -11,9 +11,8 @@ import './AddCoupon.css';
 const AddCoupon = () => {
   // Coupon couponData
   const {category, id} = useParams<{category?: string; id?: string}>();
-  const couponData = DISCOUNTS.find((discountCategory) => discountCategory.id === category)?.items[
-    Number(id)
-  ];
+  const couponCategory = DISCOUNTS.find((discountCategory) => discountCategory.id === category);
+  const couponData = couponCategory?.items.find((item) => item.id === id);
 
   const {getStorageItem, setStorageItem} = useLocalStorage();
   let coupons = getStorageItem(STORAGE.coupons) as CouponType[];

@@ -1,4 +1,5 @@
-import type {Order} from '~api/Orders';
+import type {Order} from '../api/orders/Orders';
+import {MenuType} from './product';
 
 export type OrderType = {
   details: OrderAddressDetailsType;
@@ -40,6 +41,7 @@ export enum OrderStatus {
   pending,
   preparing,
   delivering,
+  waiting,
   finished,
   rejected,
 }

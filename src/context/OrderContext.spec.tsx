@@ -1,11 +1,10 @@
 import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {jest} from '@jest/globals';
-import {createEmptyOrder} from '../api/Orders';
-import {Order} from '../api/Orders';
+import {createEmptyOrder, Order} from '../api/orders/Orders';
 import {useOrderContext, OrderProvider} from './OrderContext';
-import {OrderStatus, PaymentMethod} from '../@types/order.d';
+import {OrderStatus, PaymentMethod} from '../api/orders/Orders';
 import type {OrderContextType} from '../@types/order.d';
-import {cacheHandler as cache} from 'src/hooks/cacheSystem';
+import {storage} from 'src/utils/localStorage';
 
 function DummyComponent({futureOrder}: {futureOrder?: Order}) {
   const value = useOrderContext();
@@ -62,12 +61,12 @@ function testDummyComponent(order: Order) {
 }
 
 describe('Test OrderContext component', () => {
-  let mockGetItem: jest.SpiedFunction<typeof cache.getItem>;
-  let mockSetItem: jest.SpiedFunction<typeof cache.setItem>;
+  let mockGetItem: jest.SpiedFunction<typeof storage.getItem>;
+  let mockSetItem: jest.SpiedFunction<typeof storage.setItem>;
 
   beforeEach(() => {
-    mockGetItem = jest.spyOn(cache, 'getItem') as jest.SpiedFunction<typeof cache.getItem>;
-    mockSetItem = jest.spyOn(cache, 'setItem') as jest.SpiedFunction<typeof cache.setItem>;
+    mockGetItem = jest.spyOn(storage, 'getItem') as jest.SpiedFunction<typeof storage.getItem>;
+    mockSetItem = jest.spyOn(storage, 'setItem') as jest.SpiedFunction<typeof storage.setItem>;
   });
 
   afterEach(() => {

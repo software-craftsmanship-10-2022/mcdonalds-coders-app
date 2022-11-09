@@ -1,4 +1,3 @@
-import {clearAll, getItem, setItem} from '../../utils/localStorage';
 import {OrderStatus, PaymentMethod} from '../../api/orders/Orders';
 import type {NewOrderAddressDetailsType} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';

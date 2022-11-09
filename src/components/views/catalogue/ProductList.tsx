@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
-import { URLS } from '../../../config';
-import { useProducts } from '../../../hooks/useProducts';
+import {useEffect} from 'react';
+import {Navigate, useParams} from 'react-router-dom';
+import {URLS} from '../../../config';
+import {useProducts} from '../../../hooks/useProducts';
 import Product from '../../product/Product';
 
 import './ProductList.css';

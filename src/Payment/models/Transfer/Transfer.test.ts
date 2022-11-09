@@ -23,7 +23,7 @@ describe('Given a Transfer class', () => {
     }).toThrowError(ORDER_ERRORS.over0Number);
   });
 
-  it('should throw an error when order total amount is 0', () => {
+  it('when order total amount is 0 then an error should be thrown', () => {
     const order = new Order(0);
     const donation = new Donation(0);
     const account = new Account('john doe', 'SECTARB1XXX');

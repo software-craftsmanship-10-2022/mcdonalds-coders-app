@@ -1,4 +1,4 @@
-import {OrderStatus, PaymentMethod} from '../../api/orders/Orders';
+import {OrderStatus, PaymentMethod} from '../../@types/order';
 import type {NewOrderAddressDetailsType} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';
 import {createEmptyOrder, Order} from './Orders';

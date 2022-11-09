@@ -1,19 +1,6 @@
 import type {MenuType} from '../../@types/product.d';
 import type {NewOrderAddressDetailsType, NewOrderType} from '../../@types/order';
-
-export enum PaymentMethod {
-  cash,
-  debit,
-}
-
-export enum OrderStatus {
-  unconfirmed,
-  pending,
-  preparing,
-  delivering,
-  finished,
-  rejected,
-}
+import {OrderStatus, PaymentMethod} from '../../@types/order';
 
 export class Order {
   // @TODO calisthenics: this.order.items: use first-class collections

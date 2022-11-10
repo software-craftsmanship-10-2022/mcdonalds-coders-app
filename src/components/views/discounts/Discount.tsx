@@ -1,9 +1,9 @@
-import './Discount.css';
-import Slider from '../../slider/Slider';
-import Carousel from '../../carousel/Carousel';
+import {URLS} from '../../../config';
 import DISCOUNTS from '../../../data/discounts';
 import DISCOUNT_SLIDES from '../../../data/discountSlides';
-import {URLS} from '../../../config';
+import Carousel from '../../carousel/Carousel';
+import Slider from '../../slider/Slider';
+import './Discount.css';
 
 const Discount = () => (
   <div className="Discount">

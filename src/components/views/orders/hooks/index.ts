@@ -1,3 +1,3 @@
-import useIsValidatedType from './useIsValidated';
+import useIsValidated from './useIsValidated';
 
-export {useIsValidatedType};
+export {useIsValidated};

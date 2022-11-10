@@ -2,6 +2,8 @@ export const CARD_ERRORS = {
   wrongCardNumber: 'wrong card number',
   wrongDate: 'wrong date',
   wrongCvc: 'wrong CVC',
+  dateEmpty: 'Date must be exist',
+  cvcAsNumber: 'CVC must be a number',
 };
 
 export const DONATION_ERRORS = {

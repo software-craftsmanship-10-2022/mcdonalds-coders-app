@@ -2,15 +2,14 @@ import {ACCOUNT_ERRORS} from '../../errorMessages';
 import type IValidate from '../IValidate';
 
 class Account implements IValidate {
-  private get regexFullName() {
-    return /^[a-zA-Z]+( [a-zA-Z]+)+$/;
-  }
+  #regexFullName = /^[a-zA-Z]+( [a-zA-Z]+)+$/;
+  #regexIban = /([a-zA-Z]{2})\s*\t*(\d{2})\s*\t*(\d{4})\s*\t*(\d{4})\s*\t*(\d{2})\s*\t*(\d{10})/;
 
-  constructor(private readonly fullName: string, private readonly swift: string) {}
+  constructor(private readonly fullName: string, private readonly iban: string) {}
 
   isValid(): boolean {
-    if (!this.regexFullName.test(this.fullName)) throw new Error(ACCOUNT_ERRORS.fullNameFormat);
-    if (this.swift.length !== 11) throw new Error(ACCOUNT_ERRORS.swiftValidation);
+    if (!this.#regexFullName.test(this.fullName)) throw new Error(ACCOUNT_ERRORS.fullNameFormat);
+    if (!this.#regexIban.test(this.iban)) throw new Error(ACCOUNT_ERRORS.ibanFormat);
     return true;
   }
 }

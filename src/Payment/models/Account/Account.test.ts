@@ -6,14 +6,13 @@ describe('Given an Account class', () => {
     const account = new Account('john doe', 'SECTARB1XXX');
     expect(account).toBeInstanceOf(Object);
   });
-
-  it('Should throw an error when fullName is not valid', () => {
-    const account = new Account('john', 'SECTARB1XXX');
+  it('when fullname is not valid then an error should be thrown', () => {
+    const account = new Account('John', 'SECTARB1XXX');
     expect(() => account.isValid()).toThrowError(ACCOUNT_ERRORS.fullNameFormat);
   });
 
-  it('Should throw an error when swift has not 11 characters', () => {
+  it('when IBAN number is not valid then an error should be thrown', () => {
     const account = new Account('john doe', 'SCTARB1XXX');
-    expect(() => account.isValid()).toThrowError(ACCOUNT_ERRORS.swiftValidation);
+    expect(() => account.isValid()).toThrowError(ACCOUNT_ERRORS.ibanFormat);
   });
 });

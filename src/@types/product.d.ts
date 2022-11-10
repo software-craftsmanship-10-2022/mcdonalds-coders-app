@@ -1,6 +1,7 @@
 // @types.product.ts
 
 export type ProductType = {
+  id: string;
   img: string;
   title: string;
   description: string;
@@ -9,6 +10,15 @@ export type ProductType = {
 
 export type ProductCategoryType = {
   category: string;
-  id: string;
+  id: CategoryIds;
   items: ProductType[];
 };
+
+export type CategoryIds =
+  | 'burgers'
+  | 'chicken'
+  | 'complements'
+  | 'desserts'
+  | 'drinks'
+  | 'breakfast'
+  | 'coffee';

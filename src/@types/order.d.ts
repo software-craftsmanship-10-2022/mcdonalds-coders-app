@@ -1,11 +1,20 @@
 // @types.order.ts
 export type OrderType = {
+  id: string;
   details: OrderAddressDetailsType;
   items: OrderItemType[];
   total: number;
   confirmed: boolean;
   paymentType: string;
+  status: OrderStatus;
 };
+
+export enum OrderStatus {
+  pending = 'PENDING',
+  preparing = 'PREPARING',
+  delivering = 'DELIVERING',
+  finished = 'FINISHED',
+}
 
 export type OrderItemType = {
   quantity: number;

@@ -1,0 +1,8 @@
+.McRadio input:checked {
+  background-color: var(--mc-yellow);
+  border-color: #cbd1d8;
+}
+.McRadio input:focus {
+  border-color: var(--mc-yellow);
+  box-shadow: 0 0 0 0.25rem rgb(255 199 44 / 25%);
+}

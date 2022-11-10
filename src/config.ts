@@ -25,6 +25,7 @@ export const STORAGE = {
 export const PAYMENT_TYPE = {
   debit: 'DEBITO',
   cash: 'EFECTIVO',
+  transfer: 'TRANSFERENCIA',
 };
 
 export const DIGITS = [

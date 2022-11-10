@@ -3,7 +3,7 @@
 
 // @TODO refactor. Apply correctly Typescript
 const useLocalStorage = () => {
-  const getStorageItem = (key: string) => {
+  const getStorageItem = (key: string): any | null => {
     const value = localStorage.getItem(key);
 
     // Return value if exists & is valid
@@ -14,7 +14,7 @@ const useLocalStorage = () => {
     return null;
   };
 
-  const setStorageItem = (key: string, value: Record<string, unknown>): void => {
+  const setStorageItem = (key: string, value: Record<string, any>): void => {
     localStorage.setItem(key, JSON.stringify(value));
   };
 

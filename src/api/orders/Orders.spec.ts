@@ -8,9 +8,9 @@ describe('Check class Order', () => {
 
   beforeEach(() => {
     order = new Order({
-      id: 1,
+      id: '1a',
       details: {
-        id: 2,
+        id: '2a',
         name: 'user 1',
         address: '123 Fake street',
         image: 'avatar',
@@ -23,7 +23,12 @@ describe('Check class Order', () => {
   });
 
   it('gets the order id', () => {
-    expect(order.getId()).toBe(1);
+    expect(order.getId()).toBe('1a');
+  });
+
+  it('sets new order id', () => {
+    order.setId('new id');
+    expect(order.getId()).toBe('new id');
   });
 
   describe('Check `order.items` property', () => {
@@ -128,7 +133,7 @@ describe('Check class Order', () => {
 
   it('gets the details', () => {
     expect(order.getDetails()).toEqual({
-      id: 2,
+      id: '2a',
       name: 'user 1',
       address: '123 Fake street',
       image: 'avatar',
@@ -138,7 +143,7 @@ describe('Check class Order', () => {
 
   it('set new details object', () => {
     const details: NewOrderAddressDetailsType = {
-      id: 33,
+      id: 'a33',
       name: 'New name',
       address: 'New address',
       image: 'New image',
@@ -184,12 +189,12 @@ describe('Test function `createEmptyOrder`', () => {
   });
 
   it('gets an Order it is empty', () => {
-    expect(order.getId()).toBe(0);
+    expect(order.getId()).toBe('');
     expect(order.isItemsEmpty()).toBe(true);
     expect(order.getPayment()).toBe(PaymentMethod.cash);
     expect(order.isConfirmed()).toBe(false);
     expect(order.getDetails()).toEqual({
-      id: 0,
+      id: '',
       name: '',
       address: '',
       image: '',

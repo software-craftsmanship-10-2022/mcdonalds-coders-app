@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {QRCode} from 'react-qrcode-logo';
 import {Navigate, useNavigate} from 'react-router-dom';
-import {OrderStatus} from 'src/@types/order.d';
+import {OrderStatus} from 'src/@types/order';
 import useOrderStatus from 'src/hooks/useOrderStatus';
 import {IMG_PATH, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
@@ -25,15 +25,16 @@ const CurrentOrder = () => {
   const details = order.getDetails();
 
   useEffect(() => {
-    changeOrderStatus(order.id, OrderStatus.preparing, TWO_SECONDS);
-    changeOrderStatus(order.id, OrderStatus.delivering, TWO_SECONDS * 2);
+    changeOrderStatus(order.getId(), OrderStatus.preparing, TWO_SECONDS);
+    changeOrderStatus(order.getId(), OrderStatus.delivering, TWO_SECONDS * 2);
   }, []);
 
   const changeOrderStatus = (orderId: string, status: OrderStatus, time: number) => {
     setTimeout(() => {
       setOrderStatus(orderId, status)
         .then(() => {
-          updateOrder({...order, status});
+          order.setStatus(status);
+          updateOrder(order);
         })
         .catch((err: Error) => {
           console.log(err);
@@ -58,7 +59,7 @@ const CurrentOrder = () => {
         <h3>
           <strong>Estado del pedido:</strong>
         </h3>
-        <h3>{order.status}</h3>
+        <h3>{order.getStatus()}</h3>
       </div>
       <div className="address">
         <h3>

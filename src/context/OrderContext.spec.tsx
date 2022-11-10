@@ -81,9 +81,9 @@ describe('Test OrderContext component', () => {
 
   it('checks how the component uses the order stores in web storage.', async () => {
     const order: Order = new Order({
-      id: 3,
+      id: 'a3',
       details: {
-        id: 4,
+        id: 'a4',
         name: 'name 1',
         address: 'address 1',
         image: 'image 1',
@@ -98,7 +98,7 @@ describe('Test OrderContext component', () => {
     render(<OrderProviderTest />);
 
     await waitFor(() => {
-      expect(screen.getByText(/Order id: 3/)).toBeInTheDocument();
+      expect(screen.getByText(/Order id: a3/)).toBeInTheDocument();
       testDummyComponent(order);
     });
   });
@@ -106,9 +106,9 @@ describe('Test OrderContext component', () => {
   describe('Test `updateOrder` function', () => {
     it('checks it updates the `order` property correctly in the component', async () => {
       const order: Order = new Order({
-        id: 3,
+        id: 'a3',
         details: {
-          id: 4,
+          id: 'a4',
           name: 'name 1',
           address: 'address 1',
           image: 'image 1',
@@ -130,9 +130,9 @@ describe('Test OrderContext component', () => {
 
     it('checks the function saves the updated order in the cache', async () => {
       const order: Order = new Order({
-        id: 4,
+        id: 'a4',
         details: {
-          id: 5,
+          id: 'a5',
           name: 'name 2',
           address: 'address 2',
           image: 'image 3',
@@ -159,9 +159,9 @@ describe('Test OrderContext component', () => {
   describe('Test `resetOrder` funtion', () => {
     it('checks the order is reseted', async () => {
       const order: Order = new Order({
-        id: 4,
+        id: 'a4',
         details: {
-          id: 5,
+          id: 'a5',
           name: 'name 2',
           address: 'address 2',
           image: 'image 3',
@@ -181,22 +181,22 @@ describe('Test OrderContext component', () => {
       // Click in update button
       fireEvent.click(updateButton);
       await waitFor(() => {
-        expect(screen.getByText(/Order id: 4/)).toBeInTheDocument();
+        expect(screen.getByText(/Order id: a4/)).toBeInTheDocument();
         testDummyComponent(order);
       });
 
       fireEvent.click(resetButton);
       await waitFor(() => {
-        expect(screen.getByText(/Order id: 0/)).toBeInTheDocument();
+        expect(screen.getByText(/Order id: /)).toBeInTheDocument();
         testDummyComponent(createEmptyOrder());
       });
     });
 
     it('checks the empty order is stored in the cache system', async () => {
       const order: Order = new Order({
-        id: 4,
+        id: 'a4',
         details: {
-          id: 5,
+          id: 'a5',
           name: 'name 2',
           address: 'address 2',
           image: 'image 3',
@@ -216,7 +216,7 @@ describe('Test OrderContext component', () => {
       // Click in update button
       fireEvent.click(updateButton);
       await waitFor(() => {
-        expect(screen.getByText(/Order id: 4/)).toBeInTheDocument();
+        expect(screen.getByText(/Order id: a4/)).toBeInTheDocument();
         testDummyComponent(order);
       });
 

@@ -12,8 +12,17 @@ export class Order {
   /**
    * Get the order Id.
    */
-  getId(): number {
+  getId(): string {
     return this.order.id;
+  }
+
+  /**
+   * Set a new id.
+   *
+   * @param newId
+   */
+  setId(newId: string) {
+    this.order.id = newId;
   }
 
   /**
@@ -138,7 +147,7 @@ export class Order {
  */
 export function createEmptyOrder(): Order {
   const details: NewOrderAddressDetailsType = {
-    id: 0,
+    id: '',
     name: '',
     address: '',
     image: '',
@@ -147,7 +156,7 @@ export function createEmptyOrder(): Order {
 
   return new Order({
     details,
-    id: 0,
+    id: '',
     items: [],
     payment: PaymentMethod.cash,
     status: OrderStatus.noConfirmed,

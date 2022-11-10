@@ -126,7 +126,7 @@ const Order = ({toggleOrderModal}: OrderProps) => {
     isDelivery: boolean,
   ) => {
     order.setDetails({
-      id: 0,
+      id: 'a1',
       address,
       name: title,
       image,

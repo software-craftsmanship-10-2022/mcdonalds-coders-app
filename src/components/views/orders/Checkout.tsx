@@ -3,6 +3,8 @@ import {useNavigate} from 'react-router-dom';
 import {Form, FormGroup, Input, Label} from 'reactstrap';
 import TransferInputs from 'src/components/form/TransferInputs';
 import McRadio from 'src/components/radio/McRadio';
+import {useOrderContext} from 'src/context/OrderContext';
+import useLocalStorage from 'src/hooks/useLocalStorage';
 import Account from 'src/Payment/models/Account/Account';
 import Card from 'src/Payment/models/Card/Card';
 import Cash from 'src/Payment/models/Cash/Cash';
@@ -13,14 +15,13 @@ import type Payment from 'src/Payment/models/Payment/Payment';
 import Transfer from 'src/Payment/models/Transfer/Transfer';
 import type {OrderType} from '../../../@types/order';
 import {PAYMENT_TYPE, STORAGE, URLS} from '../../../config';
-import {useOrderContext} from '../../../context/OrderContext';
 import useFormat from '../../../hooks/useFormat';
-import useLocalStorage from '../../../hooks/useLocalStorage';
 import McButton from '../../buttons/McButton';
 import PaymentInputs from '../../form/PaymentInputs';
 import UserForm from '../../form/UserForm';
 import InfoModal from '../../modal/InfoModal';
 import './Checkout.css';
+import {useIsValidatedType} from './hooks';
 
 type CardDetailsType = {
   number: string;
@@ -236,7 +237,8 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
 const Checkout = () => {
   const navigate = useNavigate();
   // User validation check
-  const [isValidated, setIsValidated] = useState(false);
+  const {isUserValidated, updateUserValidatedStatus} = useIsValidatedType();
+
   const {order, updateOrder} = useOrderContext();
   const {getStorageItem} = useLocalStorage();
 
@@ -249,7 +251,7 @@ const Checkout = () => {
     // @TODO refactor localstorage
     const user = getStorageItem(STORAGE.users); // eslint-disable-line
     if (user) {
-      setIsValidated(true);
+      updateUserValidatedStatus(true);
     }
   }, [order, navigate, getStorageItem]);
 
@@ -263,8 +265,8 @@ const Checkout = () => {
 
   return (
     <div className="Checkout">
-      {!isValidated && <UserForm setIsValidated={setIsValidated} />}
-      {isValidated && <Detail order={order} confirmOrder={confirmOrder} />}
+      {!isUserValidated && <UserForm setIsValidated={updateUserValidatedStatus} />}
+      {isUserValidated && <Detail order={order} confirmOrder={confirmOrder} />}
     </div>
   );
 };

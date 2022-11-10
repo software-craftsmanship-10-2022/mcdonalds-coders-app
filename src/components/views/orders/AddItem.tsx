@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
+import type {MenuType} from 'src/@types/product';
 import type {OrderItemType} from '../../../@types/order';
 import {IMG_PATH, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
@@ -25,27 +26,17 @@ const AddItem = () => {
 
   // Add selected qty of this item and adds them to the order
   const handleClick = () => {
-    const existingItem = order.items.find((item) => item.name === itemData.title);
-    // If the item exists in the current order,
-    // just add the count to it to avoid duplications
-    if (existingItem) {
-      existingItem.quantity += count;
-      updateOrder(order);
-    } else {
-      const newItem: OrderItemType = {
-        quantity: count,
-        name: itemData.title,
-        img: itemData.img,
-        pricePerUnit: itemData.price,
-      };
+    const menu: MenuType = {
+      id: itemData.id,
+      image: itemData.img,
+      name: itemData.title,
+      price: itemData.price,
+      products: [],
+    };
 
-      order.items.push(newItem);
-
-      updateOrder({
-        ...order,
-        total: order.total + newItem.pricePerUnit * count,
-      });
-    }
+    Array.from({length: count}, (_, index) => index).forEach(() => {
+      order.addItem(menu);
+    });
 
     navigate(-1);
   };

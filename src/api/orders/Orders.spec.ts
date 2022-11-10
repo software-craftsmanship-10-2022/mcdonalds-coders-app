@@ -148,6 +148,28 @@ describe('Check class Order', () => {
     order.setDetails(details);
     expect(order.getDetails()).toEqual(details);
   });
+
+  it('calculates the total of the items', () => {
+    // @TODO In future replace by real MenuType variables.
+    order.addItem({price: 100} as unknown as MenuType);
+    order.addItem({price: 200} as unknown as MenuType);
+    order.addItem({price: 300} as unknown as MenuType);
+
+    expect(order.getTotalPrice()).toBe(600);
+  });
+
+  it('calculates the total filtering by menu id', () => {
+    // @TODO In future replace by real MenuType variables.
+    order.addItem({price: 100, id: 'a'} as unknown as MenuType);
+    order.addItem({price: 200, id: 'b'} as unknown as MenuType);
+    order.addItem({price: 300, id: 'a'} as unknown as MenuType);
+    order.addItem({price: 300, id: 'c'} as unknown as MenuType);
+    order.addItem({price: 500, id: 'c'} as unknown as MenuType);
+
+    expect(order.getTotalPriceByMenu('a')).toBe(400);
+    expect(order.getTotalPriceByMenu('b')).toBe(200);
+    expect(order.getTotalPriceByMenu('c')).toBe(800);
+  });
 });
 
 describe('Test function `createEmptyOrder`', () => {

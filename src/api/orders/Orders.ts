@@ -38,7 +38,7 @@ export class Order {
    * @return
    */
   getItems(): MenuType[] {
-    return this.order.items as MenuType[];
+    return this.order.items;
   }
 
   /**
@@ -60,6 +60,19 @@ export class Order {
    */
   resetItems(): void {
     this.order.items = [];
+  }
+
+  /**
+   * Get the price total of the items in the `items` list.
+   */
+  getTotalPrice(): number {
+    return this.order.items.reduce((total: number, {price}) => total + price, 0);
+  }
+
+  getTotalPriceByMenu(menuId: string) {
+    return this.order.items
+      .filter((item) => item.id === menuId)
+      .reduce((total, {price}) => total + price, 0);
   }
 
   /**

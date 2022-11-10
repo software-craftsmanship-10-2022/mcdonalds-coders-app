@@ -109,7 +109,7 @@ const Order = ({toggleOrderModal}: OrderProps) => {
   }, [location, activeMode]);
 
   // Restrict access when an order is in place
-  if (order.confirmed) {
+  if (order.isConfirmed()) {
     toggleOrderModal();
     return <Navigate to={URLS.root} replace />;
   }
@@ -119,16 +119,21 @@ const Order = ({toggleOrderModal}: OrderProps) => {
     setMapMarkers(mode ? MARKERS : []);
   };
 
-  const handleStoreSelect = (title: string, location: string, img: string, isDelivery: boolean) => {
-    updateOrder({
-      ...order,
-      details: {
-        name: title,
-        address: location,
-        img,
-        isDelivery,
-      },
+  const handleStoreSelect = (
+    title: string,
+    address: string,
+    image: string,
+    isDelivery: boolean,
+  ) => {
+    order.setDetails({
+      id: 0,
+      address,
+      name: title,
+      image,
+      isDelivery,
     });
+
+    updateOrder(order);
   };
 
   return (

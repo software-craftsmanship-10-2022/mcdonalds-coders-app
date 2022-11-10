@@ -1,5 +1,5 @@
 import type {Order} from '../api/orders/Orders';
-import {MenuType} from './product';
+import type {MenuType} from './product';
 
 export type OrderType = {
   details: OrderAddressDetailsType;
@@ -59,5 +59,5 @@ export type NewOrderAddressDetailsType = {
   name: string;
   address: string;
   image: string;
-  isDelivery: boolean,
+  isDelivery: boolean;
 };

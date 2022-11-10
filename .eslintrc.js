@@ -59,7 +59,7 @@ module.exports = {
         '@typescript-eslint/ban-types': [
           'error',
           {
-            extendDefault: true,
+            extendDefaults: true,
             types: {
               null: false,
             },

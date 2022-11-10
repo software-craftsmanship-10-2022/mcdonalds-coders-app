@@ -12,16 +12,18 @@ const CurrentOrder = () => {
   const [currencyFormatter] = useFormat();
 
   // Restrict access when an order is in place
-  if (!order || !order.confirmed) {
+  if (!order?.isConfirmed()) {
     return <Navigate to={URLS.root} replace />;
   }
+
+  const details = order.getDetails();
 
   const cancelOrder = () => {
     resetOrder();
     navigate(URLS.root);
   };
 
-  const addressTitle = order.details.isDelivery ? 'Domicilio' : 'Dirección de retiro en el local';
+  const addressTitle = details.isDelivery ? 'Domicilio' : 'Dirección de retiro en el local';
 
   return (
     <div className="CurrentOrder">
@@ -33,7 +35,7 @@ const CurrentOrder = () => {
         <h3>
           <strong>{addressTitle}</strong>
         </h3>
-        <h3>{order.details.address.split(',').slice(0, 3).join(', ')}</h3>
+        <h3>{details.address.split(',').slice(0, 3).join(', ')}</h3>
       </div>
       <QRCode value="https://mcdapp.vercel.app" size={256} bgColor={'#ffc72c'} />
       <div className="info">
@@ -42,11 +44,11 @@ const CurrentOrder = () => {
         </h1>
         <h3>
           <strong>Método de Pago: </strong>
-          {order.paymentType}
+          {order.getPayment()}
         </h3>
         <h3>
           <strong>Total: </strong>
-          {currencyFormatter().format(order.total)}
+          {currencyFormatter().format(order.getTotalPrice())}
         </h3>
       </div>
       <McButton

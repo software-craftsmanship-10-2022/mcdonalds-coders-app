@@ -23,10 +23,8 @@ const CurrentOrder = () => {
   }
 
   useEffect(() => {
-    if (order) {
-      changeOrderStatus(order.id, OrderStatus.preparing, TWO_SECONDS);
-      changeOrderStatus(order.id, OrderStatus.delivering, TWO_SECONDS * 2);
-    }
+    changeOrderStatus(order.id, OrderStatus.preparing, TWO_SECONDS);
+    changeOrderStatus(order.id, OrderStatus.delivering, TWO_SECONDS * 2);
   }, []);
 
   const changeOrderStatus = (orderId: string, status: OrderStatus, time: number) => {

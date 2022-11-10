@@ -13,7 +13,6 @@ class Transfer extends Payment {
     super.pay();
     this.account.isValid();
 
-    // TODO pay cash
     this.order.totalAmount();
     this.donation.amountValue();
   }

@@ -12,7 +12,6 @@ class Debit extends Payment {
   pay() {
     super.pay();
     this.card.isValid();
-    // TODO pay cash
     this.order.totalAmount();
     this.donation.amountValue();
   }

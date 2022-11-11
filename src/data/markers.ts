@@ -2,6 +2,7 @@ import type {MarkerType} from '../@types/marker';
 
 const MARKERS: MarkerType[] = [
   {
+    id: 1,
     title: 'BOULEVARD ADROGUE SHOPPING',
     img: 'indicador.png',
     location: 'H. Yrigoyen 13200 Adrogue',
@@ -9,6 +10,7 @@ const MARKERS: MarkerType[] = [
     lng: -58.391984558790625,
   },
   {
+    id: 2,
     title: 'AV. ESPORA ADROGUE',
     img: 'indicador.png',
     location: 'Av. Tomas Espora 611 Adrogue',
@@ -16,6 +18,7 @@ const MARKERS: MarkerType[] = [
     lng: -58.39221154793112,
   },
   {
+    id: 3,
     title: 'LOMAS CENTRO SHOPPING',
     img: 'indicador.png',
     location: 'Av. Antartida Arg. 703 Lomas de Zamora',
@@ -23,6 +26,7 @@ const MARKERS: MarkerType[] = [
     lng: -58.38949553517521,
   },
   {
+    id: 4,
     title: 'TEMPERLEY COTO',
     img: 'indicador.png',
     location: 'Av. Presidente Hipolito Yrigoyen 10699 Temperley',
@@ -30,6 +34,7 @@ const MARKERS: MarkerType[] = [
     lng: -58.38616948850077,
   },
   {
+    id: 5,
     title: 'PEATONAL LOMAS DE ZAMORA',
     img: 'indicador.png',
     location: 'Peatona Laprida 177 Lomas de Zamora',
@@ -37,6 +42,7 @@ const MARKERS: MarkerType[] = [
     lng: -58.39928551358787,
   },
   {
+    id: 6,
     title: 'LOMAS DE ZAMORA',
     img: 'indicador.png',
     location: 'Av. Hipolito Yrigoyen 8230 Lomas de Zamora',
@@ -44,6 +50,7 @@ const MARKERS: MarkerType[] = [
     lng: -58.40065839448942,
   },
   {
+    id: 7,
     title: '9 DE JULIO - LANUS',
     img: 'indicador.png',
     location: '9 de Julio 1194 Lanus',
@@ -51,6 +58,7 @@ const MARKERS: MarkerType[] = [
     lng: -58.39911336321022,
   },
   {
+    id: 8,
     title: 'LANUS',
     img: 'indicador.png',
     location: 'Av. Hipolito Yrigoyen 4475 Lanus',
@@ -58,6 +66,7 @@ const MARKERS: MarkerType[] = [
     lng: -58.40584473442899,
   },
   {
+    id: 9,
     title: 'BANFIELD',
     img: 'indicador.png',
     location: 'Av. Hipolito Yrigoyen 7545 Banfield',
@@ -65,6 +74,7 @@ const MARKERS: MarkerType[] = [
     lng: -58.401607483546044,
   },
   {
+    id: 10,
     title: 'ALTO AVELLANEDA AUTOMAC',
     img: 'indicador.png',
     location: 'Guemes 897 Alto Avellaneda',
@@ -72,6 +82,7 @@ const MARKERS: MarkerType[] = [
     lng: -58.458020038808264,
   },
   {
+    id: 11,
     title: 'AV. MITRE AVELLANEDA',
     img: 'indicador.png',
     location: 'Av. Mitre 639 Avellaneda',

@@ -10,7 +10,7 @@ import Discount from './components/views/discounts/Discount';
 import Home from './components/views/home/Home';
 import AddItem from './components/views/orders/AddItem';
 import Cart from './components/views/orders/Cart';
-import Checkout from './components/views/orders/Checkout';
+import CheckoutSwitcher from './components/views/orders/CheckoutSwitcher';
 import ComboList from './components/views/orders/ComboList';
 import CurrentOrder from './components/views/orders/CurrentOrder';
 import Order from './components/views/orders/Order';
@@ -42,7 +42,7 @@ const App = () => {
               <Route path={URLS.orders}>
                 <Route index element={<Order toggleOrderModal={toggleOrderModal} />} />
                 <Route path={URLS.ordersCart} element={<Cart />} />
-                <Route path={URLS.ordersCheckout} element={<Checkout />} />
+                <Route path={URLS.ordersCheckout} element={<CheckoutSwitcher />} />
                 <Route path={URLS.ordersCurrent} element={<CurrentOrder />} />
                 <Route path={URLS.ordersAdd} element={<ComboList />} />
                 <Route path={URLS.ordersAdd + ':category/:id'} element={<AddItem />} />

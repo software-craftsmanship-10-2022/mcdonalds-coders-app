@@ -9,7 +9,7 @@ import './Checkout.css';
 import DetailOrder from './DetailOrder';
 import {useIsValidated} from './hooks';
 
-const Checkout = () => {
+const CheckoutSwitcher = () => {
   const navigate = useNavigate();
   // User validation check
   const {isUserValidated, updateUserValidatedStatus} = useIsValidated();
@@ -46,4 +46,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default CheckoutSwitcher;

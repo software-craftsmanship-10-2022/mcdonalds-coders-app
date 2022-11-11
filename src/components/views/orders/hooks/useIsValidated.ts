@@ -5,7 +5,7 @@ type UseIsValidatedType = {
   updateUserValidatedStatus: (isValid: boolean) => void;
 };
 
-const useIsValidatedType = (): UseIsValidatedType => {
+const useIsValidated = (): UseIsValidatedType => {
   const [isValidated, setIsValidated] = useState(false);
   const updateUserValidatedStatus = (isValid: boolean): void => {
     setIsValidated(isValid);
@@ -17,4 +17,4 @@ const useIsValidatedType = (): UseIsValidatedType => {
   };
 };
 
-export default useIsValidatedType;
+export default useIsValidated;

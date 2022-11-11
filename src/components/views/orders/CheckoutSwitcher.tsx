@@ -5,8 +5,8 @@ import useLocalStorage from 'src/hooks/useLocalStorage';
 import type Payment from 'src/Payment/models/Payment/Payment';
 import {STORAGE, URLS} from '../../../config';
 import UserForm from '../../form/UserForm';
+import Checkout from './Checkout';
 import './Checkout.css';
-import DetailOrder from './DetailOrder';
 import {useIsValidated} from './hooks';
 
 const CheckoutSwitcher = () => {
@@ -41,7 +41,7 @@ const CheckoutSwitcher = () => {
   return (
     <div className="Checkout">
       {!isUserValidated && <UserForm setIsValidated={updateUserValidatedStatus} />}
-      {isUserValidated && <DetailOrder order={order} confirmOrder={confirmOrder} />}
+      {isUserValidated && <Checkout order={order} confirmOrder={confirmOrder} />}
     </div>
   );
 };

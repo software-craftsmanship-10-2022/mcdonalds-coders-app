@@ -16,6 +16,7 @@ import Donation from 'src/Payment/models/Donation/Donation';
 import Order from 'src/Payment/models/Order/Order';
 import type Payment from 'src/Payment/models/Payment/Payment';
 import Transfer from 'src/Payment/models/Transfer/Transfer';
+import OrderDetail from './OrderDetail';
 
 type CardDetailsType = {
   number: string;
@@ -28,7 +29,7 @@ type DetailProps = {
   confirmOrder: (payment: Payment, selectedMethod: string) => void;
 };
 
-const DetailOrder = ({order, confirmOrder}: DetailProps) => {
+const Checkout = ({order, confirmOrder}: DetailProps) => {
   const addressTitle = order.details.isDelivery ? 'Domicilio' : 'Dirección de retiro en el local';
   const [selectedMethod, setSelectedMethod] = useState(PAYMENT_TYPE.cash);
   const [currencyFormatter] = useFormat();
@@ -109,27 +110,7 @@ const DetailOrder = ({order, confirmOrder}: DetailProps) => {
   return (
     <div className="Detail">
       <div className="detail-box">
-        <h1 className="title">
-          <strong>Detalle del pedido</strong>
-        </h1>
-        <div className="address">
-          <h3>
-            <strong>{addressTitle}</strong>
-          </h3>
-          <h3>{order.details.address}</h3>
-        </div>
-        <div className="items">
-          <h3>
-            <strong>Resumen</strong>
-          </h3>
-          {order.items.map((value, index) => (
-            <div className="item" key={index}>
-              <p className="name">{value.name}</p>
-              <p>{`x${value.quantity}`}</p>
-              <p>{currencyFormatter().format(value.pricePerUnit * value.quantity)}</p>
-            </div>
-          ))}
-        </div>
+        <OrderDetail order={order} />
         <Form>
           <FormGroup tag="fieldset">
             <h1>
@@ -228,4 +209,4 @@ const DetailOrder = ({order, confirmOrder}: DetailProps) => {
   );
 };
 
-export default DetailOrder;
+export default Checkout;

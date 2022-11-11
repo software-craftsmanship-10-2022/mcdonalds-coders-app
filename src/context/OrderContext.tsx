@@ -29,12 +29,17 @@ export const OrderProvider = ({children}: OrderProviderProps) => {
 
   useEffect(() => {
     (async () => {
+      console.log('saving', order);
       await storage.setOrder(order);
     })();
   }, [order]);
 
+  const updateOrder = (order: Order) => {
+    setOrder(order.clone());
+  };
+
   return (
-    <ORDER_CONTEXT.Provider value={{order, updateOrder: setOrder, resetOrder}}>
+    <ORDER_CONTEXT.Provider value={{order, updateOrder, resetOrder}}>
       {children}
     </ORDER_CONTEXT.Provider>
   );

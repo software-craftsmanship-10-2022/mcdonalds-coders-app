@@ -138,6 +138,14 @@ export class Order {
   setDetails(details: NewOrderAddressDetailsType) {
     this.order.details = details;
   }
+
+  /**
+   * Get a copy of the instance.
+   */
+  clone(): Order {
+    const details: NewOrderAddressDetailsType = {...this.order.details};
+    return new Order({...this.order, details});
+  }
 }
 
 /**

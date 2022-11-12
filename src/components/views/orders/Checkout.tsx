@@ -19,7 +19,13 @@ import type Payment from 'src/Payment/models/Payment/Payment';
 import Transfer from 'src/Payment/models/Transfer/Transfer';
 import PaymentForm from '../../form/PaymentForm';
 import OrderDetail from '../../orders/OrderDetail';
-import {useBankInfo, useCardInfo, useDonation, useIsCardValid} from './hooks';
+import {
+  useBankInfo,
+  useCardInfo,
+  useDonation,
+  useIsCardValid,
+  usePaymentWarningModal,
+} from './hooks';
 
 type CardDetailsType = {
   number: string;
@@ -44,17 +50,17 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
   // Donation radios
   const {formDonationIsVisible, donationValue, updateDonationFormVisibility, updateDonationValue} =
     useDonation();
-
   // Warning modal
-  const [modalMessage, setModalMessage] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const toggleModal = () => {
-    setShowModal(!showModal);
-  };
+  const {
+    modalWarningMessage,
+    updateModalWarningMessage,
+    warningModalIsVisible,
+    toggleWarningModalVisibility,
+  } = usePaymentWarningModal();
 
   const handleCardWarning = (message: string) => {
-    setModalMessage(message);
-    toggleModal();
+    updateModalWarningMessage(message);
+    toggleWarningModalVisibility();
   };
 
   const handleDonationForm = (isFormOpen: boolean) => {
@@ -159,7 +165,12 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
         }}
         fixed
       />
-      <InfoModal toggle={toggleModal} isOpen={showModal} title="Atención" message={modalMessage} />
+      <InfoModal
+        toggle={toggleWarningModalVisibility}
+        isOpen={warningModalIsVisible}
+        title="Atención"
+        message={modalWarningMessage}
+      />
     </div>
   );
 };

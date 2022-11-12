@@ -3,6 +3,7 @@ import useCardInfo from './useCardInfo';
 import useDonation from './useDonation';
 import useIsCardValid from './useIsCardValid';
 import useIsUserValidated from './useIsUserValidated';
+import usePaymentMethod from './usePaymentMethod';
 import usePaymentWarningModal from './usePaymentWarningModal';
 
 export {
@@ -11,5 +12,6 @@ export {
   useDonation,
   useIsCardValid,
   useIsUserValidated,
+  usePaymentMethod,
   usePaymentWarningModal,
 };

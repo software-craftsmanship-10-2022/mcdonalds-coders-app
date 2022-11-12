@@ -1,5 +1,4 @@
 import type {Dispatch, SetStateAction} from 'react';
-import {useState} from 'react';
 import {FormGroup, Input, Label} from 'reactstrap';
 import type {OrderType} from 'src/@types/order';
 import McButton from 'src/components/buttons/McButton';
@@ -24,6 +23,7 @@ import {
   useCardInfo,
   useDonation,
   useIsCardValid,
+  usePaymentMethod,
   usePaymentWarningModal,
 } from './hooks';
 
@@ -35,22 +35,17 @@ type CardDetailsType = {
 
 type DetailProps = {
   order: OrderType;
-  confirmOrder: (payment: Payment, selectedMethod: string) => void;
+  confirmOrder: (payment: Payment, paymentMethod: string) => void;
 };
 
 const Checkout = ({order, confirmOrder}: DetailProps) => {
-  const [selectedMethod, setSelectedMethod] = useState(PAYMENT_TYPE.cash);
   const [currencyFormatter] = useFormat();
-  // Card information
+  const {paymentMethod, updatePaymentMethod} = usePaymentMethod(PAYMENT_TYPE.cash);
   const {cardData, cardUpdate} = useCardInfo();
-  // Bank information
   const {bankData, bankUpdate} = useBankInfo();
-  // Card validation check
   const {updateCardValidity} = useIsCardValid();
-  // Donation radios
   const {formDonationIsVisible, donationValue, updateDonationFormVisibility, updateDonationValue} =
     useDonation();
-  // Warning modal
   const {
     modalWarningMessage,
     updateModalWarningMessage,
@@ -79,7 +74,7 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
     const donation = new Donation(donationValue);
 
     try {
-      switch (selectedMethod) {
+      switch (paymentMethod) {
         case PAYMENT_TYPE.debit: {
           const card = new Card(cardData.number, cardData.date, Number(cardData.cvc));
           if (card.isValid()) {
@@ -103,7 +98,7 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
           break;
       }
 
-      if (payment) confirmOrder(payment, selectedMethod);
+      if (payment) confirmOrder(payment, paymentMethod);
     } catch (error: unknown) {
       let message = 'Unknown Error';
       if (error instanceof Error) message = error.message;
@@ -115,8 +110,8 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
     <div className="Detail">
       <div className="detail-box">
         <OrderDetail order={order} />
-        <PaymentForm handleSelectedMethod={setSelectedMethod} />
-        {selectedMethod === PAYMENT_TYPE.debit && (
+        <PaymentForm handleSelectedMethod={updatePaymentMethod} />
+        {paymentMethod === PAYMENT_TYPE.debit && (
           <PaymentInputs
             setCardCVC={cardUpdate.cvc}
             setCardDate={cardUpdate.date}
@@ -124,7 +119,7 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
             setCardIsValid={updateCardValidity}
           />
         )}
-        {selectedMethod === PAYMENT_TYPE.transfer && (
+        {paymentMethod === PAYMENT_TYPE.transfer && (
           <TransferInputs setFullName={bankUpdate.fullName} setSWIFT={bankUpdate.iban} />
         )}
         <FormGroup check className="donation-checkbox">

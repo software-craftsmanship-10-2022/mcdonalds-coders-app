@@ -83,7 +83,7 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
         case PAYMENT_TYPE.debit: {
           const card = new Card(cardNumber, cardDate, Number(cardCVC));
           if (card.isValid()) {
-            payment = new Debit(new Order(order.total), donation, card);
+            payment = new Debit(new Order(order.total, order.items, order.details), donation, card);
           }
 
           break;
@@ -93,13 +93,17 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
           {
             const account = new Account(fullName, swift);
             if (account.isValid()) {
-              payment = new Transfer(new Order(order.total), donation, account);
+              payment = new Transfer(
+                new Order(order.total, order.items, order.details),
+                donation,
+                account,
+              );
             }
           }
 
           break;
         default:
-          payment = new Cash(new Order(order.total), donation);
+          payment = new Cash(new Order(order.total, order.items, order.details), donation);
           break;
       }
 
@@ -255,7 +259,6 @@ const Checkout = () => {
 
   const confirmOrder = (payment: Payment, selectedMethod: string) => {
     updateOrder({...order, confirmed: true, paymentType: selectedMethod});
-    console.log(payment);
     payment.pay();
     // Console.log(details);
     navigate(URLS.root);

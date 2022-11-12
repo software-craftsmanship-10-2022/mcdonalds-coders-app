@@ -18,7 +18,7 @@ import type Payment from 'src/Payment/models/Payment/Payment';
 import Transfer from 'src/Payment/models/Transfer/Transfer';
 import PaymentForm from '../../form/PaymentForm';
 import OrderDetail from '../../orders/OrderDetail';
-import {useBankInfo, useCardInfo} from './hooks';
+import {useBankInfo, useCardInfo, useIsCardValid} from './hooks';
 
 type CardDetailsType = {
   number: string;
@@ -38,9 +38,8 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
   const {cardData, cardUpdate} = useCardInfo();
   // Bank information
   const {bankData, bankUpdate} = useBankInfo();
-
   // Card validation check
-  const [cardIsValid, setCardIsValid] = useState(false);
+  const {updateCardValidity} = useIsCardValid();
 
   // Warning modal
   const [modalMessage, setModalMessage] = useState('');
@@ -116,7 +115,7 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
             setCardCVC={cardUpdate.cvc}
             setCardDate={cardUpdate.date}
             setCardNumber={cardUpdate.number}
-            setCardIsValid={setCardIsValid}
+            setCardIsValid={updateCardValidity}
           />
         )}
         {selectedMethod === PAYMENT_TYPE.transfer && (

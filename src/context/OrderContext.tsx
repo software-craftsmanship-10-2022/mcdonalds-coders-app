@@ -29,7 +29,6 @@ export const OrderProvider = ({children}: OrderProviderProps) => {
 
   useEffect(() => {
     (async () => {
-      console.log('saving', order);
       await storage.setOrder(order);
     })();
   }, [order]);

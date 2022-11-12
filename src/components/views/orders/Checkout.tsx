@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Form, FormGroup, Input, Label} from 'reactstrap';
+import {FormGroup, Input, Label} from 'reactstrap';
 import type {OrderType} from 'src/@types/order';
 import McButton from 'src/components/buttons/McButton';
 import PaymentInputs from 'src/components/form/PaymentInputs';
@@ -16,6 +16,7 @@ import Donation from 'src/Payment/models/Donation/Donation';
 import Order from 'src/Payment/models/Order/Order';
 import type Payment from 'src/Payment/models/Payment/Payment';
 import Transfer from 'src/Payment/models/Transfer/Transfer';
+import PaymentForm from '../../form/PaymentForm';
 import OrderDetail from './OrderDetail';
 
 type CardDetailsType = {
@@ -30,7 +31,6 @@ type DetailProps = {
 };
 
 const Checkout = ({order, confirmOrder}: DetailProps) => {
-  const addressTitle = order.details.isDelivery ? 'Domicilio' : 'Dirección de retiro en el local';
   const [selectedMethod, setSelectedMethod] = useState(PAYMENT_TYPE.cash);
   const [currencyFormatter] = useFormat();
   // Card information
@@ -111,55 +111,7 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
     <div className="Detail">
       <div className="detail-box">
         <OrderDetail order={order} />
-        <Form>
-          <FormGroup tag="fieldset">
-            <h1>
-              <strong>Método de pago</strong>
-            </h1>
-            <div className="radio-group">
-              <FormGroup check>
-                <Label check className="pay-method-label">
-                  <Input
-                    type="radio"
-                    defaultChecked={true}
-                    name="paymethod"
-                    className="pay-method-radio"
-                    onClick={() => {
-                      setSelectedMethod(PAYMENT_TYPE.cash);
-                    }}
-                  />
-                  {PAYMENT_TYPE.cash}
-                </Label>
-              </FormGroup>
-              <FormGroup check>
-                <Label check className="pay-method-label">
-                  <Input
-                    type="radio"
-                    name="paymethod"
-                    className="pay-method-radio"
-                    onClick={() => {
-                      setSelectedMethod(PAYMENT_TYPE.debit);
-                    }}
-                  />
-                  {PAYMENT_TYPE.debit}
-                </Label>
-              </FormGroup>
-              <FormGroup check>
-                <Label check className="pay-method-label">
-                  <Input
-                    type="radio"
-                    name="paymethod"
-                    className="pay-method-radio"
-                    onClick={() => {
-                      setSelectedMethod(PAYMENT_TYPE.transfer);
-                    }}
-                  />
-                  {PAYMENT_TYPE.transfer}
-                </Label>
-              </FormGroup>
-            </div>
-          </FormGroup>
-        </Form>
+        <PaymentForm handleSelectedMethod={setSelectedMethod} />
         {selectedMethod === PAYMENT_TYPE.debit && (
           <PaymentInputs
             setCardCVC={setCardCVC}

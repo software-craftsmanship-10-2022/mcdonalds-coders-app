@@ -1,11 +1,11 @@
 import {useState} from 'react';
 
-type UseIsValidatedType = {
+type UseIsUserValidatedType = {
   isUserValidated: boolean;
   updateUserValidatedStatus: (isValid: boolean) => void;
 };
 
-const useIsValidated = (): UseIsValidatedType => {
+const useIsUserValidated = (): UseIsUserValidatedType => {
   const [isValidated, setIsValidated] = useState(false);
   const updateUserValidatedStatus = (isValid: boolean): void => {
     setIsValidated(isValid);
@@ -17,4 +17,4 @@ const useIsValidated = (): UseIsValidatedType => {
   };
 };
 
-export default useIsValidated;
+export default useIsUserValidated;

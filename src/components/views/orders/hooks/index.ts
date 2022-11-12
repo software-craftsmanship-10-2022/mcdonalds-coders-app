@@ -1,4 +1,4 @@
 import useCardInfo from './useCardInfo';
-import useIsValidated from './useIsValidated';
+import useIsUserValidated from './useIsUserValidated';
 
-export {useCardInfo, useIsValidated};
+export {useCardInfo, useIsUserValidated};

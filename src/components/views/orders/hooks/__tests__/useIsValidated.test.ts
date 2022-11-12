@@ -1,9 +1,9 @@
 import {act, renderHook} from '@testing-library/react';
-import useIsValidated from '../useIsValidated';
+import useIsUserValidated from '../useIsUserValidated';
 
-describe('given useIsValidated custom hook', () => {
+describe('given useIsUserValidated custom hook', () => {
   test('when custom hook is called then expected object should be returned', () => {
-    const {result: hookOutput} = renderHook(() => useIsValidated());
+    const {result: hookOutput} = renderHook(() => useIsUserValidated());
 
     expect(hookOutput.current.isUserValidated).toBe(false);
     expect(hookOutput.current.updateUserValidatedStatus).toBeDefined();
@@ -11,7 +11,7 @@ describe('given useIsValidated custom hook', () => {
   });
 
   test('when updateUserValidatedStatus function is called then state should be updated as expecte', () => {
-    const {result: hookOutput} = renderHook(() => useIsValidated());
+    const {result: hookOutput} = renderHook(() => useIsUserValidated());
 
     act(() => {
       hookOutput.current.updateUserValidatedStatus(true);

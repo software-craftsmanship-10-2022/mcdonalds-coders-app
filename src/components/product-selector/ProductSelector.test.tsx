@@ -1,49 +1,9 @@
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 import {IMG_PATH} from 'src/config';
+import PRODUCTS from 'src/data/products';
 import ProductSelector from './ProductSelector';
 
-const productCategory = {
-  category: 'Papas y Complementos',
-  id: 'complements',
-  items: [
-    {
-      img: 'Papas-pequeñas.png',
-      title: 'Papas pequeñas',
-      description:
-        'Calientes, crujientes y deliciosas, tus aliadas perfectas para cualquier comida. Disfrutá de nuestras papas mundialmente famosas, desde la primera hasta la última en su versión pequeña.',
-    },
-    {
-      img: 'Papas-Medianas.png',
-      title: 'Papas Medianas',
-      description:
-        'Nuestro sello. Las aliadas perfectas para cualquier comida. Disfrutá de nuestras papas mundialmente famosas, desde la primera hasta la última. Crujientes y deliciosas, no vas a parar hasta terminarlas todas.',
-    },
-    {
-      img: 'Papas-Grandes.png',
-      title: 'Papas Grandes',
-      description:
-        'Calientes, crujientes y deliciosas, tus aliadas perfectas para cualquier comida. Disfrutá de nuestras papas mundialmente famosas, desde la primera hasta la última.',
-    },
-    {
-      img: 'Papas-Kids.png',
-      title: 'Papas-Kids',
-      description:
-        'Nuestras clásicas papas fritas doradas y crocantes con la sal justa y en un porción adecuada para los niños.',
-    },
-    {
-      img: 'Papas-con-Cheddar-&-Bacon.png',
-      title: 'Papas con Cheddar & Bacon',
-      description:
-        'Calientes, crujientes y deliciosas, una nueva variedad llega para quedarse: Papas Fritas Cheddar fundido y trocitos de bacon.',
-    },
-    {
-      img: 'Side-Salad.png',
-      title: 'Side Salad',
-      description:
-        'Una opción para los que saben que una ensalada no es aburrida. Para los que saben que nuestras ensaladas son mucho más que verduras. Son las mejores variedades de hojas verdes y tomates Cherrys, ansiosas por acompañar tu hamburguesa.',
-    },
-  ],
-};
+const productCategory = PRODUCTS.find((category) => category.category === 'Papas y Complementos')!;
 
 describe('Given ProductSelector component', () => {
   let onSelectProduct: jest.Mock;
@@ -52,7 +12,7 @@ describe('Given ProductSelector component', () => {
     render(
       <ProductSelector
         productCategory={productCategory}
-        selectedProductTitle={productCategory.items[3].title}
+        selectedProductId={productCategory.items[3].title}
         onSelectProduct={onSelectProduct}
       />,
     );

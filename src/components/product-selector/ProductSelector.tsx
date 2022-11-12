@@ -4,13 +4,13 @@ import './ProductSelector.css';
 
 type ProductSelectorProps = {
   productCategory: ProductCategoryType;
-  selectedProductTitle: string | undefined;
+  selectedProductId: string | undefined;
   onSelectProduct: (product: ProductType) => void;
 };
 
 const ProductSelector = ({
   productCategory,
-  selectedProductTitle,
+  selectedProductId,
   onSelectProduct,
 }: ProductSelectorProps) => {
   return (
@@ -19,7 +19,7 @@ const ProductSelector = ({
       <ProductList
         products={productCategory.items}
         onSelectProduct={onSelectProduct}
-        selectedProductTitle={selectedProductTitle}
+        selectedProductId={selectedProductId}
       />
     </div>
   );
@@ -27,19 +27,19 @@ const ProductSelector = ({
 
 type ProductListProps = {
   products: ProductType[];
-  selectedProductTitle: string | undefined;
+  selectedProductId: string | undefined;
   onSelectProduct: (product: ProductType) => void;
 };
 
-const ProductList = ({products, selectedProductTitle, onSelectProduct}: ProductListProps) => {
+const ProductList = ({products, selectedProductId, onSelectProduct}: ProductListProps) => {
   return (
     <ul className={'product-selector__product-list'}>
       {products.map((item) => (
-        <li key={item.title} className="product-selector__product-item">
+        <li key={item.id} className="product-selector__product-item">
           <ProductItem
             product={item}
             onSelectProduct={onSelectProduct}
-            selectedProductTitle={selectedProductTitle}
+            selectedProductId={selectedProductId}
           />
         </li>
       ))}
@@ -49,17 +49,17 @@ const ProductList = ({products, selectedProductTitle, onSelectProduct}: ProductL
 
 type ProductItemProps = {
   product: ProductType;
-  selectedProductTitle: string | undefined;
+  selectedProductId: string | undefined;
   onSelectProduct: (product: ProductType) => void;
 };
 
-const ProductItem = ({product, selectedProductTitle, onSelectProduct}: ProductItemProps) => {
+const ProductItem = ({product, selectedProductId, onSelectProduct}: ProductItemProps) => {
   const onClickItem = () => {
     onSelectProduct(product);
   };
 
   const checkIsSelected = () => {
-    return product.title === selectedProductTitle;
+    return product.id === selectedProductId;
   };
 
   const ariaLabel = () => (checkIsSelected() ? 'seleccionado' : 'no seleccionado');

@@ -95,13 +95,13 @@ const AddItem = () => {
       <ProductSelector
         productCategory={PRODUCTS.find((category) => category.id === 'complements')!}
         onSelectProduct={onSelectComplement}
-        selectedProductTitle={selectedComplement?.title}
+        selectedProductId={selectedComplement?.id}
       />
 
       <ProductSelector
         productCategory={PRODUCTS.find((category) => category.id === 'drinks')!}
         onSelectProduct={onSelectDrink}
-        selectedProductTitle={selectedDrink?.title}
+        selectedProductId={selectedDrink?.id}
       />
 
       <McButton

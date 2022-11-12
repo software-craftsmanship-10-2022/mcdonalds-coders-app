@@ -21,31 +21,21 @@ const AddItem = () => {
   const {order, updateOrder} = useOrderContext();
   const [currencyFormatter] = useFormat();
   const priceTag = itemData ? currencyFormatter().format(itemData.price) : '';
-  const [selectedDrink, setSelectedDrink] = useState<string | undefined>(undefined);
-  const [selectedComplement, setSelectedComplement] = useState<string | undefined>(undefined);
+  const [selectedComplement, setSelectedComplement] = useState<ProductType | undefined>(undefined);
+  const [selectedDrink, setSelectedDrink] = useState<ProductType | undefined>(undefined);
 
   if (!itemData) {
     return <Navigate to={URLS.ordersAdd} replace />;
   }
 
-  const onSelectDrink = (product: ProductType) => {
-    if (product.title === selectedDrink) {
-      console.log(1);
-      setSelectedDrink(undefined);
-    } else {
-      console.log(2);
-      setSelectedDrink(product.title);
-    }
+  const onSelectComplement = (product: ProductType) => {
+    const newProduct = product.title === selectedComplement?.title ? undefined : product;
+    setSelectedComplement(newProduct);
   };
 
-  const onSelectComplement = (product: ProductType) => {
-    if (product.title === selectedComplement) {
-      console.log(1);
-      setSelectedComplement(undefined);
-    } else {
-      console.log(2);
-      setSelectedComplement(product.title);
-    }
+  const onSelectDrink = (product: ProductType) => {
+    const newProduct = product.title === selectedDrink?.title ? undefined : product;
+    setSelectedDrink(newProduct);
   };
 
   // Add selected qty of this item and adds them to the order
@@ -55,6 +45,8 @@ const AddItem = () => {
     // just add the count to it to avoid duplications
     if (existingItem) {
       existingItem.quantity += count;
+      existingItem.complement = selectedComplement;
+      existingItem.drink = selectedDrink;
       updateOrder(order);
     } else {
       const newItem: OrderItemType = {
@@ -62,6 +54,8 @@ const AddItem = () => {
         name: itemData.title,
         img: itemData.img,
         pricePerUnit: itemData.price,
+        complement: selectedComplement,
+        drink: selectedDrink,
       };
 
       order.items.push(newItem);
@@ -101,13 +95,13 @@ const AddItem = () => {
       <ProductSelector
         productCategory={PRODUCTS.find((category) => category.id === 'complements')!}
         onSelectProduct={onSelectComplement}
-        selectedProductTitle={selectedComplement}
+        selectedProductTitle={selectedComplement?.title}
       />
 
       <ProductSelector
         productCategory={PRODUCTS.find((category) => category.id === 'drinks')!}
         onSelectProduct={onSelectDrink}
-        selectedProductTitle={selectedDrink}
+        selectedProductTitle={selectedDrink?.title}
       />
 
       <McButton

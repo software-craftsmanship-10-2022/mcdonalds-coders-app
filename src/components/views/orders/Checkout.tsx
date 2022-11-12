@@ -18,7 +18,7 @@ import type Payment from 'src/Payment/models/Payment/Payment';
 import Transfer from 'src/Payment/models/Transfer/Transfer';
 import PaymentForm from '../../form/PaymentForm';
 import OrderDetail from '../../orders/OrderDetail';
-import {useCardInfo} from './hooks';
+import {useBankInfo, useCardInfo} from './hooks';
 
 type CardDetailsType = {
   number: string;
@@ -36,12 +36,11 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
   const [currencyFormatter] = useFormat();
   // Card information
   const {cardData, cardUpdate} = useCardInfo();
+  // Bank information
+  const {bankData, bankUpdate} = useBankInfo();
 
   // Card validation check
   const [cardIsValid, setCardIsValid] = useState(false);
-  // Bank information
-  const [fullName, setFullName] = useState('');
-  const [swift, setSWIFT] = useState('');
 
   // Warning modal
   const [modalMessage, setModalMessage] = useState('');
@@ -87,7 +86,7 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
 
         case PAYMENT_TYPE.transfer:
           {
-            const account = new Account(fullName, swift);
+            const account = new Account(bankData.fullName, bankData.iban);
             if (account.isValid()) {
               payment = new Transfer(new Order(order.total), donation, account);
             }
@@ -121,7 +120,7 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
           />
         )}
         {selectedMethod === PAYMENT_TYPE.transfer && (
-          <TransferInputs setFullName={setFullName} setSWIFT={setSWIFT} />
+          <TransferInputs setFullName={bankUpdate.fullName} setSWIFT={bankUpdate.iban} />
         )}
         <FormGroup check className="donation-checkbox">
           <Input

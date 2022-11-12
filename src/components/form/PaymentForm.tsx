@@ -1,11 +1,14 @@
-import {Form, FormGroup, Input, Label} from 'reactstrap';
+import {Form, FormGroup} from 'reactstrap';
 import {PAYMENT_TYPE} from 'src/config';
+import PaymentFormGroup from './PaymentFormGroup';
 
 type PaymentFormProps = {
   handleSelectedMethod: (paymentMethod: string) => void;
 };
 
 const PaymentForm = ({handleSelectedMethod}: PaymentFormProps) => {
+  const PAYMENT_TYPES = Object.values(PAYMENT_TYPE);
+
   return (
     <Form>
       <FormGroup tag="fieldset">
@@ -13,46 +16,15 @@ const PaymentForm = ({handleSelectedMethod}: PaymentFormProps) => {
           <strong>Método de pago</strong>
         </h1>
         <div className="radio-group">
-          <FormGroup check>
-            <Label check className="pay-method-label">
-              <Input
-                type="radio"
-                defaultChecked={true}
-                name="paymethod"
-                className="pay-method-radio"
-                onClick={() => {
-                  handleSelectedMethod(PAYMENT_TYPE.cash);
-                }}
+          {PAYMENT_TYPES.map((paymentType) => {
+            return (
+              <PaymentFormGroup
+                key={paymentType}
+                type={paymentType}
+                handleSelectedMethod={handleSelectedMethod}
               />
-              {PAYMENT_TYPE.cash}
-            </Label>
-          </FormGroup>
-          <FormGroup check>
-            <Label check className="pay-method-label">
-              <Input
-                type="radio"
-                name="paymethod"
-                className="pay-method-radio"
-                onClick={() => {
-                  handleSelectedMethod(PAYMENT_TYPE.debit);
-                }}
-              />
-              {PAYMENT_TYPE.debit}
-            </Label>
-          </FormGroup>
-          <FormGroup check>
-            <Label check className="pay-method-label">
-              <Input
-                type="radio"
-                name="paymethod"
-                className="pay-method-radio"
-                onClick={() => {
-                  handleSelectedMethod(PAYMENT_TYPE.transfer);
-                }}
-              />
-              {PAYMENT_TYPE.transfer}
-            </Label>
-          </FormGroup>
+            );
+          })}
         </div>
       </FormGroup>
     </Form>

@@ -1,3 +1,4 @@
+import type {Dispatch, SetStateAction} from 'react';
 import {useState} from 'react';
 import {FormGroup, Input, Label} from 'reactstrap';
 import type {OrderType} from 'src/@types/order';
@@ -18,7 +19,7 @@ import type Payment from 'src/Payment/models/Payment/Payment';
 import Transfer from 'src/Payment/models/Transfer/Transfer';
 import PaymentForm from '../../form/PaymentForm';
 import OrderDetail from '../../orders/OrderDetail';
-import {useBankInfo, useCardInfo, useIsCardValid} from './hooks';
+import {useBankInfo, useCardInfo, useDonation, useIsCardValid} from './hooks';
 
 type CardDetailsType = {
   number: string;
@@ -40,6 +41,9 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
   const {bankData, bankUpdate} = useBankInfo();
   // Card validation check
   const {updateCardValidity} = useIsCardValid();
+  // Donation radios
+  const {formDonationIsVisible, donationValue, updateDonationFormVisibility, updateDonationValue} =
+    useDonation();
 
   // Warning modal
   const [modalMessage, setModalMessage] = useState('');
@@ -48,18 +52,14 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
     setShowModal(!showModal);
   };
 
-  // Donation radios
-  const [donationForm, setDonationForm] = useState(false);
-  const [donationValue, setDonationValue] = useState(0);
-
   const handleCardWarning = (message: string) => {
     setModalMessage(message);
     toggleModal();
   };
 
   const handleDonationForm = (isFormOpen: boolean) => {
-    setDonationForm(isFormOpen);
-    if (!isFormOpen) setDonationValue(0);
+    updateDonationFormVisibility(isFormOpen);
+    if (!isFormOpen) updateDonationValue(0);
   };
 
   const radios = [
@@ -140,7 +140,12 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
           <a href="https://fundacionronald.org/">https://fundacionronald.org/</a>.
         </label>
         <div className="donation-options">
-          {donationForm && <McRadio radios={radios} onChange={setDonationValue} />}
+          {formDonationIsVisible && (
+            <McRadio
+              radios={radios}
+              onChange={updateDonationValue as Dispatch<SetStateAction<number>>}
+            />
+          )}
         </div>
       </div>
       <div className="detail-total">

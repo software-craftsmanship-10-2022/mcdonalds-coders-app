@@ -25,7 +25,7 @@ describe('given useCardInfo custom hook', () => {
     expect(result.current.cardUpdate.number).toBeInstanceOf(Function);
   });
 
-  test('when cardUpdate.number is called then state should be updated as expecte', () => {
+  test('when cardUpdate.number is called then state should be updated as expected', () => {
     const {result} = renderHook(() => useCardInfo());
 
     expect(result.current.cardData.number).toEqual('');
@@ -35,7 +35,7 @@ describe('given useCardInfo custom hook', () => {
     expect(result.current.cardData.number).toEqual(EXPECTED_RESULT.cardNumber);
   });
 
-  test('when cardUpdate.date is called then state should be updated as expecte', () => {
+  test('when cardUpdate.date is called then state should be updated as expected', () => {
     const {result} = renderHook(() => useCardInfo());
 
     expect(result.current.cardData.date).toEqual('');

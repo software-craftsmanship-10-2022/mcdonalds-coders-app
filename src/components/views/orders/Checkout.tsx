@@ -18,6 +18,7 @@ import type Payment from 'src/Payment/models/Payment/Payment';
 import Transfer from 'src/Payment/models/Transfer/Transfer';
 import PaymentForm from '../../form/PaymentForm';
 import OrderDetail from '../../orders/OrderDetail';
+import {useCardInfo} from './hooks';
 
 type CardDetailsType = {
   number: string;
@@ -34,9 +35,8 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
   const [selectedMethod, setSelectedMethod] = useState(PAYMENT_TYPE.cash);
   const [currencyFormatter] = useFormat();
   // Card information
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardDate, setCardDate] = useState('');
-  const [cardCVC, setCardCVC] = useState('');
+  const {cardData, cardUpdate} = useCardInfo();
+
   // Card validation check
   const [cardIsValid, setCardIsValid] = useState(false);
   // Bank information
@@ -77,7 +77,7 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
     try {
       switch (selectedMethod) {
         case PAYMENT_TYPE.debit: {
-          const card = new Card(cardNumber, cardDate, Number(cardCVC));
+          const card = new Card(cardData.number, cardData.date, Number(cardData.cvc));
           if (card.isValid()) {
             payment = new Debit(new Order(order.total), donation, card);
           }
@@ -114,9 +114,9 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
         <PaymentForm handleSelectedMethod={setSelectedMethod} />
         {selectedMethod === PAYMENT_TYPE.debit && (
           <PaymentInputs
-            setCardCVC={setCardCVC}
-            setCardDate={setCardDate}
-            setCardNumber={setCardNumber}
+            setCardCVC={cardUpdate.cvc}
+            setCardDate={cardUpdate.date}
+            setCardNumber={cardUpdate.number}
             setCardIsValid={setCardIsValid}
           />
         )}

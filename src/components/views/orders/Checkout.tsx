@@ -17,7 +17,7 @@ import Order from 'src/Payment/models/Order/Order';
 import type Payment from 'src/Payment/models/Payment/Payment';
 import Transfer from 'src/Payment/models/Transfer/Transfer';
 import PaymentForm from '../../form/PaymentForm';
-import OrderDetail from './OrderDetail';
+import OrderDetail from '../../orders/OrderDetail';
 
 type CardDetailsType = {
   number: string;

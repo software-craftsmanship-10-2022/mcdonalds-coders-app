@@ -15,7 +15,6 @@ const TestComponent = () => {
   const {products, categoryProducts, getAllProducts, getProductsByCategory} = useProducts();
 
   useEffect(() => {
-    console.log('useFX');
     getAllProducts();
   }, []);
 

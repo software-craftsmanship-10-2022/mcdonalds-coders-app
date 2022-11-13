@@ -9,8 +9,8 @@ describe('given usePaymentWarningModal custom hook', () => {
     expect(hookOutput.current.modalWarningMessage).toBe('');
     expect(hookOutput.current.warningModalIsVisible).toBeDefined();
     expect(hookOutput.current.warningModalIsVisible).toBe(false);
-    expect(hookOutput.current.updateModalWarningMessage).toBeDefined();
-    expect(hookOutput.current.updateModalWarningMessage).toBeInstanceOf(Function);
+    expect(hookOutput.current.updateCardWarning).toBeDefined();
+    expect(hookOutput.current.updateCardWarning).toBeInstanceOf(Function);
     expect(hookOutput.current.toggleWarningModalVisibility).toBeDefined();
     expect(hookOutput.current.toggleWarningModalVisibility).toBeInstanceOf(Function);
   });
@@ -19,11 +19,19 @@ describe('given usePaymentWarningModal custom hook', () => {
     const {result: hookOutput} = renderHook(() => usePaymentWarningModal());
 
     expect(hookOutput.current.modalWarningMessage).toBe('');
+    expect(hookOutput.current.warningModalIsVisible).toBe(false);
 
     act(() => {
-      hookOutput.current.updateModalWarningMessage('foo');
+      hookOutput.current.updateCardWarning('foo');
     });
     expect(hookOutput.current.modalWarningMessage).toBe('foo');
+    expect(hookOutput.current.warningModalIsVisible).toBe(true);
+
+    act(() => {
+      hookOutput.current.updateCardWarning('');
+    });
+    expect(hookOutput.current.modalWarningMessage).toBe('');
+    expect(hookOutput.current.warningModalIsVisible).toBe(false);
   });
 
   test('when toggleWarningModalVisibility function is called then warningModalIsVisible should be updated as expected', () => {

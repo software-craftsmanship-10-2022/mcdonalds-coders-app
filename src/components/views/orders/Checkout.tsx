@@ -46,15 +46,10 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
     useDonation();
   const {
     modalWarningMessage,
-    updateModalWarningMessage,
+    updateCardWarning,
     warningModalIsVisible,
     toggleWarningModalVisibility,
   } = usePaymentWarningModal();
-
-  const handleCardWarning = (message: string) => {
-    updateModalWarningMessage(message);
-    toggleWarningModalVisibility();
-  };
 
   const acceptOrder = () => {
     let payment;
@@ -89,7 +84,7 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
     } catch (error: unknown) {
       let message = 'Unknown Error';
       if (error instanceof Error) message = error.message;
-      handleCardWarning(message);
+      updateCardWarning(message);
     }
   };
 

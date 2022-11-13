@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 type UsePaymentWarningModalType = {
   modalWarningMessage: string;
-  updateModalWarningMessage: (message: string) => void;
+  updateCardWarning: (message: string) => void;
   warningModalIsVisible: boolean;
   toggleWarningModalVisibility: () => void;
 };
@@ -19,9 +19,14 @@ const usePaymentWarningModal = (): UsePaymentWarningModalType => {
     setShowWarningModal((prevState) => !prevState);
   };
 
+  const updateCardWarning = (message: string) => {
+    updateModalWarningMessage(message);
+    toggleWarningModalVisibility();
+  };
+
   return {
     modalWarningMessage,
-    updateModalWarningMessage,
+    updateCardWarning,
     warningModalIsVisible: showWarningModal,
     toggleWarningModalVisibility,
   };

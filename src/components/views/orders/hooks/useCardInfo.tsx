@@ -1,17 +1,28 @@
 import {useState} from 'react';
 
+export type CardDataType = {
+  number: string;
+  date: string;
+  cvc: string;
+};
+
+type CardUpdateType = {
+  number: (cardNumber: string) => void;
+  date: (cardDate: string) => void;
+  cvc: (cardCVC: string) => void;
+};
 const useCardInfo = () => {
   const [cardNumber, setCardNumber] = useState('');
   const [cardDate, setCardDate] = useState('');
   const [cardCVC, setCardCVC] = useState('');
 
-  const cardData = {
+  const cardData: CardDataType = {
     number: cardNumber,
     date: cardDate,
     cvc: cardCVC,
   };
 
-  const cardUpdate = {
+  const cardUpdate: CardUpdateType = {
     number(cardNumber: string) {
       setCardNumber(cardNumber);
     },

@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-type BankDataType = {
+export type BankDataType = {
   fullName: string;
   iban: string;
 };

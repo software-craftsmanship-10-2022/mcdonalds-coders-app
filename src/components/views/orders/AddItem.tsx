@@ -48,7 +48,17 @@ const AddItem = () => {
       <div className="ImageItem">
         <img src={`${IMG_PATH}${itemData.img}`} alt="" />
         <div className="IngredientList">
-          <IngredientList ingredients={['queso']} />
+          <IngredientList
+            ingredients={[
+              {
+                id: 'queso',
+                title: 'Queso',
+                img: 'queso.png',
+                extraPrice: 0.5,
+                modifaible: true,
+              },
+            ]}
+          />
         </div>
       </div>
 

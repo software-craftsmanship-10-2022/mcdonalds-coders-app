@@ -12,7 +12,19 @@ describe('Given IngredientList component', () => {
     expect(queryByText('IngredientComponent')).not.toBeInTheDocument();
   });
   test('When the array is full the Ingredient component is rendered', () => {
-    const {getByRole, getByText} = render(<IngredientList ingredients={['queso']} />);
+    const {getByRole, getByText} = render(
+      <IngredientList
+        ingredients={[
+          {
+            id: 'queso',
+            title: 'Queso',
+            img: 'queso.png',
+            extraPrice: 0.5,
+            modifaible: true,
+          },
+        ]}
+      />,
+    );
     expect(getByRole('heading', {level: 2})).toBeInTheDocument();
     expect(getByText('IngredientComponent')).toBeInTheDocument();
   });

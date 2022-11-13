@@ -1,7 +1,7 @@
-import type {ProductCategoryType} from '../@types/product';
+import type {ProductCategoryApiType} from '../@types/product';
 
 // Categories & products
-const PRODUCTS: ProductCategoryType[] = [
+const PRODUCTS: ProductCategoryApiType[] = [
   {
     category: 'Hamburguesas',
     id: 'burgers',

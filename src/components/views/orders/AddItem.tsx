@@ -1,7 +1,7 @@
 import {useState} from 'react';
-import {Navigate, useLocation, useNavigate, useParams} from 'react-router-dom';
+import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import type {MenuType} from 'src/@types/product';
-import type {OrderContextType, OrderItemType} from '../../../@types/order';
+import IngredientList from 'src/components/product/IngredientList/IngredientList';
 import {IMG_PATH, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
 import COMBOS from '../../../data/combos';
@@ -45,7 +45,13 @@ const AddItem = () => {
   return (
     <div className="AddItem">
       <p className="title">{itemData?.title}</p>
-      <img src={`${IMG_PATH}${itemData.img}`} alt="" />
+      <div className="ImageItem">
+        <img src={`${IMG_PATH}${itemData.img}`} alt="" />
+        <div className="IngredientList">
+          <IngredientList ingredients={['queso']} />
+        </div>
+      </div>
+
       <p className="price">{priceTag}</p>
       <div className="counter-container">
         <button

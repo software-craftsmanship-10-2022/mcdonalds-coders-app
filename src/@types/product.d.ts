@@ -13,6 +13,15 @@ export type ProductCategoryType = {
   items: ProductType[];
 };
 
+// New TYPES
+export type MenuType = {
+  id: string;
+  name: string;
+  image: string;
+  price: number;
+  products: ProductType[];
+};
+
 export type CategoryIds =
   | 'burgers'
   | 'chicken'

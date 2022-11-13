@@ -3,7 +3,7 @@ import type IValidate from '../IValidate';
 
 class Card implements IValidate {
   private get regexDate() {
-    return /^(0[1-9]|1[0-2])\/(0[1-9]|1[1-9]|2[1-9])$/;
+    return /^(0[1-9]|1[0-2]) \/ (0[1-9]|1[1-9]|2[1-9])$/;
   }
 
   constructor(

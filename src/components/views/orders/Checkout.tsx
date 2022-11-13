@@ -12,6 +12,7 @@ import PaymentInputs from '../../form/PaymentInputs';
 import UserForm from '../../form/UserForm';
 import InfoModal from '../../modal/InfoModal';
 import './Checkout.css';
+import saveOrder from 'src/api/orders/saveOrder';
 
 type CardDetailsType = {
   number: string;
@@ -164,10 +165,10 @@ const Checkout = () => {
     }
   }, [order, navigate, getStorageItem]);
 
-  const confirmOrder = (payment: PaymentMethod, _details: CardDetailsType) => {
+  const confirmOrder = async (payment: PaymentMethod, _details: CardDetailsType) => {
     order.setStatus(OrderStatus.pending);
     order.setPayment(payment);
-    updateOrder(order);
+    updateOrder(await saveOrder(order));
     navigate(URLS.root);
   };
 

@@ -6,14 +6,8 @@ import TransferInputs from 'src/components/form/TransferInputs';
 import InfoModal from 'src/components/modal/InfoModal';
 import {PAYMENT_TYPE} from 'src/config';
 import useFormat from 'src/hooks/useFormat';
-import Account from 'src/Payment/models/Account/Account';
-import Card from 'src/Payment/models/Card/Card';
-import Cash from 'src/Payment/models/Cash/Cash';
-import Debit from 'src/Payment/models/Debit/Debit';
-import Donation from 'src/Payment/models/Donation/Donation';
-import Order from 'src/Payment/models/Order/Order';
+import acceptOrder from 'src/Payment/acceptOrder';
 import type Payment from 'src/Payment/models/Payment/Payment';
-import Transfer from 'src/Payment/models/Transfer/Transfer';
 import PaymentForm from '../../form/PaymentForm';
 import OrderDetail from '../../orders/OrderDetail';
 import {
@@ -51,42 +45,7 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
     toggleWarningModalVisibility,
   } = usePaymentWarningModal();
 
-  const acceptOrder = () => {
-    let payment;
-    const donation = new Donation(donationValue);
-
-    try {
-      switch (paymentMethod) {
-        case PAYMENT_TYPE.debit: {
-          const card = new Card(cardData.number, cardData.date, Number(cardData.cvc));
-          if (card.isValid()) {
-            payment = new Debit(new Order(order.total), donation, card);
-          }
-
-          break;
-        }
-
-        case PAYMENT_TYPE.transfer:
-          {
-            const account = new Account(bankData.fullName, bankData.iban);
-            if (account.isValid()) {
-              payment = new Transfer(new Order(order.total), donation, account);
-            }
-          }
-
-          break;
-        default:
-          payment = new Cash(new Order(order.total), donation);
-          break;
-      }
-
-      if (payment) confirmOrder(payment, paymentMethod);
-    } catch (error: unknown) {
-      let message = 'Unknown Error';
-      if (error instanceof Error) message = error.message;
-      updateCardWarning(message);
-    }
-  };
+  const operationData = paymentMethod === PAYMENT_TYPE.debit ? cardData : bankData;
 
   return (
     <div className="Detail">
@@ -117,7 +76,14 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
       <McButton
         text={'Enviar pedido'}
         onClick={() => {
-          acceptOrder();
+          acceptOrder({
+            confirmOrder,
+            donationValue,
+            operationData,
+            order,
+            paymentMethod,
+            updateCardWarning,
+          });
         }}
         fixed
       />

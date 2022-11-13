@@ -4,7 +4,7 @@ export const ERROR_INVALID_PARAM = 'The first param is not Order type.';
 
 export const idGenerator = {
   generate() {
-    return (Math.random() + 1).toString(36).substring(7);
+    return window.crypto.getRandomValues(new Uint32Array(1))[0].toString(36);
   },
 };
 

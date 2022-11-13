@@ -1,8 +1,8 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import {useOrderStorage} from '../hooks/useOrderStorage';
 import type {Order} from '../api/orders/Orders';
-import {createEmptyOrder} from '../api/orders/Orders';
 import type {OrderContextType} from '../@types/order';
+import createEmptyOrder from 'src/api/orders/createEmptyOrder';
 
 const ORDER_CONTEXT = createContext<OrderContextType>(null as unknown as OrderContextType);
 

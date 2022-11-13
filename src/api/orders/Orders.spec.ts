@@ -1,7 +1,7 @@
 import {OrderStatus, PaymentMethod} from '../../@types/order';
 import type {NewOrderAddressDetailsType} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';
-import {createEmptyOrder, Order} from './Orders';
+import {Order} from './Orders';
 
 describe('Check class Order', () => {
   let order: Order;
@@ -189,32 +189,6 @@ describe('Check class Order', () => {
       const clonedOrder = order.clone();
       expect(clonedOrder).not.toBe(order);
       expect(clonedOrder.getDetails()).not.toBe(order.getDetails());
-    });
-  });
-});
-
-describe('Test function `createEmptyOrder`', () => {
-  let order: Order;
-
-  beforeEach(() => {
-    order = createEmptyOrder();
-  });
-
-  it('gets a Order instance', () => {
-    expect(order).toBeInstanceOf(Order);
-  });
-
-  it('gets an Order it is empty', () => {
-    expect(order.getId()).toBe('');
-    expect(order.isItemsEmpty()).toBe(true);
-    expect(order.getPayment()).toBe(PaymentMethod.cash);
-    expect(order.isConfirmed()).toBe(false);
-    expect(order.getDetails()).toEqual({
-      id: '',
-      name: '',
-      address: '',
-      image: '',
-      isDelivery: false,
     });
   });
 });

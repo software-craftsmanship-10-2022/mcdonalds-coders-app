@@ -1,6 +1,6 @@
 import type {MenuType} from '../../@types/product.d';
-import type {NewOrderAddressDetailsType, NewOrderType} from '../../@types/order';
-import {OrderStatus, PaymentMethod} from '../../@types/order';
+import type {NewOrderAddressDetailsType, NewOrderType, PaymentMethod} from '../../@types/order';
+import {OrderStatus} from '../../@types/order';
 
 export class Order {
   // @TODO calisthenics: this.order.items: use first-class collections
@@ -146,27 +146,4 @@ export class Order {
     const details: NewOrderAddressDetailsType = {...this.order.details};
     return new Order({...this.order, details});
   }
-}
-
-/**
- * Create a new empty order.
- *
- * @return new order.
- */
-export function createEmptyOrder(): Order {
-  const details: NewOrderAddressDetailsType = {
-    id: '',
-    name: '',
-    address: '',
-    image: '',
-    isDelivery: false,
-  };
-
-  return new Order({
-    details,
-    id: '',
-    items: [],
-    payment: PaymentMethod.cash,
-    status: OrderStatus.noConfirmed,
-  });
 }

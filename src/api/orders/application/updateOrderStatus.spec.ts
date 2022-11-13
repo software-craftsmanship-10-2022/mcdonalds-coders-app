@@ -1,9 +1,6 @@
-import {create} from 'domain';
-import {MenuType} from 'src/@types/product';
 import {STORAGE} from 'src/config';
 import {OrderStatus, PaymentMethod} from '../../../@types/order';
 import type {NewOrderType} from '../../../@types/order';
-import {createEmptyOrder} from '../Orders';
 import {updateOrderStatus} from './updateOrderStatus';
 
 describe('[updateOrderStatus]', () => {

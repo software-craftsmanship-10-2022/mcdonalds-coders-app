@@ -21,20 +21,15 @@ export const OrderProvider = ({children}: OrderProviderProps) => {
       const order: Order | undefined = await storage.getOrder();
       order !== undefined && setOrder(order);
     })();
-  }, [setOrder]);
+  }, []);
 
-  const resetOrder = () => {
-    setOrder(createEmptyOrder());
+  const resetOrder = async () => {
+    await updateOrder(createEmptyOrder());
   };
 
-  useEffect(() => {
-    (async () => {
-      await storage.setOrder(order);
-    })();
-  }, [order]);
-
-  const updateOrder = (order: Order) => {
+  const updateOrder = async (order: Order) => {
     setOrder(order.clone());
+    await storage.setOrder(order);
   };
 
   return (

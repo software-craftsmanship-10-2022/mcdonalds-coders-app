@@ -1,4 +1,5 @@
 import Ingredient from './Ingredient';
+import './IngredientList.css';
 
 const IngredientList = ({ingredients}: {ingredients: string[]}) => (
   <div className="IngredientList">

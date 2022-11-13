@@ -1,6 +1,6 @@
+import type {IngredientID} from 'src/@types/ingredient';
 import {IMG_PATH} from 'src/config';
 import INGREDIENTS from 'src/data/ingredients';
-import type {IngredientID} from '~types/ingredient';
 import './Ingredient.css';
 
 type IngredientProps = {

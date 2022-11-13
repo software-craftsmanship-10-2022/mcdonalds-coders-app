@@ -1,11 +1,9 @@
-import type {Dispatch, SetStateAction} from 'react';
-import {FormGroup, Input, Label} from 'reactstrap';
 import type {OrderType} from 'src/@types/order';
 import McButton from 'src/components/buttons/McButton';
+import DonationOptions from 'src/components/donation/DonationOptions';
 import PaymentInputs from 'src/components/form/PaymentInputs';
 import TransferInputs from 'src/components/form/TransferInputs';
 import InfoModal from 'src/components/modal/InfoModal';
-import McRadio from 'src/components/radio/McRadio';
 import {PAYMENT_TYPE} from 'src/config';
 import useFormat from 'src/hooks/useFormat';
 import Account from 'src/Payment/models/Account/Account';
@@ -56,11 +54,6 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
   const handleCardWarning = (message: string) => {
     updateModalWarningMessage(message);
     toggleWarningModalVisibility();
-  };
-
-  const handleDonationForm = (isFormOpen: boolean) => {
-    updateDonationFormVisibility(isFormOpen);
-    if (!isFormOpen) updateDonationValue(0);
   };
 
   const radios = [
@@ -122,32 +115,11 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
         {paymentMethod === PAYMENT_TYPE.transfer && (
           <TransferInputs setFullName={bankUpdate.fullName} setSWIFT={bankUpdate.iban} />
         )}
-        <FormGroup check className="donation-checkbox">
-          <Input
-            type="checkbox"
-            onChange={(e) => {
-              handleDonationForm(e.target.checked);
-            }}
-          />
-          <Label check>
-            Quieres donar a la <a href="https://fundacionronald.org/">Fundación Ronald McDonald</a>?
-          </Label>
-        </FormGroup>
-        <label className="donation-info">
-          Seleccionando esta opción aceptas los{' '}
-          <a href="https://fundacionronald.org/aviso-legal/">Terminos y condiciones</a>. El Usuario
-          queda informado y acepta que El donativo no supone, en modo alguno, el inicio de una
-          relación comercial con la FUNDACION. Más intormación en{' '}
-          <a href="https://fundacionronald.org/">https://fundacionronald.org/</a>.
-        </label>
-        <div className="donation-options">
-          {formDonationIsVisible && (
-            <McRadio
-              radios={radios}
-              onChange={updateDonationValue as Dispatch<SetStateAction<number>>}
-            />
-          )}
-        </div>
+        <DonationOptions
+          formDonationIsVisible={formDonationIsVisible}
+          updateDonationFormVisibility={updateDonationFormVisibility}
+          updateDonationValue={updateDonationValue}
+        />
       </div>
       <div className="detail-total">
         <p>Total</p>

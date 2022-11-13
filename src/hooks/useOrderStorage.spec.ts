@@ -1,5 +1,5 @@
 import createEmptyOrder from 'src/api/orders/createEmptyOrder';
-import {Order} from 'src/api/orders/Orders';
+import Order from 'src/api/orders/Order';
 import {clearAll, getItem, setItem} from 'src/utils/localStorage';
 import {useOrderStorage} from './useOrderStorage';
 

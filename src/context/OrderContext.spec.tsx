@@ -1,6 +1,6 @@
 import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {jest} from '@jest/globals';
-import {Order} from '../api/orders/Orders';
+import Order from '../api/orders/Order';
 import {useOrderContext, OrderProvider} from './OrderContext';
 import type {OrderContextType} from '../@types/order';
 import {storage} from 'src/utils/localStorage';

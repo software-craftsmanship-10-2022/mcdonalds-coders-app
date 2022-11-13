@@ -1,6 +1,6 @@
 import type {NewOrderAddressDetailsType} from 'src/@types/order';
 import {OrderStatus, PaymentMethod} from 'src/@types/order';
-import {Order} from './Orders';
+import Order from './Order';
 
 /**
  * Create a new empty order.

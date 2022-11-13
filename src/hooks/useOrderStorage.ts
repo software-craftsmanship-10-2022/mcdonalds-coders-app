@@ -1,5 +1,5 @@
 import {storage} from '../utils/localStorage';
-import {Order} from '../api/orders/Orders';
+import Order from '../api/orders/Order';
 import type {NewOrderType} from '../@types/order';
 
 /**

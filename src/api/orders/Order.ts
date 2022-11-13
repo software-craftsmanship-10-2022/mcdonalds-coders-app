@@ -2,7 +2,7 @@ import type {MenuType} from '../../@types/product.d';
 import type {NewOrderAddressDetailsType, NewOrderType, PaymentMethod} from '../../@types/order';
 import {OrderStatus} from '../../@types/order';
 
-export class Order {
+export default class Order {
   // @TODO calisthenics: this.order.items: use first-class collections
   /**
    * @param order Order to handle

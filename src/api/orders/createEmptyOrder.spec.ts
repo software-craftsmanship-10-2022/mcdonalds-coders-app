@@ -1,6 +1,6 @@
 import {PaymentMethod} from 'src/@types/order';
 import createEmptyOrder from './createEmptyOrder';
-import {Order} from './Orders';
+import Order from './Order';
 
 describe('Test function `createEmptyOrder`', () => {
   let order: Order;

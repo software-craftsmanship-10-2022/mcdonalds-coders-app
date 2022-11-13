@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Form, FormGroup, Input, Label} from 'reactstrap';
 import {OrderStatus, PaymentMethod} from '../../../@types/order';
-import type {Order} from '../../../api/orders/Orders';
+import type Order from 'src/api/orders/Order';
 import {PAYMENT_TYPE, STORAGE, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
 import useFormat from '../../../hooks/useFormat';

@@ -1,4 +1,4 @@
-import type {Order} from 'src/api/orders/Orders';
+import type Order from 'src/api/orders/Order';
 import type {MenuType} from './product.d';
 
 // @types.order.ts

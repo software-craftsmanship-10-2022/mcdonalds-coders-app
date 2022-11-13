@@ -56,12 +56,6 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
     toggleWarningModalVisibility();
   };
 
-  const radios = [
-    {label: '1€', value: 1},
-    {label: '5€', value: 5},
-    {label: '10€', value: 10},
-  ];
-
   const acceptOrder = () => {
     let payment;
     const donation = new Donation(donationValue);

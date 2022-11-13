@@ -1,4 +1,4 @@
-import {getItem, setItem, removeItem, clearAll} from './cacheSystem';
+import {getItem, setItem, removeItem, clearAll} from './localStorage';
 
 describe('Check the CacheSystem', () => {
   beforeEach(async () => {

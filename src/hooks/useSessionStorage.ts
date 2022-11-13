@@ -3,7 +3,6 @@ const getSessionStorageItem = <T>(key: string): T | undefined => {
     return undefined;
   }
 
-  /* eslint-disable-next-line @typescript-eslint/ban-types */
   const value: string | null = sessionStorage.getItem(key);
 
   if (value === null || value === 'undefined') {

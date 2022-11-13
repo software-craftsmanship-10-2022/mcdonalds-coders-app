@@ -51,7 +51,10 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
     <div className="Detail">
       <div className="detail-box">
         <OrderDetail order={order} />
-        <PaymentForm handleSelectedMethod={updatePaymentMethod} />
+        <PaymentForm
+          defaultPaymentMethod={paymentMethod}
+          handleSelectedMethod={updatePaymentMethod}
+        />
         {paymentMethod === PAYMENT_TYPE.debit && (
           <PaymentInputs
             setCardCVC={cardUpdate.cvc}

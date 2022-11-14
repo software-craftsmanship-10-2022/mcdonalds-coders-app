@@ -18,6 +18,7 @@ export const STORAGE = {
   users: 'user',
   orders: 'order',
   coupons: 'coupons',
+  markers: 'markers',
 };
 
 export const PAYMENT_TYPE = {

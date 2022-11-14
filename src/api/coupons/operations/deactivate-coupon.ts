@@ -8,7 +8,7 @@ async function deactivateCoupon(id: string): Promise<void> {
   const activeCoupons = getFromDDBB<CouponType[]>(STORAGE.activeCoupons);
   const inactiveCoupons = getFromDDBB<CouponType[]>(STORAGE.inactiveCoupons);
   if (!activeCoupons) {
-    throw new Error('Item is not active');
+    throw new Error('No active items');
   }
 
   const selectedCoupon: CouponType | undefined = activeCoupons.find(

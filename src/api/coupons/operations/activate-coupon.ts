@@ -22,7 +22,7 @@ async function activateCoupon(id: string): Promise<CouponType> {
   try {
     const couponData = retrieveCouponFromFakeDDBB(id)!;
     const activeCoupon: CouponType = formatCouponData(couponData);
-    const activeCoupons = getFromDDBB(STORAGE.activeCoupons);
+    const activeCoupons = getFromDDBB<CouponType[]>(STORAGE.activeCoupons);
     const updatedCoupons = activeCoupons ? [...activeCoupons, activeCoupon] : [activeCoupon];
     saveInDDBB(STORAGE.activeCoupons, updatedCoupons);
     return activeCoupon;

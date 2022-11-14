@@ -12,15 +12,15 @@ describe('given a key', () => {
   });
 
   test('when key is not defined in localStorage then undefined is returned', () => {
-    const output = getFromDDBB(STORAGE.discounts) as Discounts;
-    expect(output).toBeNull();
+    const output = getFromDDBB<Discounts>(STORAGE.discounts);
+    expect(output).toBeUndefined();
   });
 
   test('when key is defined in localStorage then expected output is returned', () => {
     const expectedOutput = [...MOCK_DISCOUNTS];
     setStorageItem(STORAGE.discounts, MOCK_DISCOUNTS);
 
-    const output = getFromDDBB(STORAGE.discounts) as Discounts;
+    const output = getFromDDBB<Discounts>(STORAGE.discounts);
     expect(output).toEqual(expectedOutput);
   });
 });

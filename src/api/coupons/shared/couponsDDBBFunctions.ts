@@ -1,16 +1,13 @@
-import type {CouponType} from 'src/@types/coupon';
 import type {Categories, DiscountItem, Discounts} from 'src/@types/discount';
 import {STORAGE} from 'src/config';
-import useLocalStorage from 'src/hooks/useLocalStorage';
 
-export function retrieveCouponFromFakeDDBB(id: string): DiscountItem | undefined {
-  const {getStorageItem} = useLocalStorage();
-  const discounts: Discounts = getStorageItem(STORAGE.discounts) as Discounts;
+export function retrieveCouponFromFakeDDBB(id: string): DiscountItem {
+  const discounts: Discounts | undefined = getFromDDBB<Discounts>(STORAGE.discounts);
+  let coupon: DiscountItem | undefined;
   if (!discounts) {
-    throw new Error('No discounts available');
+    throw Error('No discounts available');
   }
 
-  let coupon: DiscountItem | undefined;
   discounts.forEach((category: Categories) => {
     category.items.forEach((item: DiscountItem) => {
       if (item.id === id) {
@@ -25,17 +22,21 @@ export function retrieveCouponFromFakeDDBB(id: string): DiscountItem | undefined
   return coupon;
 }
 
-export const saveInDDBB = (key: string, element: CouponType[] | Discounts): void => {
+export const saveInDDBB = <T>(key: string, element: T): void => {
   localStorage.setItem(key, JSON.stringify(element));
 };
 
-export const getFromDDBB = (key: string): any => {
-  const {getStorageItem} = useLocalStorage();
-  const value: unknown = getStorageItem(key);
-  // Return value if exists & is valid
-  if (value && value !== 'undefined') {
-    return value;
+export const getFromDDBB = <T>(key: string): T | undefined => {
+  const value = localStorage.getItem(key);
+  let obj: T;
+  if (!value) {
+    return undefined;
   }
 
-  return null;
+  try {
+    obj = JSON.parse(value) as T;
+    return obj;
+  } catch {
+    return undefined;
+  }
 };

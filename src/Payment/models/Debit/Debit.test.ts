@@ -20,7 +20,7 @@ const details = {
 };
 
 const VALID_CARD_NUMBER = '1299999999999999';
-const validCard = () => new Card(VALID_CARD_NUMBER, '12/24', 123);
+const validCard = () => new Card(VALID_CARD_NUMBER, '12 / 24', 123);
 
 describe('Given a Debit class', () => {
   it('should contain a pay method', () => {

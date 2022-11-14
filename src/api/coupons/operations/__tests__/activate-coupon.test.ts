@@ -70,7 +70,7 @@ describe('given a activateCoupon request', () => {
     await getDiscounts();
     await activateCoupon(MOCK_COUPON_ID);
 
-    const localCoupons = getFromDDBB(STORAGE.activeCoupons) as CouponType[];
+    const localCoupons = getFromDDBB<CouponType[]>(STORAGE.activeCoupons);
 
     expect(localCoupons).toEqual(MOCK_ACTIVE_COUPONS);
   });

@@ -13,8 +13,8 @@ const checkExpired = async (
   inactiveCoupons: CouponType[],
 ): Promise<UserCoupons> => {
   const date = new Date();
-  let updatedActiveCoupons = activeCoupons || [];
-  let updatedInactiveCoupons = inactiveCoupons || [];
+  let updatedActiveCoupons = activeCoupons;
+  let updatedInactiveCoupons = inactiveCoupons;
 
   for (const coupon of activeCoupons) {
     if (new Date(coupon.validDate) < date) {
@@ -22,8 +22,9 @@ const checkExpired = async (
 
       // eslint-disable-next-line no-await-in-loop
       await deactivateCoupon(coupon.id);
-      updatedActiveCoupons = getFromDDBB(STORAGE.activeCoupons) as CouponType[];
-      updatedInactiveCoupons = getFromDDBB(STORAGE.inactiveCoupons) as CouponType[];
+
+      updatedActiveCoupons = getFromDDBB<CouponType[]>(STORAGE.activeCoupons) ?? [];
+      updatedInactiveCoupons = getFromDDBB<CouponType[]>(STORAGE.inactiveCoupons) ?? [];
     }
   }
 
@@ -35,13 +36,14 @@ const checkExpired = async (
 };
 
 async function getUserCoupons(): Promise<UserCoupons> {
-  const activeCoupons = getFromDDBB(STORAGE.activeCoupons) as CouponType[];
-  const inactiveCoupons = getFromDDBB(STORAGE.inactiveCoupons) as CouponType[];
+  const activeCoupons = getFromDDBB<CouponType[]>(STORAGE.activeCoupons);
+  const inactiveCoupons = getFromDDBB<CouponType[]>(STORAGE.inactiveCoupons);
+
   const response: UserCoupons = activeCoupons
-    ? await checkExpired(activeCoupons, inactiveCoupons)
+    ? await checkExpired(activeCoupons, inactiveCoupons ?? [])
     : {
         activeCoupons: [],
-        inactiveCoupons: inactiveCoupons || [],
+        inactiveCoupons: inactiveCoupons ?? [],
       };
   return response;
 }

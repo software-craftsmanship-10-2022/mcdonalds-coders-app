@@ -38,6 +38,14 @@ describe('given a deactivateCoupon request', () => {
       expect(message).toEqual('Item id is not defined');
     }
   });
+  test('when trying to deactivate a coupon that is not active then an Error is thrown', async () => {
+    try {
+      await deactivateCoupon('123');
+    } catch (error: unknown) {
+      const message = getErrorMessage(error);
+      expect(message).toEqual('Item is not active');
+    }
+  });
 
   test('when request to deactivate coupon is successful it should delete the coupon from active coupons in local storage and add it to inactive coupons', async () => {
     jest.spyOn(CouponUtils, 'getThirtyDaysLaterDate').mockReturnValueOnce(MOCK_VALID_DATE);
@@ -47,8 +55,8 @@ describe('given a deactivateCoupon request', () => {
     await activateCoupon(MOCK_COUPON_ID);
     await deactivateCoupon(MOCK_COUPON_ID);
 
-    const activeCoupons = getFromDDBB(STORAGE.activeCoupons) as CouponType[];
-    const inactiveCoupons = getFromDDBB(STORAGE.inactiveCoupons) as CouponType[];
+    const activeCoupons = getFromDDBB<CouponType[]>(STORAGE.activeCoupons);
+    const inactiveCoupons = getFromDDBB<CouponType[]>(STORAGE.inactiveCoupons);
 
     expect(activeCoupons).toEqual([]);
     expect(inactiveCoupons).toEqual(MOCK_ACTIVE_COUPONS);

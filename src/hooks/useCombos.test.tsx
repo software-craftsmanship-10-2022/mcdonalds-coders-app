@@ -1,6 +1,6 @@
 import {fireEvent, render, screen} from '@testing-library/react';
 import {useEffect, useState} from 'react';
-import type {ComboDetailType} from 'src/@types/combos';
+import type {ComboType} from 'src/@types/combos';
 import COMBOS from 'src/data/combos';
 import useCombos from './useCombos';
 
@@ -10,7 +10,7 @@ const NOT_SELECTED = 'not selected';
 const COMBO_SELECT_BUTTON = 'SELECT COMBO';
 const TestComponent = () => {
   const {combos, getAllCombos, getComboById} = useCombos();
-  const [selected, setSelected] = useState<ComboDetailType | undefined>(undefined);
+  const [selected, setSelected] = useState<ComboType | undefined>(undefined);
 
   useEffect(() => {
     getAllCombos();

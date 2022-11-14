@@ -5,7 +5,7 @@ export type ComboApiType = {
   title: string;
   img: string;
   price: number;
-  principalId: string;
+  mainProductId: string;
 };
 
 export type ComboCategoryApiType = {
@@ -19,19 +19,11 @@ export type ComboType = {
   title: string;
   img: string;
   price: number;
-  principalId: string;
+  mainProduct: ProductType;
 };
 
 export type ComboCategoryType = {
   id: string;
   category: string;
   items: ComboType[];
-};
-
-export type ComboDetailType = {
-  id: string;
-  title: string;
-  img: string;
-  price: number;
-  mainProduct: ProductType;
 };

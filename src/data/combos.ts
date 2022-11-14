@@ -1,4 +1,6 @@
-const COMBOS = [
+import type {ComboCategoryApiType} from 'src/@types/combos';
+
+const COMBOS: ComboCategoryApiType[] = [
   {
     category: 'Con Bacon todo es mejor',
     id: 'bacon',

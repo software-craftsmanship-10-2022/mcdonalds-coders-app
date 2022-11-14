@@ -43,7 +43,7 @@ describe('given a deactivateCoupon request', () => {
       await deactivateCoupon('123');
     } catch (error: unknown) {
       const message = getErrorMessage(error);
-      expect(message).toEqual('Item is not active');
+      expect(message).toEqual('No active items');
     }
   });
 

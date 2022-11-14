@@ -32,13 +32,13 @@ const acceptOrder = ({
     [PAYMENT_TYPE.debit](operationData: CardDataType) {
       const card = new Card(operationData.number, operationData.date, Number(operationData.cvc));
       if (card.isValid()) {
-        return new Debit(new Order(order.total), donation, card);
+        return new Debit(new Order(order.total, order.items, order.details), donation, card);
       }
     },
     [PAYMENT_TYPE.transfer](operationData: BankDataType) {
       const account = new Account(operationData.fullName, operationData.iban);
       if (account.isValid()) {
-        return new Transfer(new Order(order.total), donation, account);
+        return new Transfer(new Order(order.total, order.items, order.details), donation, account);
       }
     },
   };

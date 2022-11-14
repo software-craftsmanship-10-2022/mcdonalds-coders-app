@@ -2,7 +2,9 @@ import {CARD_ERRORS} from '../../errorMessages';
 import type IValidate from '../IValidate';
 
 class Card implements IValidate {
-  #regexDate = /^(0[1-9]|1[0-2])\/(0[1-9]|1[1-9]|2[1-9])$/;
+  private get regexDate() {
+    return /^(0[1-9]|1[0-2]) \/ (0[1-9]|1[1-9]|2[1-9])$/;
+  }
 
   constructor(
     private readonly cardNumber: string,

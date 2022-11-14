@@ -23,8 +23,8 @@ export const STORAGE = {
 };
 
 export const PAYMENT_TYPE = {
-  debit: 'DEBITO',
   cash: 'EFECTIVO',
+  debit: 'DEBITO',
   transfer: 'TRANSFERENCIA',
 };
 

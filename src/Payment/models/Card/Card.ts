@@ -1,4 +1,4 @@
-import {CARD_ERRORS} from '../../errorMessages';
+import { CARD_ERRORS } from '../../errorMessages';
 import type IValidate from '../IValidate';
 
 class Card implements IValidate {
@@ -27,7 +27,7 @@ class Card implements IValidate {
 
   private validateDate() {
     if (!this.date) throw new Error(CARD_ERRORS.dateEmpty);
-    if (!this.#regexDate.test(this.date)) throw new Error(CARD_ERRORS.wrongDate);
+    if (!this.regexDate.test(this.date)) throw new Error(CARD_ERRORS.wrongDate);
   }
 
   private validateCardNumber() {

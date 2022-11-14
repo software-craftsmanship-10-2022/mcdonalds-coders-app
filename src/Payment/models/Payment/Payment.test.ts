@@ -4,11 +4,27 @@ import Donation from '../Donation/Donation';
 import Order from '../Order/Order';
 import Payment from './Payment';
 
-const validOrder = () => new Order(123);
+const items = [
+  {
+    quantity: 1,
+    name: 'McCombo Cuarto De Libra Con Queso Grande',
+    img: 'McCOMBOCUARTODELIBRACONQUESOGrande.png',
+    pricePerUnit: 1020,
+  },
+];
+
+const details = {
+  name: 'PEATONAL LOMAS DE ZAMORA',
+  address: 'Peatona Laprida 177 Lomas de Zamora',
+  img: 'indicador.png',
+  isDelivery: false,
+};
+
+const validOrder = () => new Order(123, items, details);
 
 describe('Given a Payment class', () => {
   it('when an instance is created then pay method should be defined', () => {
-    const payment = new Payment(PAYMENT_TYPE.cash, new Order(45), new Donation(0));
+    const payment = new Payment(PAYMENT_TYPE.cash, new Order(45, items, details), new Donation(0));
     expect(payment.pay).toBeInstanceOf(Function);
   });
 

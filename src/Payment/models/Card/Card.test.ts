@@ -1,4 +1,4 @@
-import {CARD_ERRORS} from '../../errorMessages';
+import { CARD_ERRORS } from '../../errorMessages';
 import Card from './Card';
 
 const VALID_CARD_NUMBER = '1299999999999999';
@@ -53,14 +53,14 @@ describe('Given a Card class', () => {
 
   it('when cvc is not set then an error should be thrown', () => {
     // @ts-expect-error desactivamos ts para forzar el test
-    const card = new Card(VALID_CARD_NUMBER, '12/23', undefined);
+    const card = new Card(VALID_CARD_NUMBER, '12 / 23', undefined);
 
     expect(() => card.isValid()).toThrowError(CARD_ERRORS.wrongCvc);
   });
 
   it('when cvc is not a number set then an error should be thrown', () => {
     // @ts-expect-error desactivamos ts para forzar el test
-    const card = new Card(VALID_CARD_NUMBER, '12/23', 'aaa');
+    const card = new Card(VALID_CARD_NUMBER, '12 / 23', 'aaa');
 
     expect(() => card.isValid()).toThrowError(CARD_ERRORS.cvcAsNumber);
   });

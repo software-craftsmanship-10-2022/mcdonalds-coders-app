@@ -15,6 +15,7 @@ const AddItem = () => {
   const navigate = useNavigate();
   const itemCategory = COMBOS.find((comboCategory) => comboCategory.id === category);
   const itemData = itemCategory?.items.find((item) => item.id === id);
+  const [count, setCount] = useState(1);
 
   const {order, updateOrder} = useOrderContext() || {};
   const [currencyFormatter] = useFormat();
@@ -36,7 +37,7 @@ const AddItem = () => {
     setSelectedDrink(newProduct);
   };
 
-  const getSelectedProducts = (): ProductType[] => {
+  const getSelectedProducts = () => {
     const products: ProductType[] = [];
     if (selectedComplement) products.push(selectedComplement);
     if (selectedDrink) products.push(selectedDrink);
@@ -66,6 +67,23 @@ const AddItem = () => {
       <p className="title">{itemData?.title}</p>
       <img src={`${IMG_PATH}${itemData.img}`} alt="" />
       <p className="price">{priceTag}</p>
+      <div className="counter-container">
+        <button
+          onClick={() => {
+            setCount(count === 1 ? count : count - 1);
+          }}
+        >
+          <img src={IMG_PATH + 'minus.png'} alt="Quitar" />
+        </button>
+        <p>{count}</p>
+        <button
+          onClick={() => {
+            setCount(count >= 5 ? count : count + 1);
+          }}
+        >
+          <img src={IMG_PATH + 'plus.png'} alt="Añadir" />
+        </button>
+      </div>
 
       <ProductSelector
         productCategory={PRODUCTS.find((category) => category.id === 'complements')!}

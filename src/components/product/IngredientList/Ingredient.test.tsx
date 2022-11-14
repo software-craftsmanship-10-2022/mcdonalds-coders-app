@@ -1,4 +1,5 @@
 import {render} from '@testing-library/react';
+import type {IngredientType} from 'src/@types/ingredient';
 import Ingredient from './Ingredient';
 
 jest.mock('src/data/ingredients', () => [
@@ -11,17 +12,21 @@ jest.mock('src/data/ingredients', () => [
   },
 ]);
 
-describe('Given Ingredient component', () => {
-  test('when the id is not exist renders null', () => {
-    const {container} = render(<Ingredient id="test" />);
-    expect(container).toBeEmptyDOMElement();
-  });
-  test('when the id exists renders the component', () => {
-    const {getByText} = render(<Ingredient id="pan-arriba" />);
-    const image = document.querySelector('img');
-    expect(image?.src).toContain('Pan+arriba.png');
+const ingredient: IngredientType = {
+  id: 'pan-arriba',
+  title: 'Pan',
+  extraPrice: 0,
+  img: 'Pan+arriba.png',
+  modifaible: false,
+};
 
-    const title = getByText('Pan');
+describe('Given Ingredient component', () => {
+  test('renders correctly', () => {
+    const {getByText} = render(<Ingredient ingredient={ingredient} />);
+    const image = document.querySelector('img');
+    expect(image?.src).toContain(ingredient.img);
+
+    const title = getByText(ingredient.title);
     expect(title).toBeInTheDocument();
   });
 });

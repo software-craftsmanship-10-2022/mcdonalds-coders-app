@@ -18,7 +18,6 @@
 
 .product-selector__item-button {
   width: 100%;
-  background-color: transparent;
   border: 1px solid #eee;
   display: flex;
   flex-direction: column;

@@ -58,9 +58,7 @@ describe('Given an useProducts hook', () => {
   });
 
   test('when render the component then products should be reloaded', async () => {
-    act(() => {
-      render(<TestComponent />);
-    });
+    render(<TestComponent />);
 
     await screen.findAllByText(CATEGORIES_LENGTH + PRODUCTS.length.toString());
 
@@ -68,16 +66,13 @@ describe('Given an useProducts hook', () => {
   });
 
   test('when press select category button then should search the data of fourth category', async () => {
-    act(() => {
-      render(<TestComponent />);
-    });
+    render(<TestComponent />);
 
     screen.getByText(CATEGORY_SEARCHED + NOT_SELECTED);
 
     const button = screen.getByText(CATEGORY_SELECT_BUTTON);
-    act(() => {
-      fireEvent.click(button);
-    });
+
+    fireEvent.click(button);
 
     await screen.findAllByText(CATEGORY_SEARCHED + PRODUCTS[3].category);
 

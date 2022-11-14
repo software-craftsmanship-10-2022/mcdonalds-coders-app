@@ -1,6 +1,5 @@
-import {useCallback, useEffect} from 'react';
+import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import type {OrderType} from '../../../@types/order';
 import {IMG_PATH, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
 import useFormat from '../../../hooks/useFormat';
@@ -12,45 +11,29 @@ const Cart = () => {
   const {order, updateOrder} = useOrderContext();
   const [currencyFormatter] = useFormat();
 
-  const getTotal = useCallback(() => {
-    let result = 0;
-
-    for (const item of order.items) {
-      result += item.pricePerUnit * item.quantity;
-    }
-
-    return result;
-  }, [order.items]);
-
   useEffect(() => {
     // Go back if there is nothing no display
-    if (order.items.length <= 0) {
+    if (order.isItemsEmpty()) {
       navigate(-1);
     }
-
-    // Change order stored if the item list changed
-    updateOrder((prevOrder: OrderType) => ({
-      ...prevOrder,
-      total: getTotal(),
-    }));
-  }, [order.items, navigate, getTotal, updateOrder]);
+  }, [order, navigate]);
 
   // Delete selected item from the order
   const deleteItem = (item: number) => {
-    const list = order.items.filter((_, index) => index !== item);
-    updateOrder({...order, items: list});
+    order.removeItem(item);
+    updateOrder(order);
   };
 
   return (
     <div className="Cart">
-      {order.items.map((item, index) => (
+      {order.getItems().map((item, index) => (
         <div className="item" key={index}>
-          <img src={IMG_PATH + item.img} alt="" />
+          <img src={IMG_PATH + item.image} alt="" />
           <div className="item-info">
             <p>{item.name}</p>
-            <p>{`Cantidad: ${item.quantity}`}</p>
+            <p>{`Cantidad: ${item.price}`}</p>
             <p>
-              {currencyFormatter().format(item.pricePerUnit)}
+              {currencyFormatter().format(item.price)}
               <button
                 className="delete-btn"
                 onClick={() => {
@@ -66,7 +49,7 @@ const Cart = () => {
       <div className="cart-info">
         <div className="cart-total">
           <p>Total</p>
-          <p>{currencyFormatter().format(getTotal())}</p>
+          <p>{currencyFormatter().format(order.getTotalPrice())}</p>
         </div>
         <McButton
           text={'Pagar con la app'}

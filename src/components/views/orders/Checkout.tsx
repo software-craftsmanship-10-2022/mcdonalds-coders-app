@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {Form, FormGroup, Input, Label} from 'reactstrap';
-import type {OrderType} from '../../../@types/order';
+import {OrderStatus, PaymentMethod} from '../../../@types/order';
+import type Order from 'src/api/orders/Order';
 import {PAYMENT_TYPE, STORAGE, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
 import useFormat from '../../../hooks/useFormat';
@@ -11,6 +12,7 @@ import PaymentInputs from '../../form/PaymentInputs';
 import UserForm from '../../form/UserForm';
 import InfoModal from '../../modal/InfoModal';
 import './Checkout.css';
+import saveOrder from 'src/api/orders/saveOrder';
 
 type CardDetailsType = {
   number: string;
@@ -19,13 +21,16 @@ type CardDetailsType = {
 };
 
 type DetailProps = {
-  order: OrderType;
-  confirmOrder: (payMethod: string, details: CardDetailsType) => void;
+  order: Order;
+  confirmOrder: (paymentMethod: PaymentMethod, details: CardDetailsType) => void;
 };
 
 const Detail = ({order, confirmOrder}: DetailProps) => {
-  const addressTitle = order.details.isDelivery ? 'Domicilio' : 'Dirección de retiro en el local';
-  const [selectedMethod, setSelectedMethod] = useState(PAYMENT_TYPE.cash);
+  const addressTitle = order.getDetails().isDelivery
+    ? 'Domicilio'
+    : 'Dirección de retiro en el local';
+
+  const [selectedMethod, setSelectedMethod] = useState<PaymentMethod>(PaymentMethod.cash);
   const [currencyFormatter] = useFormat();
   // Card information
   const [cardNumber, setCardNumber] = useState('');
@@ -56,17 +61,18 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
           <h3>
             <strong>{addressTitle}</strong>
           </h3>
-          <h3>{order.details.address}</h3>
+          <h3>{order.getDetails().address}</h3>
         </div>
         <div className="items">
           <h3>
             <strong>Resumen</strong>
           </h3>
-          {order.items.map((value, index) => (
+          {order.getItems().map((item, index) => (
             <div className="item" key={index}>
-              <p className="name">{value.name}</p>
-              <p>{`x${value.quantity}`}</p>
-              <p>{currencyFormatter().format(value.pricePerUnit * value.quantity)}</p>
+              <p className="name">{item.name}</p>
+              <p>{`x${item.price}`}</p>
+              {/* @TODO calcuate price by total separating by items */}
+              <p>{currencyFormatter().format(item.price)}</p>
             </div>
           ))}
         </div>
@@ -84,7 +90,7 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
                     name="paymethod"
                     className="pay-method-radio"
                     onClick={() => {
-                      setSelectedMethod(PAYMENT_TYPE.cash);
+                      setSelectedMethod(PaymentMethod.cash);
                     }}
                   />
                   {PAYMENT_TYPE.cash}
@@ -97,7 +103,7 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
                     name="paymethod"
                     className="pay-method-radio"
                     onClick={() => {
-                      setSelectedMethod(PAYMENT_TYPE.debit);
+                      setSelectedMethod(PaymentMethod.debit);
                     }}
                   />
                   {PAYMENT_TYPE.debit}
@@ -106,7 +112,7 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
             </div>
           </FormGroup>
         </Form>
-        {selectedMethod === PAYMENT_TYPE.debit && (
+        {selectedMethod === PaymentMethod.cash && (
           <PaymentInputs
             setCardCVC={setCardCVC}
             setCardDate={setCardDate}
@@ -117,12 +123,12 @@ const Detail = ({order, confirmOrder}: DetailProps) => {
       </div>
       <div className="detail-total">
         <p>Total</p>
-        <p>{currencyFormatter().format(order.total)}</p>
+        <p>{currencyFormatter().format(order.getTotalPrice())}</p>
       </div>
       <McButton
         text={'Enviar pedido'}
         onClick={() => {
-          if (selectedMethod === PAYMENT_TYPE.debit && !cardIsValid) {
+          if (selectedMethod === PaymentMethod.debit && !cardIsValid) {
             handleCardWarning('La información de la tarjeta es inválida');
           } else {
             confirmOrder(selectedMethod, {
@@ -148,7 +154,7 @@ const Checkout = () => {
 
   useEffect(() => {
     // Exit if there is no order in the state
-    if (order.items.length <= 0) {
+    if (order.isItemsEmpty()) {
       navigate(URLS.root);
     }
 
@@ -159,9 +165,10 @@ const Checkout = () => {
     }
   }, [order, navigate, getStorageItem]);
 
-  const confirmOrder = (payMethod: string, details: CardDetailsType) => {
-    updateOrder({...order, confirmed: true, paymentType: payMethod});
-    console.log(details);
+  const confirmOrder = async (payment: PaymentMethod, _details: CardDetailsType) => {
+    order.setStatus(OrderStatus.pending);
+    order.setPayment(payment);
+    updateOrder(await saveOrder(order));
     navigate(URLS.root);
   };
 

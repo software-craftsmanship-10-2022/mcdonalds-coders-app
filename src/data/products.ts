@@ -149,7 +149,6 @@ const PRODUCTS: ProductCategoryApiType[] = [
         id: 'McNuggets-4-unidades',
         img: 'McNuggets-4-unidades.png',
         title: 'McNuggets 4 unidades',
-        ingredients: ['pan-arriba', 'pan-abajo', 'pollo'],
         description:
           'Ligero sabor a empanado de harina de maíz y trigo frito con notas caramelizadas. Suave sabor a pollo que es ligeramente salado con un toque de pimienta negra y apio en el empanado.',
       },
@@ -157,7 +156,6 @@ const PRODUCTS: ProductCategoryApiType[] = [
         id: 'McNuggets-6-unidades',
         img: 'McNuggets-6-unidades.png',
         title: 'McNuggets 6 unidades',
-        ingredients: ['pan-arriba', 'pan-abajo', 'pollo'],
         description:
           'Seis piezas del mejor pollo rebozado sólo para vos. Comelas como quieras: con salsas o solas; todas son igual de deliciosas!',
       },
@@ -165,7 +163,6 @@ const PRODUCTS: ProductCategoryApiType[] = [
         id: 'McNuggets-10-unidades',
         img: 'McNuggets-10-unidades.png',
         title: 'McNuggets 10 unidades',
-        ingredients: ['pan-arriba', 'pan-abajo', 'pollo'],
         description:
           'Diez piezas del mejor pollo rebozado. Para comerlas con salsas o solas; todas son igual de deliciosas!',
       },
@@ -173,7 +170,6 @@ const PRODUCTS: ProductCategoryApiType[] = [
         id: 'McNuggets-20-unidades',
         img: 'McNuggets-20-unidades.png',
         title: 'McNuggets 20 unidades',
-        ingredients: ['pan-arriba', 'pan-abajo', 'pollo'],
         description:
           'Veinte piezas del mejor pollo rebozado, en su versión ideal para compartir. Con amigos o en pareja; con o sin salsas. Comelas como quieras. Todas son igual de deliciosas!',
       },

@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Navigate, useNavigate, useParams} from 'react-router-dom';
 import type {MenuType, ProductType} from 'src/@types/product';
 import ProductSelector from 'src/components/product-selector/ProductSelector';
-import PRODUCTS from 'src/data/products';
+import {useProducts} from 'src/hooks/useProducts';
 import {IMG_PATH, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
 import COMBOS from '../../../data/combos';
@@ -11,6 +11,7 @@ import McButton from '../../buttons/McButton';
 import './AddItem.css';
 
 const AddItem = () => {
+  const {multipleProductsByCategory, getMultipleProductsByCategory} = useProducts();
   const {category, id} = useParams<{category: string; id: string}>();
   const navigate = useNavigate();
   const itemCategory = COMBOS.find((comboCategory) => comboCategory.id === category);
@@ -22,6 +23,10 @@ const AddItem = () => {
   const priceTag = itemData ? currencyFormatter().format(itemData.price) : '';
   const [selectedComplement, setSelectedComplement] = useState<ProductType | undefined>(undefined);
   const [selectedDrink, setSelectedDrink] = useState<ProductType | undefined>(undefined);
+
+  useState(() => {
+    getMultipleProductsByCategory(['drinks', 'complements']);
+  });
 
   if (!itemData) {
     return <Navigate to={URLS.ordersAdd} replace />;
@@ -65,7 +70,7 @@ const AddItem = () => {
   return (
     <div className="AddItem">
       <p className="title">{itemData?.title}</p>
-      <img src={`${IMG_PATH}${itemData.img}`} alt="" />
+      <img src={`${IMG_PATH}${itemData.img}`} alt="Combo" />
       <p className="price">{priceTag}</p>
       <div className="counter-container">
         <button
@@ -86,13 +91,15 @@ const AddItem = () => {
       </div>
 
       <ProductSelector
-        productCategory={PRODUCTS.find((category) => category.id === 'complements')!}
+        productCategory={multipleProductsByCategory.find(
+          (category) => category.id === 'complements',
+        )}
         onSelectProduct={onSelectComplement}
         selectedProductId={selectedComplement?.id}
       />
 
       <ProductSelector
-        productCategory={PRODUCTS.find((category) => category.id === 'drinks')!}
+        productCategory={multipleProductsByCategory.find((category) => category.id === 'drinks')}
         onSelectProduct={onSelectDrink}
         selectedProductId={selectedDrink?.id}
       />

@@ -3,7 +3,7 @@ import {IMG_PATH} from 'src/config';
 import './ProductSelector.css';
 
 type ProductSelectorProps = {
-  productCategory: ProductCategoryType;
+  productCategory: ProductCategoryType | undefined;
   selectedProductId: string | undefined;
   onSelectProduct: (product: ProductType) => void;
 };
@@ -13,6 +13,8 @@ const ProductSelector = ({
   selectedProductId,
   onSelectProduct,
 }: ProductSelectorProps) => {
+  if (!productCategory) return null;
+
   return (
     <div className="product-selector">
       <h3>{productCategory.category}</h3>

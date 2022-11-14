@@ -17,10 +17,10 @@ class StorageMarkerRepository implements MarkerRepository {
       throw new Error();
     }
 
-    return this.parseOrder(storedMarker);
+    return this.parseMarker(storedMarker);
   }
 
-  private parseOrder(storedMarker: string): MarkerType {
+  private parseMarker(storedMarker: string): MarkerType {
     const marker: MarkerType = JSON.parse(storedMarker) as MarkerType;
 
     return marker;

@@ -4,9 +4,9 @@ import type {MarkerRepository} from '../domain/MarkerRepository';
 
 class StorageMarkerRepository implements MarkerRepository {
   async save(markerType: MarkerType) {
-    const order = this.checkMarkerOrFail(markerType.id);
+    const marker = this.checkMarkerOrFail(markerType.id);
 
-    localStorage.setItem(STORAGE.markers, JSON.stringify(order));
+    localStorage.setItem(STORAGE.markers, JSON.stringify(marker));
 
     return Promise.resolve();
   }

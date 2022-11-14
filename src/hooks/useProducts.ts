@@ -23,16 +23,15 @@ export const useProducts = () => {
 
     if (productsFromCache) {
       setProducts(productsFromCache);
+      return;
     }
 
-    if (!productsFromCache) {
-      getAllProductsFromApi()
-        .then((productsFromApi) => {
-          setProducts(productsFromApi);
-          setSessionStorageItem('products', productsFromApi);
-        })
-        .catch(console.error);
-    }
+    getAllProductsFromApi()
+      .then((productsFromApi) => {
+        setProducts(productsFromApi);
+        setSessionStorageItem('products', productsFromApi);
+      })
+      .catch(console.error);
   };
 
   const getProductsByCategory = (categoryId: string): void => {
@@ -42,16 +41,15 @@ export const useProducts = () => {
 
     if (productsByCategoryFromCache) {
       setCategoryProducts(productsByCategoryFromCache);
+      return;
     }
 
-    if (!productsByCategoryFromCache) {
-      getProductsByCategoryFromApi(categoryId)
-        .then((productsByCategoryFromApi) => {
-          setCategoryProducts(productsByCategoryFromApi);
-          setSessionStorageItem(categoryId, productsByCategoryFromApi);
-        })
-        .catch(console.error);
-    }
+    getProductsByCategoryFromApi(categoryId)
+      .then((productsByCategoryFromApi) => {
+        setCategoryProducts(productsByCategoryFromApi);
+        setSessionStorageItem(categoryId, productsByCategoryFromApi);
+      })
+      .catch(console.error);
   };
 
   const getMultipleProductsByCategory = (categoryIds: CategoryIds[]): void => {

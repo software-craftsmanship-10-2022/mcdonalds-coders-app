@@ -1,10 +1,10 @@
-import type { OrderType } from 'src/@types/order';
+import type {OrderType} from 'src/@types/order';
 import McButton from 'src/components/buttons/McButton';
 import DonationOptions from 'src/components/donation/DonationOptions';
 import PaymentInputs from 'src/components/form/PaymentInputs';
 import TransferInputs from 'src/components/form/TransferInputs';
 import InfoModal from 'src/components/modal/InfoModal';
-import { PAYMENT_TYPE } from 'src/config';
+import {PAYMENT_TYPE} from 'src/config';
 import useFormat from 'src/hooks/useFormat';
 import acceptOrder from 'src/Payment/acceptOrder';
 import type Payment from 'src/Payment/models/Payment/Payment';
@@ -16,7 +16,7 @@ import {
   useDonation,
   useIsCardValid,
   usePaymentMethod,
-  usePaymentWarningModal
+  usePaymentWarningModal,
 } from './hooks';
 
 type CardDetailsType = {

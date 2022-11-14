@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type {CouponType} from 'src/@types/coupon';
 import type {DiscountItem} from 'src/@types/discount';
 import {STORAGE} from 'src/config';

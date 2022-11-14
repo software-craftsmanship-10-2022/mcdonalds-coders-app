@@ -1,4 +1,4 @@
-import { CARD_ERRORS } from '../../errorMessages';
+import {CARD_ERRORS} from '../../errorMessages';
 import type IValidate from '../IValidate';
 
 class Card implements IValidate {

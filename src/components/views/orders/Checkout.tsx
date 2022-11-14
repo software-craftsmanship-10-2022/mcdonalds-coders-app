@@ -64,7 +64,7 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
           />
         )}
         {paymentMethod === PAYMENT_TYPE.transfer && (
-          <TransferInputs setFullName={bankUpdate.fullName} setSWIFT={bankUpdate.iban} />
+          <TransferInputs setFullName={bankUpdate.fullName} setIBAN={bankUpdate.iban} />
         )}
         <DonationOptions
           formDonationIsVisible={formDonationIsVisible}

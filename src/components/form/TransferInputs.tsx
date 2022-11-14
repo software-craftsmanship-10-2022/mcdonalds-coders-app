@@ -2,11 +2,11 @@ import McInput from '../input/McInput';
 
 type TransferInputsProps = {
   setFullName: (fullName: string) => void;
-  setSWIFT: (swift: string) => void;
+  setIBAN: (iban: string) => void;
 };
 
 // Card input info
-const TransferInputs = ({setFullName, setSWIFT}: TransferInputsProps) => {
+const TransferInputs = ({setFullName, setIBAN}: TransferInputsProps) => {
   const ERROR_MESSAGES = {
     emptyCardNumber: 'El número de la tarjeta es inválido',
     invalidCardNumber: 'El número de la tarjeta es inválido',
@@ -56,11 +56,11 @@ const TransferInputs = ({setFullName, setSWIFT}: TransferInputsProps) => {
       <McInput
         id={'input-name'}
         type={'text'}
-        label={'SWIFT'}
+        label={'IBAN'}
         width={'100%'}
         value={''}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          setSWIFT(e.target.value);
+          setIBAN(e.target.value);
         }}
       />
     </div>

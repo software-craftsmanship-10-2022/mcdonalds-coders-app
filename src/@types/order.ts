@@ -1,4 +1,5 @@
-import type {ProductType} from './product';
+import type Order from 'src/api/orders/Order';
+import type {MenuType} from './product.d';
 
 // @types.order.ts
 export type OrderType = {
@@ -12,10 +13,18 @@ export type OrderType = {
 };
 
 export enum OrderStatus {
+  noConfirmed = 'NO_CONFIRMED',
+  ready = 'READY',
+  rejected = 'REJECTED',
   pending = 'PENDING',
   preparing = 'PREPARING',
   delivering = 'DELIVERING',
   finished = 'FINISHED',
+}
+
+export enum PaymentMethod {
+  cash,
+  debit,
 }
 
 export type OrderItemType = {
@@ -23,8 +32,6 @@ export type OrderItemType = {
   name: string;
   img: string;
   pricePerUnit: number;
-  complement: ProductType | undefined;
-  drink: ProductType | undefined;
 };
 
 export type OrderAddressDetailsType = {
@@ -35,7 +42,23 @@ export type OrderAddressDetailsType = {
 };
 
 export type OrderContextType = {
-  order: OrderType;
-  updateOrder: React.Dispatch<React.SetStateAction<OrderType>>;
+  updateOrder: (_: Order) => void;
+  order: Order;
   resetOrder: () => void;
+};
+
+export type NewOrderType = {
+  id: string;
+  details: NewOrderAddressDetailsType;
+  items: MenuType[];
+  payment: PaymentMethod;
+  status: OrderStatus;
+};
+
+export type NewOrderAddressDetailsType = {
+  id: string;
+  name: string;
+  address: string;
+  image: string;
+  isDelivery: boolean;
 };

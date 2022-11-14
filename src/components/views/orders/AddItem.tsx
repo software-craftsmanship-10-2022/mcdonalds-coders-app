@@ -1,36 +1,45 @@
-import {useState} from 'react';
-import {Navigate, useNavigate, useParams} from 'react-router-dom';
+import {useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import type {ComboType} from 'src/@types/combos';
 import type {MenuType, ProductType} from 'src/@types/product';
 import ProductSelector from 'src/components/product-selector/ProductSelector';
 import IngredientList from 'src/components/product/IngredientList/IngredientList';
+import useCombos from 'src/hooks/useCombos';
 import {useProducts} from 'src/hooks/useProducts';
-import {IMG_PATH, URLS} from '../../../config';
+import {IMG_PATH} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
-import COMBOS from '../../../data/combos';
 import useFormat from '../../../hooks/useFormat';
 import McButton from '../../buttons/McButton';
 import './AddItem.css';
 
 const AddItem = () => {
   const {multipleProductsByCategory, getMultipleProductsByCategory} = useProducts();
-  const {category, id} = useParams<{category: string; id: string}>();
+  const {getComboById} = useCombos();
+  const {id} = useParams<{category: string; id: string}>();
   const navigate = useNavigate();
-  const itemCategory = COMBOS.find((comboCategory) => comboCategory.id === category);
-  const itemData = itemCategory?.items.find((item) => item.id === id);
+
   const [count, setCount] = useState(1);
+  const [combo, setCombo] = useState<undefined | ComboType>();
 
   const {order, updateOrder} = useOrderContext() || {};
   const [currencyFormatter] = useFormat();
-  const priceTag = itemData ? currencyFormatter().format(itemData.price) : '';
+  const priceTag = combo ? currencyFormatter().format(combo.price) : '';
   const [selectedComplement, setSelectedComplement] = useState<ProductType | undefined>(undefined);
   const [selectedDrink, setSelectedDrink] = useState<ProductType | undefined>(undefined);
 
-  useState(() => {
+  useEffect(() => {
     getMultipleProductsByCategory(['drinks', 'complements']);
-  });
+    if (id) {
+      getComboById(id)
+        .then((combo) => {
+          setCombo(combo);
+        })
+        .catch(console.error);
+    }
+  }, [id]);
 
-  if (!itemData) {
-    return <Navigate to={URLS.ordersAdd} replace />;
+  if (!combo) {
+    return null;
   }
 
   const onSelectComplement = (product: ProductType) => {
@@ -53,10 +62,10 @@ const AddItem = () => {
   // Add selected qty of this item and adds them to the order
   const handleClick = () => {
     const menu: MenuType = {
-      id: itemData.id,
-      image: itemData.img,
-      name: itemData.title,
-      price: itemData.price,
+      id: combo.id,
+      image: combo.img,
+      name: combo.title,
+      price: combo.price,
       products: getSelectedProducts(),
     };
 
@@ -70,22 +79,14 @@ const AddItem = () => {
 
   return (
     <div className="AddItem">
-      <p className="title">{itemData?.title}</p>
+      <p className="title">{combo?.title}</p>
       <div className="ImageItem">
-        <img src={`${IMG_PATH}${itemData.img}`} alt="Combo" />
-        <div className="IngredientList">
-          <IngredientList
-            ingredients={[
-              {
-                id: 'queso',
-                title: 'Queso',
-                img: 'queso.png',
-                extraPrice: 0.5,
-                modifaible: true,
-              },
-            ]}
-          />
-        </div>
+        <img src={`${IMG_PATH}${combo.img}`} alt="Combo" />
+        {combo.mainProduct.ingredients && combo.mainProduct.ingredients.length > 0 && (
+          <div className="IngredientList">
+            <IngredientList ingredients={combo.mainProduct.ingredients} />
+          </div>
+        )}
       </div>
 
       <p className="price">{priceTag}</p>

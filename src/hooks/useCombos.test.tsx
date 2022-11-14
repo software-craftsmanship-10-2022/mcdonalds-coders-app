@@ -1,4 +1,4 @@
-import {fireEvent, render, screen} from '@testing-library/react';
+import {act, fireEvent, render, renderHook, screen} from '@testing-library/react';
 import {useEffect, useState} from 'react';
 import type {ComboType} from 'src/@types/combos';
 import COMBOS from 'src/data/combos';
@@ -41,7 +41,9 @@ const TestComponent = () => {
 
 describe('Given useCombos hook', () => {
   test('TestComponent should render', () => {
-    render(<TestComponent />);
+    act(() => {
+      renderHook(() => <TestComponent />);
+    });
   });
 
   test('when render the component then combos should be reloaded', async () => {

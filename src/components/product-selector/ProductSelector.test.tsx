@@ -1,9 +1,28 @@
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
+import type {ProductCategoryType} from 'src/@types/product';
 import {IMG_PATH} from 'src/config';
-import PRODUCTS from 'src/data/products';
 import ProductSelector from './ProductSelector';
 
-const productCategory = PRODUCTS.find((category) => category.category === 'Papas y Complementos')!;
+const productCategory: ProductCategoryType = {
+  category: 'Papas y Complementos',
+  id: 'complements',
+  items: [
+    {
+      id: 'Papas-pequeñas',
+      img: 'Papas-pequeñas.png',
+      title: 'Papas pequeñas',
+      description:
+        'Calientes, crujientes y deliciosas, tus aliadas perfectas para cualquier comida. Disfrutá de nuestras papas mundialmente famosas, desde la primera hasta la última en su versión pequeña.',
+    },
+    {
+      id: 'Papas-Medianas',
+      img: 'Papas-Medianas.png',
+      title: 'Papas Medianas',
+      description:
+        'Nuestro sello. Las aliadas perfectas para cualquier comida. Disfrutá de nuestras papas mundialmente famosas, desde la primera hasta la última. Crujientes y deliciosas, no vas a parar hasta terminarlas todas.',
+    },
+  ],
+};
 
 describe('Given ProductSelector component', () => {
   let onSelectProduct: jest.Mock;
@@ -12,7 +31,7 @@ describe('Given ProductSelector component', () => {
     render(
       <ProductSelector
         productCategory={productCategory}
-        selectedProductId={productCategory.items[3].title}
+        selectedProductId={productCategory.items[1].id}
         onSelectProduct={onSelectProduct}
       />,
     );
@@ -59,7 +78,7 @@ describe('Given ProductSelector component', () => {
 
   test('when receive an ProductCategory type and with a product selected then should mark product as selected', () => {
     const buttons = screen.getAllByRole('button');
-    expect(buttons[3]).toHaveAttribute('aria-label', 'seleccionado');
+    expect(buttons[1]).toHaveAttribute('aria-label', 'seleccionado');
 
     const notSelected = screen.getAllByLabelText('no seleccionado');
     expect(notSelected.length).toBe(productCategory.items.length - 1);

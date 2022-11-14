@@ -4,22 +4,27 @@ import type {
   ComboCategoryType,
   ComboType,
 } from 'src/@types/combos';
-import type {ProductType} from 'src/@types/product';
+import type {ProductApiType, ProductType} from 'src/@types/product';
 import COMBOS from 'src/data/combos';
 import PRODUCTS from 'src/data/products';
+import {transformProductApiToProduct} from '../products/productsApi';
 
 const findProductInListById = (
-  productList: ProductType[],
+  productList: ProductApiType[],
   productId: string,
 ): ProductType | undefined => {
-  return productList.find((product) => product.id === productId);
+  const product = productList.find((product) => product.id === productId);
+  if (!product) return undefined;
+  return transformProductApiToProduct(product);
 };
 
 const productById = (productId: string): ProductType => {
-  let product;
+  let product: ProductType | undefined;
   PRODUCTS.forEach((category) => {
     const result = findProductInListById(category.items, productId);
-    if (result) product = result;
+    if (result) {
+      product = result;
+    }
   });
   if (!product) throw new Error('Product not found');
   return product;

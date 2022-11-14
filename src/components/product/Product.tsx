@@ -1,14 +1,20 @@
-import './Product.css';
-import {IMG_PATH} from '../../config';
 import type {ProductType} from '../../@types/product';
+import {IMG_PATH} from '../../config';
+import IngredientList from './IngredientList/IngredientList';
+import './Product.css';
 
-const Product = ({img, title, description}: ProductType) => (
+const ProductInfo = ({title, description, ingredients}: ProductType) => (
+  <div className="Product-info">
+    <p className="Product-title">{title}</p>
+    <p className="Product-text">{description}</p>
+    {ingredients && ingredients.length > 0 && <IngredientList ingredients={ingredients} />}
+  </div>
+);
+
+const Product = (props: ProductType) => (
   <div className="Product">
-    <img src={IMG_PATH + img} alt="" />
-    <div className="Product-info">
-      <p className="Product-title">{title}</p>
-      <p className="Product-text">{description}</p>
-    </div>
+    <img src={IMG_PATH + props.img} alt="" />
+    <ProductInfo {...props} />
   </div>
 );
 

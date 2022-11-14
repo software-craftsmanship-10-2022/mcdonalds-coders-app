@@ -4,11 +4,15 @@ import {
   getAllProductsFromApi,
   getMultipleProductsByCategoryFromApi,
   getProductsByCategoryFromApi,
+  transformCategoryApiListToCategoryList,
+  transformCategoryApiToCategory,
 } from './productsApi';
 
 describe('Given productsApi', () => {
   test('when we call getAllProductsFromApi, then all products data is resolved', async () => {
-    await expect(getAllProductsFromApi()).resolves.toEqual(PRODUCTS);
+    await expect(getAllProductsFromApi()).resolves.toEqual(
+      transformCategoryApiListToCategoryList(PRODUCTS),
+    );
   });
 
   test('when we call getProductsByCategoryFromApi with a category id, then filter products data is resolved', async () => {
@@ -19,7 +23,11 @@ describe('Given productsApi', () => {
       (productCategory) => productCategory.id === categoryId,
     );
 
-    await expect(foundProductsByCategoryId).resolves.toEqual(mockedFoundProducts);
+    if (mockedFoundProducts) {
+      await expect(foundProductsByCategoryId).resolves.toEqual(
+        transformCategoryApiToCategory(mockedFoundProducts),
+      );
+    }
   });
 
   test('when we call getMultipleProductsByCategoryFromApi with an array of categories id, then filter products data is resolved', async () => {
@@ -28,7 +36,7 @@ describe('Given productsApi', () => {
 
     const mockedFoundProducts = PRODUCTS.filter((productCategory) =>
       categoryIds.includes(productCategory.id),
-    );
+    ).map((category) => transformCategoryApiToCategory(category));
 
     await expect(foundProductsByCategoryId).resolves.toEqual(mockedFoundProducts);
   });

@@ -1,0 +1,9 @@
+.Ingredient-image {
+  width: 35%;
+}
+
+@media screen and (max-width: 768px) {
+  .Ingredient-image {
+    width: 55%;
+  }
+}

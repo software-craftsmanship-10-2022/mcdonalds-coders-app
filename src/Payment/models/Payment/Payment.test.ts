@@ -1,11 +1,72 @@
 import {PAYMENT_TYPE} from 'src/config';
+import {DONATION_ERRORS, ORDER_ERRORS, PAYMENT_TYPE_ERRORS} from 'src/Payment/errorMessages';
 import Donation from '../Donation/Donation';
 import Order from '../Order/Order';
 import Payment from './Payment';
+
+const validOrder = () => new Order(123);
 
 describe('Given a Payment class', () => {
   it('when an instance is created then pay method should be defined', () => {
     const payment = new Payment(PAYMENT_TYPE.cash, new Order(45), new Donation(0));
     expect(payment.pay).toBeInstanceOf(Function);
+  });
+
+  it('when payment type is not setted then an error should be thrown', () => {
+    // @ts-expect-error desactivamos ts para forzar el test
+    const cash = new Payment(undefined, undefined, undefined);
+    expect(() => {
+      cash.pay();
+    }).toThrowError(PAYMENT_TYPE_ERRORS.noPaymentType);
+  });
+
+  it('when payment type is empty string then an error should be thrown', () => {
+    // @ts-expect-error desactivamos ts para forzar el test
+    const cash = new Payment('', undefined, undefined);
+    expect(() => {
+      cash.pay();
+    }).toThrowError(PAYMENT_TYPE_ERRORS.noPaymentType);
+  });
+
+  it('when payment type is not valid then an error should be thrown', () => {
+    // @ts-expect-error desactivamos ts para forzar el test
+    const cash = new Payment('3242', undefined, undefined);
+    expect(() => {
+      cash.pay();
+    }).toThrowError(PAYMENT_TYPE_ERRORS.typeValue);
+  });
+
+  it('when order is not setted then an error should be thrown', () => {
+    // @ts-expect-error desactivamos ts para forzar el test
+    const cash = new Payment(PAYMENT_TYPE.cash, undefined, undefined);
+    expect(() => {
+      cash.pay();
+    }).toThrowError(ORDER_ERRORS.noOrderError);
+  });
+
+  it('when order is not typeOf Order then an error should be thrown', () => {
+    const donation = new Donation(0);
+    // @ts-expect-error desactivamos ts para forzar el test
+    const cash = new Payment(PAYMENT_TYPE.cash, 444, undefined);
+    expect(() => {
+      cash.pay();
+    }).toThrowError(ORDER_ERRORS.typeError);
+  });
+
+  it('when donation is not setted then an error should be thrown', () => {
+    // @ts-expect-error desactivamos ts para forzar el test
+    const cash = new Payment(PAYMENT_TYPE.cash, validOrder(), undefined);
+    expect(() => {
+      cash.pay();
+    }).toThrowError(DONATION_ERRORS.noDonationError);
+  });
+
+  it('when donation is not typeOf Order then an error should be thrown', () => {
+    const donation = new Donation(0);
+    // @ts-expect-error desactivamos ts para forzar el test
+    const cash = new Payment(PAYMENT_TYPE.cash, validOrder(), 444);
+    expect(() => {
+      cash.pay();
+    }).toThrowError(DONATION_ERRORS.typeError);
   });
 });

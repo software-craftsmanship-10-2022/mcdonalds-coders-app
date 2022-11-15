@@ -26,6 +26,6 @@ describe('given a McRadio component', () => {
     const allRadios = getAllByRole('radio');
     allRadios[1].click();
 
-    expect(handleChange).toHaveBeenCalledWith(1);
+    expect(handleChange).toHaveBeenCalledWith(300);
   });
 });

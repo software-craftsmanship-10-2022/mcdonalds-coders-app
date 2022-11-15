@@ -3,7 +3,7 @@ import type IValidate from '../IValidate';
 
 class Account implements IValidate {
   #regexFullName = /^[a-zA-Z]+( [a-zA-Z]+)+$/;
-  #regexIban = /([a-zA-Z]{2})\s*\t*(\d{2})\s*\t*(\d{4})\s*\t*(\d{4})\s*\t*(\d{2})\s*\t*(\d{10})/;
+  #regexIban = /^[A-Z]{2}(?:[ ]?[0-9]){18,20}$/;
 
   constructor(private readonly fullName: string, private readonly iban: string) {}
 

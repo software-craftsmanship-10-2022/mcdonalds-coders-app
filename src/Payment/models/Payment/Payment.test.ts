@@ -1,6 +1,5 @@
 import {OrderStatus, PaymentMethod} from 'src/@types/order';
 import Order from 'src/api/orders/Order';
-import {PAYMENT_TYPE} from 'src/config';
 import {DONATION_ERRORS, ORDER_ERRORS, PAYMENT_TYPE_ERRORS} from 'src/Payment/errorMessages';
 import Donation from '../Donation/Donation';
 import Payment from './Payment';
@@ -52,7 +51,7 @@ describe('Given a Payment class', () => {
 
   it('when payment type is empty string then an error should be thrown', () => {
     // @ts-expect-error desactivamos ts para forzar el test
-    const cash = new Payment('', undefined, undefined);
+    const cash = new Payment(undefined, undefined, undefined);
     expect(() => {
       cash.pay();
     }).toThrowError(PAYMENT_TYPE_ERRORS.noPaymentType);
@@ -68,7 +67,7 @@ describe('Given a Payment class', () => {
 
   it('when order is not setted then an error should be thrown', () => {
     // @ts-expect-error desactivamos ts para forzar el test
-    const cash = new Payment(PAYMENT_TYPE.cash, undefined, undefined);
+    const cash = new Payment(PaymentMethod.cash, undefined, undefined);
     expect(() => {
       cash.pay();
     }).toThrowError(ORDER_ERRORS.noOrderError);
@@ -77,7 +76,7 @@ describe('Given a Payment class', () => {
   it('when order is not typeOf Order then an error should be thrown', () => {
     const donation = new Donation(0);
     // @ts-expect-error desactivamos ts para forzar el test
-    const cash = new Payment(PAYMENT_TYPE.cash, 444, undefined);
+    const cash = new Payment(PaymentMethod.cash, 444, undefined);
     expect(() => {
       cash.pay();
     }).toThrowError(ORDER_ERRORS.typeError);
@@ -85,7 +84,7 @@ describe('Given a Payment class', () => {
 
   it('when donation is not setted then an error should be thrown', () => {
     // @ts-expect-error desactivamos ts para forzar el test
-    const cash = new Payment(PAYMENT_TYPE.cash, validOrder(), undefined);
+    const cash = new Payment(PaymentMethod.cash, validOrder(), undefined);
     expect(() => {
       cash.pay();
     }).toThrowError(DONATION_ERRORS.noDonationError);
@@ -94,7 +93,7 @@ describe('Given a Payment class', () => {
   it('when donation is not typeOf Order then an error should be thrown', () => {
     const donation = new Donation(0);
     // @ts-expect-error desactivamos ts para forzar el test
-    const cash = new Payment(PAYMENT_TYPE.cash, validOrder(), 444);
+    const cash = new Payment(PaymentMethod.cash, validOrder(), 444);
     expect(() => {
       cash.pay();
     }).toThrowError(DONATION_ERRORS.typeError);

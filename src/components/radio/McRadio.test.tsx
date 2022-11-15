@@ -3,9 +3,9 @@ import McRadio from './McRadio';
 
 describe('given a McRadio component', () => {
   const radios = [
-    {label: '0€', value: 0},
-    {label: '1€', value: 1},
-    {label: '5€', value: 5},
+    {label: '150$', value: 150},
+    {label: '300$', value: 300},
+    {label: '500$', value: 500},
   ];
 
   const handleChange = jest.fn();

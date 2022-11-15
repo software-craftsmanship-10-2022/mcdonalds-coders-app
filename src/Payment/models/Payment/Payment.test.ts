@@ -74,7 +74,6 @@ describe('Given a Payment class', () => {
   });
 
   it('when order is not typeOf Order then an error should be thrown', () => {
-    const donation = new Donation(0);
     // @ts-expect-error desactivamos ts para forzar el test
     const cash = new Payment(PaymentMethod.cash, 444, undefined);
     expect(() => {

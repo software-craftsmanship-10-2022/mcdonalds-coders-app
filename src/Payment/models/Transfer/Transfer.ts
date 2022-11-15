@@ -12,7 +12,6 @@ class Transfer extends Payment {
   pay() {
     super.pay();
     this.account.isValid();
-    // This.order.totalAmount();
     this.donation.amountValue();
   }
 }

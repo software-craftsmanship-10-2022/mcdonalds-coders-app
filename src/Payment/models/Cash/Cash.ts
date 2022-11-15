@@ -10,7 +10,6 @@ class Cash extends Payment {
 
   pay() {
     super.pay();
-    // This.order.totalAmount();
     this.donation.amountValue();
   }
 }

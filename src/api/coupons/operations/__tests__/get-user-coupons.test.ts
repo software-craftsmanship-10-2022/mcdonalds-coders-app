@@ -13,7 +13,7 @@ import {
   MOCK_VALID_DATE,
 } from '../mocks/mocks';
 
-describe('given an item id and a status', () => {
+describe('given a getUserCoupons request', () => {
   globalThis.fetch = jest.fn(async () => {
     return Promise.resolve({
       json: () => MOCK_DISCOUNTS,

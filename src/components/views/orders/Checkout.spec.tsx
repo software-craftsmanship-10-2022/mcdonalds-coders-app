@@ -1,117 +1,118 @@
-// Import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
-// import {useEffect} from 'react';
-// import {MemoryRouter, Route, Routes, useNavigate} from 'react-router-dom';
-// import createEmptyOrder from 'src/api/orders/createEmptyOrder';
-// import * as saveOrderObject from 'src/api/orders/saveOrder';
-// import {STORAGE, URLS} from 'src/config';
-// import {OrderProvider, useOrderContext} from 'src/context/OrderContext';
-// import useLocalStorage from 'src/hooks/useLocalStorage';
-// import {storage} from 'src/utils/localStorage';
-// import Checkout from './Checkout';
+import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {useEffect} from 'react';
+import {MemoryRouter, Route, Routes, useNavigate} from 'react-router-dom';
+import createEmptyOrder from 'src/api/orders/createEmptyOrder';
+import saveOrder, * as saveOrderObject from 'src/api/orders/saveOrder';
+import {STORAGE, URLS} from 'src/config';
+import {OrderProvider, useOrderContext} from 'src/context/OrderContext';
+import useLocalStorage from 'src/hooks/useLocalStorage';
+import {storage} from 'src/utils/localStorage';
+import Checkout from './Checkout';
 
-// Object.defineProperty(global.self, 'crypto', {
-//   value: {
-//     getRandomValues: () => 'random id',
-//   },
-// });
+Object.defineProperty(global.self, 'crypto', {
+  value: {
+    getRandomValues: () => 'random id',
+  },
+});
 
-// const dummyOrder = createEmptyOrder();
+const dummyOrder = createEmptyOrder();
 
-// dummyOrder.addItem({
-//   id: '0f6fbXbWUp',
-//   name: 'prueba',
-//   image: 'McCOMBOGRANDTRIPLEMcBACONGrande.png',
-//   price: 1320,
-//   products: [],
-// });
+dummyOrder.addItem({
+  id: '0f6fbXbWUp',
+  name: 'prueba',
+  image: 'McCOMBOGRANDTRIPLEMcBACONGrande.png',
+  price: 1320,
+  products: [],
+});
 
-// function ShowOrder(): JSX.Element {
-//   const {order} = useOrderContext() || {};
+function ShowOrder(): JSX.Element {
+  const {order} = useOrderContext() || {};
 
-//   return <div>The order id is: {order.getId()}</div>;
-// }
+  return <div>The order id is: {order.getId()}</div>;
+}
 
-// function ComponentWithRouter(): JSX.Element {
-//   const DummyComponent = () => {
-//     return (
-//       <div>
-//         <ShowOrder />
-//         <Checkout test-id="test" />
-//       </div>
-//     );
-//   };
+function ComponentWithRouter(): JSX.Element {
+  const DummyComponent = () => {
+    const {order, updateOrder} = useOrderContext();
+    const mockConfirmOrder = async () => {
+      updateOrder(await saveOrder(order));
+    };
 
-//   const MainComponent = () => {
-//     const {order} = useOrderContext() || {};
-//     const navigate = useNavigate();
-//     const {setStorageItem} = useLocalStorage();
+    return (
+      <div>
+        <ShowOrder />
+        <Checkout order={order} confirmOrder={mockConfirmOrder} test-id="test" />
+      </div>
+    );
+  };
 
-//     useEffect(() => {
-//       setStorageItem(STORAGE.users, {user: 'user'});
-//       !order?.isItemsEmpty() && navigate(URLS.ordersCheckout);
-//     }, [order]);
+  const MainComponent = () => {
+    const {order} = useOrderContext() || {};
+    const navigate = useNavigate();
+    const {setStorageItem} = useLocalStorage();
 
-//     return null;
-//   };
+    useEffect(() => {
+      setStorageItem(STORAGE.users, {user: 'user'});
+      !order?.isItemsEmpty() && navigate(URLS.ordersCheckout);
+    }, [order]);
 
-//   return (
-//     <OrderProvider>
-//       <MemoryRouter initialEntries={[URLS.root]}>
-//         <Routes>
-//           <Route path={`${URLS.ordersCheckout}`} element={<DummyComponent />} />
-//           <Route index path={URLS.root} element={<MainComponent />} />
-//         </Routes>
-//       </MemoryRouter>
-//     </OrderProvider>
-//   );
-// }
+    return null;
+  };
 
-// describe.skip('Test Checkout component', () => {
-//   describe('Test the order confirmation', () => {
-//     let spyGetOrder: jest.SpiedFunction<typeof storage.getItem>;
-//     let spySaveOrder: jest.SpiedFunction<typeof saveOrderObject.default>;
+  return (
+    <OrderProvider>
+      <MemoryRouter initialEntries={[URLS.root]}>
+        <Routes>
+          <Route path={`${URLS.ordersCheckout}`} element={<DummyComponent />} />
+          <Route index path={URLS.root} element={<MainComponent />} />
+        </Routes>
+      </MemoryRouter>
+    </OrderProvider>
+  );
+}
 
-//     beforeEach(() => {
-//       spyGetOrder = jest.spyOn(storage, 'getItem');
-//       spyGetOrder.mockResolvedValue(dummyOrder);
-//       spySaveOrder = jest.spyOn(saveOrderObject, 'default');
-//     });
+describe('Test Checkout component', () => {
+  describe('Test the order confirmation', () => {
+    let spyGetOrder: jest.SpiedFunction<typeof storage.getItem>;
+    let spySaveOrder: jest.SpiedFunction<typeof saveOrderObject.default>;
 
-//     afterEach(() => {
-//       spyGetOrder.mockRestore();
-//       spySaveOrder.mockRestore();
-//     });
+    beforeEach(() => {
+      spyGetOrder = jest.spyOn(storage, 'getItem');
+      spyGetOrder.mockResolvedValue(dummyOrder);
+      spySaveOrder = jest.spyOn(saveOrderObject, 'default');
+    });
 
-//     it('checks the confirm button exists', async () => {
-//       await act(async () => {
-//         render(<ComponentWithRouter />);
-//       });
-//       await waitFor(() => {
-//         screen.getByText(/Enviar pedido/);
-//       });
-//     });
+    afterEach(() => {
+      spyGetOrder.mockRestore();
+      spySaveOrder.mockRestore();
+    });
 
-//     it('checks the order is saved when it clicks in the button', async () => {
-//       const orderId = '1234abc';
-//       const dummyOrderWithId = dummyOrder.clone();
-//       dummyOrderWithId.setId(orderId);
-//       spySaveOrder.mockResolvedValue(dummyOrderWithId);
+    it('checks the confirm button exists', async () => {
+      await act(async () => {
+        render(<ComponentWithRouter />);
+      });
+      await waitFor(() => {
+        screen.getByText(/Enviar pedido/);
+      });
+    });
 
-//       await act(async () => {
-//         render(<ComponentWithRouter />);
-//       });
+    it('checks the order is saved when it clicks in the button', async () => {
+      const orderId = '1234abc';
+      const dummyOrderWithId = dummyOrder.clone();
+      dummyOrderWithId.setId(orderId);
+      spySaveOrder.mockResolvedValue(dummyOrderWithId);
 
-//       const button = screen.getByText(/Enviar pedido/);
-//       fireEvent.click(button);
+      await act(async () => {
+        render(<ComponentWithRouter />);
+      });
 
-//       await waitFor(() => {
-//         expect(spySaveOrder).toHaveBeenCalledTimes(1);
-//         expect(screen.getByText(/The order id is: 1234abc/)).toBeInTheDocument();
-//       });
-//     });
-//   });
-// });
+      const button = screen.getByText(/Enviar pedido/);
+      fireEvent.click(button);
 
-test('foo', () => {
-  expect(1).toBeTruthy();
+      await waitFor(() => {
+        expect(spySaveOrder).toHaveBeenCalledTimes(1);
+        expect(screen.getByText(/The order id is: 1234abc/)).toBeInTheDocument();
+      });
+    });
+  });
 });

@@ -2,8 +2,7 @@ import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {useEffect} from 'react';
 import {MemoryRouter, Route, Routes, useNavigate} from 'react-router-dom';
 import createEmptyOrder from 'src/api/orders/createEmptyOrder';
-import type Order from 'src/api/orders/Order';
-import * as saveOrderObject from 'src/api/orders/saveOrder';
+import saveOrder, * as saveOrderObject from 'src/api/orders/saveOrder';
 import {STORAGE, URLS} from 'src/config';
 import {OrderProvider, useOrderContext} from 'src/context/OrderContext';
 import useLocalStorage from 'src/hooks/useLocalStorage';
@@ -34,10 +33,15 @@ function ShowOrder(): JSX.Element {
 
 function ComponentWithRouter(): JSX.Element {
   const DummyComponent = () => {
+    const {order, updateOrder} = useOrderContext();
+    const mockConfirmOrder = async () => {
+      updateOrder(await saveOrder(order));
+    };
+
     return (
       <div>
         <ShowOrder />
-        <Checkout test-id="test" />
+        <Checkout order={order} confirmOrder={mockConfirmOrder} test-id="test" />
       </div>
     );
   };

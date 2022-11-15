@@ -1,9 +1,9 @@
-import './ComboList.css';
+import {NavLink} from 'react-router-dom';
 import {IMG_PATH, URLS} from '../../../config';
+import {useOrderContext} from '../../../context/OrderContext';
 import COMBOS from '../../../data/combos';
 import Slider from '../../slider/Slider';
-import {NavLink} from 'react-router-dom';
-import {useOrderContext} from '../../../context/OrderContext';
+import './ComboList.css';
 
 const ComboList = () => {
   const {order} = useOrderContext();

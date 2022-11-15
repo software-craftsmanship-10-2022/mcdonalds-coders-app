@@ -1,85 +1,73 @@
-import {useMemo, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Navigate, useParams} from 'react-router-dom';
-import type {CouponType} from '../../../@types/coupon';
-import {IMG_PATH, STORAGE, URLS} from '../../../config';
-import DISCOUNTS from '../../../data/discounts';
-import useLocalStorage from '../../../hooks/useLocalStorage';
-import useRandom from '../../../hooks/useRandom';
+import type {CouponType} from 'src/@types/coupon';
+import type {DiscountItem} from 'src/@types/discount';
+import Loader from 'src/components/loader/Loader';
+
+import activateCoupon from '../../../api/coupons/operations/activate-coupon';
+import {retrieveCouponFromFakeDDBB} from '../../../api/coupons/shared/couponsDDBBFunctions';
+import {IMG_PATH, URLS} from '../../../config';
 import CouponModal from '../../modal/CouponModal';
 import './AddCoupon.css';
 
 const AddCoupon = () => {
-  // Coupon couponData
-  const {category, id} = useParams<{category?: string; id?: string}>();
-  const couponCategory = DISCOUNTS.find((discountCategory) => discountCategory.id === category);
-  const couponData = couponCategory?.items.find((item) => item.id === id);
-
-  const {getStorageItem, setStorageItem} = useLocalStorage();
-  let coupons = getStorageItem(STORAGE.coupons) as CouponType[];
-
-  // Get date 30 days from now
-  const date = new Date();
-  date.setDate(date.getDate() + 30);
-
   // Modal open state
   const [modal, setModal] = useState(false);
-  const [added, setAdded] = useState(false);
+  // Coupon state
+  const [activeCoupon, setActiveCoupon] = useState<CouponType | undefined>(undefined);
+  const [coupon, setCoupon] = useState<DiscountItem | undefined>(undefined);
+  // Coupon couponData
+  const {category, id} = useParams<{category: string; id: string}>() as {
+    category: string;
+    id: string;
+  };
+
+  useEffect(() => {
+    const couponData = retrieveCouponFromFakeDDBB(id);
+
+    setCoupon(couponData);
+  }, []);
+
   // Toggle for Modal
   const toggleModal = () => {
     setModal(!modal);
   };
 
-  const randomString = useRandom(9);
-  const code = useMemo(
-    () => randomString.match(/.{1,3}/g)!.join('-'),
-
-    [randomString],
-  );
-
-  if (!couponData) {
-    return <Navigate to={URLS.discounts} replace />;
-  }
-
-  const handleAddCoupon = () => {
-    if (!added) {
-      const coupon = {
-        title: couponData?.title,
-        img: couponData?.img,
-        price: couponData?.price,
-        code,
-        validDate: date,
-      };
-
-      if (!coupons) {
-        coupons = [];
-      }
-
-      coupons.push(coupon);
-      // @TODO refacto localstorage
-      setStorageItem(STORAGE.coupons, coupons as unknown as Record<string, unknown>);
-      setAdded(true);
-    }
-
+  const handleAddCoupon = async () => {
+    const activeCoupon: CouponType = await activateCoupon(id);
+    setActiveCoupon(activeCoupon);
     toggleModal();
   };
 
+  if (!category || !id) {
+    return <Navigate to={URLS.discounts} replace />;
+  }
+
   return (
-    <div className="AddCoupon">
-      <img src={IMG_PATH + couponData.img} alt="" />
-      <p className="warning">🇦🇷 Este cupón solo es válido para la República Argentina.</p>
-      <p className="title">{couponData?.title}</p>
-      <button className="button" onClick={handleAddCoupon}>
-        <img src={IMG_PATH + 'qr-icon.png'} alt="" />
-        OBTENER CUPÓN
-      </button>
-      <CouponModal
-        modal={modal}
-        toggleModal={toggleModal}
-        title={couponData?.title}
-        code={code}
-        validDate={date}
-      />
-    </div>
+    <>
+      {coupon ? (
+        <div className="AddCoupon">
+          <img src={IMG_PATH + coupon.img} alt="" />
+          <p className="warning">🇦🇷 Este cupón solo es válido para la República Argentina.</p>
+          <p className="title">{coupon?.title}</p>
+          <button className="button" onClick={handleAddCoupon}>
+            <img src={IMG_PATH + 'qr-icon.png'} alt="" />
+            OBTENER CUPÓN
+          </button>
+          {activeCoupon && (
+            <CouponModal
+              modal={modal}
+              toggleModal={toggleModal}
+              title={coupon?.title}
+              code={activeCoupon.code}
+              validDate={activeCoupon.validDate}
+            />
+          )}
+        </div>
+      ) : (
+        <Loader fullScreen />
+      )}
+    </>
   );
 };
 

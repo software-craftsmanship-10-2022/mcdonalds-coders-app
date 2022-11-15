@@ -17,12 +17,15 @@ export const URLS = {
 export const STORAGE = {
   users: 'user',
   orders: 'order',
-  coupons: 'coupons',
+  activeCoupons: 'activeCoupons',
+  inactiveCoupons: 'inactiveCoupons',
+  discounts: 'discounts',
 };
 
 export const PAYMENT_TYPE = {
-  debit: 'DEBITO',
   cash: 'EFECTIVO',
+  debit: 'DEBITO',
+  transfer: 'TRANSFERENCIA',
 };
 
 export const DIGITS = [

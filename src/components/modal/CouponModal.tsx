@@ -1,7 +1,7 @@
-import './CouponModal.css';
-import {LOCALE} from '../../config';
-import {Modal} from 'reactstrap';
 import {QRCode} from 'react-qrcode-logo';
+import {Modal} from 'reactstrap';
+import {LOCALE} from '../../config';
+import './CouponModal.css';
 
 type CouponModalProps = {
   modal: boolean;

@@ -51,6 +51,10 @@ describe('Given an useProducts hook', () => {
     clearSessionStorage();
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('testing component should render', () => {
     act(() => {
       renderHook(() => <TestComponent />);

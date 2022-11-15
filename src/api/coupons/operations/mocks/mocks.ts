@@ -1,5 +1,4 @@
-// Discounts & promotions
-const DISCOUNTS = [
+export const MOCK_DISCOUNTS = [
   {
     category: 'Para disfrutar en familia',
     id: 'burgers',
@@ -80,4 +79,47 @@ const DISCOUNTS = [
   },
 ];
 
-export default DISCOUNTS;
+export const MOCK_COUPON_ID = '8XUu0dMqsP';
+export const MOCK_COUPON_CODE = 'URY-XJG-15Q';
+export const MOCK_VALID_DATE = new Date('2022-12-07T12:14:32.637Z');
+export const MOCK_EXPIRED_DATE = new Date('2022-10-07T12:14:32.637Z');
+
+export const MOCK_ACTIVE_COUPON = {
+  id: '8XUu0dMqsP',
+  title: '2 McCombos Cuarto de Libra',
+  img: 'PROMOCIONE2McCombosMedianosCuartodeLibraconQueso.png',
+  price: 1250,
+  code: MOCK_COUPON_CODE,
+  validDate: MOCK_VALID_DATE,
+};
+
+export const MOCK_ACTIVE_COUPONS = [
+  {
+    id: '8XUu0dMqsP',
+    title: '2 McCombos Cuarto de Libra',
+    img: 'PROMOCIONE2McCombosMedianosCuartodeLibraconQueso.png',
+    price: 1250,
+    code: MOCK_COUPON_CODE,
+    validDate: '2022-12-07T12:14:32.637Z',
+  },
+];
+
+export const MOCK_INACTIVE_COUPON = {
+  id: '8XUu0dMqsP',
+  title: '2 McCombos Cuarto de Libra',
+  img: 'PROMOCIONE2McCombosMedianosCuartodeLibraconQueso.png',
+  price: 1250,
+  code: MOCK_COUPON_CODE,
+  validDate: MOCK_EXPIRED_DATE,
+};
+
+export const MOCK_INACTIVE_COUPONS = [
+  {
+    id: '8XUu0dMqsP',
+    title: '2 McCombos Cuarto de Libra',
+    img: 'PROMOCIONE2McCombosMedianosCuartodeLibraconQueso.png',
+    price: 1250,
+    code: MOCK_COUPON_CODE,
+    validDate: '2022-10-07T12:14:32.637Z',
+  },
+];

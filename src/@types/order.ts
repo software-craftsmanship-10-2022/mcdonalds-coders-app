@@ -25,6 +25,7 @@ export enum OrderStatus {
 export enum PaymentMethod {
   cash,
   debit,
+  transfer,
 }
 
 export type OrderItemType = {

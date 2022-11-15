@@ -1,6 +1,7 @@
+import {OrderStatus, PaymentMethod} from 'src/@types/order';
+import Order from 'src/api/orders/Order';
 import Account from '../Account/Account';
 import Donation from '../Donation/Donation';
-import Order from '../Order/Order';
 import Transfer from './Transfer';
 
 const items = [
@@ -26,8 +27,20 @@ const validAccount = () => new Account('john doe', VALID_IBAN);
 describe('Given a Transfer class', () => {
   it('when an instance is created then pay method should be defined', () => {
     const account = validAccount();
-    const order = new Order(200, items, details);
     const donation = new Donation(0);
+    const order = new Order({
+      id: 'a3',
+      details: {
+        id: 'a4',
+        name: 'name 1',
+        address: 'address 1',
+        image: 'image 1',
+        isDelivery: false,
+      },
+      items: [],
+      payment: PaymentMethod.debit,
+      status: OrderStatus.delivering,
+    });
     const transfer = new Transfer(order, donation, account);
     expect(transfer.pay).toBeInstanceOf(Function);
   });

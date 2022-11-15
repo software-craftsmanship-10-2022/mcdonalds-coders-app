@@ -1,7 +1,8 @@
+import {OrderStatus, PaymentMethod} from 'src/@types/order';
+import Order from 'src/api/orders/Order';
 import {PAYMENT_TYPE} from 'src/config';
 import {DONATION_ERRORS, ORDER_ERRORS, PAYMENT_TYPE_ERRORS} from 'src/Payment/errorMessages';
 import Donation from '../Donation/Donation';
-import Order from '../Order/Order';
 import Payment from './Payment';
 
 const items = [
@@ -20,11 +21,24 @@ const details = {
   isDelivery: false,
 };
 
-const validOrder = () => new Order(123, items, details);
+const validOrder = () =>
+  new Order({
+    id: 'a3',
+    details: {
+      id: 'a4',
+      name: 'name 1',
+      address: 'address 1',
+      image: 'image 1',
+      isDelivery: false,
+    },
+    items: [],
+    payment: PaymentMethod.debit,
+    status: OrderStatus.delivering,
+  });
 
 describe('Given a Payment class', () => {
   it('when an instance is created then pay method should be defined', () => {
-    const payment = new Payment(PAYMENT_TYPE.cash, new Order(45, items, details), new Donation(0));
+    const payment = new Payment(PaymentMethod.cash, validOrder(), new Donation(0));
     expect(payment.pay).toBeInstanceOf(Function);
   });
 

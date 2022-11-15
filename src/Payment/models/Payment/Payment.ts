@@ -1,7 +1,6 @@
-import type {PaymentMethod} from 'src/@types/order';
-import {OrderStatus} from 'src/@types/order';
+import {OrderStatus, PaymentMethod} from 'src/@types/order';
 import Order from 'src/api/orders/Order';
-import {PAYMENT_TYPE, STORAGE} from 'src/config';
+import {STORAGE} from 'src/config';
 import {DONATION_ERRORS, ORDER_ERRORS, PAYMENT_TYPE_ERRORS} from 'src/Payment/errorMessages';
 import Donation from '../Donation/Donation';
 
@@ -13,12 +12,12 @@ class Payment {
   ) {}
 
   checkPaymentType() {
-    if (!this.paymentType) throw new Error(PAYMENT_TYPE_ERRORS.noPaymentType);
-    if (typeof this.paymentType !== 'string') throw new Error(PAYMENT_TYPE_ERRORS.typeValue);
+    if (this.paymentType === undefined) throw new Error(PAYMENT_TYPE_ERRORS.noPaymentType);
+    if (typeof this.paymentType !== 'number') throw new Error(PAYMENT_TYPE_ERRORS.typeValue);
     if (
-      this.paymentType !== PAYMENT_TYPE.debit &&
-      this.paymentType !== PAYMENT_TYPE.cash &&
-      this.paymentType !== PAYMENT_TYPE.transfer
+      this.paymentType !== PaymentMethod.cash &&
+      this.paymentType !== PaymentMethod.debit &&
+      this.paymentType !== PaymentMethod.transfer
     )
       throw new Error(PAYMENT_TYPE_ERRORS.typeValue);
   }

@@ -1,30 +1,29 @@
 import type {MarkerType} from 'src/@types/marker';
-import {STORAGE} from 'src/config';
+import MARKERS from 'src/data/markers';
 import type {MarkerRepository} from '../domain/MarkerRepository';
 
-class StorageMarkerRepository implements MarkerRepository {
-  async save(markerType: MarkerType) {
-    const marker = this.checkMarkerOrFail(markerType.id);
+export default class StorageMarkerRepository implements MarkerRepository {
+  async findAll(): Promise<MarkerType[]> {
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    const markersFromStorage: string | null = sessionStorage.getItem('markers');
 
-    localStorage.setItem(STORAGE.markers, JSON.stringify(marker));
-
-    return Promise.resolve();
-  }
-
-  private checkMarkerOrFail(markerId: number): MarkerType {
-    const storedMarker = localStorage.getItem(STORAGE.markers);
-    if (storedMarker === null) {
-      throw new Error();
+    if (markersFromStorage) {
+      const markers: MarkerType[] = JSON.parse(markersFromStorage) as MarkerType[];
+      return Promise.resolve(markers);
     }
 
-    return this.parseMarker(storedMarker);
+    sessionStorage.setItem('markers', JSON.stringify(MARKERS));
+    return Promise.resolve(MARKERS);
   }
 
-  private parseMarker(storedMarker: string): MarkerType {
-    const marker: MarkerType = JSON.parse(storedMarker) as MarkerType;
+  async findById(markerId: number): Promise<MarkerType> {
+    const markers = await this.findAll();
+    const marker = markers.find((marker) => marker.id === markerId);
 
-    return marker;
+    if (!marker) {
+      throw new Error(`Marker with id ${markerId} not found`);
+    }
+
+    return Promise.resolve(marker);
   }
 }
-
-export const storage: MarkerRepository = new StorageMarkerRepository();

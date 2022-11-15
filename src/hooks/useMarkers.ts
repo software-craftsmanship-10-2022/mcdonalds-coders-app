@@ -1,30 +1,17 @@
-import {useState} from 'react';
 import type {MarkerType} from 'src/@types/marker';
-import {getAllMarkersFromApi} from 'src/api/markers/application/markersApi';
-import {getSessionStorageItem, setSessionStorageItem} from './useSessionStorage';
+import {findMarkerById, findMarkers} from 'src/api/markers/application/markersApi';
 
-export const useProducts = () => {
-  const [markers, setMarkers] = useState<MarkerType[]>([]);
+export const useMarkers = () => {
+  const getAllMarkers = async (): Promise<MarkerType[]> => {
+    return Promise.resolve(findMarkers());
+  };
 
-  const getAllMarkers = (): void => {
-    const markersFromCache = getSessionStorageItem<MarkerType[] | undefined>('markers');
-
-    if (markersFromCache) {
-      setMarkers(markersFromCache);
-    }
-
-    if (!markersFromCache) {
-      getAllMarkersFromApi()
-        .then((markersFromApi) => {
-          setMarkers(markersFromApi);
-          setSessionStorageItem('markers', markersFromApi);
-        })
-        .catch(console.error);
-    }
+  const getMarkerById = async (markerId: number): Promise<MarkerType> => {
+    return Promise.resolve(findMarkerById(markerId));
   };
 
   return {
-    markers,
     getAllMarkers,
+    getMarkerById,
   };
 };

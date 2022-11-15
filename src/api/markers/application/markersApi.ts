@@ -1,20 +1,15 @@
 import type {MarkerType} from 'src/@types/marker';
-import MARKERS from 'src/data/markers';
+import type {MarkerRepository} from '../domain/MarkerRepository';
+import StorageMarkerRepository from '../infrastructure/StorageMarkerRepository';
 
-const getAllMarkersFromApi = async (): Promise<MarkerType[]> => {
-  return Promise.resolve(MARKERS);
+const findMarkers = async (): Promise<MarkerType[]> => {
+  const markerRepository: MarkerRepository = new StorageMarkerRepository();
+  return markerRepository.findAll();
 };
 
-const getMarkerByIdFromApi = async (id: number): Promise<MarkerType> => {
-  return new Promise((resolve) => {
-    const foundMarkerById = MARKERS.find((marker) => marker.id === id);
-
-    if (foundMarkerById) {
-      resolve(foundMarkerById);
-    } else {
-      throw new Error('Marker not found');
-    }
-  });
+const findMarkerById = async (markerId: number): Promise<MarkerType> => {
+  const markerRepository: MarkerRepository = new StorageMarkerRepository();
+  return markerRepository.findById(markerId);
 };
 
-export {getAllMarkersFromApi, getMarkerByIdFromApi};
+export {findMarkers, findMarkerById};

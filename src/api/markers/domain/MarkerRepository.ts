@@ -1,5 +1,6 @@
 import type {MarkerType} from 'src/@types/marker';
 
 export type MarkerRepository = {
-  save: (markerType: MarkerType) => Promise<void>;
+  findAll: () => Promise<MarkerType[]>;
+  findById: (markerId: number) => Promise<MarkerType>;
 };

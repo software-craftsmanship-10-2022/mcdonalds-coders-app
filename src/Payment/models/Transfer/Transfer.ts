@@ -1,19 +1,18 @@
-import {PAYMENT_TYPE} from 'src/config';
+import {PaymentMethod} from 'src/@types/order';
+import type Order from 'src/api/orders/Order';
 import type Account from '../Account/Account';
 import type Donation from '../Donation/Donation';
-import type Order from '../Order/Order';
 import Payment from '../Payment/Payment';
 
 class Transfer extends Payment {
   constructor(order: Order, donation: Donation, private readonly account: Account) {
-    super(PAYMENT_TYPE.transfer, order, donation);
+    super(PaymentMethod.transfer, order, donation);
   }
 
   pay() {
     super.pay();
     this.account.isValid();
-
-    this.order.totalAmount();
+    // This.order.totalAmount();
     this.donation.amountValue();
   }
 }

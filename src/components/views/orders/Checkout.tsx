@@ -1,4 +1,5 @@
-import type {OrderType} from 'src/@types/order';
+// <<<<<<< HEAD
+import type Order from 'src/api/orders/Order';
 import McButton from 'src/components/buttons/McButton';
 import DonationOptions from 'src/components/donation/DonationOptions';
 import PaymentInputs from 'src/components/form/PaymentInputs';
@@ -26,8 +27,8 @@ type CardDetailsType = {
 };
 
 type DetailProps = {
-  order: OrderType;
-  confirmOrder: (payment: Payment, paymentMethod: string) => void;
+  order: Order;
+  confirmOrder: (payment: Payment, order: Order) => void;
 };
 
 const Checkout = ({order, confirmOrder}: DetailProps) => {
@@ -74,7 +75,7 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
       </div>
       <div className="detail-total">
         <p>Total</p>
-        <p>{currencyFormatter().format(order.total + donationValue)}</p>
+        <p>{currencyFormatter().format(order.getTotalPrice() + donationValue)}</p>
       </div>
       <McButton
         text={'Enviar pedido'}

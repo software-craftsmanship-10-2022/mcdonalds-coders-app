@@ -1,8 +1,8 @@
-import type {OrderType} from 'src/@types/order';
+import type Order from 'src/api/orders/Order';
 import useFormat from 'src/hooks/useFormat';
 
 type OrderDetailProps = {
-  order: OrderType;
+  order: Order;
 };
 const OrderDetail = ({order}: OrderDetailProps) => {
   const ADDRESS_TYPE = {
@@ -10,7 +10,7 @@ const OrderDetail = ({order}: OrderDetailProps) => {
     shop: 'Dirección de retiro en el local',
   };
   const [currencyFormatter] = useFormat();
-  const getddressLabel = (isDelivery: boolean): string =>
+  const getAddressLabel = (isDelivery: boolean): string =>
     isDelivery ? ADDRESS_TYPE.home : ADDRESS_TYPE.shop;
 
   return (
@@ -20,19 +20,19 @@ const OrderDetail = ({order}: OrderDetailProps) => {
       </h1>
       <div className="address">
         <h3>
-          <strong>{getddressLabel(order.details.isDelivery)}</strong>
+          <strong>{getAddressLabel(order.getDetails().isDelivery)}</strong>
         </h3>
-        <h3>{order.details.address}</h3>
+        <h3>{order.getDetails().address}</h3>
       </div>
       <div className="items">
         <h3>
           <strong>Resumen</strong>
         </h3>
-        {order.items.map((value, index) => (
+        {order.getItems().map((value, index) => (
           <div className="item" key={index}>
             <p className="name">{value.name}</p>
-            <p>{`x${value.quantity}`}</p>
-            <p>{currencyFormatter().format(value.pricePerUnit * value.quantity)}</p>
+            {/* <p>{`x${value.quantity}`}</p> */}
+            <p>{currencyFormatter().format(value.price)}</p>
           </div>
         ))}
       </div>

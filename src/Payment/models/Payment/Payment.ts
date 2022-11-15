@@ -1,11 +1,13 @@
+import type {PaymentMethod} from 'src/@types/order';
+import {OrderStatus} from 'src/@types/order';
+import Order from 'src/api/orders/Order';
 import {PAYMENT_TYPE, STORAGE} from 'src/config';
 import {DONATION_ERRORS, ORDER_ERRORS, PAYMENT_TYPE_ERRORS} from 'src/Payment/errorMessages';
 import Donation from '../Donation/Donation';
-import Order from '../Order/Order';
 
 class Payment {
   constructor(
-    protected paymentType: string,
+    protected paymentType: PaymentMethod,
     protected order: Order,
     protected donation: Donation,
   ) {}
@@ -26,6 +28,10 @@ class Payment {
     if (!(this.order instanceof Order)) throw new Error(ORDER_ERRORS.typeError);
   }
 
+  getPaymentType() {
+    return this.paymentType;
+  }
+
   checkDonation() {
     if (!this.donation) throw new Error(DONATION_ERRORS.noDonationError);
     if (!(this.donation instanceof Donation)) throw new Error(DONATION_ERRORS.typeError);
@@ -35,12 +41,12 @@ class Payment {
     this.checkPaymentType();
     this.checkOrder();
     this.checkDonation();
-    this.order.confirm();
+    this.order.setStatus(OrderStatus.preparing);
     localStorage.setItem(
       STORAGE.orders,
       JSON.stringify({
         ...this.order,
-        total: this.order.totalAmount() + this.donation.amountValue(),
+        total: this.order.getTotalPrice() + this.donation.amountValue(),
         paymentType: this.paymentType,
       }),
     );

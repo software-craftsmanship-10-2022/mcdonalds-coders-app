@@ -7,13 +7,15 @@ import './ComboList.css';
 
 const ComboList = () => {
   const {order} = useOrderContext();
+  const details = order.getDetails();
+
   return (
     <div className="ComboList">
       <div className="restaurant">
-        <img src={IMG_PATH + order.details.img} alt="" />
+        <img src={IMG_PATH + details.image} alt="" />
         <div className="address">
-          <p>{order.details.name}</p>
-          <p>{order.details.address}</p>
+          <p>{details.name}</p>
+          <p>{details.address}</p>
         </div>
       </div>
       <div className="ComboList-slides">
@@ -23,10 +25,10 @@ const ComboList = () => {
             <Slider items={value.items} showPrice={true} link={URLS.ordersAdd + value.id + '/'} />
           </div>
         ))}
-        {order && order.items.length > 0 && (
+        {!order?.isItemsEmpty() && (
           <NavLink className="view-order-link" to={URLS.ordersCart}>
             <img src={IMG_PATH + 'order-bag.png'} alt="" />
-            <div className="order-qty">{order.items.length}</div>
+            <div className="order-qty">{order.getItems().length}</div>
           </NavLink>
         )}
       </div>

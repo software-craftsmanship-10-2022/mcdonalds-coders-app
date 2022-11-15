@@ -1,7 +1,11 @@
 import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
+import {OrderStatus} from 'src/@types/order';
+import saveOrder from 'src/api/orders/saveOrder';
 import {useOrderContext} from 'src/context/OrderContext';
 import useLocalStorage from 'src/hooks/useLocalStorage';
+// Import type Order from 'src/Payment/models/Order/Order';
+import type Order from 'src/api/orders/Order';
 import type Payment from 'src/Payment/models/Payment/Payment';
 import {STORAGE, URLS} from '../../../config';
 import UserForm from '../../form/UserForm';
@@ -19,7 +23,7 @@ const CheckoutSwitcher = () => {
 
   useEffect(() => {
     // Exit if there is no order in the state
-    if (order.items.length <= 0) {
+    if (order.isItemsEmpty()) {
       navigate(URLS.root);
     }
 
@@ -30,11 +34,11 @@ const CheckoutSwitcher = () => {
     }
   }, [order, navigate, getStorageItem]);
 
-  const confirmOrder = (payment: Payment, selectedMethod: string) => {
-    updateOrder({...order, confirmed: true, paymentType: selectedMethod});
-    console.log(payment);
+  const confirmOrder = async (payment: Payment, order: Order) => {
+    order.setStatus(OrderStatus.pending);
+    order.setPayment(payment.getPaymentType());
+    updateOrder(await saveOrder(order));
     payment.pay();
-    // Console.log(details);
     navigate(URLS.root);
   };
 

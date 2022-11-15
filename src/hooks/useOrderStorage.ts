@@ -1,6 +1,6 @@
-import {storage} from '../utils/localStorage';
-import Order from '../api/orders/Order';
 import type {NewOrderType} from '../@types/order';
+import Order from '../api/orders/Order';
+import {storage} from '../utils/localStorage';
 
 /**
  * Order storage hook.
@@ -16,7 +16,7 @@ export function useOrderStorage(): UseOrderStorageType {
   /**
    * Storage key used to read/write the current order
    */
-  const storageKey = 'currentOrder';
+  const storageKey = 'order';
 
   /**
    * Set in the cache system, the `order` order.

@@ -18,7 +18,7 @@ export default function createEmptyOrder(): Order {
 
   return new Order({
     details,
-    id: '',
+    id: '123',
     items: [],
     payment: PaymentMethod.cash,
     status: OrderStatus.noConfirmed,

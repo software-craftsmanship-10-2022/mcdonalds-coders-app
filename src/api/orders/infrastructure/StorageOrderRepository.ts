@@ -1,4 +1,4 @@
-import type {OrderStatus, NewOrderType} from 'src/@types/order';
+import type {NewOrder, NewOrderType, OrderStatus} from 'src/@types/order';
 import {STORAGE} from 'src/config';
 import type {OrderRepository} from '../domain/OrderRepository';
 
@@ -23,7 +23,8 @@ class StorageOrderRepository implements OrderRepository {
   }
 
   private parseOrder(storedOrder: string, orderId: string): NewOrderType {
-    const order: NewOrderType = JSON.parse(storedOrder) as NewOrderType;
+    const {order}: NewOrder = JSON.parse(storedOrder) as NewOrder;
+
     if (order.id !== orderId) {
       throw new Error();
     }

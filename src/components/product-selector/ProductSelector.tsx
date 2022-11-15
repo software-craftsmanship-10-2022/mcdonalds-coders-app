@@ -72,7 +72,7 @@ const ProductItem = ({product, selectedProductId, onSelectProduct}: ProductItemP
     <button
       onClick={onClickItem}
       className={'product-selector__item-button' + selectedCss()}
-      aria-label={ariaLabel()}
+      aria-label={`${product.title}: ${ariaLabel()}`}
     >
       <span>{product.title}</span>
       <img

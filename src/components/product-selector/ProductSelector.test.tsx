@@ -78,9 +78,9 @@ describe('Given ProductSelector component', () => {
 
   test('when receive an ProductCategory type and with a product selected then should mark product as selected', () => {
     const buttons = screen.getAllByRole('button');
-    expect(buttons[1]).toHaveAttribute('aria-label', 'seleccionado');
+    expect(buttons[1]).toHaveAttribute('aria-label', 'Papas Medianas: seleccionado');
 
-    const notSelected = screen.getAllByLabelText('no seleccionado');
+    const notSelected = screen.getAllByLabelText(/no seleccionado/);
     expect(notSelected.length).toBe(productCategory.items.length - 1);
   });
 });

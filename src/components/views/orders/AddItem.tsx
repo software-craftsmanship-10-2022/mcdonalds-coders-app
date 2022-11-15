@@ -66,23 +66,30 @@ const AddItem = () => {
     return products;
   };
 
+  const showModal = (message: string) => {
+    setModalConfig({
+      ...modalConfig,
+      visible: true,
+      message,
+    });
+  };
+
+  const closeModal = () => {
+    setModalConfig({
+      ...modalConfig,
+      visible: false,
+    });
+  };
+
   // Add selected qty of this item and adds them to the order
   const handleClick = () => {
     if (!selectedComplement) {
-      setModalConfig({
-        ...modalConfig,
-        visible: true,
-        message: MODAL_TEXT_NO_COMPLEMENT,
-      });
+      showModal(MODAL_TEXT_NO_COMPLEMENT);
       return;
     }
 
     if (!selectedDrink) {
-      setModalConfig({
-        ...modalConfig,
-        visible: true,
-        message: MODAL_TEXT_NO_DRINK,
-      });
+      showModal(MODAL_TEXT_NO_DRINK);
       return;
     }
 
@@ -157,9 +164,7 @@ const AddItem = () => {
 
       <InfoModal
         isOpen={modalConfig.visible}
-        toggle={() => {
-          setModalConfig({...modalConfig, visible: !modalConfig.visible});
-        }}
+        toggle={closeModal}
         title={modalConfig.title}
         message={modalConfig.message}
       />

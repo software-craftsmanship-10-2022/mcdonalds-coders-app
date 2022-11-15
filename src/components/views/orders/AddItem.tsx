@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import type {ComboType} from 'src/@types/combos';
 import type {MenuType, ProductType} from 'src/@types/product';
+import InfoModal from 'src/components/modal/InfoModal';
 import ProductSelector from 'src/components/product-selector/ProductSelector';
 import IngredientList from 'src/components/product/IngredientList/IngredientList';
 import useCombos from 'src/hooks/useCombos';
@@ -11,6 +12,11 @@ import {useOrderContext} from '../../../context/OrderContext';
 import useFormat from '../../../hooks/useFormat';
 import McButton from '../../buttons/McButton';
 import './AddItem.css';
+
+const MODAL_TITLE = 'Ups, aún tienes cosas por elegir';
+const MODAL_TEXT_NO_COMPLEMENT =
+  'No has seleccionado un acompañamiento, pero no te preocupes estas a tiempo de mejorar tu combo';
+const MODAL_TEXT_NO_DRINK = 'No has seleccionado una bebida, no queremos que te deshidrates';
 
 const AddItem = () => {
   const {multipleProductsByCategory, getMultipleProductsByCategory} = useProducts();
@@ -26,6 +32,7 @@ const AddItem = () => {
   const priceTag = combo ? currencyFormatter().format(combo.price) : '';
   const [selectedComplement, setSelectedComplement] = useState<ProductType | undefined>(undefined);
   const [selectedDrink, setSelectedDrink] = useState<ProductType | undefined>(undefined);
+  const [modalConfig, setModalConfig] = useState({visible: false, title: MODAL_TITLE, message: ''});
 
   useEffect(() => {
     getMultipleProductsByCategory(['drinks', 'complements']);
@@ -61,6 +68,24 @@ const AddItem = () => {
 
   // Add selected qty of this item and adds them to the order
   const handleClick = () => {
+    if (!selectedComplement) {
+      setModalConfig({
+        ...modalConfig,
+        visible: true,
+        message: MODAL_TEXT_NO_COMPLEMENT,
+      });
+      return;
+    }
+
+    if (!selectedDrink) {
+      setModalConfig({
+        ...modalConfig,
+        visible: true,
+        message: MODAL_TEXT_NO_DRINK,
+      });
+      return;
+    }
+
     const menu: MenuType = {
       id: combo.id,
       image: combo.img,
@@ -128,6 +153,15 @@ const AddItem = () => {
           handleClick();
         }}
         fixed
+      />
+
+      <InfoModal
+        isOpen={modalConfig.visible}
+        toggle={() => {
+          setModalConfig({...modalConfig, visible: !modalConfig.visible});
+        }}
+        title={modalConfig.title}
+        message={modalConfig.message}
       />
     </div>
   );

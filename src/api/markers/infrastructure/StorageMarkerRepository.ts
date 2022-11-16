@@ -4,7 +4,6 @@ import type {MarkerRepository} from '../domain/MarkerRepository';
 
 export default class StorageMarkerRepository implements MarkerRepository {
   async findAll(): Promise<MarkerType[]> {
-    // eslint-disable-next-line @typescript-eslint/ban-types
     const markersFromStorage: string | null = sessionStorage.getItem('markers');
 
     if (markersFromStorage) {

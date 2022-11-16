@@ -79,8 +79,21 @@
   height: auto;
 }
 
+.ImageItem {
+  display: flex;
+  align-items: center;
+  width: 65%;
+}
+
+.IngredientList {
+  width: 100%;
+}
+
 @media screen and (max-width: 500px) {
   .AddItem > img {
     width: 75%;
+  }
+  .ImageItem {
+    flex-direction: column;
   }
 }

@@ -1,7 +1,7 @@
-import type {ProductCategoryType} from '../@types/product';
+import type {ProductCategoryApiType} from '../@types/product';
 
 // Categories & products
-const PRODUCTS: ProductCategoryType[] = [
+const PRODUCTS: ProductCategoryApiType[] = [
   {
     category: 'Hamburguesas',
     id: 'burgers',
@@ -10,12 +10,14 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'big_mac',
         img: 'big_mac.png', // First img used as category image
         title: 'Big Mac',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne', 'salsa-bigmac'],
         description: 'La hamburguesa más famosa del mundo. Un sabor único.',
       },
       {
         id: 'mcnifica',
         img: 'mcnifica.png',
         title: 'McNífica',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'En un mundo donde todos buscan lo nuevo, la McNífica viene a rectificar lo bueno de ser clásico.',
       },
@@ -23,6 +25,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'Cuarto-Libra-con-queso',
         img: 'Cuarto-Libra-con-queso.png',
         title: 'Cuarto de Libra con Queso',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne', 'queso'],
         description:
           'La belleza radica en la simpleza de las cosas. Una hamburguesa que no se anda con vueltas. La perfecta combinación entre la mejor carne 100% vacuna y dos quesos que lo rodean, junto con el toque del kétchup, mostaza y la cebolla fresca.',
       },
@@ -30,6 +33,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'Doble-Cuarto-Libra-con-Queso',
         img: 'Doble-Cuarto-Libra-con-Queso.png',
         title: 'Doble Cuarto de Libra con Queso',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne', 'carne', 'queso'],
         description:
           'Imaginá la sensación del clásico Cuarto de Libra. Imaginalo con un medallón de deliciosa carne 100% vacuna, queso cheddar, cebolla, kétchup y mostaza ¿Listo? Ahora duplicá esa sensación. Ya tenés el Doble Cuarto en la cabeza.',
       },
@@ -37,6 +41,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'Grande-Doble-McBacon',
         img: 'Grande-Doble-McBacon.png',
         title: 'Grande Doble McBacon',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne', 'bacon'],
         description:
           '¡NUEVO PAN! Dos carnes, inigualable queso cheddar, cebolla, kétchup y mostaza, y el increíble ingrediente que lo hace único: bacon premium.',
       },
@@ -44,6 +49,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'Grande-Tasty-Doble',
         img: 'Grande-Tasty-Doble.png',
         title: 'Grande Tasty Doble',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Inigualable pan con semillas de sésamo, dos medallones de carne 100% vacuna, tres fetas de nuestro exclusivo Queso Cheddar, cebolla, lechuga y tomate frescos. Sumado a estos ingredientes la única e inigualable Salsa Tasty, un exclusivo sabor McDonald’s',
       },
@@ -51,6 +57,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'Grande-Tasty-Triple',
         img: 'Grande-Tasty-Triple.png',
         title: 'Grande Tasty Triple',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Inigualable pan con semillas de sésamo, tres medallones de carne 100% vacuna, cuatro fetas de nuestro exclusivo Queso Cheddar, cebolla, lechuga y tomate frescos. Sumado a estos ingredientes la única e inigualable Salsa Tasty, un exclusivo sabor McDonald’s',
       },
@@ -58,6 +65,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'Grande-Triple-McBacon',
         img: 'Grande-Triple-McBacon.png',
         title: 'Grande Triple McBacon',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne', 'bacon'],
         description:
           'I¡NUEVO PAN! Triple carne, inigualable queso cheddar, cebolla, kétchup y mostaza, y el increíble ingrediente que lo hace único: bacon premium.',
       },
@@ -65,6 +73,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'Hamburguesa-(Cajita-Feliz)',
         img: 'Hamburguesa-(Cajita-Feliz).png',
         title: 'Hamburguesa(Cajita-Feliz)',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Hamburguesa de carne 100% vacuna sin aditivos ni conservantes , condimentada con una pisca de sal y pimienta.',
       },
@@ -72,6 +81,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'Hamburguesa',
         img: 'Hamburguesa.png',
         title: 'Hamburguesa',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'El sabor de la carne 100% vacuna más deliciosa, acompañado del pan más esponjoso, kétchup, mostaza y cebolla triturada.',
       },
@@ -79,6 +89,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'Mc-Fiesta_JR(Cajita-Feliz)',
         img: 'Mc-Fiesta_JR(Cajita-Feliz).png',
         title: 'McFiestaJR(Cajita-Feliz)',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'La McFiesta Jr. comienza con una carne 100% vacuna sin aditivos ni conservantes, condimentada con una pisca de sal y pimienta, con una rodaja de tomate y lechuga.',
       },
@@ -86,6 +97,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'Mc-Fiesta',
         img: 'Mc-Fiesta.png',
         title: 'McFiesta',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Hamburguesa elaborada con carne 100% de carne vacuna, mayonesa, lechuga, tomate.',
       },
@@ -93,6 +105,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'McDuo',
         img: 'McDuo.png',
         title: 'McDuo',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Una hamburguesa exquisita compuesta de dos carnes 100% vacuna, acompañadas del clásico pan, mostaza, kétchup, queso derretido, y un toque de cebolla que la hace única.',
       },
@@ -100,6 +113,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'Triple-Hamburguesa-con-queso',
         img: 'Triple-Hamburguesa-con-queso.png',
         title: 'Triple Hamburguesa con queso',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Tres medallones de carne 100% vacuna, queso derretido, mostaza, kétchup y cebolla triturada, es algo que nunca puede fallar.',
       },
@@ -107,6 +121,7 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'Triple-Mac',
         img: 'Triple-Mac.png',
         title: 'TripleMac',
+        ingredients: ['pan-arriba', 'pan-abajo', 'carne'],
         description:
           'Una hamburguesa que no es para cualquiera. Sólo los más extremos están dispuestos a saborear tres carnes 100% vacuna acompañadas del clásico pan McDonald’s, su característica salsa especial, queso derretido, lechuga fresca, pepino crocante y el toque de cebolla que la hace única.',
       },
@@ -120,12 +135,14 @@ const PRODUCTS: ProductCategoryType[] = [
         id: 'mc_pollo',
         img: 'mc_pollo.png',
         title: 'McPollo',
+        ingredients: ['pan-arriba', 'pan-abajo', 'pollo'],
         description: 'El auténtico sabor del pollo lo encontrás en nuestro clásico McPollo.',
       },
       {
         id: 'mc_pollo_2',
         img: 'mc_pollo_2.png',
         title: 'McPollo doble',
+        ingredients: ['pan-arriba', 'pan-abajo', 'pollo'],
         description: 'El clásico McPollo, esta vez con doble sabor.',
       },
       {

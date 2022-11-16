@@ -1,59 +1,126 @@
-import {useState} from 'react';
-import {Navigate, useNavigate, useParams} from 'react-router-dom';
-import type {OrderItemType} from '../../../@types/order';
-import {IMG_PATH, URLS} from '../../../config';
+import {useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import type {ComboType} from 'src/@types/combos';
+import type {MenuType, ProductType} from 'src/@types/product';
+import InfoModal from 'src/components/modal/InfoModal';
+import ProductSelector from 'src/components/product-selector/ProductSelector';
+import IngredientList from 'src/components/product/IngredientList/IngredientList';
+import useCombos from 'src/hooks/useCombos';
+import {useProducts} from 'src/hooks/useProducts';
+import {IMG_PATH} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
-import COMBOS from '../../../data/combos';
 import useFormat from '../../../hooks/useFormat';
 import McButton from '../../buttons/McButton';
 import './AddItem.css';
 
+const MODAL_TITLE = 'Ups, aún tienes cosas por elegir';
+const MODAL_TEXT_NO_COMPLEMENT =
+  'No has seleccionado un acompañamiento, pero no te preocupes estas a tiempo de mejorar tu combo';
+const MODAL_TEXT_NO_DRINK = 'No has seleccionado una bebida, no queremos que te deshidrates';
+
 const AddItem = () => {
-  const {category, id} = useParams<{category: string; id: string}>();
+  const {multipleProductsByCategory, getMultipleProductsByCategory} = useProducts();
+  const {getComboById} = useCombos();
+  const {id} = useParams<{category: string; id: string}>();
   const navigate = useNavigate();
-  const itemCategory = COMBOS.find((comboCategory) => comboCategory.id === category);
-  const itemData = itemCategory?.items.find((item) => item.id === id);
 
   const [count, setCount] = useState(1);
-  const {order, updateOrder} = useOrderContext();
-  const [currencyFormatter] = useFormat();
-  const priceTag = itemData ? currencyFormatter().format(itemData.price) : '';
+  const [combo, setCombo] = useState<undefined | ComboType>();
 
-  if (!itemData) {
-    return <Navigate to={URLS.ordersAdd} replace />;
+  const {order, updateOrder} = useOrderContext() || {};
+  const [currencyFormatter] = useFormat();
+  const priceTag = combo ? currencyFormatter().format(combo.price) : '';
+  const [selectedComplement, setSelectedComplement] = useState<ProductType | undefined>(undefined);
+  const [selectedDrink, setSelectedDrink] = useState<ProductType | undefined>(undefined);
+  const [modalConfig, setModalConfig] = useState({visible: false, title: MODAL_TITLE, message: ''});
+
+  useEffect(() => {
+    getMultipleProductsByCategory(['drinks', 'complements']);
+    if (id) {
+      getComboById(id)
+        .then((combo) => {
+          setCombo(combo);
+        })
+        .catch(console.error);
+    }
+  }, [id]);
+
+  if (!combo) {
+    return null;
   }
+
+  const onSelectComplement = (product: ProductType) => {
+    const newProduct = product.title === selectedComplement?.title ? undefined : product;
+    setSelectedComplement(newProduct);
+  };
+
+  const onSelectDrink = (product: ProductType) => {
+    const newProduct = product.title === selectedDrink?.title ? undefined : product;
+    setSelectedDrink(newProduct);
+  };
+
+  const getSelectedProducts = () => {
+    const products: ProductType[] = [];
+    if (selectedComplement) products.push(selectedComplement);
+    if (selectedDrink) products.push(selectedDrink);
+    return products;
+  };
+
+  const showModal = (message: string) => {
+    setModalConfig({
+      ...modalConfig,
+      visible: true,
+      message,
+    });
+  };
+
+  const closeModal = () => {
+    setModalConfig({
+      ...modalConfig,
+      visible: false,
+    });
+  };
 
   // Add selected qty of this item and adds them to the order
   const handleClick = () => {
-    const existingItem = order.items.find((item) => item.name === itemData.title);
-    // If the item exists in the current order,
-    // just add the count to it to avoid duplications
-    if (existingItem) {
-      existingItem.quantity += count;
-      updateOrder(order);
-    } else {
-      const newItem: OrderItemType = {
-        quantity: count,
-        name: itemData.title,
-        img: itemData.img,
-        pricePerUnit: itemData.price,
-      };
-
-      order.items.push(newItem);
-
-      updateOrder({
-        ...order,
-        total: order.total + newItem.pricePerUnit * count,
-      });
+    if (!selectedComplement) {
+      showModal(MODAL_TEXT_NO_COMPLEMENT);
+      return;
     }
 
+    if (!selectedDrink) {
+      showModal(MODAL_TEXT_NO_DRINK);
+      return;
+    }
+
+    const menu: MenuType = {
+      id: combo.id,
+      image: combo.img,
+      name: combo.title,
+      price: combo.price,
+      products: getSelectedProducts(),
+    };
+
+    Array.from({length: count}, (_, index) => index).forEach(() => {
+      order.addItem(menu);
+    });
+
+    updateOrder(order);
     navigate(-1);
   };
 
   return (
     <div className="AddItem">
-      <p className="title">{itemData?.title}</p>
-      <img src={`${IMG_PATH}${itemData.img}`} alt="" />
+      <p className="title">{combo?.title}</p>
+      <div className="ImageItem">
+        <img src={`${IMG_PATH}${combo.img}`} alt="Combo" />
+        {combo.mainProduct.ingredients && combo.mainProduct.ingredients.length > 0 && (
+          <div className="IngredientList">
+            <IngredientList ingredients={combo.mainProduct.ingredients} />
+          </div>
+        )}
+      </div>
+
       <p className="price">{priceTag}</p>
       <div className="counter-container">
         <button
@@ -61,7 +128,7 @@ const AddItem = () => {
             setCount(count === 1 ? count : count - 1);
           }}
         >
-          <img src={IMG_PATH + 'minus.png'} alt="" />
+          <img src={IMG_PATH + 'minus.png'} alt="Quitar" />
         </button>
         <p>{count}</p>
         <button
@@ -69,15 +136,37 @@ const AddItem = () => {
             setCount(count >= 5 ? count : count + 1);
           }}
         >
-          <img src={IMG_PATH + 'plus.png'} alt="" />
+          <img src={IMG_PATH + 'plus.png'} alt="Añadir" />
         </button>
       </div>
+
+      <ProductSelector
+        productCategory={multipleProductsByCategory.find(
+          (category) => category.id === 'complements',
+        )}
+        onSelectProduct={onSelectComplement}
+        selectedProductId={selectedComplement?.id}
+      />
+
+      <ProductSelector
+        productCategory={multipleProductsByCategory.find((category) => category.id === 'drinks')}
+        onSelectProduct={onSelectDrink}
+        selectedProductId={selectedDrink?.id}
+      />
+
       <McButton
         text={'Agregar al pedido'}
         onClick={() => {
           handleClick();
         }}
         fixed
+      />
+
+      <InfoModal
+        isOpen={modalConfig.visible}
+        toggle={closeModal}
+        title={modalConfig.title}
+        message={modalConfig.message}
       />
     </div>
   );

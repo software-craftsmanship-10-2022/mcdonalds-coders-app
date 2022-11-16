@@ -27,7 +27,7 @@
   width: 90%;
   display: flex;
   flex-direction: column;
-  row-gap: 20px;
+
   justify-content: center;
 }
 
@@ -163,4 +163,36 @@
     margin-top: -80px;
     opacity: 0;
   }
+}
+.donation-checkbox {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+}
+.donation-info {
+  font-size: 9px;
+  color: #9faab7;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.donation-checkbox > input[type='checkbox'] {
+  height: 24px;
+  width: 24px;
+  margin-right: 20px;
+}
+.donation-checkbox > input[type='checkbox']:checked {
+  background-color: var(--mc-yellow);
+  border-color: #cbd1d8;
+}
+.donation-checkbox > [type='checkbox']:focus {
+  border-color: var(--mc-yellow);
+  box-shadow: 0 0 0 0.25rem rgb(255 199 44 / 25%);
+}
+.donation-options {
+  display: flex;
+  margin: 12px 0px 40px 0px;
+}
+.donation-options > div {
+  margin-right: 20px;
 }

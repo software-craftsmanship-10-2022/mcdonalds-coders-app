@@ -1,4 +1,4 @@
-import type {OrderStatus, OrderType} from 'src/@types/order.d';
+import type {NewOrder, NewOrderType, OrderStatus} from 'src/@types/order';
 import {STORAGE} from 'src/config';
 import type {OrderRepository} from '../domain/OrderRepository';
 
@@ -13,7 +13,7 @@ class StorageOrderRepository implements OrderRepository {
     return Promise.resolve();
   }
 
-  private checkOrderOrFail(orderId: string): OrderType {
+  private checkOrderOrFail(orderId: string): NewOrderType {
     const storedOrder = localStorage.getItem(STORAGE.orders);
     if (storedOrder === null) {
       throw new Error();
@@ -22,8 +22,9 @@ class StorageOrderRepository implements OrderRepository {
     return this.parseOrder(storedOrder, orderId);
   }
 
-  private parseOrder(storedOrder: string, orderId: string): OrderType {
-    const order: OrderType = JSON.parse(storedOrder) as OrderType;
+  private parseOrder(storedOrder: string, orderId: string): NewOrderType {
+    const {order}: NewOrder = JSON.parse(storedOrder) as NewOrder;
+
     if (order.id !== orderId) {
       throw new Error();
     }

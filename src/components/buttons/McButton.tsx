@@ -1,5 +1,5 @@
-import './McButton.css';
 import {IMG_PATH} from '../../config';
+import './McButton.css';
 
 type McButtonProps = {
   fixed?: boolean;

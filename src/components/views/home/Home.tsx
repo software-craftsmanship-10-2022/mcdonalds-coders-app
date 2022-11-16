@@ -24,7 +24,7 @@ const Home = () => {
           </div>
         ))}
       </div>
-      {order?.confirmed && (
+      {order?.isConfirmed() && (
         <McButton
           text={'Pedido en curso >>>'}
           img={'order-bag-nobg.png'}

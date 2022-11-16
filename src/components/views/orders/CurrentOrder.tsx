@@ -1,7 +1,7 @@
 import {useEffect} from 'react';
 import {QRCode} from 'react-qrcode-logo';
 import {Navigate, useNavigate} from 'react-router-dom';
-import {OrderStatus} from 'src/@types/order.d';
+import {OrderStatus} from 'src/@types/order';
 import useOrderStatus from 'src/hooks/useOrderStatus';
 import {IMG_PATH, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
@@ -18,20 +18,23 @@ const CurrentOrder = () => {
   const [currencyFormatter] = useFormat();
 
   // Restrict access when an order is in place
-  if (!order || !order.confirmed) {
+  if (!order?.isConfirmed()) {
     return <Navigate to={URLS.root} replace />;
   }
 
+  const details = order.getDetails();
+
   useEffect(() => {
-    changeOrderStatus(order.id, OrderStatus.preparing, TWO_SECONDS);
-    changeOrderStatus(order.id, OrderStatus.delivering, TWO_SECONDS * 2);
+    changeOrderStatus(order.getId(), OrderStatus.preparing, TWO_SECONDS);
+    changeOrderStatus(order.getId(), OrderStatus.delivering, TWO_SECONDS * 2);
   }, []);
 
   const changeOrderStatus = (orderId: string, status: OrderStatus, time: number) => {
     setTimeout(() => {
       setOrderStatus(orderId, status)
         .then(() => {
-          updateOrder({...order, status});
+          order.setStatus(status);
+          updateOrder(order);
         })
         .catch((err: Error) => {
           console.log(err);
@@ -44,7 +47,7 @@ const CurrentOrder = () => {
     navigate(URLS.root);
   };
 
-  const addressTitle = order.details.isDelivery ? 'Domicilio' : 'Dirección de retiro en el local';
+  const addressTitle = details.isDelivery ? 'Domicilio' : 'Dirección de retiro en el local';
 
   return (
     <div className="CurrentOrder">
@@ -56,13 +59,13 @@ const CurrentOrder = () => {
         <h3>
           <strong>Estado del pedido:</strong>
         </h3>
-        <h3>{order.status}</h3>
+        <h3>{order.getStatus()}</h3>
       </div>
       <div className="address">
         <h3>
           <strong>{addressTitle}</strong>
         </h3>
-        <h3>{order.details.address.split(',').slice(0, 3).join(', ')}</h3>
+        <h3>{details.address.split(',').slice(0, 3).join(', ')}</h3>
       </div>
       <QRCode value="https://mcdapp.vercel.app" size={256} bgColor={'#ffc72c'} />
       <div className="info">
@@ -71,11 +74,11 @@ const CurrentOrder = () => {
         </h1>
         <h3>
           <strong>Método de Pago: </strong>
-          {order.paymentType}
+          {order.getPayment()}
         </h3>
         <h3>
           <strong>Total: </strong>
-          {currencyFormatter().format(order.total)}
+          {currencyFormatter().format(order.getTotalPrice())}
         </h3>
       </div>
       <McButton

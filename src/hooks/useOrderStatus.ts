@@ -1,4 +1,4 @@
-import type {OrderStatus} from 'src/@types/order.d';
+import type {OrderStatus} from 'src/@types/order';
 import {updateOrderStatus} from 'src/api/orders/application/updateOrderStatus';
 
 const useOrderStatus = () => {

@@ -31,6 +31,7 @@ const ProductList = () => {
           img={value.img}
           title={value.title}
           description={value.description}
+          ingredients={value.ingredients}
         />
       ))}
     </div>

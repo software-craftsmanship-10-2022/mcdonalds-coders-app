@@ -1,4 +1,6 @@
-import {OrderStatus} from '../../../@types/order.d';
+import {STORAGE} from 'src/config';
+import {OrderStatus, PaymentMethod} from '../../../@types/order';
+import type {NewOrderType} from '../../../@types/order';
 import {updateOrderStatus} from './updateOrderStatus';
 
 describe('[updateOrderStatus]', () => {
@@ -15,6 +17,21 @@ describe('[updateOrderStatus]', () => {
   it('should return a promise with no content', () => {
     const orderId = 'some id';
     const status = OrderStatus.preparing;
+    const order: NewOrderType = {
+      id: orderId,
+      details: {
+        id: '2a',
+        name: 'user 1',
+        address: '123 Fake street',
+        image: 'avatar',
+        isDelivery: false,
+      },
+      items: [],
+      payment: PaymentMethod.cash,
+      status: OrderStatus.noConfirmed,
+    };
+
+    localStorage.setItem(STORAGE.orders, JSON.stringify(order));
 
     expect(updateOrderStatus(orderId, status)).toBeInstanceOf(Promise);
   });

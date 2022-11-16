@@ -20,6 +20,7 @@ export const STORAGE = {
   activeCoupons: 'activeCoupons',
   inactiveCoupons: 'inactiveCoupons',
   discounts: 'discounts',
+  markers: 'markers',
 };
 
 export const PAYMENT_TYPE = {

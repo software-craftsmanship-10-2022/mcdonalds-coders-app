@@ -1,5 +1,6 @@
 import ConfirmedState from './ConfirmedState';
 import OrderState from './OrderState';
+import RejectedState from './RejectedState';
 
 class ReceivedState extends OrderState {
   nextStep() {
@@ -15,7 +16,7 @@ class ReceivedState extends OrderState {
   }
 
   reject() {
-    // Do nothing
+    this.order.changeState(new RejectedState(this.order));
   }
 }
 

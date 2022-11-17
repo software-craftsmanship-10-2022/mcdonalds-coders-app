@@ -1,16 +1,14 @@
 import {mockNewOrder} from '../mocks/mocks';
 import type Order from '../Order';
 import CancelledByRestaurantState from './CancelledByRestaurantState';
-import CancelledByUserState from './CancelledByUserState';
-import ConfirmedState from './ConfirmedState';
 import PreparingState from './PreparingState';
 
-describe('Given a ConfirmedState class', () => {
+describe('Given a PreparingState class', () => {
   let order: Order;
 
   beforeEach(() => {
     order = mockNewOrder();
-    order.changeState(new ConfirmedState(order));
+    order.changeState(new PreparingState(order));
   });
 
   it('when an instance is created then cancelByUser() method should be defined', () => {
@@ -29,21 +27,21 @@ describe('Given a ConfirmedState class', () => {
     expect(order.getState().reject).toBeDefined();
   });
 
-  it('when an nextState is called order.getState() should return PreparingState', () => {
-    order.getState().nextStep();
-    expect(order.getState()).toBeInstanceOf(PreparingState);
-  });
+  // It('when an nextState is called order.getState() should return ReadeState', () => {
+  //   order.getState().nextStep();
+  //   expect(order.getState()).toBeInstanceOf(ReadeState);
+  // });
 
-  it('when an cancelByUser is called order.getState() should return CancelledByUserState', () => {
+  it('when an cancelByUser is called order.getState() should return PreparingState', () => {
     order.getState().cancelByUser();
-    expect(order.getState()).toBeInstanceOf(CancelledByUserState);
+    expect(order.getState()).toBeInstanceOf(PreparingState);
   });
   it('when an cancelByRestaurant is called order.getState() should return CancelledByRestaurantState', () => {
     order.getState().cancelByRestaurant();
     expect(order.getState()).toBeInstanceOf(CancelledByRestaurantState);
   });
-  it('when an reject is called order.getState() should return ConfirmedState', () => {
+  it('when an reject is called order.getState() should return PreparingState', () => {
     order.getState().reject();
-    expect(order.getState()).toBeInstanceOf(ConfirmedState);
+    expect(order.getState()).toBeInstanceOf(PreparingState);
   });
 });

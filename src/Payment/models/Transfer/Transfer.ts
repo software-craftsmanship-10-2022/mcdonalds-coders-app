@@ -1,18 +1,20 @@
-import {PaymentMethod} from 'src/@types/order';
-import type Order from 'src/api/orders/Order';
 import type Account from '../Account/Account';
-import type Donation from '../Donation/Donation';
-import Payment from '../Payment/Payment';
+import type IPaymentStrategy from '../IPaymentStrategy';
 
-class Transfer extends Payment {
-  constructor(order: Order, donation: Donation, private readonly account: Account) {
-    super(PaymentMethod.transfer, order, donation);
+class Transfer implements IPaymentStrategy {
+  #account: Account;
+
+  constructor(account: Account) {
+    this.#account = account;
   }
 
-  pay() {
-    super.pay();
-    this.account.isValid();
-    this.donation.amountValue();
+  pay(amount: number) {
+    try {
+      this.#account.isValid();
+      console.log(`Currently paying with a transfer: ${amount} €`);
+    } catch (error) {
+      return error;
+    }
   }
 }
 

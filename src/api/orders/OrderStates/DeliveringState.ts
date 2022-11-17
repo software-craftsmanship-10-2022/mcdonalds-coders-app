@@ -1,9 +1,10 @@
 import CancelledByRestaurantState from './CancelledByRestaurantState';
+import FinishedState from './FinishedState';
 import OrderState from './OrderState';
 
 class DeliveringState extends OrderState {
   nextStep() {
-    // This.order.changeState(new ConfirmedState(this.order));
+    this.order.changeState(new FinishedState(this.order));
   }
 
   cancelByUser() {

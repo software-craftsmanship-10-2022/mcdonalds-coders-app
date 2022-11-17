@@ -1,3 +1,4 @@
+import CancelledByUserState from './CancelledByUserState';
 import OrderState from './OrderState';
 
 class ConfirmedState extends OrderState {
@@ -7,7 +8,7 @@ class ConfirmedState extends OrderState {
   }
 
   cancelByUser() {
-    // Do nothing
+    this.order.changeState(new CancelledByUserState(this.order));
   }
 
   cancelByRestaurant() {

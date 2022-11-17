@@ -1,24 +1,12 @@
-import {OrderStatus, PaymentMethod} from 'src/@types/order';
-import Order from '../Order';
+import {MOCK_NEW_ORDER} from '../mocks/mocks';
+import type Order from '../Order';
 import OrderState from './OrderState';
 
 describe('Given a OrderState class', () => {
   let order: Order;
 
   beforeEach(() => {
-    order = new Order({
-      id: '1a',
-      details: {
-        id: '2a',
-        name: 'user 1',
-        address: '123 Fake street',
-        image: 'avatar',
-        isDelivery: false,
-      },
-      items: [],
-      payment: PaymentMethod.cash,
-      status: OrderStatus.noConfirmed,
-    });
+    order = MOCK_NEW_ORDER;
   });
 
   it('when an instance is created then nextStep() method should be defined', () => {

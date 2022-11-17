@@ -2,14 +2,13 @@ import {mockNewOrder} from '../mocks/mocks';
 import type Order from '../Order';
 import CancelledByRestaurantState from './CancelledByRestaurantState';
 import DeliveringState from './DeliveringState';
-import ReadyState from './ReadyState';
 
 describe('Given a ReadyState class', () => {
   let order: Order;
 
   beforeEach(() => {
     order = mockNewOrder();
-    order.changeState(new ReadyState(order));
+    order.changeState(new DeliveringState(order));
   });
 
   it('when an instance is created then cancelByUser() method should be defined', () => {
@@ -28,21 +27,21 @@ describe('Given a ReadyState class', () => {
     expect(order.getState().reject).toBeDefined();
   });
 
-  it('when an nextState is called order.getState() should return DeliveringState', () => {
-    order.getState().nextStep();
-    expect(order.getState()).toBeInstanceOf(DeliveringState);
-  });
+  // It('when an nextState is called order.getState() should return ReadeState', () => {
+  //   order.getState().nextStep();
+  //   expect(order.getState()).toBeInstanceOf(ReadeState);
+  // });
 
-  it('when an cancelByUser is called order.getState() should return ReadyState', () => {
+  it('when an cancelByUser is called order.getState() should return DeliveringState', () => {
     order.getState().cancelByUser();
-    expect(order.getState()).toBeInstanceOf(ReadyState);
+    expect(order.getState()).toBeInstanceOf(DeliveringState);
   });
   it('when an cancelByRestaurant is called order.getState() should return CancelledByRestaurantState', () => {
     order.getState().cancelByRestaurant();
     expect(order.getState()).toBeInstanceOf(CancelledByRestaurantState);
   });
-  it('when an reject is called order.getState() should return ReadyState', () => {
+  it('when an reject is called order.getState() should return DeliveringState', () => {
     order.getState().reject();
-    expect(order.getState()).toBeInstanceOf(ReadyState);
+    expect(order.getState()).toBeInstanceOf(DeliveringState);
   });
 });

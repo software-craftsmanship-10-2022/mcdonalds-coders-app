@@ -1,4 +1,4 @@
-import {MOCK_NEW_ORDER} from '../mocks/mocks';
+import {mockNewOrder} from '../mocks/mocks';
 import type Order from '../Order';
 import OrderState from './OrderState';
 
@@ -6,7 +6,7 @@ describe('Given a OrderState class', () => {
   let order: Order;
 
   beforeEach(() => {
-    order = MOCK_NEW_ORDER;
+    order = mockNewOrder();
   });
 
   it('when an instance is created then nextStep() method should be defined', () => {

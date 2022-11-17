@@ -49,7 +49,15 @@ describe('Check class Order', () => {
       expect(order.reject).toBeInstanceOf(Function);
     });
 
-    it('when an instance is created then state is InProgressState', () => {
+    it('when an instance is created then changeState() method should be defined', () => {
+      expect(order.changeState).toBeInstanceOf(Function);
+    });
+
+    it('when an instance is created then getState() method should be defined', () => {
+      expect(order.getState).toBeInstanceOf(Function);
+    });
+
+    it('when an instance is created then getState() method shoud return InProgressState', () => {
       expect(order.getState()).toBeInstanceOf(InProgressState);
     });
   });

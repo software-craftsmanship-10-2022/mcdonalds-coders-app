@@ -1,9 +1,9 @@
-import ConfirmedState from './ConfirmedState';
 import OrderState from './OrderState';
 
-class ReceivedState extends OrderState {
+class ConfirmedState extends OrderState {
   nextStep() {
-    this.order.changeState(new ConfirmedState(this.order));
+    // Do something
+    // this.order.changeState(nextState);
   }
 
   cancelByUser() {
@@ -19,4 +19,4 @@ class ReceivedState extends OrderState {
   }
 }
 
-export default ReceivedState;
+export default ConfirmedState;

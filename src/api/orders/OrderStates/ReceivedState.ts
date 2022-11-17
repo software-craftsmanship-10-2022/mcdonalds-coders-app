@@ -1,9 +1,9 @@
 import OrderState from './OrderState';
-import ReceivedState from './ReceivedState';
 
-class InProgressState extends OrderState {
+class ReceivedState extends OrderState {
   nextStep() {
-    this.order.changeState(new ReceivedState(this.order));
+    // Do something
+    // this.order.changeState(nextState);
   }
 
   cancelByUser() {
@@ -19,4 +19,4 @@ class InProgressState extends OrderState {
   }
 }
 
-export default InProgressState;
+export default ReceivedState;

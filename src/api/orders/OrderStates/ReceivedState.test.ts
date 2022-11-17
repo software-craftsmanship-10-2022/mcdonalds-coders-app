@@ -1,15 +1,14 @@
 import {MOCK_NEW_ORDER} from '../mocks/mocks';
 import type Order from '../Order';
-import InProgressState from './InProgressState';
 import ReceivedState from './ReceivedState';
 
-describe('Given a InProgressState class', () => {
+describe('Given a ReceivedState class', () => {
   let order: Order;
-  let state: InProgressState;
+  let state: ReceivedState;
 
   beforeEach(() => {
     order = MOCK_NEW_ORDER;
-    state = new InProgressState(order);
+    state = new ReceivedState(order);
   });
 
   it('when an instance is created then cancelByUser() method should be defined', () => {
@@ -26,10 +25,5 @@ describe('Given a InProgressState class', () => {
 
   it('when an instance is created then cancelByUser() method should be defined', () => {
     expect(state.reject).toBeDefined();
-  });
-
-  it('when an nextState is called order.getState() should return ReceivedState', () => {
-    state.nextStep();
-    expect(order.getState()).toBeInstanceOf(ReceivedState);
   });
 });

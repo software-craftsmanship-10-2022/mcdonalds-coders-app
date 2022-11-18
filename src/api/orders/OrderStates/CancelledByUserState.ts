@@ -1,6 +1,6 @@
 import OrderState from './OrderState';
 
-class CancelledByUser extends OrderState {
+class CancelledByUserState extends OrderState {
   nextStep() {
     // Do nothing
   }
@@ -18,4 +18,4 @@ class CancelledByUser extends OrderState {
   }
 }
 
-export default CancelledByUser;
+export default CancelledByUserState;

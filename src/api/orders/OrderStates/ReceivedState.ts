@@ -1,8 +1,12 @@
+import type Order from '../Order';
 import ConfirmedState from './ConfirmedState';
 import OrderState from './OrderState';
 import RejectedState from './RejectedState';
-
 class ReceivedState extends OrderState {
+  constructor(order: Order) {
+    super(order, 'Pedido recibido');
+  }
+
   nextStep() {
     this.order.changeState(new ConfirmedState(this.order));
   }

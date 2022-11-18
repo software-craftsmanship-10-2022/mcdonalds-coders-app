@@ -10,19 +10,19 @@ describe('Given a FinishedState class', () => {
     order.changeState(new FinishedState(order));
   });
 
-  it('when an instance is created then nextStep() method should be defined', () => {
+  it('when an FinishedState instance is created then nextStep() method should be defined', () => {
     expect(order.getState().nextStep).toBeDefined();
   });
 
-  it('when an instance is created then cancelByUser() method should be defined', () => {
+  it('when an FinishedState instance is created then cancelByUser() method should be defined', () => {
     expect(order.getState().cancelByUser).toBeDefined();
   });
 
-  it('when an instance is created then cancelByRestaurant() method should be defined', () => {
+  it('when an FinishedState instance is created then cancelByRestaurant() method should be defined', () => {
     expect(order.getState().cancelByRestaurant).toBeDefined();
   });
 
-  it('when an instance is created then reject() method should be defined', () => {
+  it('when an FinishedState instance is created then reject() method should be defined', () => {
     expect(order.getState().reject).toBeDefined();
   });
 

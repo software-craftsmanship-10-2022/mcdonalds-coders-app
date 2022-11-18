@@ -12,19 +12,19 @@ describe('Given a ReceivedState class', () => {
     order.changeState(new ReceivedState(order));
   });
 
-  it('when an instance is created then nextStep() method should be defined', () => {
+  it('when an ReceivedState instance is created then nextStep() method should be defined', () => {
     expect(order.getState().nextStep).toBeDefined();
   });
 
-  it('when an instance is created then cancelByUser() method should be defined', () => {
+  it('when an ReceivedState instance is created then cancelByUser() method should be defined', () => {
     expect(order.getState().cancelByUser).toBeDefined();
   });
 
-  it('when an instance is created then cancelByRestaurant() method should be defined', () => {
+  it('when an ReceivedState instance is created then cancelByRestaurant() method should be defined', () => {
     expect(order.getState().cancelByRestaurant).toBeDefined();
   });
 
-  it('when an instance is created then reject() method should be defined', () => {
+  it('when an ReceivedState instance is created then reject() method should be defined', () => {
     expect(order.getState().reject).toBeDefined();
   });
   it('when an nextState is called order.getState() should return ConfirmedState', () => {

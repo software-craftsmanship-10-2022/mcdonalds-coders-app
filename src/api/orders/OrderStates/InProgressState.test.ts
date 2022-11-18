@@ -11,19 +11,19 @@ describe('Given a InProgressState class', () => {
     order.changeState(new InProgressState(order));
   });
 
-  it('when an instance is created then nexStep() method should be defined', () => {
+  it('when an InProgressState instance is created then nexStep() method should be defined', () => {
     expect(order.getState().nextStep).toBeDefined();
   });
 
-  it('when an instance is created then cancelByUser() method should be defined', () => {
+  it('when an InProgressState instance is created then cancelByUser() method should be defined', () => {
     expect(order.getState().cancelByUser).toBeDefined();
   });
 
-  it('when an instance is created then cancelByRestaurant() method should be defined', () => {
+  it('when an InProgressState instance is created then cancelByRestaurant() method should be defined', () => {
     expect(order.getState().cancelByRestaurant).toBeDefined();
   });
 
-  it('when an instance is created then reject() method should be defined', () => {
+  it('when an InProgressState instance is created then reject() method should be defined', () => {
     expect(order.getState().reject).toBeDefined();
   });
 

@@ -48,6 +48,14 @@ const getAllProductsFromApi = async (): Promise<ProductCategoryType[]> => {
   return Promise.resolve(transformCategoryApiListToCategoryList(PRODUCTS));
 };
 
+/**
+ * Get a list with All products in the App, indexed by his id.
+ */
+async function getAllProductListFromApi(): Promise<Record<string, ProductType>> {
+  const products = (await getAllProductsFromApi()).map(({items}) => items).flat();
+  return Object.fromEntries(products.map((product) => [product.id, product]));
+}
+
 const getProductsByCategoryFromApi = async (
   categoryId: string | undefined,
 ): Promise<ProductCategoryType> => {
@@ -80,4 +88,9 @@ const getMultipleProductsByCategoryFromApi = async (
   });
 };
 
-export {getAllProductsFromApi, getMultipleProductsByCategoryFromApi, getProductsByCategoryFromApi};
+export {
+  getAllProductsFromApi,
+  getAllProductListFromApi,
+  getMultipleProductsByCategoryFromApi,
+  getProductsByCategoryFromApi,
+};

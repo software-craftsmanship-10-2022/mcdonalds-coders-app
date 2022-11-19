@@ -21,10 +21,6 @@ class ConfirmedState extends OrderState {
   cancelByRestaurant() {
     this.order.changeState(new CancelledByRestaurantState(this.order));
   }
-
-  reject() {
-    // Do nothing
-  }
 }
 
 export default ConfirmedState;

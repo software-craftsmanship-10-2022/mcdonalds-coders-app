@@ -12,16 +12,8 @@ class PreparingState extends OrderState {
     this.order.changeState(new ReadyState(this.order));
   }
 
-  cancelByUser() {
-    // Do nothing
-  }
-
   cancelByRestaurant() {
     this.order.changeState(new CancelledByRestaurantState(this.order));
-  }
-
-  reject() {
-    // Do nothing
   }
 }
 

@@ -12,14 +12,6 @@ class ReceivedState extends OrderState {
     this.order.changeState(new ConfirmedState(this.order));
   }
 
-  cancelByUser() {
-    // Do nothing
-  }
-
-  cancelByRestaurant() {
-    // Do nothing
-  }
-
   reject() {
     this.order.changeState(new RejectedState(this.order));
   }

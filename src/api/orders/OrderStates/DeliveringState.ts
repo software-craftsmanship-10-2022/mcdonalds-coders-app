@@ -12,16 +12,8 @@ class DeliveringState extends OrderState {
     this.order.changeState(new FinishedState(this.order));
   }
 
-  cancelByUser() {
-    // Do nothing
-  }
-
   cancelByRestaurant() {
     this.order.changeState(new CancelledByRestaurantState(this.order));
-  }
-
-  reject() {
-    // Do nothing
   }
 }
 

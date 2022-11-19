@@ -1,6 +1,6 @@
 import {STORAGE} from 'src/config';
-import {OrderStatus, PaymentMethod} from '../../../@types/order';
 import type {NewOrderType} from '../../../@types/order';
+import {OrderStatus, PaymentMethod} from '../../../@types/order';
 import {updateOrderStatus} from './updateOrderStatus';
 
 describe('[updateOrderStatus]', () => {

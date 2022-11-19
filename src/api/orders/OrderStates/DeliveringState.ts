@@ -1,10 +1,11 @@
 import type Order from '../Order';
 import CancelledByRestaurantState from './CancelledByRestaurantState';
+import {MAPPED_ORDER_STATES} from './constants';
 import FinishedState from './FinishedState';
 import OrderState from './OrderState';
 class DeliveringState extends OrderState {
   constructor(order: Order) {
-    super(order, 'Pedido en reparto');
+    super(order, MAPPED_ORDER_STATES.deliveringState.code);
   }
 
   nextStep() {

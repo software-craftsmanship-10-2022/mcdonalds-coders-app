@@ -18,6 +18,7 @@ describe('[MenuBuilder]', () => {
       price: 990,
       products: [
         {
+          categoryId: 'burgers',
           description: 'La hamburguesa más famosa del mundo. Un sabor único.',
           id: 'big_mac',
           img: 'big_mac.png',

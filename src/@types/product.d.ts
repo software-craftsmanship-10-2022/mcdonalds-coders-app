@@ -12,6 +12,7 @@ export type ProductApiType = {
 
 export type ProductType = Pick<ProductApiType, 'id' | 'img' | 'title' | 'description'> & {
   ingredients?: IngredientType[];
+  categoryId: CategoryIds;
 };
 
 export type ProductCategoryApiType = {

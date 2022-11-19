@@ -8,6 +8,7 @@ const productCategory: ProductCategoryType = {
   id: 'complements',
   items: [
     {
+      categoryId: 'complements',
       id: 'Papas-pequeñas',
       img: 'Papas-pequeñas.png',
       title: 'Papas pequeñas',
@@ -15,6 +16,7 @@ const productCategory: ProductCategoryType = {
         'Calientes, crujientes y deliciosas, tus aliadas perfectas para cualquier comida. Disfrutá de nuestras papas mundialmente famosas, desde la primera hasta la última en su versión pequeña.',
     },
     {
+      categoryId: 'complements',
       id: 'Papas-Medianas',
       img: 'Papas-Medianas.png',
       title: 'Papas Medianas',

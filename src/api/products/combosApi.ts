@@ -4,7 +4,7 @@ import type {
   ComboCategoryType,
   ComboType,
 } from 'src/@types/combos';
-import type {ProductApiType, ProductType} from 'src/@types/product';
+import type {CategoryIds, ProductApiType, ProductType} from 'src/@types/product';
 import COMBOS from 'src/data/combos';
 import PRODUCTS from 'src/data/products';
 import {transformProductApiToProduct} from '../products/productsApi';
@@ -12,16 +12,17 @@ import {transformProductApiToProduct} from '../products/productsApi';
 const findProductInListById = (
   productList: ProductApiType[],
   productId: string,
+  categoryId: CategoryIds,
 ): ProductType | undefined => {
   const product = productList.find((product) => product.id === productId);
   if (!product) return undefined;
-  return transformProductApiToProduct(product);
+  return transformProductApiToProduct(product, categoryId);
 };
 
 const productById = (productId: string): ProductType => {
   let product: ProductType | undefined;
   PRODUCTS.forEach((category) => {
-    const result = findProductInListById(category.items, productId);
+    const result = findProductInListById(category.items, productId, category.id);
     if (result) {
       product = result;
     }

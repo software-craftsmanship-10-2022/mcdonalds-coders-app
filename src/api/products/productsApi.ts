@@ -8,8 +8,11 @@ import type {
 import INGREDIENTS from 'src/data/ingredients';
 import PRODUCTS from 'src/data/products';
 
-export const transformProductApiToProduct = (productApi: ProductApiType): ProductType => {
-  const product: ProductType = {...productApi, ingredients: undefined};
+export const transformProductApiToProduct = (
+  productApi: ProductApiType,
+  categoryId: CategoryIds,
+): ProductType => {
+  const product: ProductType = {...productApi, ingredients: undefined, categoryId};
   if (productApi.ingredients) {
     product.ingredients = productApi.ingredients.map(
       (ingredientId) => INGREDIENTS.find((ingredient) => ingredient.id === ingredientId)!,
@@ -25,7 +28,7 @@ export const transformCategoryApiToCategory = (
   const products: ProductType[] = [];
 
   category.items.forEach((product) => {
-    products.push(transformProductApiToProduct(product));
+    products.push(transformProductApiToProduct(product, category.id));
   });
   return {...category, items: products};
 };

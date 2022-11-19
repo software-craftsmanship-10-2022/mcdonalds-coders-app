@@ -1,17 +1,18 @@
 import type {ComboId, ComboType} from 'src/@types/combos';
-import type {MenuType, ProductType} from 'src/@types/product.d';
+import type {MenuType} from 'src/@types/product.d';
 import {getComboDetailByIdFromApi} from './combosApi';
 import {getProductsByCategoryFromApi} from './productsApi';
 
 export const ERRORS = {
   mainMenuNoExist: 'The main menu has not been added',
   drinkIdNotfound: (id: string) => `The drink '${id}' does not exist`,
+  complementNotFound: (id: string) => `The complment '${id}' does not exist`,
 };
 
 export type MenuBuilderInterface = {
   withMainMenu(id: ComboId): Promise<MenuBuilder>;
   withDrink(id: string): Promise<MenuBuilder>;
-  // WithMainComplement(id: string): void;
+  withMainComplement(complementId: string): Promise<MenuBuilder>;
   getMenu(): MenuType;
   reset(): void;
 };
@@ -42,20 +43,15 @@ export class MenuBuilder implements MenuBuilderInterface {
 
   /**
    * Add the `drinkId` drink in the menu.
-   *
-   * Notes:
-   * - To add the drink, first, the instance must create the main menu.
-   * - Only one drink: If the instance adds other drink is added, it deletes the previous.
+   * Only one drink: If the isntance adds other drink, it deletes the previous.
    *
    * @param drinkId Drink id.
    * @return Promise of the current instance.
-   * @throws Error The instance doesn't has the main manu.
-   * @throws The `drinkId` drink doesn't exist.
+   * @throws Error The instance has defined the main manu.
+   * @throws Error The `drinkId` drink doesn't exist.
    */
   async withDrink(drinkId: string): Promise<MenuBuilder> {
-    if (!this.#existMainMenu) {
-      throw new Error(ERRORS.mainMenuNoExist);
-    }
+    this.assertMainMenu();
 
     const allDrinks = await getProductsByCategoryFromApi('drinks');
     const drink = allDrinks.items.find(({id}) => id === drinkId);
@@ -66,6 +62,33 @@ export class MenuBuilder implements MenuBuilderInterface {
 
     this.#menu.products = this.#menu.products.filter((product) => product.categoryId !== 'drinks');
     this.#menu.products.push(drink);
+
+    return this;
+  }
+
+  /**
+   * Add the `complementId` complement in the menu.
+   * Only one main complement: If the isntance adds other main complement, it deletes the previous.
+   *
+   * @param complementId complement id.
+   * @return Promise of the current instance.
+   * @throws Error The instance has defined the main manu.
+   * @throws Error The `complementId` drink doesn't exist.
+   */
+  async withMainComplement(complementId: string): Promise<MenuBuilder> {
+    this.assertMainMenu();
+
+    const allComplements = await getProductsByCategoryFromApi('complements');
+    const complement = allComplements.items.find(({id}) => id === complementId);
+
+    if (complement === undefined) {
+      throw new Error(ERRORS.complementNotFound(complementId));
+    }
+
+    this.#menu.products = this.#menu.products.filter(
+      (product) => product.categoryId !== 'complements',
+    );
+    this.#menu.products.push(complement);
 
     return this;
   }
@@ -87,6 +110,16 @@ export class MenuBuilder implements MenuBuilderInterface {
       price: 0,
       products: [],
     };
+  }
+
+  /**
+   * Throws if the current instance has none main menu.
+   * @throws Error
+   */
+  private assertMainMenu(): void {
+    if (!this.#existMainMenu) {
+      throw new Error(ERRORS.mainMenuNoExist);
+    }
   }
 
   private buildMenuMinimalInfo(combo: ComboType): void {

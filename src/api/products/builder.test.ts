@@ -92,6 +92,31 @@ const drinks: Record<string, ProductType> = {
   },
 };
 
+const complements: Record<string, ProductType> = {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  'Papas-pequeñas': {
+    categoryId: 'complements',
+    id: 'Papas-pequeñas',
+    img: 'Papas-pequeñas.png',
+    title: 'Papas pequeñas',
+    description:
+      'Calientes, crujientes y deliciosas, tus aliadas perfectas para cualquier comida. ' +
+      'Disfrutá de nuestras papas mundialmente famosas, desde la primera hasta la última en ' +
+      'su versión pequeña.',
+  },
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  'Papas-Medianas': {
+    categoryId: 'complements',
+    id: 'Papas-Medianas',
+    img: 'Papas-Medianas.png',
+    title: 'Papas Medianas',
+    description:
+      'Nuestro sello. Las aliadas perfectas para cualquier comida. Disfrutá de nuestras papas ' +
+      'mundialmente famosas, desde la primera hasta la última. Crujientes y deliciosas, ' +
+      'no vas a parar hasta terminarlas todas.',
+  },
+};
+
 describe('[MenuBuilder]', () => {
   describe('Test `MenuBuilder.constructor`', () => {
     it('creates a empty instance menu', () => {
@@ -187,6 +212,72 @@ describe('[MenuBuilder]', () => {
       await menuBuilder.withMainMenu(menuId);
       await menuBuilder.withDrink(drinkdId1);
       await menuBuilder.withDrink(drinkdId2);
+
+      expect(menuBuilder.getMenu()).toEqual(menu);
+    });
+  });
+
+  describe('Test `MenuBuilder.withMainComplement` function', () => {
+    it('throws an error if the main menu did not create before', async () => {
+      expect.assertions(1);
+
+      try {
+        await new MenuBuilder().withMainComplement('Papas-pequeñas');
+      } catch (error) {
+        expect(error).toEqual(new Error(ERRORS.mainMenuNoExist));
+      }
+    });
+
+    it('returns a MenuBuilder promise', async () => {
+      const menuId = 'kj7Stiwpn5';
+      const complementId = 'Papas-pequeñas';
+      const menuBuilder = new MenuBuilder();
+      await menuBuilder.withMainMenu(menuId);
+
+      expect(await menuBuilder.withMainComplement(complementId)).toBeInstanceOf(MenuBuilder);
+    });
+
+    it('adds the main complement in the product list', async () => {
+      const menuId = 'kj7Stiwpn5';
+      const complementId = 'Papas-pequeñas';
+      const menu = {...menus[menuId], products: [...menus[menuId].products]};
+      const menuBuilder = new MenuBuilder();
+
+      menu.products.push(complements[complementId]);
+
+      await menuBuilder.withMainMenu(menuId);
+      await menuBuilder.withMainComplement(complementId);
+
+      expect(menuBuilder.getMenu()).toEqual(menu);
+    });
+
+    it('throws when the main complement id is not exist', async () => {
+      const menuId = 'kj7Stiwpn5';
+      const complementId = 'invalid-id';
+      const menuBuilder = new MenuBuilder();
+
+      expect.assertions(1);
+
+      try {
+        await menuBuilder.withMainMenu(menuId);
+        await menuBuilder.withMainComplement(complementId);
+      } catch (error) {
+        expect(error).toEqual(new Error(ERRORS.complementNotFound(complementId)));
+      }
+    });
+
+    it('replaces the new complement by the current complement in the menu', async () => {
+      const menuId = 'kj7Stiwpn5';
+      const complementId1 = 'Papas-pequeñas';
+      const complementId2 = 'Papas-Medianas';
+      const menu = {...menus[menuId], products: [...menus[menuId].products]};
+      const menuBuilder = new MenuBuilder();
+
+      menu.products.push(complements[complementId2]);
+
+      await menuBuilder.withMainMenu(menuId);
+      await menuBuilder.withMainComplement(complementId1);
+      await menuBuilder.withMainComplement(complementId2);
 
       expect(menuBuilder.getMenu()).toEqual(menu);
     });

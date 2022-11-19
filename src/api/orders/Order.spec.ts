@@ -1,7 +1,8 @@
-import {OrderStatus, PaymentMethod} from '../../@types/order';
 import type {NewOrderAddressDetailsType} from '../../@types/order';
+import {OrderStatus, PaymentMethod} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';
 import Order from './Order';
+import InProgressState from './OrderStates/InProgressState';
 
 describe('Check class Order', () => {
   let order: Order;
@@ -29,6 +30,36 @@ describe('Check class Order', () => {
   it('sets new order id', () => {
     order.setId('new id');
     expect(order.getId()).toBe('new id');
+  });
+
+  describe('Given a Order class', () => {
+    it('when an instance is created then nextStep() method should be defined', () => {
+      expect(order.nextStep).toBeInstanceOf(Function);
+    });
+
+    it('when an instance is created then cancelByUser() method should be defined', () => {
+      expect(order.cancelByUser).toBeInstanceOf(Function);
+    });
+
+    it('when an instance is created then cancelByRestaurant() method should be defined', () => {
+      expect(order.cancelByRestaurant).toBeInstanceOf(Function);
+    });
+
+    it('when an instance is created then reject() method should be defined', () => {
+      expect(order.reject).toBeInstanceOf(Function);
+    });
+
+    it('when an instance is created then changeState() method should be defined', () => {
+      expect(order.changeState).toBeInstanceOf(Function);
+    });
+
+    it('when an instance is created then getState() method should be defined', () => {
+      expect(order.getState).toBeInstanceOf(Function);
+    });
+
+    it('when an instance is created then getState() method shoud return InProgressState', () => {
+      expect(order.getState()).toBeInstanceOf(InProgressState);
+    });
   });
 
   describe('Check `order.items` property', () => {

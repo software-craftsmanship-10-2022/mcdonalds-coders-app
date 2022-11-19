@@ -1,7 +1,7 @@
 import type Order from '../Order';
 
 class OrderState {
-  constructor(protected order: Order, private readonly description: string) {}
+  constructor(protected order: Order, private readonly code: string) {}
 
   nextStep() {
     // Do something
@@ -19,8 +19,8 @@ class OrderState {
     // Do something
   }
 
-  getDescription(): string {
-    return this.description;
+  getCode(): string {
+    return this.code;
   }
 }
 

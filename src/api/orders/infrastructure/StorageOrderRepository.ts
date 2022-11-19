@@ -9,7 +9,6 @@ class StorageOrderRepository implements OrderRepository {
     order.status = status;
 
     localStorage.setItem(STORAGE.orders, JSON.stringify(order));
-
     return Promise.resolve();
   }
 

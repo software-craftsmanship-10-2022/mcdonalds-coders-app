@@ -48,10 +48,6 @@ export type OrderContextType = {
   resetOrder: () => void;
 };
 
-export type NewOrder = {
-  order: NewOrderType;
-};
-
 export type NewOrderType = {
   id: string;
   details: NewOrderAddressDetailsType;

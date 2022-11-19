@@ -9,14 +9,14 @@ export const ERRORS = {
   complementNotFound: (id: string) => `The complment '${id}' does not exist`,
 };
 
-export type MenuBuilderInterface = {
-  withMainMenu(id: ComboId): Promise<MenuBuilder>;
-  withDrink(id: string): Promise<MenuBuilder>;
-  withMainComplement(complementId: string): Promise<MenuBuilder>;
-  withExtra(extraId: string): Promise<MenuBuilder>;
+export interface MenuBuilderInterface {
+  withMainMenu(id: ComboId): Promise<MenuBuilderInterface>;
+  withDrink(id: string): Promise<MenuBuilderInterface>;
+  withMainComplement(complementId: string): Promise<MenuBuilderInterface>;
+  withExtra(extraId: string): Promise<MenuBuilderInterface>;
   getMenu(): MenuType;
   reset(): void;
-};
+}
 
 export class MenuBuilder implements MenuBuilderInterface {
   #menu: MenuType = {} as unknown as MenuType;
@@ -37,7 +37,7 @@ export class MenuBuilder implements MenuBuilderInterface {
     this.#extra = undefined;
   }
 
-  async withMainMenu(id: ComboId): Promise<MenuBuilder> {
+  async withMainMenu(id: ComboId): Promise<MenuBuilderInterface> {
     this.reset();
     this.buildMenuMinimalInfo(await getComboDetailByIdFromApi(id));
     this.#existMainMenu = true;
@@ -54,7 +54,7 @@ export class MenuBuilder implements MenuBuilderInterface {
    * @throws Error The instance has defined the main manu.
    * @throws Error The `drinkId` drink doesn't exist.
    */
-  async withDrink(drinkId: string): Promise<MenuBuilder> {
+  async withDrink(drinkId: string): Promise<MenuBuilderInterface> {
     this.assertMainMenu();
 
     const allDrinks = await getProductsByCategoryFromApi('drinks');
@@ -76,7 +76,7 @@ export class MenuBuilder implements MenuBuilderInterface {
    * @throws Error The instance has defined the main manu.
    * @throws Error The `complementId` drink doesn't exist.
    */
-  async withMainComplement(complementId: string): Promise<MenuBuilder> {
+  async withMainComplement(complementId: string): Promise<MenuBuilderInterface> {
     this.assertMainMenu();
 
     const allComplements = await getProductsByCategoryFromApi('complements');
@@ -98,7 +98,7 @@ export class MenuBuilder implements MenuBuilderInterface {
    * @throws Error The instance has defined the main manu.
    * @throws Error The `complementId` drink doesn't exist.
    */
-  async withExtra(extraId: string): Promise<MenuBuilder> {
+  async withExtra(extraId: string): Promise<MenuBuilderInterface> {
     this.assertMainMenu();
 
     this.#extra = (await getAllProductListFromApi())[extraId];

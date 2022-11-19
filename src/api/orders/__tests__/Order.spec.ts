@@ -1,8 +1,8 @@
-import type {NewOrderAddressDetailsType} from '../../@types/order';
-import {OrderStatus, PaymentMethod} from '../../@types/order';
-import type {MenuType} from '../../@types/product.d';
-import Order from './Order';
-import InProgressState from './OrderStates/InProgressState';
+import type {NewOrderAddressDetailsType} from '../../../@types/order';
+import {OrderStatus, PaymentMethod} from '../../../@types/order';
+import type {MenuType} from '../../../@types/product';
+import Order from '../Order';
+import InProgressState from '../OrderStates/InProgressState';
 
 describe('Check class Order', () => {
   let order: Order;

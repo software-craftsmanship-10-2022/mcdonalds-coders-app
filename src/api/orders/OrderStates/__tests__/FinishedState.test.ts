@@ -1,6 +1,6 @@
+import type Order from '../../Order';
+import FinishedState from '../FinishedState';
 import {mockNewOrder} from '../mocks/mocks';
-import type Order from '../Order';
-import FinishedState from './FinishedState';
 
 describe('Given a FinishedState class', () => {
   let order: Order;

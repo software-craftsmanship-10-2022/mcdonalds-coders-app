@@ -1,8 +1,8 @@
+import type Order from '../../Order';
+import CancelledByRestaurantState from '../CancelledByRestaurantState';
+import DeliveringState from '../DeliveringState';
 import {mockNewOrder} from '../mocks/mocks';
-import type Order from '../Order';
-import CancelledByRestaurantState from './CancelledByRestaurantState';
-import DeliveringState from './DeliveringState';
-import ReadyState from './ReadyState';
+import ReadyState from '../ReadyState';
 
 describe('Given a ReadyState class', () => {
   let order: Order;

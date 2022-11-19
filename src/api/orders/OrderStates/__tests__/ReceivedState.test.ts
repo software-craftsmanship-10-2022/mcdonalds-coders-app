@@ -1,8 +1,8 @@
+import type Order from '../../Order';
+import ConfirmedState from '../ConfirmedState';
 import {mockNewOrder} from '../mocks/mocks';
-import type Order from '../Order';
-import ConfirmedState from './ConfirmedState';
-import ReceivedState from './ReceivedState';
-import RejectedState from './RejectedState';
+import ReceivedState from '../ReceivedState';
+import RejectedState from '../RejectedState';
 
 describe('Given a ReceivedState class', () => {
   let order: Order;

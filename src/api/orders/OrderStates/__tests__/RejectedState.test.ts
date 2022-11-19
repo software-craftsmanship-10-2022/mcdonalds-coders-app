@@ -1,6 +1,6 @@
+import type Order from '../../Order';
 import {mockNewOrder} from '../mocks/mocks';
-import type Order from '../Order';
-import RejectedState from './RejectedState';
+import RejectedState from '../RejectedState';
 
 describe('Given a RejectedState class', () => {
   let order: Order;

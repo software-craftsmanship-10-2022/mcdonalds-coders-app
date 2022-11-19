@@ -1,7 +1,7 @@
 import type {ComboId, ComboType} from 'src/@types/combos';
-import type {MenuType} from 'src/@types/product.d';
+import type {MenuType, ProductType} from 'src/@types/product.d';
 import {getComboDetailByIdFromApi} from './combosApi';
-import {getProductsByCategoryFromApi} from './productsApi';
+import {getAllProductListFromApi, getProductsByCategoryFromApi} from './productsApi';
 
 export const ERRORS = {
   mainMenuNoExist: 'The main menu has not been added',
@@ -13,24 +13,28 @@ export type MenuBuilderInterface = {
   withMainMenu(id: ComboId): Promise<MenuBuilder>;
   withDrink(id: string): Promise<MenuBuilder>;
   withMainComplement(complementId: string): Promise<MenuBuilder>;
+  withExtra(extraId: string): Promise<MenuBuilder>;
   getMenu(): MenuType;
   reset(): void;
 };
 
 export class MenuBuilder implements MenuBuilderInterface {
-  #menu: MenuType;
-  #existMainMenu: boolean;
+  #menu: MenuType = {} as unknown as MenuType;
+  #existMainMenu = false;
+  #drink: ProductType | undefined;
+  #mainComplement: ProductType | undefined;
+  #extra: ProductType | undefined;
 
   constructor() {
-    this.#menu = undefined as unknown as MenuType;
-    this.#existMainMenu = false;
-
     this.reset();
   }
 
   reset(): void {
     this.#menu = this.buildMenuPlaceholder();
     this.#existMainMenu = false;
+    this.#drink = undefined;
+    this.#mainComplement = undefined;
+    this.#extra = undefined;
   }
 
   async withMainMenu(id: ComboId): Promise<MenuBuilder> {
@@ -54,14 +58,11 @@ export class MenuBuilder implements MenuBuilderInterface {
     this.assertMainMenu();
 
     const allDrinks = await getProductsByCategoryFromApi('drinks');
-    const drink = allDrinks.items.find(({id}) => id === drinkId);
+    this.#drink = allDrinks.items.find(({id}) => id === drinkId);
 
-    if (drink === undefined) {
+    if (this.#drink === undefined) {
       throw new Error(ERRORS.drinkIdNotfound(drinkId));
     }
-
-    this.#menu.products = this.#menu.products.filter((product) => product.categoryId !== 'drinks');
-    this.#menu.products.push(drink);
 
     return this;
   }
@@ -79,16 +80,32 @@ export class MenuBuilder implements MenuBuilderInterface {
     this.assertMainMenu();
 
     const allComplements = await getProductsByCategoryFromApi('complements');
-    const complement = allComplements.items.find(({id}) => id === complementId);
+    this.#mainComplement = allComplements.items.find(({id}) => id === complementId);
 
-    if (complement === undefined) {
+    if (this.#mainComplement === undefined) {
       throw new Error(ERRORS.complementNotFound(complementId));
     }
 
-    this.#menu.products = this.#menu.products.filter(
-      (product) => product.categoryId !== 'complements',
-    );
-    this.#menu.products.push(complement);
+    return this;
+  }
+
+  /**
+   * Add the `extra id` extra in the menu.
+   * Only one extra: If the isntance adds other extra, it deletes the previous.
+   *
+   * @param extraId complement id.
+   * @return Promise of the current instance.
+   * @throws Error The instance has defined the main manu.
+   * @throws Error The `complementId` drink doesn't exist.
+   */
+  async withExtra(extraId: string): Promise<MenuBuilder> {
+    this.assertMainMenu();
+
+    this.#extra = (await getAllProductListFromApi())[extraId];
+
+    if (this.#extra === undefined) {
+      throw new Error(ERRORS.complementNotFound(extraId));
+    }
 
     return this;
   }
@@ -98,7 +115,12 @@ export class MenuBuilder implements MenuBuilderInterface {
    */
   getMenu(): MenuType {
     const result = this.#menu;
+
+    this.#drink && result.products.push(this.#drink);
+    this.#mainComplement && result.products.push(this.#mainComplement);
+    this.#extra && result.products.push(this.#extra);
     this.reset();
+
     return result;
   }
 
@@ -117,7 +139,7 @@ export class MenuBuilder implements MenuBuilderInterface {
    * @throws Error
    */
   private assertMainMenu(): void {
-    if (!this.#existMainMenu) {
+    if (this.#menu === undefined || !this.#existMainMenu) {
       throw new Error(ERRORS.mainMenuNoExist);
     }
   }

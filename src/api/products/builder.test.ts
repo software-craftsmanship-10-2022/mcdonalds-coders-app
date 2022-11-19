@@ -282,4 +282,70 @@ describe('[MenuBuilder]', () => {
       expect(menuBuilder.getMenu()).toEqual(menu);
     });
   });
+
+  describe('Test `MenuBuilder.withExtra` function', () => {
+    it('throws an error if the main menu did not create before', async () => {
+      expect.assertions(1);
+
+      try {
+        await new MenuBuilder().withExtra('Papas-pequeñas');
+      } catch (error) {
+        expect(error).toEqual(new Error(ERRORS.mainMenuNoExist));
+      }
+    });
+
+    it('returns a MenuBuilder promise', async () => {
+      const menuId = 'kj7Stiwpn5';
+      const extraId = 'Papas-pequeñas';
+      const menuBuilder = new MenuBuilder();
+      await menuBuilder.withMainMenu(menuId);
+
+      expect(await menuBuilder.withExtra(extraId)).toBeInstanceOf(MenuBuilder);
+    });
+
+    it('adds the extra in the product list', async () => {
+      const menuId = 'kj7Stiwpn5';
+      const extraId = 'Papas-pequeñas';
+      const menu = {...menus[menuId], products: [...menus[menuId].products]};
+      const menuBuilder = new MenuBuilder();
+
+      menu.products.push(complements[extraId]);
+
+      await menuBuilder.withMainMenu(menuId);
+      await menuBuilder.withExtra(extraId);
+
+      expect(menuBuilder.getMenu()).toEqual(menu);
+    });
+
+    it('throws when the main complement id is not exist', async () => {
+      const menuId = 'kj7Stiwpn5';
+      const extraId = 'invalid-id';
+      const menuBuilder = new MenuBuilder();
+
+      expect.assertions(1);
+
+      try {
+        await menuBuilder.withMainMenu(menuId);
+        await menuBuilder.withExtra(extraId);
+      } catch (error) {
+        expect(error).toEqual(new Error(ERRORS.complementNotFound(extraId)));
+      }
+    });
+
+    it('replaces the new complement by the current complement in the menu', async () => {
+      const menuId = 'kj7Stiwpn5';
+      const extraId1 = 'Papas-pequeñas';
+      const extraId2 = 'Papas-Medianas';
+      const menu = {...menus[menuId], products: [...menus[menuId].products]};
+      const menuBuilder = new MenuBuilder();
+
+      menu.products.push(complements[extraId2]);
+
+      await menuBuilder.withMainMenu(menuId);
+      await menuBuilder.withExtra(extraId1);
+      await menuBuilder.withExtra(extraId2);
+
+      expect(menuBuilder.getMenu()).toEqual(menu);
+    });
+  });
 });

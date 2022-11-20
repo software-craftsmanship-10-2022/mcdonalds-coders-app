@@ -1,18 +1,20 @@
-import {PaymentMethod} from 'src/@types/order';
-import type Order from 'src/api/orders/Order';
 import type Card from '../Card/Card';
-import type Donation from '../Donation/Donation';
-import Payment from '../Payment/Payment';
+import type IPaymentStrategy from '../IPaymentStrategy';
 
-class Debit extends Payment {
-  constructor(order: Order, donation: Donation, private readonly card: Card) {
-    super(PaymentMethod.debit, order, donation);
+class Debit implements IPaymentStrategy {
+  #card: Card;
+
+  constructor(card: Card) {
+    this.#card = card;
   }
 
-  pay() {
-    super.pay();
-    this.card.isValid();
-    this.donation.amountValue();
+  pay(amount: number) {
+    try {
+      this.#card.isValid();
+      console.log(`Currently paying with a credit card: ${amount} €`);
+    } catch (error) {
+      return error;
+    }
   }
 }
 

@@ -211,20 +211,4 @@ describe('Check class Order', () => {
     expect(order.getTotalPriceByMenu('b')).toBe(200);
     expect(order.getTotalPriceByMenu('c')).toBe(800);
   });
-
-  describe('`clone` function', () => {
-    it('clones an instance of Order', () => {
-      expect(order.clone()).toBeInstanceOf(Order);
-    });
-
-    it('clones an object with the same properties.', () => {
-      expect(order.clone()).toEqual(order);
-    });
-
-    it('clones an object that is not the original object', () => {
-      const clonedOrder = order.clone();
-      expect(clonedOrder).not.toBe(order);
-      expect(clonedOrder.getDetails()).not.toBe(order.getDetails());
-    });
-  });
 });

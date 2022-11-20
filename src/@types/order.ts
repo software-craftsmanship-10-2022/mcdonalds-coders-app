@@ -1,4 +1,5 @@
 import type Order from 'src/api/orders/Order';
+import type {ORDER_STATES_CODES} from 'src/api/orders/OrderStates/constants';
 import type {PaymentMethodType} from 'src/components/form/Payment/constants/paymentMethodsTypes';
 import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
 import type {MenuType} from './product.d';
@@ -11,7 +12,7 @@ export type OrderType = {
   total: number;
   confirmed: boolean;
   paymentType: string;
-  status: OrderStatus;
+  status: typeof ORDER_STATES_CODES;
 };
 
 export enum OrderStatus {

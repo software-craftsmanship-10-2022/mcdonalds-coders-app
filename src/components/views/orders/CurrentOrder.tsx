@@ -33,7 +33,7 @@ const CurrentOrder = () => {
     setTimeout(() => {
       setOrderStatus(orderId, status)
         .then(() => {
-          order.setStatus(status);
+          order.nextStep();
           updateOrder(order);
         })
         .catch((err: Error) => {

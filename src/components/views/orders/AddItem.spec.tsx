@@ -77,7 +77,7 @@ describe('Test AddItem component', () => {
       await screen.findAllByText('No has seleccionado una bebida, no queremos que te deshidrates');
     });
 
-    it('clicks in button after click in the "increment counter" button', async () => {
+    xit('clicks in button after click in the "increment counter" button', async () => {
       await act(async () => {
         render(<RenderWithRouter />);
       });

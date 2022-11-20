@@ -10,7 +10,7 @@ export type OrderType = {
   payment: PaymentMethod;
   confirmed: boolean;
   paymentType: string;
-  status: typeof ORDER_STATES_CODES;
+  state: typeof ORDER_STATES_CODES;
 };
 
 export enum PaymentMethod {

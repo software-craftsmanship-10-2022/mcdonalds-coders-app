@@ -22,6 +22,9 @@ export const OrderProvider = ({children}: OrderProviderProps) => {
       order !== undefined && setOrder(order);
     })();
   }, []);
+  useEffect(() => {
+    console.log(order.getStateCode());
+  }, [order]);
 
   const resetOrder = async () => {
     await updateOrder(createEmptyOrder());

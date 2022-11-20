@@ -1,4 +1,4 @@
-export const ORDER_STATES_CODES = {
+const ORDER_STATES_CODES = {
   inProgressState: 'inProgressState',
   cancelledByRestaurantState: 'cancelledByRestaurantState',
   cancelledByUserState: 'cancelledByUserState',

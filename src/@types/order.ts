@@ -12,18 +12,8 @@ export type OrderType = {
   total: number;
   confirmed: boolean;
   paymentType: string;
-  status: typeof ORDER_STATES_CODES;
+  state: typeof ORDER_STATES_CODES;
 };
-
-export enum OrderStatus {
-  noConfirmed = 'NO_CONFIRMED',
-  ready = 'READY',
-  rejected = 'REJECTED',
-  pending = 'PENDING',
-  preparing = 'PREPARING',
-  delivering = 'DELIVERING',
-  finished = 'FINISHED',
-}
 
 export enum PaymentMethod {
   cash,
@@ -57,7 +47,7 @@ export type NewOrderType = {
   items: MenuType[];
   payment: PaymentMethodType;
   paymentAmount: PaymentAmount;
-  status: OrderStatus;
+  status: ORDER_STATES_CODES;
 };
 
 export type NewOrderAddressDetailsType = {

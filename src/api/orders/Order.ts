@@ -2,7 +2,7 @@ import type {PaymentMethodType} from 'src/components/form/Payment/constants/paym
 import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
 import type {NewOrderAddressDetailsType, NewOrderType} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';
-import {ORDER_STATES_CODES} from './OrderStates/constants';
+import {ORDER_STATES} from './OrderStates/constants';
 import InProgressState from './OrderStates/InProgressState';
 import type OrderState from './OrderStates/OrderState';
 
@@ -58,10 +58,24 @@ export default class Order {
   }
 
   /**
-   * Get the order Id.
+   * Get the order state instance.
    */
   getState(): OrderState {
     return this.#state;
+  }
+
+  /**
+   * Get the order state code.
+   */
+  getStateCode(): string {
+    return this.getState().getCode();
+  }
+
+  /**
+   * Get the order state description.
+   */
+  getStateDescription(): string {
+    return this.getState().getDescription();
   }
 
   /**
@@ -129,17 +143,10 @@ export default class Order {
   }
 
   /**
-   * Get the status of the order.
-   */
-  getStatus(): string {
-    return this.#state.getCode();
-  }
-
-  /**
-   * Check if the order status is not confirmed.
+   * Check if the order state is not confirmed.
    */
   isConfirmed(): boolean {
-    return this.#state.getCode() === ORDER_STATES_CODES.confirmedState;
+    return this.#state.getCode() === ORDER_STATES.confirmedState.code;
   }
 
   /**

@@ -1,8 +1,8 @@
 import {createContext, useContext, useEffect, useState} from 'react';
-import {useOrderStorage} from '../hooks/useOrderStorage';
-import type Order from '../api/orders/Order';
-import type {OrderContextType} from '../@types/order';
 import createEmptyOrder from 'src/api/orders/createEmptyOrder';
+import type {OrderContextType} from '../@types/order';
+import type Order from '../api/orders/Order';
+import {useOrderStorage} from '../hooks/useOrderStorage';
 
 const ORDER_CONTEXT = createContext<OrderContextType>(null as unknown as OrderContextType);
 
@@ -22,13 +22,17 @@ export const OrderProvider = ({children}: OrderProviderProps) => {
       order !== undefined && setOrder(order);
     })();
   }, []);
+  useEffect(() => {
+    console.log(order.getStateCode());
+  }, [order]);
 
   const resetOrder = async () => {
     await updateOrder(createEmptyOrder());
   };
 
   const updateOrder = async (order: Order) => {
-    setOrder(order.clone());
+    setOrder(order);
+    console.log(order);
     await storage.setOrder(order);
   };
 

@@ -1,4 +1,4 @@
-export const ORDER_STATES_CODES = {
+const ORDER_STATES_CODES = {
   inProgressState: 'inProgressState',
   cancelledByRestaurantState: 'cancelledByRestaurantState',
   cancelledByUserState: 'cancelledByUserState',
@@ -24,7 +24,12 @@ const ORDER_STATES_DESCRIPTIONS = {
   rejectedState: 'Pedido rechazado',
 };
 
-export const MAPPED_ORDER_STATES = {
+export type OrderStateType = {
+  code: string;
+  description: string;
+};
+
+export const ORDER_STATES = {
   inProgressState: {
     code: ORDER_STATES_CODES.inProgressState,
     description: ORDER_STATES_DESCRIPTIONS.inProgressState,

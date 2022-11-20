@@ -149,14 +149,6 @@ export default class Order {
     this.order.details = details;
   }
 
-  /**
-   * Get a copy of the instance.
-   */
-  clone(): Order {
-    const details: NewOrderAddressDetailsType = {...this.order.details};
-    return new Order({...this.order, details});
-  }
-
   changeState(state: OrderState) {
     this.#state = state;
   }

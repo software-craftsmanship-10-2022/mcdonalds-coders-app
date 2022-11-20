@@ -1,5 +1,4 @@
 import type Order from 'src/api/orders/Order';
-import type {ORDER_STATES} from 'src/api/orders/OrderStates/constants';
 import type {MenuType} from './product.d';
 
 // @types.order.ts
@@ -10,7 +9,6 @@ export type OrderType = {
   total: number;
   confirmed: boolean;
   paymentType: string;
-  state: typeof ORDER_STATES;
 };
 
 export enum PaymentMethod {

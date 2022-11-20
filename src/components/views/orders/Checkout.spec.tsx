@@ -98,7 +98,7 @@ describe('Test Checkout component', () => {
 
     it('checks the order is saved when it clicks in the button', async () => {
       const orderId = '1234abc';
-      const dummyOrderWithId = dummyOrder.clone();
+      const dummyOrderWithId = dummyOrder;
       dummyOrderWithId.setId(orderId);
       spySaveOrder.mockResolvedValue(dummyOrderWithId);
 

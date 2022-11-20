@@ -1,10 +1,10 @@
 import {jest} from '@jest/globals';
 import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
-import {PaymentMethod} from 'src/@types/order';
 import createEmptyOrder from 'src/api/orders/createEmptyOrder';
+import {mockNewOrder} from 'src/api/orders/mocks/mocks';
 import {storage} from 'src/utils/localStorage';
 import type {OrderContextType} from '../@types/order';
-import Order from '../api/orders/Order';
+import type Order from '../api/orders/Order';
 import {OrderProvider, useOrderContext} from './OrderContext';
 
 function DummyComponent({futureOrder}: {futureOrder?: Order}) {
@@ -81,42 +81,20 @@ describe('Test OrderContext component', () => {
   });
 
   it('checks how the component uses the order stores in web storage.', async () => {
-    const order: Order = new Order({
-      id: 'a3',
-      details: {
-        id: 'a4',
-        name: 'name 1',
-        address: 'address 1',
-        image: 'image 1',
-        isDelivery: false,
-      },
-      items: [],
-      payment: PaymentMethod.debit,
-    });
+    const order: Order = mockNewOrder();
 
     mockGetItem.mockResolvedValue(order);
     render(<OrderProviderTest />);
 
     await waitFor(() => {
-      expect(screen.getByText(/Order id: a3/)).toBeInTheDocument();
+      expect(screen.getByText(/Order id: 1a/)).toBeInTheDocument();
       testDummyComponent(order);
     });
   });
 
   describe('Test `updateOrder` function', () => {
     it('checks it updates the `order` property correctly in the component', async () => {
-      const order: Order = new Order({
-        id: 'a3',
-        details: {
-          id: 'a4',
-          name: 'name 1',
-          address: 'address 1',
-          image: 'image 1',
-          isDelivery: false,
-        },
-        items: [],
-        payment: PaymentMethod.debit,
-      });
+      const order: Order = mockNewOrder();
 
       await act(async () => {
         render(<OrderProviderTest order={order} />);
@@ -128,18 +106,7 @@ describe('Test OrderContext component', () => {
     });
 
     it('checks the function saves the updated order in the cache', async () => {
-      const order: Order = new Order({
-        id: 'a4',
-        details: {
-          id: 'a5',
-          name: 'name 2',
-          address: 'address 2',
-          image: 'image 3',
-          isDelivery: false,
-        },
-        items: [],
-        payment: PaymentMethod.debit,
-      });
+      const order: Order = mockNewOrder();
 
       await act(async () => {
         render(<OrderProviderTest order={order} />);
@@ -156,18 +123,7 @@ describe('Test OrderContext component', () => {
 
   describe('Test `resetOrder` funtion', () => {
     it('checks the order is reseted', async () => {
-      const order: Order = new Order({
-        id: 'a4',
-        details: {
-          id: 'a5',
-          name: 'name 2',
-          address: 'address 2',
-          image: 'image 3',
-          isDelivery: false,
-        },
-        items: [],
-        payment: PaymentMethod.debit,
-      });
+      const order: Order = mockNewOrder();
 
       await act(async () => {
         render(<OrderProviderTest order={order} />);
@@ -178,7 +134,7 @@ describe('Test OrderContext component', () => {
       // Click in update button
       fireEvent.click(updateButton);
       await waitFor(() => {
-        expect(screen.getByText(/Order id: a4/)).toBeInTheDocument();
+        expect(screen.getByText(/Order id: 1a/)).toBeInTheDocument();
         testDummyComponent(order);
       });
 
@@ -190,18 +146,7 @@ describe('Test OrderContext component', () => {
     });
 
     it('checks the empty order is stored in the cache system', async () => {
-      const order: Order = new Order({
-        id: 'a4',
-        details: {
-          id: 'a5',
-          name: 'name 2',
-          address: 'address 2',
-          image: 'image 3',
-          isDelivery: false,
-        },
-        items: [],
-        payment: PaymentMethod.debit,
-      });
+      const order: Order = mockNewOrder();
 
       await act(async () => {
         render(<OrderProviderTest order={order} />);
@@ -212,7 +157,7 @@ describe('Test OrderContext component', () => {
       // Click in update button
       fireEvent.click(updateButton);
       await waitFor(() => {
-        expect(screen.getByText(/Order id: a4/)).toBeInTheDocument();
+        expect(screen.getByText(/Order id: 1a/)).toBeInTheDocument();
         testDummyComponent(order);
       });
 

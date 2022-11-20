@@ -1,6 +1,6 @@
 import type {PaymentMethodType} from 'src/components/form/Payment/constants/paymentMethodsTypes';
 import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
-import type {NewOrderAddressDetailsType, NewOrderType} from '../../@types/order';
+import type {OrderAddressDetailsType, OrderType} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';
 import {ORDER_STATES} from './OrderStates/constants';
 import InProgressState from './OrderStates/InProgressState';
@@ -12,7 +12,7 @@ export default class Order {
    * @param order Order to handle
    */
   #state: OrderState;
-  constructor(private order: NewOrderType) {
+  constructor(private order: OrderType) {
     this.#state = new InProgressState(this);
   }
 
@@ -152,7 +152,7 @@ export default class Order {
   /**
    * Get the order details.
    */
-  getDetails(): NewOrderAddressDetailsType {
+  getDetails(): OrderAddressDetailsType {
     return this.order.details;
   }
 
@@ -161,7 +161,7 @@ export default class Order {
    *
    * @param details new Details.
    */
-  setDetails(details: NewOrderAddressDetailsType) {
+  setDetails(details: OrderAddressDetailsType) {
     this.order.details = details;
   }
 
@@ -183,5 +183,10 @@ export default class Order {
 
   reject() {
     this.#state.reject();
+  }
+
+  toOrderType(): OrderType {
+    const {id, details, items, total, payment} = this.order;
+    return {id, details, items, total, payment};
   }
 }

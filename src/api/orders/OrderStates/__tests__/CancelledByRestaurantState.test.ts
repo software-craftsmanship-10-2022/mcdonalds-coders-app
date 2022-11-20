@@ -1,6 +1,6 @@
+import {mockNewOrder} from '../../mocks/mocks';
 import type Order from '../../Order';
 import CancelledByRestaurantState from '../CancelledByRestaurantState';
-import {mockNewOrder} from '../mocks/mocks';
 
 describe('Given a CancelledByRestaurant class', () => {
   let order: Order;

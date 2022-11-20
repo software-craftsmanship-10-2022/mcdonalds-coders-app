@@ -1,14 +1,12 @@
 import type Order from 'src/api/orders/Order';
 import type {ORDER_STATES_CODES} from 'src/api/orders/OrderStates/constants';
-import type {PaymentMethodType} from 'src/components/form/Payment/constants/paymentMethodsTypes';
-import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
 import type {MenuType} from './product.d';
 
 // @types.order.ts
 export type OrderType = {
   id: string;
   details: OrderAddressDetailsType;
-  items: OrderItemType[];
+  items: MenuType[];
   total: number;
   confirmed: boolean;
   paymentType: string;
@@ -29,9 +27,10 @@ export type OrderItemType = {
 };
 
 export type OrderAddressDetailsType = {
+  id: string;
   name: string;
   address: string;
-  img: string;
+  image: string;
   isDelivery: boolean;
 };
 
@@ -39,21 +38,4 @@ export type OrderContextType = {
   updateOrder: (_: Order) => void;
   order: Order;
   resetOrder: () => void;
-};
-
-export type NewOrderType = {
-  id: string;
-  details: NewOrderAddressDetailsType;
-  items: MenuType[];
-  payment: PaymentMethodType;
-  paymentAmount: PaymentAmount;
-  status: ORDER_STATES_CODES;
-};
-
-export type NewOrderAddressDetailsType = {
-  id: string;
-  name: string;
-  address: string;
-  image: string;
-  isDelivery: boolean;
 };

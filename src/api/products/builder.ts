@@ -10,17 +10,16 @@ export const ERRORS = {
 };
 
 export interface MenuBuilderInterface {
-  withMainMenu(id: ComboId): Promise<MenuBuilderInterface>;
-  withDrink(id: string): Promise<MenuBuilderInterface>;
-  withMainComplement(complementId: string): Promise<MenuBuilderInterface>;
-  withExtra(extraId: string): Promise<MenuBuilderInterface>;
+  withMainMenu(id: ComboId): Promise<MenuBuilder>;
+  withDrink(drinkId: string): Promise<MenuBuilder>;
+  withMainComplement(complementId: string): Promise<MenuBuilder>;
+  withExtra(extraId: string): Promise<MenuBuilder>;
   getMenu(): MenuType;
   reset(): void;
 }
 
 export class MenuBuilder implements MenuBuilderInterface {
-  #menu: MenuType = {} as unknown as MenuType;
-  #existMainMenu = false;
+  #menu: MenuType = this.buildMenuPlaceholder();
   #drink: ProductType | undefined;
   #mainComplement: ProductType | undefined;
   #extra: ProductType | undefined;
@@ -31,16 +30,14 @@ export class MenuBuilder implements MenuBuilderInterface {
 
   reset(): void {
     this.#menu = this.buildMenuPlaceholder();
-    this.#existMainMenu = false;
     this.#drink = undefined;
     this.#mainComplement = undefined;
     this.#extra = undefined;
   }
 
-  async withMainMenu(id: ComboId): Promise<MenuBuilderInterface> {
+  async withMainMenu(id: ComboId): Promise<MenuBuilder> {
     this.reset();
     this.buildMenuMinimalInfo(await getComboDetailByIdFromApi(id));
-    this.#existMainMenu = true;
 
     return this;
   }
@@ -49,20 +46,27 @@ export class MenuBuilder implements MenuBuilderInterface {
    * Add the `drinkId` drink in the menu.
    * Only one drink: If the isntance adds other drink, it deletes the previous.
    *
-   * @param drinkId Drink id.
+   * @param {string} drinkId Drink id.
    * @return Promise of the current instance.
    * @throws Error The instance has defined the main manu.
    * @throws Error The `drinkId` drink doesn't exist.
    */
-  async withDrink(drinkId: string): Promise<MenuBuilderInterface> {
+  async withDrink(drinkId: string): Promise<MenuBuilder> {
     this.assertMainMenu();
 
     const allDrinks = await getProductsByCategoryFromApi('drinks');
-    this.#drink = allDrinks.items.find(({id}) => id === drinkId);
+    const drink = allDrinks.items.find(({id}) => id === drinkId);
 
-    if (this.#drink === undefined) {
+    if (drink === undefined) {
       throw new Error(ERRORS.drinkIdNotfound(drinkId));
     }
+
+    this.#menu.products = this.#menu.products.filter(({categoryId}) => {
+      return categoryId !== 'drinks';
+    });
+
+    this.#drink = drink;
+    this.#menu.products.push(this.#drink);
 
     return this;
   }
@@ -76,15 +80,22 @@ export class MenuBuilder implements MenuBuilderInterface {
    * @throws Error The instance has defined the main manu.
    * @throws Error The `complementId` drink doesn't exist.
    */
-  async withMainComplement(complementId: string): Promise<MenuBuilderInterface> {
+  async withMainComplement(complementId: string): Promise<MenuBuilder> {
     this.assertMainMenu();
 
     const allComplements = await getProductsByCategoryFromApi('complements');
-    this.#mainComplement = allComplements.items.find(({id}) => id === complementId);
+    const complement = allComplements.items.find(({id}) => id === complementId);
 
-    if (this.#mainComplement === undefined) {
+    if (complement === undefined) {
       throw new Error(ERRORS.complementNotFound(complementId));
     }
+
+    this.#menu.products = this.#menu.products.filter(({categoryId}) => {
+      return categoryId !== 'complements';
+    });
+
+    this.#mainComplement = complement;
+    this.#menu.products.push(complement);
 
     return this;
   }
@@ -98,14 +109,23 @@ export class MenuBuilder implements MenuBuilderInterface {
    * @throws Error The instance has defined the main manu.
    * @throws Error The `complementId` drink doesn't exist.
    */
-  async withExtra(extraId: string): Promise<MenuBuilderInterface> {
+  async withExtra(extraId: string): Promise<MenuBuilder> {
     this.assertMainMenu();
 
-    this.#extra = (await getAllProductListFromApi())[extraId];
+    const allExtras = await getAllProductListFromApi();
+    const extra = allExtras[extraId];
 
-    if (this.#extra === undefined) {
+    if (extra === undefined) {
       throw new Error(ERRORS.complementNotFound(extraId));
     }
+
+    this.#menu.products = this.#menu.products.filter(({categoryId}) => {
+      return categoryId !== 'extra';
+    });
+
+    extra.categoryId = 'extra';
+    this.#extra = extra;
+    this.#menu.products.push(extra);
 
     return this;
   }
@@ -115,10 +135,6 @@ export class MenuBuilder implements MenuBuilderInterface {
    */
   getMenu(): MenuType {
     const result = this.#menu;
-
-    this.#drink && result.products.push(this.#drink);
-    this.#mainComplement && result.products.push(this.#mainComplement);
-    this.#extra && result.products.push(this.#extra);
     this.reset();
 
     return result;
@@ -139,7 +155,7 @@ export class MenuBuilder implements MenuBuilderInterface {
    * @throws Error
    */
   private assertMainMenu(): void {
-    if (this.#menu === undefined || !this.#existMainMenu) {
+    if (this.#menu.id === '') {
       throw new Error(ERRORS.mainMenuNoExist);
     }
   }

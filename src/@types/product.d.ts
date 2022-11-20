@@ -41,4 +41,5 @@ export type CategoryIds =
   | 'desserts'
   | 'drinks'
   | 'breakfast'
-  | 'coffee';
+  | 'coffee'
+  | 'extra';

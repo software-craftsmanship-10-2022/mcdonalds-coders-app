@@ -20,7 +20,7 @@ describe('Given IngredientList component', () => {
             title: 'Queso',
             img: 'queso.png',
             extraPrice: 0.5,
-            modifaible: true,
+            modifiable: true,
           },
         ]}
       />,

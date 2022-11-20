@@ -18,16 +18,16 @@ const menus: Record<string, MenuType> = {
             extraPrice: 0,
             id: 'pan-arriba',
             img: 'Pan+arriba.png',
-            modifaible: false,
+            modifiable: false,
             title: 'Pan',
           },
-          {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifaible: false, title: 'Pan'},
-          {extraPrice: 0, id: 'carne', img: 'carne.png', modifaible: false, title: 'Carne'},
+          {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifiable: false, title: 'Pan'},
+          {extraPrice: 0, id: 'carne', img: 'carne.png', modifiable: false, title: 'Carne'},
           {
             extraPrice: 0,
             id: 'salsa-bigmac',
             img: 'salsa-bic-mac.png',
-            modifaible: true,
+            modifiable: true,
             title: 'Salsa Big Mac',
           },
         ],
@@ -49,14 +49,14 @@ const menus: Record<string, MenuType> = {
         id: 'big_mac',
         img: 'big_mac.png',
         ingredients: [
-          {extraPrice: 0, id: 'pan-arriba', img: 'Pan+arriba.png', modifaible: false, title: 'Pan'},
-          {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifaible: false, title: 'Pan'},
-          {extraPrice: 0, id: 'carne', img: 'carne.png', modifaible: false, title: 'Carne'},
+          {extraPrice: 0, id: 'pan-arriba', img: 'Pan+arriba.png', modifiable: false, title: 'Pan'},
+          {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifiable: false, title: 'Pan'},
+          {extraPrice: 0, id: 'carne', img: 'carne.png', modifiable: false, title: 'Carne'},
           {
             extraPrice: 0,
             id: 'salsa-bigmac',
             img: 'salsa-bic-mac.png',
-            modifaible: true,
+            modifiable: true,
             title: 'Salsa Big Mac',
           },
         ],
@@ -314,7 +314,12 @@ describe('[MenuBuilder]', () => {
       await menuBuilder.withMainMenu(menuId);
       await menuBuilder.withExtra(extraId);
 
-      expect(menuBuilder.getMenu()).toEqual(menu);
+      const extraAdded = {...complements[extraId]};
+      extraAdded.categoryId = 'extra';
+
+      expect(menuBuilder.getMenu().products).toEqual(
+        expect.arrayContaining([expect.objectContaining({id: extraId})]),
+      );
     });
 
     it('throws when the main complement id is not exist', async () => {
@@ -345,7 +350,12 @@ describe('[MenuBuilder]', () => {
       await menuBuilder.withExtra(extraId1);
       await menuBuilder.withExtra(extraId2);
 
-      expect(menuBuilder.getMenu()).toEqual(menu);
+      const extraAdded = {...complements[extraId2]};
+      extraAdded.categoryId = 'extra';
+
+      expect(menuBuilder.getMenu().products).toEqual(
+        expect.arrayContaining([expect.objectContaining({id: extraId2})]),
+      );
     });
   });
 });

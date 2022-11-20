@@ -1,3 +1,4 @@
+import {PaymentMethodType} from 'src/components/form/payment/constants/paymentMethodsTypes';
 import type {OrderAddressDetailsType, OrderType} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';
 import {ORDER_STATES} from './OrderStates/constants';

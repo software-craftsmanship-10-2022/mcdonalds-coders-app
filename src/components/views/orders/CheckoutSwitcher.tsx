@@ -2,7 +2,6 @@ import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {useOrderContext} from 'src/context/OrderContext';
 import useLocalStorage from 'src/hooks/useLocalStorage';
-// Import type Order from 'src/Payment/models/Order/Order';
 import {STORAGE, URLS} from '../../../config';
 import UserForm from '../../form/UserForm';
 import Checkout from './Checkout';

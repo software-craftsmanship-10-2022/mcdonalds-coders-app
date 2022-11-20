@@ -8,6 +8,9 @@ export type OrderType = {
   items: MenuType[];
   total: number;
   payment: PaymentMethod;
+  confirmed: boolean;
+  paymentType: string;
+  status: typeof ORDER_STATES_CODES;
 };
 
 export enum PaymentMethod {

@@ -1,6 +1,5 @@
 import {useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {OrderStatus} from 'src/@types/order';
 import saveOrder from 'src/api/orders/saveOrder';
 import {useOrderContext} from 'src/context/OrderContext';
 import useLocalStorage from 'src/hooks/useLocalStorage';
@@ -35,7 +34,7 @@ const CheckoutSwitcher = () => {
   }, [order, navigate, getStorageItem]);
 
   const confirmOrder = async (payment: Payment, order: Order) => {
-    order.setStatus(OrderStatus.pending);
+    order.nextStep();
     order.setPayment(payment.getPaymentType());
     updateOrder(await saveOrder(order));
     payment.pay();

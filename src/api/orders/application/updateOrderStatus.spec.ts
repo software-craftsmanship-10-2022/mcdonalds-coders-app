@@ -28,7 +28,7 @@ describe('[updateOrderStatus]', () => {
       },
       items: [],
       payment: PaymentMethod.cash,
-      status: OrderStatus.noConfirmed,
+      // Status: OrderStatus.noConfirmed,
     };
 
     localStorage.setItem(STORAGE.orders, JSON.stringify(order));

@@ -1,11 +1,11 @@
-import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {jest} from '@jest/globals';
-import Order from '../api/orders/Order';
-import {useOrderContext, OrderProvider} from './OrderContext';
-import type {OrderContextType} from '../@types/order';
-import {storage} from 'src/utils/localStorage';
-import {OrderStatus, PaymentMethod} from 'src/@types/order';
+import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {PaymentMethod} from 'src/@types/order';
 import createEmptyOrder from 'src/api/orders/createEmptyOrder';
+import {storage} from 'src/utils/localStorage';
+import type {OrderContextType} from '../@types/order';
+import Order from '../api/orders/Order';
+import {OrderProvider, useOrderContext} from './OrderContext';
 
 function DummyComponent({futureOrder}: {futureOrder?: Order}) {
   const value = useOrderContext();
@@ -92,7 +92,6 @@ describe('Test OrderContext component', () => {
       },
       items: [],
       payment: PaymentMethod.debit,
-      status: OrderStatus.delivering,
     });
 
     mockGetItem.mockResolvedValue(order);
@@ -117,7 +116,6 @@ describe('Test OrderContext component', () => {
         },
         items: [],
         payment: PaymentMethod.debit,
-        status: OrderStatus.delivering,
       });
 
       await act(async () => {
@@ -141,7 +139,6 @@ describe('Test OrderContext component', () => {
         },
         items: [],
         payment: PaymentMethod.debit,
-        status: OrderStatus.delivering,
       });
 
       await act(async () => {
@@ -170,7 +167,6 @@ describe('Test OrderContext component', () => {
         },
         items: [],
         payment: PaymentMethod.debit,
-        status: OrderStatus.delivering,
       });
 
       await act(async () => {
@@ -205,7 +201,6 @@ describe('Test OrderContext component', () => {
         },
         items: [],
         payment: PaymentMethod.debit,
-        status: OrderStatus.delivering,
       });
 
       await act(async () => {

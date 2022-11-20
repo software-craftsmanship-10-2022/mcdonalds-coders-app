@@ -1,4 +1,4 @@
-import {OrderStatus, PaymentMethod} from 'src/@types/order';
+import {PaymentMethod} from 'src/@types/order';
 import Order from 'src/api/orders/Order';
 import {DONATION_ERRORS, ORDER_ERRORS, PAYMENT_TYPE_ERRORS} from 'src/Payment/errorMessages';
 import Donation from '../Donation/Donation';
@@ -32,7 +32,6 @@ const validOrder = () =>
     },
     items: [],
     payment: PaymentMethod.debit,
-    status: OrderStatus.delivering,
   });
 
 describe('Given a Payment class', () => {

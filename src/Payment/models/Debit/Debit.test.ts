@@ -1,4 +1,4 @@
-import {OrderStatus, PaymentMethod} from 'src/@types/order';
+import {PaymentMethod} from 'src/@types/order';
 import Order from 'src/api/orders/Order';
 import Card from '../Card/Card';
 import Donation from '../Donation/Donation';
@@ -37,7 +37,6 @@ describe('Given a Debit class', () => {
       },
       items: [],
       payment: PaymentMethod.debit,
-      status: OrderStatus.delivering,
     });
     const donation = new Donation(0);
     const debit = new Debit(order, donation, card);

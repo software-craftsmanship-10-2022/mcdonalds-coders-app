@@ -1,4 +1,4 @@
-import {OrderStatus, PaymentMethod} from 'src/@types/order';
+import {PaymentMethod} from 'src/@types/order';
 import Order from 'src/api/orders/Order';
 import Account from '../Account/Account';
 import Donation from '../Donation/Donation';
@@ -39,7 +39,6 @@ describe('Given a Transfer class', () => {
       },
       items: [],
       payment: PaymentMethod.debit,
-      status: OrderStatus.delivering,
     });
     const transfer = new Transfer(order, donation, account);
     expect(transfer.pay).toBeInstanceOf(Function);

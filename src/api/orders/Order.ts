@@ -1,6 +1,6 @@
 import type {NewOrderAddressDetailsType, NewOrderType, PaymentMethod} from '../../@types/order';
-import {OrderStatus} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';
+import {ORDER_STATES_CODES} from './OrderStates/constants';
 import InProgressState from './OrderStates/InProgressState';
 import type OrderState from './OrderStates/OrderState';
 
@@ -115,24 +115,15 @@ export default class Order {
   /**
    * Get the status of the order.
    */
-  getStatus(): OrderStatus {
-    return this.order.status;
-  }
-
-  /**
-   * Sets new order status.
-   *
-   * @param newStatus New status
-   */
-  setStatus(newStatus: OrderStatus): void {
-    this.order.status = newStatus;
+  getStatus(): string {
+    return this.#state.getCode();
   }
 
   /**
    * Check if the order status is not confirmed.
    */
   isConfirmed(): boolean {
-    return this.getStatus() !== OrderStatus.noConfirmed;
+    return this.#state.getCode() === ORDER_STATES_CODES.confirmedState;
   }
 
   /**

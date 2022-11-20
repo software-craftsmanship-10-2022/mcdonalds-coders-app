@@ -1,4 +1,4 @@
-import {OrderStatus, PaymentMethod} from 'src/@types/order';
+import {PaymentMethod} from 'src/@types/order';
 import Order from 'src/api/orders/Order';
 import Donation from '../Donation/Donation';
 import Cash from './Cash';
@@ -32,7 +32,6 @@ describe('Given a Cash class', () => {
       },
       items: [],
       payment: PaymentMethod.debit,
-      status: OrderStatus.delivering,
     });
     const donation = new Donation(0);
     const cash = new Cash(order, donation);

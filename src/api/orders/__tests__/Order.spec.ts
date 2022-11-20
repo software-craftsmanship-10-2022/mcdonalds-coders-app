@@ -1,7 +1,10 @@
 import type {NewOrderAddressDetailsType} from '../../../@types/order';
-import {OrderStatus, PaymentMethod} from '../../../@types/order';
+import {PaymentMethod} from '../../../@types/order';
 import type {MenuType} from '../../../@types/product';
 import Order from '../Order';
+import ConfirmedState from '../OrderStates/ConfirmedState';
+import {ORDER_STATES_CODES} from '../OrderStates/constants';
+import DeliveringState from '../OrderStates/DeliveringState';
 import InProgressState from '../OrderStates/InProgressState';
 
 describe('Check class Order', () => {
@@ -19,7 +22,6 @@ describe('Check class Order', () => {
       },
       items: [],
       payment: PaymentMethod.cash,
-      status: OrderStatus.noConfirmed,
     });
   });
 
@@ -145,12 +147,12 @@ describe('Check class Order', () => {
   });
 
   it('gets order status', () => {
-    expect(order.getStatus()).toBe(OrderStatus.noConfirmed);
+    expect(order.getStatus()).toBe(ORDER_STATES_CODES.inProgressState);
   });
 
   it('sets new status', () => {
-    order.setStatus(OrderStatus.delivering);
-    expect(order.getStatus()).toBe(OrderStatus.delivering);
+    order.changeState(new DeliveringState(order));
+    expect(order.getStatus()).toBe(ORDER_STATES_CODES.deliveringState);
   });
 
   it('checks the order status is no confirmed', () => {
@@ -158,7 +160,7 @@ describe('Check class Order', () => {
   });
 
   it('checks the order status is confirmed', () => {
-    order.setStatus(OrderStatus.pending);
+    order.changeState(new ConfirmedState(order));
     expect(order.isConfirmed()).toBe(true);
   });
 

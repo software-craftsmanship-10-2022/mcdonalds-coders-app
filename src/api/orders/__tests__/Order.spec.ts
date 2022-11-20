@@ -3,8 +3,7 @@ import {PaymentMethod} from '../../../@types/order';
 import type {MenuType} from '../../../@types/product';
 import Order from '../Order';
 import ConfirmedState from '../OrderStates/ConfirmedState';
-import {ORDER_STATES_CODES} from '../OrderStates/constants';
-import DeliveringState from '../OrderStates/DeliveringState';
+import {ORDER_STATES} from '../OrderStates/constants';
 import InProgressState from '../OrderStates/InProgressState';
 
 describe('Check class Order', () => {
@@ -146,20 +145,24 @@ describe('Check class Order', () => {
     expect(order.getPayment()).toBe(PaymentMethod.debit);
   });
 
-  it('gets order status', () => {
-    expect(order.getStatus()).toBe(ORDER_STATES_CODES.inProgressState);
+  it('gets order state code', () => {
+    expect(order.getStateCode()).toBe(ORDER_STATES.inProgressState.code);
   });
 
-  it('sets new status', () => {
-    order.changeState(new DeliveringState(order));
-    expect(order.getStatus()).toBe(ORDER_STATES_CODES.deliveringState);
+  it('gets order state description', () => {
+    expect(order.getStateDescription()).toBe(ORDER_STATES.inProgressState.description);
   });
 
-  it('checks the order status is no confirmed', () => {
+  it('goes to next state', () => {
+    order.nextStep();
+    expect(order.getStateCode()).toBe(ORDER_STATES.receivedState.code);
+  });
+
+  it('checks the order state is no confirmed', () => {
     expect(order.isConfirmed()).toBe(false);
   });
 
-  it('checks the order status is confirmed', () => {
+  it('checks the order state is confirmed', () => {
     order.changeState(new ConfirmedState(order));
     expect(order.isConfirmed()).toBe(true);
   });

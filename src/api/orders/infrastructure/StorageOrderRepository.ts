@@ -1,9 +1,9 @@
-import type {NewOrderType, OrderStatus} from 'src/@types/order';
+import type {NewOrderType} from 'src/@types/order';
 import {STORAGE} from 'src/config';
 import type {OrderRepository} from '../domain/OrderRepository';
 
 class StorageOrderRepository implements OrderRepository {
-  async save(orderId: string, status: OrderStatus) {
+  async save(orderId: string) {
     const order = this.checkOrderOrFail(orderId);
 
     localStorage.setItem(STORAGE.orders, JSON.stringify(order));

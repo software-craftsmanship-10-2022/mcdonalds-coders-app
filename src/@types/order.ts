@@ -1,5 +1,5 @@
 import type Order from 'src/api/orders/Order';
-import type {ORDER_STATES_CODES} from 'src/api/orders/OrderStates/constants';
+import type {ORDER_STATES} from 'src/api/orders/OrderStates/constants';
 import type {MenuType} from './product.d';
 
 // @types.order.ts
@@ -10,18 +10,8 @@ export type OrderType = {
   total: number;
   confirmed: boolean;
   paymentType: string;
-  status: typeof ORDER_STATES_CODES;
+  state: typeof ORDER_STATES;
 };
-
-export enum OrderStatus {
-  noConfirmed = 'NO_CONFIRMED',
-  ready = 'READY',
-  rejected = 'REJECTED',
-  pending = 'PENDING',
-  preparing = 'PREPARING',
-  delivering = 'DELIVERING',
-  finished = 'FINISHED',
-}
 
 export enum PaymentMethod {
   cash,

@@ -38,7 +38,7 @@ const CheckoutSwitcher = () => {
     order.setPayment(payment.getPaymentType());
     updateOrder(await saveOrder(order));
     payment.pay();
-    navigate(URLS.root);
+    navigate(URLS.ordersCurrent);
   };
 
   return (

@@ -32,7 +32,7 @@ function DummyComponent({futureOrder}: {futureOrder?: Order}) {
           </ul>
         </li>
         <li>Order payment: {order.getPayment()}.</li>
-        <li>Order status: {order.getStatus()}.</li>
+        <li>Order state: {order.getStateCode()}.</li>
       </ul>
     </>
   );
@@ -48,12 +48,12 @@ function OrderProviderTest({order}: {order?: Order}) {
 
 function testDummyComponent(order: Order) {
   const id = order.getId();
-  const status = order.getStatus();
+  const state = order.getStateCode();
   const payment = order.getPayment();
   const details = order.getDetails();
 
   expect(screen.getByText(new RegExp(`Order id: ${id}`))).toBeInTheDocument();
-  expect(screen.getByText(new RegExp(`Order status: ${status}.`))).toBeInTheDocument();
+  expect(screen.getByText(new RegExp(`Order state: ${state}.`))).toBeInTheDocument();
   expect(screen.getByText(new RegExp(`Order payment: ${payment}.`))).toBeInTheDocument();
   expect(screen.getByText(new RegExp(`Details id: ${details.id}.`))).toBeInTheDocument();
   expect(screen.getByText(new RegExp(`Details name: ${details.name}.`))).toBeInTheDocument();

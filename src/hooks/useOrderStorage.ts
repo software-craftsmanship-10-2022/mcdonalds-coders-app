@@ -1,3 +1,4 @@
+import type OrderState from 'src/api/orders/OrderStates/OrderState';
 import type {NewOrderType} from '../@types/order';
 import Order from '../api/orders/Order';
 import {storage} from '../utils/localStorage';
@@ -6,7 +7,8 @@ import {storage} from '../utils/localStorage';
  * Order storage hook.
  */
 export type UseOrderStorageType = {
-  storageKey: string;
+  storageStateKey: string;
+  storageOrderKey: string;
   setOrder: (_: Order) => Promise<void>;
   getOrder: () => Promise<Order | undefined>;
   removeOrder: () => Promise<void>;
@@ -16,7 +18,8 @@ export function useOrderStorage(): UseOrderStorageType {
   /**
    * Storage key used to read/write the current order
    */
-  const storageKey = 'order';
+  const storageOrderKey = 'order';
+  const storageStateKey = 'state';
 
   /**
    * Set in the cache system, the `order` order.
@@ -24,10 +27,15 @@ export function useOrderStorage(): UseOrderStorageType {
    * @param order Order to store.
    */
   async function setOrder(order: Order): Promise<void> {
-    await storage.setItem<Order>(storageKey, order);
+    const stateCode = order.getStateCode();
+
+    await storage.setItem<Order>(storageOrderKey, order);
+
+    // Await storage.setItem<OrderStateType>(storageStateKey, ORDER_STATES[stateCode]});
   }
 
-  type OrderInStorageType = {order: NewOrderType} | undefined;
+  type OrderInStorageType = NewOrderType | undefined;
+  type OrderStateInStorageType = OrderState | undefined;
 
   /**
    * Get from the cache system the stored order.
@@ -35,19 +43,28 @@ export function useOrderStorage(): UseOrderStorageType {
    * @return Order instance.
    */
   async function getOrder(): Promise<Order | undefined> {
-    const order: OrderInStorageType = await storage.getItem<OrderInStorageType>(storageKey);
-    return order === undefined ? undefined : new Order(order.order);
+    const order: OrderInStorageType = await storage.getItem<OrderInStorageType>(storageOrderKey);
+    const orderState: OrderStateInStorageType = await storage.getItem<OrderStateInStorageType>(
+      storageStateKey,
+    );
+    if (order && orderState) {
+      const newOrder = new Order(order);
+      newOrder.changeState(orderState);
+      return newOrder;
+    }
   }
 
   /**
    * Remove the order from cache system.
    */
   async function removeOrder(): Promise<void> {
-    await storage.removeItem(storageKey);
+    await storage.removeItem(storageOrderKey);
+    await storage.removeItem(storageStateKey);
   }
 
   return {
-    storageKey,
+    storageOrderKey,
+    storageStateKey,
     setOrder,
     getOrder,
     removeOrder,

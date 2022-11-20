@@ -6,6 +6,7 @@ class StorageOrderRepository implements OrderRepository {
   async save(orderId: string) {
     const order = this.checkOrderOrFail(orderId);
 
+    console.log(orderId);
     localStorage.setItem(STORAGE.orders, JSON.stringify(order));
     return Promise.resolve();
   }

@@ -15,7 +15,7 @@ type OrderProviderProps = {
 export const OrderProvider = ({children}: OrderProviderProps) => {
   const [order, setOrder] = useState<Order>(createEmptyOrder());
   const storage = useOrderStorage();
-
+  console.log('state', order);
   useEffect(() => {
     (async () => {
       const order: Order | undefined = await storage.getOrder();
@@ -32,7 +32,7 @@ export const OrderProvider = ({children}: OrderProviderProps) => {
 
   const updateOrder = async (order: Order) => {
     setOrder(order);
-    console.log(order);
+    console.log('update', order);
     await storage.setOrder(order);
   };
 

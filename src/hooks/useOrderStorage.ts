@@ -1,5 +1,16 @@
-import type OrderState from 'src/api/orders/OrderStates/OrderState';
-import type {NewOrderType} from '../@types/order';
+import type {OrderType} from 'src/@types/order';
+import CancelledByRestaurantState from 'src/api/orders/OrderStates/CancelledByRestaurantState';
+import CancelledByUserState from 'src/api/orders/OrderStates/CancelledByUserState';
+import ConfirmedState from 'src/api/orders/OrderStates/ConfirmedState';
+import type {OrderStateType} from 'src/api/orders/OrderStates/constants';
+import {ORDER_STATES} from 'src/api/orders/OrderStates/constants';
+import DeliveringState from 'src/api/orders/OrderStates/DeliveringState';
+import FinishedState from 'src/api/orders/OrderStates/FinishedState';
+import InProgressState from 'src/api/orders/OrderStates/InProgressState';
+import PreparingState from 'src/api/orders/OrderStates/PreparingState';
+import ReadyState from 'src/api/orders/OrderStates/ReadyState';
+import ReceivedState from 'src/api/orders/OrderStates/ReceivedState';
+import RejectedState from 'src/api/orders/OrderStates/RejectedState';
 import Order from '../api/orders/Order';
 import {storage} from '../utils/localStorage';
 
@@ -28,14 +39,12 @@ export function useOrderStorage(): UseOrderStorageType {
    */
   async function setOrder(order: Order): Promise<void> {
     const stateCode = order.getStateCode();
-
-    await storage.setItem<Order>(storageOrderKey, order);
-
-    // Await storage.setItem<OrderStateType>(storageStateKey, ORDER_STATES[stateCode]});
+    await storage.setItem<OrderType>(storageOrderKey, order.toOrderType());
+    await storage.setItem<OrderStateType>(storageStateKey, ORDER_STATES[stateCode]);
   }
 
-  type OrderInStorageType = NewOrderType | undefined;
-  type OrderStateInStorageType = OrderState | undefined;
+  type OrderInStorageType = OrderType | undefined;
+  type OrderStateInStorageType = OrderStateType | undefined;
 
   /**
    * Get from the cache system the stored order.
@@ -47,10 +56,40 @@ export function useOrderStorage(): UseOrderStorageType {
     const orderState: OrderStateInStorageType = await storage.getItem<OrderStateInStorageType>(
       storageStateKey,
     );
-    if (order && orderState) {
-      const newOrder = new Order(order);
-      newOrder.changeState(orderState);
-      return newOrder;
+    let newOrder;
+    if (order) {
+      newOrder = new Order(order);
+      if (orderState) {
+        const state = getStateOrderByCode(orderState.code, newOrder);
+        newOrder.changeState(state);
+      }
+    }
+
+    return newOrder;
+  }
+
+  function getStateOrderByCode(code: string, newOrder: Order) {
+    switch (code) {
+      case ORDER_STATES.receivedState.code:
+        return new ReceivedState(newOrder);
+      case ORDER_STATES.confirmedState.code:
+        return new ConfirmedState(newOrder);
+      case ORDER_STATES.readyState.code:
+        return new ReadyState(newOrder);
+      case ORDER_STATES.preparingState.code:
+        return new PreparingState(newOrder);
+      case ORDER_STATES.rejectedState.code:
+        return new RejectedState(newOrder);
+      case ORDER_STATES.cancelledByRestaurantState.code:
+        return new CancelledByRestaurantState(newOrder);
+      case ORDER_STATES.cancelledByUserState.code:
+        return new CancelledByUserState(newOrder);
+      case ORDER_STATES.deliveringState.code:
+        return new DeliveringState(newOrder);
+      case ORDER_STATES.finishedState.code:
+        return new FinishedState(newOrder);
+      default:
+        return new InProgressState(newOrder);
     }
   }
 

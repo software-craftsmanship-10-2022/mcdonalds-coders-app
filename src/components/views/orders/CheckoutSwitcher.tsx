@@ -34,10 +34,9 @@ const CheckoutSwitcher = () => {
   }, [order, navigate, getStorageItem]);
 
   const confirmOrder = async (payment: Payment, order: Order) => {
-    order.nextStep();
     order.setPayment(payment.getPaymentType());
-    updateOrder(await saveOrder(order));
     payment.pay();
+    updateOrder(await saveOrder(order));
     navigate(URLS.ordersCurrent);
   };
 

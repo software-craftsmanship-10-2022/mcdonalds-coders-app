@@ -1,14 +1,13 @@
 import type Order from 'src/api/orders/Order';
-import type {MenuType} from './product.d';
+import type {MenuType} from './product';
 
 // @types.order.ts
 export type OrderType = {
   id: string;
   details: OrderAddressDetailsType;
-  items: OrderItemType[];
+  items: MenuType[];
   total: number;
-  confirmed: boolean;
-  paymentType: string;
+  payment: PaymentMethod;
 };
 
 export enum PaymentMethod {
@@ -25,9 +24,10 @@ export type OrderItemType = {
 };
 
 export type OrderAddressDetailsType = {
+  id: string;
   name: string;
   address: string;
-  img: string;
+  image: string;
   isDelivery: boolean;
 };
 
@@ -35,19 +35,4 @@ export type OrderContextType = {
   updateOrder: (_: Order) => void;
   order: Order;
   resetOrder: () => void;
-};
-
-export type NewOrderType = {
-  id: string;
-  details: NewOrderAddressDetailsType;
-  items: MenuType[];
-  payment: PaymentMethod;
-};
-
-export type NewOrderAddressDetailsType = {
-  id: string;
-  name: string;
-  address: string;
-  image: string;
-  isDelivery: boolean;
 };

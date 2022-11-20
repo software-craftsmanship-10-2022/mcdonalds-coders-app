@@ -1,7 +1,8 @@
-import type {NewOrderAddressDetailsType} from '../../../@types/order';
+import type {OrderAddressDetailsType} from '../../../@types/order';
 import {PaymentMethod} from '../../../@types/order';
 import type {MenuType} from '../../../@types/product';
-import Order from '../Order';
+import {mockNewOrder} from '../mocks/mocks';
+import type Order from '../Order';
 import ConfirmedState from '../OrderStates/ConfirmedState';
 import {ORDER_STATES} from '../OrderStates/constants';
 import InProgressState from '../OrderStates/InProgressState';
@@ -10,18 +11,7 @@ describe('Check class Order', () => {
   let order: Order;
 
   beforeEach(() => {
-    order = new Order({
-      id: '1a',
-      details: {
-        id: '2a',
-        name: 'user 1',
-        address: '123 Fake street',
-        image: 'avatar',
-        isDelivery: false,
-      },
-      items: [],
-      payment: PaymentMethod.cash,
-    });
+    order = mockNewOrder();
   });
 
   it('gets the order id', () => {
@@ -178,7 +168,7 @@ describe('Check class Order', () => {
   });
 
   it('set new details object', () => {
-    const details: NewOrderAddressDetailsType = {
+    const details: OrderAddressDetailsType = {
       id: 'a33',
       name: 'New name',
       address: 'New address',

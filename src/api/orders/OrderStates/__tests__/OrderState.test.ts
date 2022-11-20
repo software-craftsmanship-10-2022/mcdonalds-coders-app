@@ -1,6 +1,6 @@
+import {mockNewOrder} from '../../mocks/mocks';
 import type Order from '../../Order';
 import {ORDER_STATES} from '../constants';
-import {mockNewOrder} from '../mocks/mocks';
 import OrderState from '../OrderState';
 
 describe('Given a OrderState class', () => {

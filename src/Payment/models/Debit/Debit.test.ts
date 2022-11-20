@@ -1,5 +1,4 @@
-import {PaymentMethod} from 'src/@types/order';
-import Order from 'src/api/orders/Order';
+import {mockNewOrder} from 'src/api/orders/mocks/mocks';
 import Card from '../Card/Card';
 import Donation from '../Donation/Donation';
 import Debit from './Debit';
@@ -26,18 +25,7 @@ const validCard = () => new Card(VALID_CARD_NUMBER, '12 / 24', 123);
 describe('Given a Debit class', () => {
   it('should contain a pay method', () => {
     const card = validCard();
-    const order = new Order({
-      id: 'a3',
-      details: {
-        id: 'a4',
-        name: 'name 1',
-        address: 'address 1',
-        image: 'image 1',
-        isDelivery: false,
-      },
-      items: [],
-      payment: PaymentMethod.debit,
-    });
+    const order = mockNewOrder();
     const donation = new Donation(0);
     const debit = new Debit(order, donation, card);
     expect(debit.pay).toBeInstanceOf(Function);

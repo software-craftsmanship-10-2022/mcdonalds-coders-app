@@ -1,5 +1,7 @@
-import {PaymentMethodType} from 'src/components/form/payment/constants/paymentMethodsTypes';
+import type {PaymentMethodType} from 'src/components/form/Payment/constants/paymentMethodsTypes';
+import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
 import type {OrderAddressDetailsType, OrderType} from '../../@types/order';
+
 import type {MenuType} from '../../@types/product.d';
 import {ORDER_STATES} from './OrderStates/constants';
 import InProgressState from './OrderStates/InProgressState';
@@ -182,5 +184,10 @@ export default class Order {
 
   reject() {
     this.#state.reject();
+  }
+
+  toOrderType(): OrderType {
+    const {id, details, items, total, payment} = this.order;
+    return {id, details, items, total, payment};
   }
 }

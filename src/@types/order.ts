@@ -1,4 +1,5 @@
 import type Order from 'src/api/orders/Order';
+import type {ORDER_STATES_CODES} from 'src/api/orders/OrderStates/constants';
 import type {MenuType} from './product';
 
 // @types.order.ts

@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 import {mockNewOrder} from '../../mocks/mocks';
+=======
+>>>>>>> aae9c3d (Squashed commit of the following:)
 import type Order from '../../Order';
 import CancelledByRestaurantState from '../CancelledByRestaurantState';
 import DeliveringState from '../DeliveringState';
 import FinishedState from '../FinishedState';
+<<<<<<< HEAD
+=======
+import {mockNewOrder} from '../mocks/mocks';
+>>>>>>> aae9c3d (Squashed commit of the following:)
 
 describe('Given a DeliveringState class', () => {
   let order: Order;

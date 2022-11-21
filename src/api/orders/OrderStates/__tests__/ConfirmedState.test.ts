@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 import {mockNewOrder} from '../../mocks/mocks';
+=======
+>>>>>>> aae9c3d (Squashed commit of the following:)
 import type Order from '../../Order';
 import CancelledByRestaurantState from '../CancelledByRestaurantState';
 import CancelledByUserState from '../CancelledByUserState';
 import ConfirmedState from '../ConfirmedState';
+<<<<<<< HEAD
+=======
+import {mockNewOrder} from '../mocks/mocks';
+>>>>>>> aae9c3d (Squashed commit of the following:)
 import PreparingState from '../PreparingState';
 
 describe('Given a ConfirmedState class', () => {

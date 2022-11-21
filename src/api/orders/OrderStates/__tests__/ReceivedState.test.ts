@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import {mockNewOrder} from '../../mocks/mocks';
 import type Order from '../../Order';
 import ConfirmedState from '../ConfirmedState';
+=======
+import type Order from '../../Order';
+import ConfirmedState from '../ConfirmedState';
+import {mockNewOrder} from '../mocks/mocks';
+>>>>>>> aae9c3d (Squashed commit of the following:)
 import ReceivedState from '../ReceivedState';
 import RejectedState from '../RejectedState';
 

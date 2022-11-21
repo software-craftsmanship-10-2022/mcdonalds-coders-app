@@ -39,3 +39,19 @@ export type OrderContextType = {
   order: Order;
   resetOrder: () => void;
 };
+
+export type NewOrderType = {
+  id: string;
+  details: NewOrderAddressDetailsType;
+  items: MenuType[];
+  payment: PaymentMethod;
+  status: OrderStatus;
+};
+
+export type NewOrderAddressDetailsType = {
+  id: string;
+  name: string;
+  address: string;
+  image: string;
+  isDelivery: boolean;
+};

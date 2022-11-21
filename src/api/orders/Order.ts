@@ -58,24 +58,10 @@ export default class Order {
   }
 
   /**
-   * Get the order state instance.
+   * Get the order Id.
    */
   getState(): OrderState {
     return this.#state;
-  }
-
-  /**
-   * Get the order state code.
-   */
-  getStateCode(): string {
-    return this.getState().getCode();
-  }
-
-  /**
-   * Get the order state description.
-   */
-  getStateDescription(): string {
-    return this.getState().getDescription();
   }
 
   /**
@@ -165,6 +151,11 @@ export default class Order {
     this.order.details = details;
   }
 
+  toOrderType(): OrderType {
+    const {id, details, items, total, payment} = this.order;
+    return {id, details, items, total, payment};
+  }
+
   changeState(state: OrderState) {
     this.#state = state;
   }
@@ -183,10 +174,5 @@ export default class Order {
 
   reject() {
     this.#state.reject();
-  }
-
-  toOrderType(): OrderType {
-    const {id, details, items, total, payment} = this.order;
-    return {id, details, items, total, payment};
   }
 }

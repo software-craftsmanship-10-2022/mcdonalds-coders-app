@@ -24,6 +24,7 @@ const ORDER_STATES_DESCRIPTIONS = {
   rejectedState: 'Pedido rechazado',
 };
 
+<<<<<<< HEAD
 export type OrderStateType = {
   code: string;
   description: string;
@@ -67,6 +68,46 @@ export const ORDER_STATES = {
     description: ORDER_STATES_DESCRIPTIONS.receivedState,
   },
   [ORDER_STATES_CODES.rejectedState]: {
+=======
+export const MAPPED_ORDER_STATES = {
+  inProgressState: {
+    code: ORDER_STATES_CODES.inProgressState,
+    description: ORDER_STATES_DESCRIPTIONS.inProgressState,
+  },
+  cancelledByRestaurantState: {
+    code: ORDER_STATES_CODES.cancelledByRestaurantState,
+    description: ORDER_STATES_DESCRIPTIONS.cancelledByRestaurantState,
+  },
+  cancelledByUserState: {
+    code: ORDER_STATES_CODES.cancelledByUserState,
+    description: ORDER_STATES_DESCRIPTIONS.cancelledByUserState,
+  },
+  confirmedState: {
+    code: ORDER_STATES_CODES.confirmedState,
+    description: ORDER_STATES_DESCRIPTIONS.confirmedState,
+  },
+  deliveringState: {
+    code: ORDER_STATES_CODES.deliveringState,
+    description: ORDER_STATES_DESCRIPTIONS.deliveringState,
+  },
+  finishedState: {
+    code: ORDER_STATES_CODES.finishedState,
+    description: ORDER_STATES_DESCRIPTIONS.finishedState,
+  },
+  preparingState: {
+    code: ORDER_STATES_CODES.preparingState,
+    description: ORDER_STATES_DESCRIPTIONS.preparingState,
+  },
+  readyState: {
+    code: ORDER_STATES_CODES.readyState,
+    description: ORDER_STATES_DESCRIPTIONS.readyState,
+  },
+  receivedState: {
+    code: ORDER_STATES_CODES.receivedState,
+    description: ORDER_STATES_DESCRIPTIONS.receivedState,
+  },
+  rejectedState: {
+>>>>>>> aae9c3d (Squashed commit of the following:)
     code: ORDER_STATES_CODES.rejectedState,
     description: ORDER_STATES_DESCRIPTIONS.rejectedState,
   },

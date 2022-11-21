@@ -18,7 +18,10 @@ class Payment {
   pay() {
     this.checkOrder();
     this.checkDonation();
+<<<<<<< HEAD
     this.order.nextStep();
+=======
+>>>>>>> aae9c3d (Squashed commit of the following:)
   }
 }
 

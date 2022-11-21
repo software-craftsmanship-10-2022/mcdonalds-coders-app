@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import {mockNewOrder} from '../../mocks/mocks';
 import type Order from '../../Order';
 import CancelledByUserState from '../CancelledByUserState';
+=======
+import type Order from '../../Order';
+import CancelledByUserState from '../CancelledByUserState';
+import {mockNewOrder} from '../mocks/mocks';
+>>>>>>> aae9c3d (Squashed commit of the following:)
 
 describe('Given a CancelledByUser class', () => {
   let order: Order;

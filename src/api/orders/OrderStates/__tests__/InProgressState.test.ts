@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import {mockNewOrder} from '../../mocks/mocks';
 import type Order from '../../Order';
 import InProgressState from '../InProgressState';
+=======
+import type Order from '../../Order';
+import InProgressState from '../InProgressState';
+import {mockNewOrder} from '../mocks/mocks';
+>>>>>>> aae9c3d (Squashed commit of the following:)
 import ReceivedState from '../ReceivedState';
 
 describe('Given a InProgressState class', () => {

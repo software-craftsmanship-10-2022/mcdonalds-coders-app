@@ -128,232 +128,163 @@ describe('[MenuBuilder]', () => {
   });
 
   describe('Test `MenuBuilder.withMainMenu` method', () => {
-    it('returns a MenuBuilder promise', async () => {
-      const menuBuilder = new MenuBuilder();
-      const menuId = 'kj7Stiwpn5';
-      expect(await menuBuilder.withMainMenu(menuId)).toBeInstanceOf(MenuBuilder);
-    });
-
-    it('should build a main menu', async () => {
+    it('returns a MenuBuilder promise', () => {
       const menuBuilder = new MenuBuilder();
       const menuId = 'kj7Stiwpn5';
 
-      expect((await menuBuilder.withMainMenu(menuId)).getMenu()).toEqual(menus[menuId]);
+      expect(menuBuilder.withMainMenu(menus[menuId])).toBeInstanceOf(MenuBuilder);
     });
 
-    it('checks the main menu is replaced', async () => {
+    it('should build a main menu', () => {
+      const menuBuilder = new MenuBuilder();
+      const menuId = 'kj7Stiwpn5';
+
+      expect(menuBuilder.withMainMenu(menus[menuId]).getMenu()).toEqual(menus[menuId]);
+    });
+
+    it('checks the main menu is replaced', () => {
       const menuBuilder = new MenuBuilder();
       const menuId1 = 'kj7Stiwpn5';
       const menuId2 = '4IkmjbhAKy';
 
-      await menuBuilder.withMainMenu(menuId1);
+      menuBuilder.withMainMenu(menus[menuId1]);
 
-      expect((await menuBuilder.withMainMenu(menuId2)).getMenu()).toEqual(menus[menuId2]);
+      expect(menuBuilder.withMainMenu(menus[menuId2]).getMenu()).toEqual(menus[menuId2]);
     });
   });
 
   describe('Test `MenuBuilder.withDrink` function', () => {
-    it('throws an error if the main menu did not create before', async () => {
+    it('throws an error if the main menu did not create before', () => {
       expect.assertions(1);
 
       try {
-        await new MenuBuilder().withDrink('fanta-chica');
+        new MenuBuilder().withDrink(drinks['fanta-chica']);
       } catch (error) {
         expect(error).toEqual(new Error(ERRORS.mainMenuNoExist));
       }
     });
 
-    it('returns a MenuBuilder promise', async () => {
-      const menuId = 'kj7Stiwpn5';
-      const menuBuilder = new MenuBuilder();
-      await menuBuilder.withMainMenu(menuId);
-
-      expect(await menuBuilder.withDrink('fanta-chica')).toBeInstanceOf(MenuBuilder);
-    });
-
-    it('adds the drink in the product list', async () => {
+    it('sets the drink correctly', () => {
       const menuId = 'kj7Stiwpn5';
       const drinkdId = 'fanta-chica';
-      const menu = {...menus[menuId], products: [...menus[menuId].products]};
+      const menu = {...menus[menuId], products: [...menus[menuId]!.products]};
+      menu.products.push(drinks[drinkdId]);
       const menuBuilder = new MenuBuilder();
 
-      menu.products.push(drinks[drinkdId]);
-
-      await menuBuilder.withMainMenu(menuId);
-      await menuBuilder.withDrink(drinkdId);
+      menuBuilder.withMainMenu(menus[menuId]);
+      menuBuilder.withDrink(drinks[drinkdId]);
 
       expect(menuBuilder.getMenu()).toEqual(menu);
-    });
-
-    it('throws when the drink id is not exist', async () => {
-      const menuId = 'kj7Stiwpn5';
-      const drinkId = 'invalid-id';
-      const menuBuilder = new MenuBuilder();
-
-      expect.assertions(1);
-
-      try {
-        await menuBuilder.withMainMenu(menuId);
-        await menuBuilder.withDrink(drinkId);
-      } catch (error) {
-        expect(error).toEqual(new Error(ERRORS.drinkIdNotfound(drinkId)));
-      }
     });
 
     it('replaces the new drink by the current drink in the menu', async () => {
       const menuId = 'kj7Stiwpn5';
       const drinkdId1 = 'fanta-chica';
       const drinkdId2 = 'coca-cola-zero-grande';
-      const menu = {...menus[menuId], products: [...menus[menuId].products]};
+      const menu = {...menus[menuId], products: [...menus[menuId]!.products]};
       const menuBuilder = new MenuBuilder();
 
       menu.products.push(drinks[drinkdId2]);
 
-      await menuBuilder.withMainMenu(menuId);
-      await menuBuilder.withDrink(drinkdId1);
-      await menuBuilder.withDrink(drinkdId2);
+      menuBuilder.withMainMenu(menus[menuId]);
+      menuBuilder.withDrink(drinks[drinkdId1]);
+      menuBuilder.withDrink(drinks[drinkdId2]);
 
       expect(menuBuilder.getMenu()).toEqual(menu);
     });
   });
 
   describe('Test `MenuBuilder.withMainComplement` function', () => {
-    it('throws an error if the main menu did not create before', async () => {
+    it('throws an error if the main menu did not create before', () => {
       expect.assertions(1);
 
       try {
-        await new MenuBuilder().withMainComplement('Papas-pequeñas');
+        const complementId = 'Papas-pequeñas';
+        new MenuBuilder().withMainComplement(complements[complementId]);
       } catch (error) {
         expect(error).toEqual(new Error(ERRORS.mainMenuNoExist));
       }
     });
 
-    it('returns a MenuBuilder promise', async () => {
+    it('adds the main complement in the product list', () => {
       const menuId = 'kj7Stiwpn5';
       const complementId = 'Papas-pequeñas';
-      const menuBuilder = new MenuBuilder();
-      await menuBuilder.withMainMenu(menuId);
-
-      expect(await menuBuilder.withMainComplement(complementId)).toBeInstanceOf(MenuBuilder);
-    });
-
-    it('adds the main complement in the product list', async () => {
-      const menuId = 'kj7Stiwpn5';
-      const complementId = 'Papas-pequeñas';
-      const menu = {...menus[menuId], products: [...menus[menuId].products]};
+      const menu = {...menus[menuId], products: [...menus[menuId]!.products]};
       const menuBuilder = new MenuBuilder();
 
       menu.products.push(complements[complementId]);
 
-      await menuBuilder.withMainMenu(menuId);
-      await menuBuilder.withMainComplement(complementId);
+      menuBuilder.withMainMenu(menus[menuId]);
+      menuBuilder.withMainComplement(complements[complementId]);
 
       expect(menuBuilder.getMenu()).toEqual(menu);
     });
 
-    it('throws when the main complement id is not exist', async () => {
-      const menuId = 'kj7Stiwpn5';
-      const complementId = 'invalid-id';
-      const menuBuilder = new MenuBuilder();
-
-      expect.assertions(1);
-
-      try {
-        await menuBuilder.withMainMenu(menuId);
-        await menuBuilder.withMainComplement(complementId);
-      } catch (error) {
-        expect(error).toEqual(new Error(ERRORS.complementNotFound(complementId)));
-      }
-    });
-
-    it('replaces the new complement by the current complement in the menu', async () => {
+    it('replaces the new complement by the current complement in the menu', () => {
       const menuId = 'kj7Stiwpn5';
       const complementId1 = 'Papas-pequeñas';
       const complementId2 = 'Papas-Medianas';
-      const menu = {...menus[menuId], products: [...menus[menuId].products]};
+      const menu = {...menus[menuId], products: [...menus[menuId]!.products]};
       const menuBuilder = new MenuBuilder();
 
       menu.products.push(complements[complementId2]);
 
-      await menuBuilder.withMainMenu(menuId);
-      await menuBuilder.withMainComplement(complementId1);
-      await menuBuilder.withMainComplement(complementId2);
+      menuBuilder.withMainMenu(menus[menuId]);
+      menuBuilder.withMainComplement(complements[complementId1]);
+      menuBuilder.withMainComplement(complements[complementId2]);
 
       expect(menuBuilder.getMenu()).toEqual(menu);
     });
   });
 
   describe('Test `MenuBuilder.withExtra` function', () => {
-    it('throws an error if the main menu did not create before', async () => {
+    it('throws an error if the main menu did not create before', () => {
       expect.assertions(1);
 
       try {
-        await new MenuBuilder().withExtra('Papas-pequeñas');
+        const complementId = 'Papas-pequeñas';
+        new MenuBuilder().withExtra(complements[complementId]);
       } catch (error) {
         expect(error).toEqual(new Error(ERRORS.mainMenuNoExist));
       }
     });
 
-    it('returns a MenuBuilder promise', async () => {
+    it('adds the extra in the product list', () => {
       const menuId = 'kj7Stiwpn5';
       const extraId = 'Papas-pequeñas';
-      const menuBuilder = new MenuBuilder();
-      await menuBuilder.withMainMenu(menuId);
-
-      expect(await menuBuilder.withExtra(extraId)).toBeInstanceOf(MenuBuilder);
-    });
-
-    it('adds the extra in the product list', async () => {
-      const menuId = 'kj7Stiwpn5';
-      const extraId = 'Papas-pequeñas';
-      const menu = {...menus[menuId], products: [...menus[menuId].products]};
+      const menu = {...menus[menuId], products: [...menus[menuId]!.products]};
       const menuBuilder = new MenuBuilder();
 
       menu.products.push(complements[extraId]);
 
-      await menuBuilder.withMainMenu(menuId);
-      await menuBuilder.withExtra(extraId);
+      menuBuilder.withMainMenu(menus[menuId]);
+      menuBuilder.withExtra(complements[extraId]);
 
       const extraAdded = {...complements[extraId]};
       extraAdded.categoryId = 'extra';
 
-      expect(menuBuilder.getMenu().products).toEqual(
+      expect(menuBuilder.getMenu()!.products).toEqual(
         expect.arrayContaining([expect.objectContaining({id: extraId})]),
       );
     });
 
-    it('throws when the main complement id is not exist', async () => {
-      const menuId = 'kj7Stiwpn5';
-      const extraId = 'invalid-id';
-      const menuBuilder = new MenuBuilder();
-
-      expect.assertions(1);
-
-      try {
-        await menuBuilder.withMainMenu(menuId);
-        await menuBuilder.withExtra(extraId);
-      } catch (error) {
-        expect(error).toEqual(new Error(ERRORS.complementNotFound(extraId)));
-      }
-    });
-
-    it('replaces the new complement by the current complement in the menu', async () => {
+    it('replaces the new complement by the current complement in the menu', () => {
       const menuId = 'kj7Stiwpn5';
       const extraId1 = 'Papas-pequeñas';
       const extraId2 = 'Papas-Medianas';
-      const menu = {...menus[menuId], products: [...menus[menuId].products]};
+      const menu = {...menus[menuId], products: [...menus[menuId]!.products]};
       const menuBuilder = new MenuBuilder();
 
       menu.products.push(complements[extraId2]);
 
-      await menuBuilder.withMainMenu(menuId);
-      await menuBuilder.withExtra(extraId1);
-      await menuBuilder.withExtra(extraId2);
+      menuBuilder.withMainMenu(menus[menuId]);
+      menuBuilder.withExtra(complements[extraId1]);
+      menuBuilder.withExtra(complements[extraId2]);
 
       const extraAdded = {...complements[extraId2]};
       extraAdded.categoryId = 'extra';
 
-      expect(menuBuilder.getMenu().products).toEqual(
+      expect(menuBuilder.getMenu()!.products).toEqual(
         expect.arrayContaining([expect.objectContaining({id: extraId2})]),
       );
     });

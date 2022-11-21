@@ -1,21 +1,8 @@
-import {useEffect} from 'react';
 import {PaymentInputsWrapper, usePaymentInputs} from 'react-payment-inputs';
 import images from 'react-payment-inputs/images';
 import {css} from 'styled-components';
 
-export type DebitPaymentInputsProps = {
-  setCardIsValid: (isValid: boolean) => void;
-  setCardNumber: (number: string) => void;
-  setCardDate: (date: string) => void;
-  setCardCVC: (cvc: string) => void;
-};
-
-const DebitPaymentInputs = ({
-  setCardIsValid,
-  setCardNumber,
-  setCardDate,
-  setCardCVC,
-}: DebitPaymentInputsProps) => {
+const DebitPaymentInputs = () => {
   const ERROR_MESSAGES = {
     emptyCardNumber: 'El número de la tarjeta es inválido',
     invalidCardNumber: 'El número de la tarjeta es inválido',
@@ -32,23 +19,6 @@ const DebitPaymentInputs = ({
     usePaymentInputs({
       errorMessages: ERROR_MESSAGES,
     });
-
-  useEffect(() => {
-    setCardIsValid(!wrapperProps.error);
-  }, [wrapperProps.error, setCardIsValid]);
-
-  // Card event handlers
-  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCardNumber(e.target.value);
-  };
-
-  const handleCardDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCardDate(e.target.value);
-  };
-
-  const handleCardCVCChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCardCVC(e.target.value);
-  };
 
   return (
     <PaymentInputsWrapper
@@ -103,9 +73,9 @@ const DebitPaymentInputs = ({
       }}
     >
       <svg {...getCardImageProps({images: images.images})} />
-      <input {...getCardNumberProps({onChange: handleCardNumberChange})} />
-      <input {...getExpiryDateProps({onChange: handleCardDateChange})} />
-      <input {...getCVCProps({onChange: handleCardCVCChange})} />
+      <input {...getCardNumberProps()} />
+      <input {...getExpiryDateProps()} />
+      <input {...getCVCProps()} />
     </PaymentInputsWrapper>
   );
 };

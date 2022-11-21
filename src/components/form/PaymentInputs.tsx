@@ -1,7 +1,7 @@
-import {PaymentInputsWrapper, usePaymentInputs} from 'react-payment-inputs';
-import {css} from 'styled-components';
-import images from 'react-payment-inputs/images';
 import {useEffect} from 'react';
+import {PaymentInputsWrapper, usePaymentInputs} from 'react-payment-inputs';
+import images from 'react-payment-inputs/images';
+import {css} from 'styled-components';
 
 type PaymentInputsProps = {
   setCardIsValid: (isValid: boolean) => void;
@@ -40,14 +40,17 @@ const PaymentInputs = ({
 
   // Card event handlers
   const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
     setCardNumber(e.target.value);
   };
 
   const handleCardDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
     setCardDate(e.target.value);
   };
 
   const handleCardCVCChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
     setCardCVC(e.target.value);
   };
 

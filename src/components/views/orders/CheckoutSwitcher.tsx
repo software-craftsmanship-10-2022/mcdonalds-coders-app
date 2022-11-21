@@ -11,13 +11,13 @@ import {STORAGE, URLS} from '../../../config';
 import UserForm from '../../form/UserForm';
 import Checkout from './Checkout';
 import './Checkout.css';
-import {useIsUserValidated} from './hooks';
+import {useDonation, useIsUserValidated} from './hooks';
 
 const CheckoutSwitcher = () => {
   const navigate = useNavigate();
   // User validation check
   const {isUserValidated, updateUserValidatedStatus} = useIsUserValidated();
-
+  const {donationValue} = useDonation();
   const {order, updateOrder} = useOrderContext();
   const {getStorageItem} = useLocalStorage();
 
@@ -36,9 +36,18 @@ const CheckoutSwitcher = () => {
 
   const confirmOrder = async (payment: Payment, order: Order) => {
     order.setStatus(OrderStatus.pending);
-    order.setPayment(payment.getPaymentType());
+    /*     order.setPayment(payment.getPaymentType()); */
     updateOrder(await saveOrder(order));
     payment.pay();
+    order.setStatus(OrderStatus.preparing);
+    localStorage.setItem(
+      STORAGE.orders,
+      JSON.stringify({
+        ...order,
+        total: order.getTotalPrice() + donationValue,
+        /*         paymentType: payment.getPaymentType(), */
+      }),
+    );
     navigate(URLS.root);
   };
 

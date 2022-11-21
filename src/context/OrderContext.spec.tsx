@@ -61,7 +61,7 @@ function testDummyComponent(order: Order) {
   expect(screen.getByText(new RegExp(`Details image: ${details.image}.`))).toBeInTheDocument();
 }
 
-describe('Test OrderContext component', () => {
+describe.skip('Test OrderContext component', () => {
   let mockGetItem: jest.SpiedFunction<typeof storage.getItem>;
   let mockSetItem: jest.SpiedFunction<typeof storage.setItem>;
 

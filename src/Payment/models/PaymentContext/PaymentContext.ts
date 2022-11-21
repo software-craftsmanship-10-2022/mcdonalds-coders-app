@@ -1,24 +1,23 @@
 import type {PaymentStrategy} from 'src/@types/payments';
+import type {PaymentAmount} from '../PaymentAmount/PaymentAmount';
 
-class PaymentContext {
-  strategy: PaymentStrategy;
+export class PaymentContext {
+  #strategy: PaymentStrategy;
 
   constructor(strategy: PaymentStrategy) {
-    this.strategy = strategy;
+    this.#strategy = strategy;
   }
 
   setPaymentStrategy(strategy: PaymentStrategy) {
-    this.strategy = strategy;
+    this.#strategy = strategy;
   }
 
-  pay(amount: number) {
-    this.strategy.pay(amount);
+  pay(paymentAmount: PaymentAmount) {
+    this.#strategy.pay(paymentAmount.totalAmount());
   }
 }
 
-export default PaymentContext;
-
 // Implementation example
-// const debitCard = new Debit(new Card('123456', '22/11', 234));
-// const payment = new PaymentContext(debitCard);
-// payment.pay(100);
+// const defineStrategy = new DebitPaymentStrategy(new Card('123456', '22/11', 234));
+// const payment = new PaymentContext(defineStrategy);
+// payment.pay(100, 20, 50);

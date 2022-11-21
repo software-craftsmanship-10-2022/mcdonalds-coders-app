@@ -28,6 +28,9 @@ const UserForm = ({setIsValidated}: UserFormProps) => {
   };
 
   const handleValidation = () => {
+    setStorageItem(STORAGE.users, formData);
+    setIsValidated(true);
+
     if (!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/.test(formData.email)) {
       toggleModal('Correo inválido');
       return;

@@ -61,6 +61,12 @@ const Checkout = () => {
 
   const onSelectPaymentMethod = (methodId: string) => {
     const method = PAYMENT_METHODS.find((method) => method.id === methodId);
+    setSelectedMethod(method);
+  };
+
+  const handlePaymentSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    selectedMethod?.handleForm(event);
   };
 
   return (

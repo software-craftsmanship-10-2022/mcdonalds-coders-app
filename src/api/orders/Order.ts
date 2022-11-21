@@ -1,13 +1,18 @@
 import type {NewOrderAddressDetailsType, NewOrderType, PaymentMethod} from '../../@types/order';
 import {OrderStatus} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';
+import InProgressState from './OrderStates/InProgressState';
+import type OrderState from './OrderStates/OrderState';
 
 export default class Order {
   // @TODO calisthenics: this.order.items: use first-class collections
   /**
    * @param order Order to handle
    */
-  constructor(private order: NewOrderType) {}
+  #state: OrderState;
+  constructor(private order: NewOrderType) {
+    this.#state = new InProgressState(this);
+  }
 
   /**
    * Get the order Id.
@@ -48,6 +53,13 @@ export default class Order {
    */
   getItems(): MenuType[] {
     return this.order.items;
+  }
+
+  /**
+   * Get the order Id.
+   */
+  getState(): OrderState {
+    return this.#state;
   }
 
   /**
@@ -145,5 +157,25 @@ export default class Order {
   clone(): Order {
     const details: NewOrderAddressDetailsType = {...this.order.details};
     return new Order({...this.order, details});
+  }
+
+  changeState(state: OrderState) {
+    this.#state = state;
+  }
+
+  nextStep() {
+    this.#state.nextStep();
+  }
+
+  cancelByUser() {
+    this.#state.cancelByUser();
+  }
+
+  cancelByRestaurant() {
+    this.#state.cancelByRestaurant();
+  }
+
+  reject() {
+    this.#state.reject();
   }
 }

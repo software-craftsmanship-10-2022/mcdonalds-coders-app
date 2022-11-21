@@ -1,4 +1,3 @@
-// <<<<<<< HEAD
 import React, {useState} from 'react';
 import type Order from 'src/api/orders/Order';
 import DonationOptions from 'src/components/donation/DonationOptions';
@@ -7,6 +6,8 @@ import {PAYMENT_METHODS} from 'src/components/form/payment/constants/paymentMeth
 import PaymentMethodForm from 'src/components/form/payment/PaymentMethodForm';
 import InfoModal from 'src/components/modal/InfoModal';
 import useFormat from 'src/hooks/useFormat';
+import Card from 'src/Payment/models/Card/Card';
+import {DebitPaymentStrategy} from 'src/Payment/models/Debit/Debit';
 import type Payment from 'src/Payment/models/Payment/Payment';
 import OrderDetail from '../../orders/OrderDetail';
 import {useDonation, usePaymentWarningModal} from './hooks';
@@ -22,7 +23,7 @@ type DetailProps = {
   confirmOrder: (payment: Payment, order: Order) => void;
 };
 
-const Checkout = ({order, confirmOrder}: DetailProps) => {
+const Checkout = () => {
   const [currencyFormatter] = useFormat();
   // Const {paymentMethod, updatePaymentMethod} = usePaymentMethod(PAYMENT_TYPE.cash);
   // const {cardData, cardUpdate} = useCardInfo();
@@ -49,6 +50,29 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
     event.preventDefault();
     selectedMethod?.handleForm(event);
   };
+  /*  Const operationData = paymentMethod === PAYMENT_TYPE.debit ? cardData : bankData; */
+
+  // order.setStatus(OrderStatus.pending);
+  // order.setPayment(payment.getPaymentType());
+  // updateOrder(await saveOrder(order));
+  // payment.pay();
+  // order.setStatus(OrderStatus.preparing);
+  // localStorage.setItem(
+  //   STORAGE.orders,
+  //   JSON.stringify({
+  //     ...order,
+  //     total: order.getTotalPrice() + donationValue,
+  //     paymentType: payment.getPaymentType(),
+  //   }),
+  // );
+  // navigate(URLS.root);
+
+  const {number, date, cvc} = cardData;
+
+  // Cuando tenemos tipo de pag
+  const paymentStrategy = new DebitPaymentStrategy(new Card(number, date, cvc));
+
+  order.setPayment(paymentMethod);
 
   return (
     <form onSubmit={handlePaymentSubmit}>

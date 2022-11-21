@@ -1,6 +1,6 @@
-import createEmptyOrder from './createEmptyOrder';
-import type Order from './Order';
-import saveOrder, {ERROR_INVALID_PARAM, idGenerator} from './saveOrder';
+import createEmptyOrder from '../createEmptyOrder';
+import type Order from '../Order';
+import saveOrder, {ERROR_INVALID_PARAM, idGenerator} from '../saveOrder';
 
 describe('Test `saveOrder` function', () => {
   const dummyId = 'dummy123';

@@ -59,6 +59,10 @@ const Checkout = () => {
     }
   };
 
+  const onSelectPaymentMethod = (methodId: string) => {
+    const method = PAYMENT_METHODS.find((method) => method.id === methodId);
+  };
+
   return (
     <form onSubmit={handlePaymentSubmit}>
       <div className="Detail">

@@ -173,4 +173,24 @@ export default class Order {
     const {id, details, items, total, payment} = this.order;
     return {id, details, items, total, payment};
   }
+
+  changeState(state: OrderState) {
+    this.#state = state;
+  }
+
+  nextStep() {
+    this.#state.nextStep();
+  }
+
+  cancelByUser() {
+    this.#state.cancelByUser();
+  }
+
+  cancelByRestaurant() {
+    this.#state.cancelByRestaurant();
+  }
+
+  reject() {
+    this.#state.reject();
+  }
 }

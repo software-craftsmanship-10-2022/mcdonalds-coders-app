@@ -6,8 +6,11 @@ import PaymentInputs from 'src/components/form/PaymentInputs';
 import TransferInputs from 'src/components/form/TransferInputs';
 import InfoModal from 'src/components/modal/InfoModal';
 import {PAYMENT_TYPE} from 'src/config';
+import {useOrderContext} from 'src/context/OrderContext';
 import useFormat from 'src/hooks/useFormat';
 import acceptOrder from 'src/Payment/acceptOrder';
+import Card from 'src/Payment/models/Card/Card';
+import {DebitPaymentStrategy} from 'src/Payment/models/Debit/Debit';
 import type Payment from 'src/Payment/models/Payment/Payment';
 import PaymentForm from '../../form/PaymentForm';
 import OrderDetail from '../../orders/OrderDetail';
@@ -31,11 +34,12 @@ type DetailProps = {
   confirmOrder: (payment: Payment, order: Order) => void;
 };
 
-const Checkout = ({order, confirmOrder}: DetailProps) => {
+const Checkout = () => {
   const [currencyFormatter] = useFormat();
+  const {order, updateOrder} = useOrderContext();
   const {paymentMethod, updatePaymentMethod} = usePaymentMethod(PAYMENT_TYPE.cash);
   const {cardData, cardUpdate} = useCardInfo();
-  const {bankData, bankUpdate} = useBankInfo();
+  const {/* bankData, */ bankUpdate} = useBankInfo();
   const {updateCardValidity} = useIsCardValid();
   const {formDonationIsVisible, donationValue, updateDonationFormVisibility, updateDonationValue} =
     useDonation();
@@ -46,7 +50,29 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
     toggleWarningModalVisibility,
   } = usePaymentWarningModal();
 
-  const operationData = paymentMethod === PAYMENT_TYPE.debit ? cardData : bankData;
+  /*  const operationData = paymentMethod === PAYMENT_TYPE.debit ? cardData : bankData; */
+
+  // order.setStatus(OrderStatus.pending);
+  // order.setPayment(payment.getPaymentType());
+  // updateOrder(await saveOrder(order));
+  // payment.pay();
+  // order.setStatus(OrderStatus.preparing);
+  // localStorage.setItem(
+  //   STORAGE.orders,
+  //   JSON.stringify({
+  //     ...order,
+  //     total: order.getTotalPrice() + donationValue,
+  //     paymentType: payment.getPaymentType(),
+  //   }),
+  // );
+  // navigate(URLS.root);
+
+  const {number, date, cvc} = cardData;
+
+  // cuando tenemos tipo de pag
+  const paymentStrategy = new DebitPaymentStrategy(new Card(number, date, cvc));
+
+  order.setPayment(paymentMethod);
 
   return (
     <div className="Detail">
@@ -81,11 +107,9 @@ const Checkout = ({order, confirmOrder}: DetailProps) => {
         text={'Enviar pedido'}
         onClick={() => {
           acceptOrder({
-            confirmOrder,
-            donationValue,
-            operationData,
+            donation: donationValue,
             order,
-            paymentMethod,
+            strategy: paymentStrategy,
             updateCardWarning,
           });
         }}

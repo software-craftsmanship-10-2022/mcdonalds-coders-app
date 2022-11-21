@@ -1,5 +1,4 @@
-import {PaymentMethod} from 'src/@types/order';
-import Order from 'src/api/orders/Order';
+import {mockNewOrder} from 'src/api/orders/mocks/mocks';
 import Donation from '../Donation/Donation';
 import Cash from './Cash';
 
@@ -21,18 +20,7 @@ const details = {
 
 describe('Given a Cash class', () => {
   it('should contain a pay method', () => {
-    const order = new Order({
-      id: 'a3',
-      details: {
-        id: 'a4',
-        name: 'name 1',
-        address: 'address 1',
-        image: 'image 1',
-        isDelivery: false,
-      },
-      items: [],
-      payment: PaymentMethod.debit,
-    });
+    const order = mockNewOrder();
     const donation = new Donation(0);
     const cash = new Cash(order, donation);
     expect(cash.pay).toBeInstanceOf(Function);

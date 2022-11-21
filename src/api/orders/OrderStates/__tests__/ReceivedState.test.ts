@@ -1,6 +1,6 @@
+import {mockNewOrder} from '../../mocks/mocks';
 import type Order from '../../Order';
 import ConfirmedState from '../ConfirmedState';
-import {mockNewOrder} from '../mocks/mocks';
 import ReceivedState from '../ReceivedState';
 import RejectedState from '../RejectedState';
 

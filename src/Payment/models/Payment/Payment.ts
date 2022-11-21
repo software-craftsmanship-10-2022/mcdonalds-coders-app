@@ -1,6 +1,5 @@
 import {PaymentMethod} from 'src/@types/order';
 import Order from 'src/api/orders/Order';
-import {STORAGE} from 'src/config';
 import {DONATION_ERRORS, ORDER_ERRORS, PAYMENT_TYPE_ERRORS} from 'src/Payment/errorMessages';
 import Donation from '../Donation/Donation';
 
@@ -41,14 +40,6 @@ class Payment {
     this.checkOrder();
     this.checkDonation();
     this.order.nextStep();
-    localStorage.setItem(
-      STORAGE.orders,
-      JSON.stringify({
-        ...this.order,
-        total: this.order.getTotalPrice() + this.donation.amountValue(),
-        paymentType: this.paymentType,
-      }),
-    );
   }
 }
 

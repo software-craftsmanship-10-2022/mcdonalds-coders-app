@@ -27,11 +27,8 @@ export class DebitPaymentStrategy implements PaymentStrategy {
   }
 
   pay(amount: number) {
-    try {
-      this.#card.isValid();
-      console.log(`Currently paying with a credit card: ${amount} €`);
-    } catch (error) {
-      return error;
-    }
+    this.#card.isValid();
+
+    console.log(`Currently paying with a credit card: ${amount} €`);
   }
 }

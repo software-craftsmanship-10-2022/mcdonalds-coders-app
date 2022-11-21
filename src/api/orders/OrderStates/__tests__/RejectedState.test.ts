@@ -1,5 +1,5 @@
+import {mockNewOrder} from '../../mocks/mocks';
 import type Order from '../../Order';
-import {mockNewOrder} from '../mocks/mocks';
 import RejectedState from '../RejectedState';
 
 describe('Given a RejectedState class', () => {

@@ -19,7 +19,7 @@ export default async function saveOrder(order: Order): Promise<Order> {
   }
 
   // Simulate saving and the fetching of a new id from backend.
-  const newOrder = order.clone();
+  const newOrder = order;
   newOrder.setId(idGenerator.generate());
   return newOrder;
 }

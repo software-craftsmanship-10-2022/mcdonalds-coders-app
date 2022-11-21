@@ -1,6 +1,6 @@
+import {mockNewOrder} from '../../mocks/mocks';
 import type Order from '../../Order';
 import CancelledByRestaurantState from '../CancelledByRestaurantState';
-import {mockNewOrder} from '../mocks/mocks';
 import PreparingState from '../PreparingState';
 import ReadyState from '../ReadyState';
 

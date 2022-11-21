@@ -107,6 +107,8 @@ describe('Test OrderContext component', () => {
 
     it('checks the function saves the updated order in the cache', async () => {
       const order: Order = mockNewOrder();
+      const firstSetLocalStorageCall = 0;
+      const firstSetLocalStorageValue = 1;
 
       await act(async () => {
         render(<OrderProviderTest order={order} />);
@@ -116,7 +118,9 @@ describe('Test OrderContext component', () => {
       fireEvent.click(button);
 
       await waitFor(() => {
-        expect(mockSetItem.mock.lastCall[1]).toEqual(order);
+        expect(mockSetItem.mock.calls[firstSetLocalStorageCall][firstSetLocalStorageValue]).toEqual(
+          order.toOrderType(),
+        );
       });
     });
   });
@@ -147,6 +151,8 @@ describe('Test OrderContext component', () => {
 
     it('checks the empty order is stored in the cache system', async () => {
       const order: Order = mockNewOrder();
+      const firstSetLocalStorageCall = 0;
+      const firstSetLocalStorageValue = 1;
 
       await act(async () => {
         render(<OrderProviderTest order={order} />);
@@ -163,7 +169,9 @@ describe('Test OrderContext component', () => {
 
       fireEvent.click(resetButton);
       await waitFor(() => {
-        expect(mockSetItem.mock.lastCall[1]).toEqual(createEmptyOrder());
+        expect(mockSetItem.mock.calls[firstSetLocalStorageCall][firstSetLocalStorageValue]).toEqual(
+          createEmptyOrder(),
+        );
       });
     });
   });

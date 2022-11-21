@@ -9,7 +9,7 @@ class Card implements IValidate {
   constructor(
     private readonly cardNumber: string,
     private readonly date: string,
-    private readonly cvc: number,
+    private readonly cvc: string,
   ) {}
 
   isValid(): boolean {
@@ -21,8 +21,8 @@ class Card implements IValidate {
 
   private validateCVC() {
     if (!this.cvc) throw new Error(CARD_ERRORS.wrongCvc);
-    if (typeof this.cvc !== 'number') throw new Error(CARD_ERRORS.cvcAsNumber);
-    if (!this.cvc || this.cvc.toString().length !== 3) throw new Error(CARD_ERRORS.wrongCvc);
+    if (typeof +this.cvc !== 'number') throw new Error(CARD_ERRORS.cvcAsNumber);
+    if (this.cvc.length !== 3) throw new Error(CARD_ERRORS.wrongCvc);
   }
 
   private validateDate() {

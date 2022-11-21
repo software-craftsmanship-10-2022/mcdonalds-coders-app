@@ -7,7 +7,6 @@ import saveOrder, * as saveOrderObject from 'src/api/orders/saveOrder';
 import {STORAGE, URLS} from 'src/config';
 import {useOrderContext} from 'src/context/OrderContext';
 import useLocalStorage from 'src/hooks/useLocalStorage';
-import {storage} from 'src/utils/localStorage';
 import Checkout from './Checkout';
 
 Object.defineProperty(global.self, 'crypto', {
@@ -61,7 +60,6 @@ function ComponentWithRouter(): JSX.Element {
         products: [],
       });
     }, []);
-
     useEffect(() => {
       setStorageItem(STORAGE.users, {user: 'user'});
       !order?.isItemsEmpty() && navigate(URLS.ordersCheckout);

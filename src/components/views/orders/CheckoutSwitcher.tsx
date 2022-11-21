@@ -7,14 +7,13 @@ import {STORAGE, URLS} from '../../../config';
 import UserForm from '../../form/UserForm';
 import Checkout from './Checkout';
 import './Checkout.css';
-import {useDonation, useIsUserValidated} from './hooks';
+import {useIsUserValidated} from './hooks';
 
 const CheckoutSwitcher = () => {
   const navigate = useNavigate();
   // User validation check
   const {isUserValidated, updateUserValidatedStatus} = useIsUserValidated();
-  const {donationValue} = useDonation();
-  const {order, updateOrder} = useOrderContext();
+  const {order} = useOrderContext();
   const {getStorageItem} = useLocalStorage();
 
   useEffect(() => {

@@ -16,7 +16,6 @@ describe('Manipulate the Order object in cache system', () => {
   xit('sets the order in the cache system', async () => {
     await setOrder(order);
     const newOrder = await getOrder();
-    console.log('🚀 ~ file: useOrderStorage.spec.ts ~ line 19 ~ it ~ newOrder', newOrder);
     expect(newOrder).toEqual(order);
   });
 

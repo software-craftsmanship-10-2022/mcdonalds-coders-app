@@ -43,7 +43,7 @@ export function useOrderStorage(): UseOrderStorageType {
     await storage.setItem<OrderStateType>(storageStateKey, ORDER_STATES[stateCode]);
   }
 
-  type OrderInStorageType = {order: OrderType} | undefined;
+  type OrderInStorageType = OrderType | undefined;
   type OrderStateInStorageType = OrderStateType | undefined;
 
   /**
@@ -58,8 +58,7 @@ export function useOrderStorage(): UseOrderStorageType {
     );
     let newOrder;
     if (order) {
-      console.log(order);
-      newOrder = new Order(order.order);
+      newOrder = new Order(order);
       if (orderState) {
         const state = getStateOrderByCode(orderState.code, newOrder);
         newOrder.changeState(state);

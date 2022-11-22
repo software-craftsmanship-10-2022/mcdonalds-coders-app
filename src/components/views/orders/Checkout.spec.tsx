@@ -1,11 +1,13 @@
-import {act, render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import {useEffect} from 'react';
 import {MemoryRouter, Route, Routes, useNavigate} from 'react-router-dom';
 import createEmptyOrder from 'src/api/orders/createEmptyOrder';
-import saveOrder from 'src/api/orders/saveOrder';
+// Import saveOrder from 'src/api/orders/saveOrder';
+import saveOrder, * as saveOrderObject from 'src/api/orders/saveOrder';
 import {STORAGE, URLS} from 'src/config';
 import {OrderProvider, useOrderContext} from 'src/context/OrderContext';
 import useLocalStorage from 'src/hooks/useLocalStorage';
+import {storage} from 'src/utils/localStorage';
 import Checkout from './Checkout';
 
 Object.defineProperty(global.self, 'crypto', {
@@ -34,7 +36,8 @@ function ComponentWithRouter(): JSX.Element {
   const DummyComponent = () => {
     const {order, updateOrder} = useOrderContext();
     const mockConfirmOrder = async () => {
-      updateOrder(await saveOrder(order));
+      const awaitOrder = await saveOrder(order);
+      updateOrder(awaitOrder);
     };
 
     return (
@@ -50,6 +53,8 @@ function ComponentWithRouter(): JSX.Element {
     const navigate = useNavigate();
     const {setStorageItem} = useLocalStorage();
     useEffect(() => {
+      setStorageItem(STORAGE.users, {user: 'user'});
+      navigate(URLS.ordersCheckout);
       order?.addItem({
         id: '0f6fbXbWUp',
         name: 'prueba',
@@ -58,6 +63,7 @@ function ComponentWithRouter(): JSX.Element {
         products: [],
       });
     }, []);
+
     useEffect(() => {
       setStorageItem(STORAGE.users, {user: 'user'});
       !order?.isItemsEmpty() && navigate(URLS.ordersCheckout);
@@ -80,10 +86,22 @@ function ComponentWithRouter(): JSX.Element {
 
 describe('Test Checkout component', () => {
   describe('Test the order confirmation', () => {
+    let spyGetOrder: jest.SpiedFunction<typeof storage.getItem>;
+    let spySaveOrder: jest.SpiedFunction<typeof saveOrderObject.default>;
+
+    beforeEach(() => {
+      spyGetOrder = jest.spyOn(storage, 'getItem');
+      spyGetOrder.mockResolvedValue(dummyOrder);
+      spySaveOrder = jest.spyOn(saveOrderObject, 'default');
+    });
+
+    afterEach(() => {
+      spyGetOrder.mockRestore();
+      spySaveOrder.mockRestore();
+    });
+
     it('checks the confirm button exists', async () => {
-      await act(async () => {
-        render(<ComponentWithRouter />);
-      });
+      render(<ComponentWithRouter />);
       await waitFor(() => {
         screen.getByText(/Enviar pedido/);
       });

@@ -1,5 +1,5 @@
 import type {MenuType, ProductType} from 'src/@types/product';
-import {ERRORS, MenuBuilder} from './builder';
+import {MenuBuilder} from './builder';
 
 const menus: Record<string, MenuType> = {
   kj7Stiwpn5: {
@@ -121,7 +121,21 @@ describe('[MenuBuilder]', () => {
       const menuBuilder = new MenuBuilder();
 
       expect(menuBuilder).toBeInstanceOf(MenuBuilder);
-      expect(menuBuilder.getMenu()).toEqual({id: '', image: '', name: '', price: 0, products: []});
+      expect(menuBuilder.getMenu()).toEqual({
+        id: '',
+        image: '',
+        name: '',
+        price: 0,
+        mainProduct: {
+          categoryId: 'burgers',
+          description: '',
+          id: '',
+          img: '',
+          ingredients: [],
+          title: '',
+        },
+        products: [],
+      });
     });
   });
 
@@ -152,16 +166,6 @@ describe('[MenuBuilder]', () => {
   });
 
   describe('Test `MenuBuilder.withDrink` function', () => {
-    it('throws an error if the main menu did not create before', () => {
-      expect.assertions(1);
-
-      try {
-        new MenuBuilder().withDrink(drinks['fanta-chica']);
-      } catch (error) {
-        expect(error).toEqual(new Error(ERRORS.mainMenuNoExist));
-      }
-    });
-
     it('sets the drink correctly', () => {
       const menuId = 'kj7Stiwpn5';
       const drinkdId = 'fanta-chica';
@@ -193,17 +197,6 @@ describe('[MenuBuilder]', () => {
   });
 
   describe('Test `MenuBuilder.withMainComplement` function', () => {
-    it('throws an error if the main menu did not create before', () => {
-      expect.assertions(1);
-
-      try {
-        const complementId = 'Papas-pequeñas';
-        new MenuBuilder().withMainComplement(complements[complementId]);
-      } catch (error) {
-        expect(error).toEqual(new Error(ERRORS.mainMenuNoExist));
-      }
-    });
-
     it('adds the main complement in the product list', () => {
       const menuId = 'kj7Stiwpn5';
       const complementId = 'Papas-pequeñas';
@@ -236,17 +229,6 @@ describe('[MenuBuilder]', () => {
   });
 
   describe('Test `MenuBuilder.withExtra` function', () => {
-    it('throws an error if the main menu did not create before', () => {
-      expect.assertions(1);
-
-      try {
-        const complementId = 'Papas-pequeñas';
-        new MenuBuilder().withExtra(complements[complementId]);
-      } catch (error) {
-        expect(error).toEqual(new Error(ERRORS.mainMenuNoExist));
-      }
-    });
-
     it('adds the extra in the product list', () => {
       const menuId = 'kj7Stiwpn5';
       const extraId = 'Papas-pequeñas';

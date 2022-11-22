@@ -1,4 +1,5 @@
 import {PaymentMethod} from 'src/@types/order';
+import type {PaymentStrategy} from 'src/@types/payments';
 import type Order from 'src/api/orders/Order';
 import type Card from '../Card/Card';
 import type Donation from '../Donation/Donation';
@@ -17,3 +18,17 @@ class Debit extends Payment {
 }
 
 export default Debit;
+
+export class DebitPaymentStrategy implements PaymentStrategy {
+  #card: Card;
+
+  constructor(card: Card) {
+    this.#card = card;
+  }
+
+  pay(amount: number) {
+    this.#card.isValid();
+
+    console.log(`Currently paying with a credit card: ${amount} €`);
+  }
+}

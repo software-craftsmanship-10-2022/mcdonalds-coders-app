@@ -7,6 +7,7 @@ export const ERRORS = {
 };
 
 export interface MenuBuilderInterface {
+  withMainProduct(product: ProductType): MenuBuilderInterface;
   withMainMenu(menu: MenuType): MenuBuilderInterface;
   withDrink(product: ProductType): MenuBuilderInterface;
   withMainComplement(product: ProductType): MenuBuilderInterface;
@@ -17,16 +18,20 @@ export interface MenuBuilderInterface {
 
 export class MenuBuilder implements MenuBuilderInterface {
   #menu: MenuType;
+  #mainProduct: ProductType;
   #drink: ProductType | undefined;
   #mainComplement: ProductType | undefined;
   #extra: ProductType | undefined;
 
   constructor() {
     this.reset();
+    this.#menu = this.buildMenuPlaceholder();
+    this.#mainProduct = this.buildMainProductPlaceholder();
   }
 
   reset(): void {
-    this.#menu = undefined;
+    this.#menu = this.buildMenuPlaceholder();
+    this.#mainProduct = this.buildMainProductPlaceholder();
     this.#drink = undefined;
     this.#mainComplement = undefined;
     this.#extra = undefined;
@@ -38,14 +43,21 @@ export class MenuBuilder implements MenuBuilderInterface {
     return this;
   }
 
-  withDrink(product: ProductType): MenuBuilderInterface {
+  withMainProduct(product: ProductType): MenuBuilderInterface {
+    this.assertMainMenu();
+    this.#mainProduct = product;
+
+    return this;
+  }
+
+  withDrink(product: ProductType | undefined): MenuBuilderInterface {
     this.assertMainMenu();
     this.#drink = product;
 
     return this;
   }
 
-  withMainComplement(product: ProductType): MenuBuilderInterface {
+  withMainComplement(product: ProductType | undefined): MenuBuilderInterface {
     this.assertMainMenu();
 
     this.#mainComplement = product;
@@ -53,9 +65,13 @@ export class MenuBuilder implements MenuBuilderInterface {
     return this;
   }
 
-  withExtra(product: ProductType): MenuBuilderInterface {
+  withExtra(product: ProductType | undefined): MenuBuilderInterface {
     this.assertMainMenu();
-    product.categoryId = 'extra';
+
+    if (product) {
+      product.categoryId = 'extra';
+    }
+
     this.#extra = product;
 
     return this;
@@ -71,6 +87,7 @@ export class MenuBuilder implements MenuBuilderInterface {
       return this.buildMenuPlaceholder();
     }
 
+    menu.mainProduct = this.#mainProduct;
     this.addProductToList(this.#drink, menu);
     this.addProductToList(this.#extra, menu);
     this.addProductToList(this.#mainComplement, menu);
@@ -86,13 +103,14 @@ export class MenuBuilder implements MenuBuilderInterface {
       image: '',
       name: '',
       price: 0,
+      mainProduct: this.buildMainProductPlaceholder(),
       products: [],
     };
   }
 
   private addProductToList(product: ProductType | undefined, menu: MenuType): void {
     if (product) {
-      menu!.products.push(product);
+      menu.products.push(product);
     }
   }
 
@@ -108,5 +126,16 @@ export class MenuBuilder implements MenuBuilderInterface {
 
   private buildMenuMinimalInfo(menu: MenuType): void {
     this.#menu = menu;
+  }
+
+  private buildMainProductPlaceholder(): ProductType {
+    return {
+      categoryId: 'burgers',
+      description: '',
+      id: '',
+      img: '',
+      ingredients: [],
+      title: '',
+    };
   }
 }

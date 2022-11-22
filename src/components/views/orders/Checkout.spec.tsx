@@ -22,6 +22,25 @@ dummyOrder.addItem({
   name: 'prueba',
   image: 'McCOMBOGRANDTRIPLEMcBACONGrande.png',
   price: 1320,
+  mainProduct: {
+    categoryId: 'burgers',
+    description: 'La hamburguesa más famosa del mundo. Un sabor único.',
+    id: 'big_mac',
+    img: 'big_mac.png',
+    ingredients: [
+      {extraPrice: 0, id: 'pan-arriba', img: 'Pan+arriba.png', modifiable: false, title: 'Pan'},
+      {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifiable: false, title: 'Pan'},
+      {extraPrice: 0, id: 'carne', img: 'carne.png', modifiable: false, title: 'Carne'},
+      {
+        extraPrice: 0,
+        id: 'salsa-bigmac',
+        img: 'salsa-bic-mac.png',
+        modifiable: true,
+        title: 'Salsa Big Mac',
+      },
+    ],
+    title: 'Big Mac',
+  },
   products: [],
 });
 

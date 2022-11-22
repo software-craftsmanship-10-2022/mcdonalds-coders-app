@@ -7,33 +7,32 @@ const menus: Record<string, MenuType> = {
     image: 'McCOMBOBIGMACGrande.png',
     name: 'McCombo BIG MAC Grande',
     price: 990,
-    products: [
-      {
-        categoryId: 'burgers',
-        description: 'La hamburguesa más famosa del mundo. Un sabor único.',
-        id: 'big_mac',
-        img: 'big_mac.png',
-        ingredients: [
-          {
-            extraPrice: 0,
-            id: 'pan-arriba',
-            img: 'Pan+arriba.png',
-            modifiable: false,
-            title: 'Pan',
-          },
-          {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifiable: false, title: 'Pan'},
-          {extraPrice: 0, id: 'carne', img: 'carne.png', modifiable: false, title: 'Carne'},
-          {
-            extraPrice: 0,
-            id: 'salsa-bigmac',
-            img: 'salsa-bic-mac.png',
-            modifiable: true,
-            title: 'Salsa Big Mac',
-          },
-        ],
-        title: 'Big Mac',
-      },
-    ],
+    mainProduct: {
+      categoryId: 'burgers',
+      description: 'La hamburguesa más famosa del mundo. Un sabor único.',
+      id: 'big_mac',
+      img: 'big_mac.png',
+      ingredients: [
+        {
+          extraPrice: 0,
+          id: 'pan-arriba',
+          img: 'Pan+arriba.png',
+          modifiable: false,
+          title: 'Pan',
+        },
+        {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifiable: false, title: 'Pan'},
+        {extraPrice: 0, id: 'carne', img: 'carne.png', modifiable: false, title: 'Carne'},
+        {
+          extraPrice: 0,
+          id: 'salsa-bigmac',
+          img: 'salsa-bic-mac.png',
+          modifiable: true,
+          title: 'Salsa Big Mac',
+        },
+      ],
+      title: 'Big Mac',
+    },
+    products: [],
   },
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -42,27 +41,26 @@ const menus: Record<string, MenuType> = {
     image: 'McCOMBOBIGMACMediano.png',
     name: 'McCombo BIG MAC Mediano',
     price: 870,
-    products: [
-      {
-        categoryId: 'burgers',
-        description: 'La hamburguesa más famosa del mundo. Un sabor único.',
-        id: 'big_mac',
-        img: 'big_mac.png',
-        ingredients: [
-          {extraPrice: 0, id: 'pan-arriba', img: 'Pan+arriba.png', modifiable: false, title: 'Pan'},
-          {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifiable: false, title: 'Pan'},
-          {extraPrice: 0, id: 'carne', img: 'carne.png', modifiable: false, title: 'Carne'},
-          {
-            extraPrice: 0,
-            id: 'salsa-bigmac',
-            img: 'salsa-bic-mac.png',
-            modifiable: true,
-            title: 'Salsa Big Mac',
-          },
-        ],
-        title: 'Big Mac',
-      },
-    ],
+    mainProduct: {
+      categoryId: 'burgers',
+      description: 'La hamburguesa más famosa del mundo. Un sabor único.',
+      id: 'big_mac',
+      img: 'big_mac.png',
+      ingredients: [
+        {extraPrice: 0, id: 'pan-arriba', img: 'Pan+arriba.png', modifiable: false, title: 'Pan'},
+        {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifiable: false, title: 'Pan'},
+        {extraPrice: 0, id: 'carne', img: 'carne.png', modifiable: false, title: 'Carne'},
+        {
+          extraPrice: 0,
+          id: 'salsa-bigmac',
+          img: 'salsa-bic-mac.png',
+          modifiable: true,
+          title: 'Salsa Big Mac',
+        },
+      ],
+      title: 'Big Mac',
+    },
+    products: [],
   },
 };
 

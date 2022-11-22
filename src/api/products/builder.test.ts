@@ -9,28 +9,11 @@ const menus: Record<string, MenuType> = {
     price: 990,
     mainProduct: {
       categoryId: 'burgers',
-      description: 'La hamburguesa más famosa del mundo. Un sabor único.',
-      id: 'big_mac',
-      img: 'big_mac.png',
-      ingredients: [
-        {
-          extraPrice: 0,
-          id: 'pan-arriba',
-          img: 'Pan+arriba.png',
-          modifiable: false,
-          title: 'Pan',
-        },
-        {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifiable: false, title: 'Pan'},
-        {extraPrice: 0, id: 'carne', img: 'carne.png', modifiable: false, title: 'Carne'},
-        {
-          extraPrice: 0,
-          id: 'salsa-bigmac',
-          img: 'salsa-bic-mac.png',
-          modifiable: true,
-          title: 'Salsa Big Mac',
-        },
-      ],
-      title: 'Big Mac',
+      description: '',
+      id: '',
+      img: '',
+      ingredients: [],
+      title: '',
     },
     products: [],
   },
@@ -43,22 +26,11 @@ const menus: Record<string, MenuType> = {
     price: 870,
     mainProduct: {
       categoryId: 'burgers',
-      description: 'La hamburguesa más famosa del mundo. Un sabor único.',
-      id: 'big_mac',
-      img: 'big_mac.png',
-      ingredients: [
-        {extraPrice: 0, id: 'pan-arriba', img: 'Pan+arriba.png', modifiable: false, title: 'Pan'},
-        {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifiable: false, title: 'Pan'},
-        {extraPrice: 0, id: 'carne', img: 'carne.png', modifiable: false, title: 'Carne'},
-        {
-          extraPrice: 0,
-          id: 'salsa-bigmac',
-          img: 'salsa-bic-mac.png',
-          modifiable: true,
-          title: 'Salsa Big Mac',
-        },
-      ],
-      title: 'Big Mac',
+      description: '',
+      id: '',
+      img: '',
+      ingredients: [],
+      title: '',
     },
     products: [],
   },
@@ -115,7 +87,75 @@ const complements: Record<string, ProductType> = {
   },
 };
 
+const mainProducts: Record<string, ProductType> = {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  big_mac: {
+    categoryId: 'burgers',
+    description: 'La hamburguesa más famosa del mundo. Un sabor único.',
+    id: 'big_mac',
+    img: 'big_mac.png',
+    ingredients: [
+      {
+        extraPrice: 0,
+        id: 'pan-arriba',
+        img: 'Pan+arriba.png',
+        modifiable: false,
+        title: 'Pan',
+      },
+      {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifiable: false, title: 'Pan'},
+      {extraPrice: 0, id: 'carne', img: 'carne.png', modifiable: false, title: 'Carne'},
+      {
+        extraPrice: 0,
+        id: 'salsa-bigmac',
+        img: 'salsa-bic-mac.png',
+        modifiable: true,
+        title: 'Salsa Big Mac',
+      },
+    ],
+    title: 'Big Mac',
+  },
+  mcnifica: {
+    categoryId: 'burgers',
+    id: 'mcnifica',
+    img: 'mcnifica.png',
+    title: 'McNífica',
+    ingredients: [
+      {
+        extraPrice: 0,
+        id: 'pan-arriba',
+        img: 'Pan+arriba.png',
+        modifiable: false,
+        title: 'Pan',
+      },
+      {extraPrice: 0, id: 'pan-abajo', img: 'Pan+abajo.png', modifiable: false, title: 'Pan'},
+      {extraPrice: 0, id: 'carne', img: 'carne.png', modifiable: false, title: 'Carne'},
+      {
+        extraPrice: 0,
+        id: 'salsa-bigmac',
+        img: 'salsa-bic-mac.png',
+        modifiable: true,
+        title: 'Salsa Big Mac',
+      },
+    ],
+    description:
+      'En un mundo donde todos buscan lo nuevo, la McNífica viene a rectificar lo bueno de ser clásico.',
+  },
+};
+
 describe('[MenuBuilder]', () => {
+  // AfterAll(() => {
+  //   // eslint-disable-next-line guard-for-in
+  //   for (const menuId in menus) {
+  //     menus[menuId].mainProduct = {
+  //       categoryId: 'burgers',
+  //       description: '',
+  //       id: '',
+  //       img: '',
+  //       ingredients: [],
+  //       title: '',
+  //     };
+  //   }
+  // });
   describe('Test `MenuBuilder.constructor`', () => {
     it('creates a empty instance menu', () => {
       const menuBuilder = new MenuBuilder();
@@ -165,17 +205,46 @@ describe('[MenuBuilder]', () => {
     });
   });
 
+  // Describe('Test `MenuBuilder.withMainProduct` function', () => {
+  //   it('adds the main product in the menu type', () => {
+  //     const menuId = 'kj7Stiwpn5';
+  //     const mainProductId = 'big_mac';
+  //     const menu = {...menus[menuId], mainProduct: mainProducts[mainProductId]};
+  //     const menuBuilder = new MenuBuilder();
+
+  //     menuBuilder.withMainMenu(menus[menuId]);
+  //     menuBuilder.withMainProduct(mainProducts[mainProductId]);
+
+  //     expect(menuBuilder.getMenu()).toEqual(menu);
+  //   });
+
+  //   it('replaces the new main product by the current main product in the menu', () => {
+  //     const menuId = 'kj7Stiwpn5';
+  //     const mainProductId1 = 'big_mac';
+  //     const mainProductId2 = 'mcnifica';
+  //     const menu = {...menus[menuId], mainProduct: mainProducts[mainProductId2]};
+  //     const menuBuilder = new MenuBuilder();
+
+  //     menuBuilder.withMainMenu(menus[menuId]);
+  //     menuBuilder.withMainProduct(mainProducts[mainProductId1]);
+  //     menuBuilder.withMainProduct(mainProducts[mainProductId2]);
+
+  //     expect(menuBuilder.getMenu()).toEqual(menu);
+  //   });
+  // });
+
   describe('Test `MenuBuilder.withDrink` function', () => {
     it('sets the drink correctly', () => {
       const menuId = 'kj7Stiwpn5';
       const drinkdId = 'fanta-chica';
       const menu = {...menus[menuId], products: [...menus[menuId]!.products]};
+
       menu.products.push(drinks[drinkdId]);
       const menuBuilder = new MenuBuilder();
 
       menuBuilder.withMainMenu(menus[menuId]);
       menuBuilder.withDrink(drinks[drinkdId]);
-
+      console.log(menu);
       expect(menuBuilder.getMenu()).toEqual(menu);
     });
 

@@ -13,7 +13,7 @@ describe('Manipulate the Order object in cache system', () => {
     await clearAll();
   });
 
-  xit('sets the order in the cache system', async () => {
+  it('sets the order in the cache system', async () => {
     await setOrder(order);
     const newOrder = await getOrder();
     expect(newOrder).toEqual(order);

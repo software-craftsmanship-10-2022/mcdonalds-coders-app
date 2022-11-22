@@ -3,6 +3,7 @@ import {useEffect} from 'react';
 import {MemoryRouter, Route, Routes, useNavigate} from 'react-router-dom';
 import createEmptyOrder from 'src/api/orders/createEmptyOrder';
 // Import saveOrder from 'src/api/orders/saveOrder';
+import type Order from 'src/api/orders/Order';
 import saveOrder, * as saveOrderObject from 'src/api/orders/saveOrder';
 import {STORAGE, URLS} from 'src/config';
 import {OrderProvider, useOrderContext} from 'src/context/OrderContext';
@@ -26,11 +27,9 @@ dummyOrder.addItem({
   products: [],
 });
 
-function ShowOrder(): JSX.Element {
-  const {order} = useOrderContext() || {};
-
+const ShowOrder: React.FC<{order: Order}> = ({order}) => {
   return <div>The order id is: {order.getId()}</div>;
-}
+};
 
 function ComponentWithRouter(): JSX.Element {
   const DummyComponent = () => {
@@ -42,8 +41,8 @@ function ComponentWithRouter(): JSX.Element {
 
     return (
       <div>
-        <ShowOrder />
-        <Checkout test-id="test" />
+        <ShowOrder order={order} />
+        <Checkout order={order} confirmOrder={mockConfirmOrder} test-id="test" />
       </div>
     );
   };
@@ -91,7 +90,6 @@ describe('Test Checkout component', () => {
 
     beforeEach(() => {
       spyGetOrder = jest.spyOn(storage, 'getItem');
-      spyGetOrder.mockResolvedValue(dummyOrder);
       spySaveOrder = jest.spyOn(saveOrderObject, 'default');
     });
 

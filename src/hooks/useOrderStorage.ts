@@ -58,7 +58,6 @@ export function useOrderStorage(): UseOrderStorageType {
     );
     let newOrder;
     if (order) {
-      console.log(order);
       newOrder = new Order(order.order);
       if (orderState) {
         const state = getStateOrderByCode(orderState.code, newOrder);

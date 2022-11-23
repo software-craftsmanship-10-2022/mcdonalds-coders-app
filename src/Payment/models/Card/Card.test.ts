@@ -56,7 +56,7 @@ describe('Given a Card class', () => {
     expect(() => card.isValid()).toThrowError(CARD_ERRORS.wrongCvc);
   });
 
-  it.skip('when cvc is not a number set then an error should be thrown', () => {
+  it('when cvc is not a number set then an error should be thrown', () => {
     const card = new Card(VALID_CARD_NUMBER, '12 / 23', 'aaa');
 
     expect(() => card.isValid()).toThrowError(CARD_ERRORS.cvcAsNumber);

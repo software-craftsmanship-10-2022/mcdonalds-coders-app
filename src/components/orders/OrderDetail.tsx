@@ -20,15 +20,15 @@ const OrderDetail = ({order}: OrderDetailProps) => {
       </h1>
       <div className="address">
         <h3>
-          <strong>{getAddressLabel(order.getDetails().isDelivery)}</strong>
+          <strong>{getAddressLabel(order.getDetails()?.isDelivery)}</strong>
         </h3>
-        <h3>{order.getDetails().address}</h3>
+        <h3>{order.getDetails()?.address}</h3>
       </div>
       <div className="items">
         <h3>
           <strong>Resumen</strong>
         </h3>
-        {order.getItems().map((value, index) => (
+        {order.getItems()?.map((value, index) => (
           <div className="item" key={index}>
             <p className="name">{value.name}</p>
             {/* <p>{`x${value.quantity}`}</p> */}

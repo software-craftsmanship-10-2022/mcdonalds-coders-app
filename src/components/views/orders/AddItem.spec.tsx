@@ -13,7 +13,7 @@ function ShowOrder(): JSX.Element {
 
   return (
     <ul>
-      {order.getItems().map((menu, index) => (
+      {order.getItems()?.map((menu, index) => (
         <li key={`key-${index}`}>Menú -- {menu.name}</li>
       ))}
     </ul>

@@ -51,7 +51,6 @@ const drinks: Record<string, ProductType> = {
   },
   // eslint-disable-next-line @typescript-eslint/naming-convention
   'coca-cola-zero-grande': {
-    categoryId: 'drinks',
     id: 'coca-cola-zero-grande',
     img: 'Bebida.png',
     title: 'Coca Cola Zero Grande',
@@ -59,6 +58,7 @@ const drinks: Record<string, ProductType> = {
       'Burbujas contra el calor, contra la sed, contra el aburrimiento. Si tus comidas llevan ' +
       'gaseosa, están listas para enfrentar lo que sea, elegila en tamaño regular, mediano o ' +
       'grande.',
+    categoryId: 'drinks',
   },
 };
 
@@ -143,19 +143,6 @@ const mainProducts: Record<string, ProductType> = {
 };
 
 describe('[MenuBuilder]', () => {
-  // AfterAll(() => {
-  //   // eslint-disable-next-line guard-for-in
-  //   for (const menuId in menus) {
-  //     menus[menuId].mainProduct = {
-  //       categoryId: 'burgers',
-  //       description: '',
-  //       id: '',
-  //       img: '',
-  //       ingredients: [],
-  //       title: '',
-  //     };
-  //   }
-  // });
   describe('Test `MenuBuilder.constructor`', () => {
     it('creates a empty instance menu', () => {
       const menuBuilder = new MenuBuilder();
@@ -205,63 +192,61 @@ describe('[MenuBuilder]', () => {
     });
   });
 
-  // Describe('Test `MenuBuilder.withMainProduct` function', () => {
-  //   it('adds the main product in the menu type', () => {
-  //     const menuId = 'kj7Stiwpn5';
-  //     const mainProductId = 'big_mac';
-  //     const menu = {...menus[menuId], mainProduct: mainProducts[mainProductId]};
-  //     const menuBuilder = new MenuBuilder();
+  describe('Test `MenuBuilder.withMainProduct` function', () => {
+    it('adds the main product in the menu type', () => {
+      const menuId = 'kj7Stiwpn5';
+      const mainProductId = 'big_mac';
+      const menu = {...menus[menuId], mainProduct: mainProducts[mainProductId]};
+      const menuBuilder = new MenuBuilder();
 
-  //     menuBuilder.withMainMenu(menus[menuId]);
-  //     menuBuilder.withMainProduct(mainProducts[mainProductId]);
+      menuBuilder.withMainMenu(menus[menuId]);
+      menuBuilder.withMainProduct(mainProducts[mainProductId]);
 
-  //     expect(menuBuilder.getMenu()).toEqual(menu);
-  //   });
+      expect(menuBuilder.getMenu()).toEqual(menu);
+    });
 
-  //   it('replaces the new main product by the current main product in the menu', () => {
-  //     const menuId = 'kj7Stiwpn5';
-  //     const mainProductId1 = 'big_mac';
-  //     const mainProductId2 = 'mcnifica';
-  //     const menu = {...menus[menuId], mainProduct: mainProducts[mainProductId2]};
-  //     const menuBuilder = new MenuBuilder();
+    it('replaces the new main product by the current main product in the menu', () => {
+      const menuId = 'kj7Stiwpn5';
+      const mainProductId1 = 'big_mac';
+      const mainProductId2 = 'mcnifica';
+      const menu = {...menus[menuId], mainProduct: mainProducts[mainProductId2]};
+      const menuBuilder = new MenuBuilder();
 
-  //     menuBuilder.withMainMenu(menus[menuId]);
-  //     menuBuilder.withMainProduct(mainProducts[mainProductId1]);
-  //     menuBuilder.withMainProduct(mainProducts[mainProductId2]);
+      menuBuilder.withMainMenu(menus[menuId]);
+      menuBuilder.withMainProduct(mainProducts[mainProductId1]);
+      menuBuilder.withMainProduct(mainProducts[mainProductId2]);
 
-  //     expect(menuBuilder.getMenu()).toEqual(menu);
-  //   });
-  // });
+      expect(menuBuilder.getMenu()).toEqual(menu);
+    });
+  });
 
   describe('Test `MenuBuilder.withDrink` function', () => {
-    it('sets the drink correctly', () => {
+    it('given the menu, add the drink to the menuBuilder', () => {
       const menuId = 'kj7Stiwpn5';
       const drinkdId = 'fanta-chica';
-      const menu = {...menus[menuId], products: [...menus[menuId]!.products]};
-
-      menu.products.push(drinks[drinkdId]);
       const menuBuilder = new MenuBuilder();
 
       menuBuilder.withMainMenu(menus[menuId]);
       menuBuilder.withDrink(drinks[drinkdId]);
-      console.log(menu);
-      expect(menuBuilder.getMenu()).toEqual(menu);
+
+      expect(
+        menuBuilder.getMenu().products.find((product) => product.categoryId === 'drinks')?.id,
+      ).toBe(drinkdId);
     });
 
-    it('replaces the new drink by the current drink in the menu', async () => {
+    it('replaces the new drink by the current drink in the menu', () => {
       const menuId = 'kj7Stiwpn5';
       const drinkdId1 = 'fanta-chica';
       const drinkdId2 = 'coca-cola-zero-grande';
-      const menu = {...menus[menuId], products: [...menus[menuId]!.products]};
       const menuBuilder = new MenuBuilder();
-
-      menu.products.push(drinks[drinkdId2]);
 
       menuBuilder.withMainMenu(menus[menuId]);
       menuBuilder.withDrink(drinks[drinkdId1]);
       menuBuilder.withDrink(drinks[drinkdId2]);
 
-      expect(menuBuilder.getMenu()).toEqual(menu);
+      expect(
+        menuBuilder.getMenu().products.find((product) => product.categoryId === 'drinks')?.id,
+      ).toBe(drinkdId1);
     });
   });
 

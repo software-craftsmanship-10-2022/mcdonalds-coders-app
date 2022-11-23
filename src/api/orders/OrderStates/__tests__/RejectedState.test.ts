@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import {mockNewOrder} from '../../mocks/mocks';
 import type Order from '../../Order';
-=======
-import type Order from '../../Order';
-import {mockNewOrder} from '../mocks/mocks';
->>>>>>> aae9c3d (Squashed commit of the following:)
 import RejectedState from '../RejectedState';
 
 describe('Given a RejectedState class', () => {

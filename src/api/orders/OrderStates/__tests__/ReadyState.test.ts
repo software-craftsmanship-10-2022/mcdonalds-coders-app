@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 import {mockNewOrder} from '../../mocks/mocks';
 import type Order from '../../Order';
 import CancelledByRestaurantState from '../CancelledByRestaurantState';
 import DeliveringState from '../DeliveringState';
-=======
-import type Order from '../../Order';
-import CancelledByRestaurantState from '../CancelledByRestaurantState';
-import DeliveringState from '../DeliveringState';
-import {mockNewOrder} from '../mocks/mocks';
->>>>>>> aae9c3d (Squashed commit of the following:)
 import ReadyState from '../ReadyState';
 
 describe('Given a ReadyState class', () => {

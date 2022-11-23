@@ -1,8 +1,6 @@
 import type {PaymentMethodType} from 'src/components/form/Payment/constants/paymentMethodsTypes';
 import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
-import type {OrderAddressDetailsType, OrderType} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';
-import {ORDER_STATES} from './OrderStates/constants';
 import InProgressState from './OrderStates/InProgressState';
 import type OrderState from './OrderStates/OrderState';
 
@@ -12,7 +10,7 @@ export default class Order {
    * @param order Order to handle
    */
   #state: OrderState;
-  constructor(private order: OrderType) {
+  constructor(private order: NewOrderType) {
     this.#state = new InProgressState(this);
   }
 
@@ -129,16 +127,37 @@ export default class Order {
   }
 
   /**
-   * Check if the order state is not confirmed.
+   * Get the status of the order.
+   */
+  getStatus(): OrderStatus {
+    return this.order.status;
+  }
+
+  /**
+   * Sets new order status.
+   *
+   * @param newStatus New status
+   */
+  setStatus(newStatus: OrderStatus): void {
+    this.order.status = newStatus;
+  }
+
+  toOrderType(): NewOrderType {
+    const {id, details, items, total, payment} = this.order;
+    return {id, details, items, total, payment};
+  }
+
+  /**
+   * Check if the order status is not confirmed.
    */
   isConfirmed(): boolean {
-    return this.#state.getCode() === ORDER_STATES.confirmedState.code;
+    return this.getStatus() !== OrderStatus.noConfirmed;
   }
 
   /**
    * Get the order details.
    */
-  getDetails(): OrderAddressDetailsType {
+  getDetails(): NewOrderAddressDetailsType {
     return this.order.details;
   }
 
@@ -147,13 +166,16 @@ export default class Order {
    *
    * @param details new Details.
    */
-  setDetails(details: OrderAddressDetailsType) {
+  setDetails(details: NewOrderAddressDetailsType) {
     this.order.details = details;
   }
 
-  toOrderType(): OrderType {
-    const {id, details, items, total, payment} = this.order;
-    return {id, details, items, total, payment};
+  /**
+   * Get a copy of the instance.
+   */
+  clone(): Order {
+    const details: NewOrderAddressDetailsType = {...this.order.details};
+    return new Order({...this.order, details});
   }
 
   changeState(state: OrderState) {

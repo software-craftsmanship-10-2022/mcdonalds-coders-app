@@ -1,5 +1,8 @@
+import {useEffect} from 'react';
 import {QRCode} from 'react-qrcode-logo';
-import {useNavigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
+import {OrderStatus} from 'src/@types/order';
+import useOrderStatus from 'src/hooks/useOrderStatus';
 import {IMG_PATH, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
 import useFormat from '../../../hooks/useFormat';
@@ -11,33 +14,33 @@ const TWO_SECONDS = 1000 * 2;
 const CurrentOrder = () => {
   const navigate = useNavigate();
   const {order, resetOrder, updateOrder} = useOrderContext();
-  // Const {setOrderState} = useOrderState();
+  const {setOrderStatus} = useOrderStatus();
   const [currencyFormatter] = useFormat();
 
   // Restrict access when an order is in place
-  // if (!order?.isConfirmed()) {
-  //   return <Navigate to={URLS.root} replace />;
-  // }
+  if (!order?.isConfirmed()) {
+    return <Navigate to={URLS.root} replace />;
+  }
 
   const details = order.getDetails();
 
-  // UseEffect(() => {
-  //   changeOrderStatus(order.getId(), OrderStatus.preparing, TWO_SECONDS);
-  //   changeOrderStatus(order.getId(), OrderStatus.delivering, TWO_SECONDS * 2);
-  // }, []);
+  useEffect(() => {
+    changeOrderStatus(order.getId(), OrderStatus.preparing, TWO_SECONDS);
+    changeOrderStatus(order.getId(), OrderStatus.delivering, TWO_SECONDS * 2);
+  }, []);
 
-  // const changeOrderState = (orderId: string, state: OrderStateType, time: number) => {
-  //   setTimeout(() => {
-  //     setOrderState(orderId, status)
-  //       .then(() => {
-  //         order.nextStep();
-  //         updateOrder(order);
-  //       })
-  //       .catch((err: Error) => {
-  //         console.log(err);
-  //       });
-  //   }, time);
-  // };
+  const changeOrderStatus = (orderId: string, status: OrderStatus, time: number) => {
+    setTimeout(() => {
+      setOrderStatus(orderId, status)
+        .then(() => {
+          order.setStatus(status);
+          updateOrder(order);
+        })
+        .catch((err: Error) => {
+          console.log(err);
+        });
+    }, time);
+  };
 
   const cancelOrder = () => {
     resetOrder();
@@ -56,8 +59,7 @@ const CurrentOrder = () => {
         <h3>
           <strong>Estado del pedido:</strong>
         </h3>
-        <h3>{order.getStateCode()}</h3>
-        <h3>{order.getStateDescription()}</h3>
+        <h3>{order.getStatus()}</h3>
       </div>
       <div className="address">
         <h3>

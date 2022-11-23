@@ -13,6 +13,8 @@ export type OrderType = {
   confirmed: boolean;
   paymentType: string;
   state: typeof ORDER_STATES_CODES;
+  paymentAmount: PaymentAmount;
+  payment: PaymentMethodType;
 };
 
 export enum PaymentMethod {
@@ -40,21 +42,4 @@ export type OrderContextType = {
   updateOrder: (_: Order) => void;
   order: Order;
   resetOrder: () => void;
-};
-
-export type NewOrderType = {
-  id: string;
-  details: NewOrderAddressDetailsType;
-  items: MenuType[];
-  payment: PaymentMethodType;
-  paymentAmount: PaymentAmount;
-  status: ORDER_STATES_CODES;
-};
-
-export type NewOrderAddressDetailsType = {
-  id: string;
-  name: string;
-  address: string;
-  image: string;
-  isDelivery: boolean;
 };

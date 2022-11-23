@@ -1,6 +1,5 @@
 // <<<<<<< HEAD
 import React, { useState } from 'react';
-import type Order from 'src/api/orders/Order';
 import DonationOptions from 'src/components/donation/DonationOptions';
 import type { PaymentMethodType } from 'src/components/form/payment/constants/paymentMethodsTypes';
 import { PAYMENT_METHODS } from 'src/components/form/payment/constants/paymentMethodsTypes';
@@ -12,20 +11,8 @@ import useFormat from 'src/hooks/useFormat';
 import acceptOrder from 'src/Payment/acceptOrder';
 import Card from 'src/Payment/models/Card/Card';
 import { DebitPaymentStrategy } from 'src/Payment/models/Debit/Debit';
-import type Payment from 'src/Payment/models/Payment/Payment';
 import OrderDetail from '../../orders/OrderDetail';
 import { useDonation, usePaymentWarningModal } from './hooks';
-
-// Type CardDetailsType = {
-//   number: string;
-//   date: string;
-//   cvc: string;
-// };
-
-type DetailProps = {
-  order: Order;
-  confirmOrder: (payment: Payment, order: Order) => void;
-};
 
 const Checkout = () => {
   const [currencyFormatter] = useFormat();
@@ -75,31 +62,13 @@ const Checkout = () => {
 
   const handlePaymentSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    selectedMethod?.handleForm(event);
+
+    if (!selectedMethod) {
+      throw new Error();
+    }
+
+    const paymentStrategy = selectedMethod?.handleForm(event);
   };
-  /*  Const operationData = paymentMethod === PAYMENT_TYPE.debit ? cardData : bankData; */
-
-  // order.setStatus(OrderStatus.pending);
-  // order.setPayment(payment.getPaymentType());
-  // updateOrder(await saveOrder(order));
-  // payment.pay();
-  // order.setStatus(OrderStatus.preparing);
-  // localStorage.setItem(
-  //   STORAGE.orders,
-  //   JSON.stringify({
-  //     ...order,
-  //     total: order.getTotalPrice() + donationValue,
-  //     paymentType: payment.getPaymentType(),
-  //   }),
-  // );
-  // navigate(URLS.root);
-
-  const {number, date, cvc} = cardData;
-
-  // Cuando tenemos tipo de pag
-  const paymentStrategy = new DebitPaymentStrategy(new Card(number, date, cvc));
-
-  order.setPayment(paymentMethod);
 
   return (
     <form onSubmit={handlePaymentSubmit}>
@@ -113,19 +82,6 @@ const Checkout = () => {
 
           {selectedMethod?.formComponent()}
 
-          {/* <button type="submit">Submit</button> */}
-
-          {/* {paymentMethod === PAYMENT_TYPE.debit && (
-            <PaymentInputs
-              setCardCVC={cardUpdate.cvc}
-              setCardDate={cardUpdate.date}
-              setCardNumber={cardUpdate.number}
-              setCardIsValid={updateCardValidity}
-            />
-          )}
-          {paymentMethod === PAYMENT_TYPE.transfer && (
-            <TransferInputs setFullName={bankUpdate.fullName} setIBAN={bankUpdate.iban} />
-          )} */}
           <DonationOptions
             formDonationIsVisible={formDonationIsVisible}
             updateDonationFormVisibility={updateDonationFormVisibility}
@@ -139,20 +95,6 @@ const Checkout = () => {
         <button type="submit" className="McButton fixed">
           Enviar pedido
         </button>
-        {/* <McButton
-          text={'Enviar pedido'}
-          onClick={() => {
-            acceptOrder({
-              confirmOrder,
-              donationValue,
-              operationData,
-              order,
-              paymentMethod,
-              updateCardWarning,
-            });
-          }}
-          fixed
-        /> */}
         <InfoModal
           toggle={toggleWarningModalVisibility}
           isOpen={warningModalIsVisible}

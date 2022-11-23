@@ -1,3 +1,9 @@
+import type {PaymentStrategy} from 'src/@types/payments';
+import Account from 'src/Payment/models/Account/Account';
+import Card from 'src/Payment/models/Card/Card';
+import {CashPaymentStrategy} from 'src/Payment/models/Cash/Cash';
+import {DebitPaymentStrategy} from 'src/Payment/models/Debit/Debit';
+import {TransferPaymentStrategy} from 'src/Payment/models/Transfer/Transfer';
 import DebitPaymentInputs from '../DebitPaymentInputs';
 import TransferPaymentInputs from '../TransferPaymentInputs';
 
@@ -5,7 +11,7 @@ export type PaymentMethodType = {
   id: string;
   text: string;
   formComponent: () => any;
-  handleForm: (event: React.FormEvent<HTMLFormElement>) => void;
+  handleForm: (event: React.FormEvent<HTMLFormElement>) => PaymentStrategy;
 };
 
 export const PAYMENT_METHODS: PaymentMethodType[] = [
@@ -15,6 +21,8 @@ export const PAYMENT_METHODS: PaymentMethodType[] = [
     formComponent: () => null,
     handleForm(event: React.FormEvent<HTMLFormElement>) {
       console.log(event, 'cash');
+      const strategy = new CashPaymentStrategy();
+      return strategy;
     },
   },
   {
@@ -30,6 +38,10 @@ export const PAYMENT_METHODS: PaymentMethodType[] = [
       const cardNumber = target.cardNumber.value;
       const cardDate = target.expiryDate.value;
       const cardCvc = target.cvc.value;
+
+      const card = new Card(cardNumber, cardDate, cardCvc);
+      const strategy = new DebitPaymentStrategy(card);
+      return strategy;
     },
   },
   {
@@ -43,14 +55,10 @@ export const PAYMENT_METHODS: PaymentMethodType[] = [
       };
       const name = target.name.value;
       const iban = target.iban.value;
-    },
-  },
-  {
-    id: 'paypal',
-    text: 'Paypal',
-    formComponent: () => null,
-    handleForm(event: React.FormEvent<HTMLFormElement>) {
-      console.log(event, 'paypal');
+
+      const acount = new Account(name, iban);
+      const strategy = new TransferPaymentStrategy(acount);
+      return strategy;
     },
   },
 ];

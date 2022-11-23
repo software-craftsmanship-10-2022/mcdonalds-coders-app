@@ -15,6 +15,7 @@ import OrderDetail from '../../orders/OrderDetail';
 import { useDonation, usePaymentWarningModal } from './hooks';
 
 const Checkout = () => {
+  const {order} = useOrderContext();
   const [currencyFormatter] = useFormat();
   const {order, updateOrder} = useOrderContext();
   const {paymentMethod, updatePaymentMethod} = usePaymentMethod(PAYMENT_TYPE.cash);
@@ -68,6 +69,12 @@ const Checkout = () => {
     }
 
     const paymentStrategy = selectedMethod?.handleForm(event);
+    const context = new PaymentContext(paymentStrategy);
+    try {
+      context.pay(new PaymentAmount(order.getTotalPrice(), donationValue, 0));
+    } catch (error: unknown) {
+      updateCardWarning((error as Error).message);
+    }
   };
 
   return (

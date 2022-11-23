@@ -64,7 +64,7 @@ const Checkout = () => {
     setSelectedMethod(method);
   };
 
-  const handlePaymentSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handlePaymentSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!selectedMethod) {
@@ -73,8 +73,15 @@ const Checkout = () => {
 
     const paymentStrategy = selectedMethod?.handleForm(event);
     const context = new PaymentContext(paymentStrategy);
+    const paymentAmount = new PaymentAmount(order.getTotalPrice(), donationValue, 0);
+
     try {
-      context.pay(new PaymentAmount(order.getTotalPrice(), donationValue, 0));
+      context.pay(paymentAmount.totalAmount());
+      order.setStatus(OrderStatus.preparing);
+      order.setPayment(selectedMethod);
+      order.setPaymentAmount(paymentAmount);
+      updateOrder(await saveOrder(order));
+      navigate(URLS.ordersCurrent);
     } catch (error: unknown) {
       updateCardWarning((error as Error).message);
     }

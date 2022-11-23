@@ -1,14 +1,18 @@
 import React, {useState} from 'react';
 import DonationOptions from 'src/components/donation/DonationOptions';
-import type {PaymentMethodType} from 'src/components/form/payment/constants/paymentMethodsTypes';
-import {PAYMENT_METHODS} from 'src/components/form/payment/constants/paymentMethodsTypes';
-import PaymentMethodForm from 'src/components/form/payment/PaymentMethodForm';
 import InfoModal from 'src/components/modal/InfoModal';
+import {useOrderContext} from 'src/context/OrderContext';
 import useFormat from 'src/hooks/useFormat';
+import {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
+import {PaymentContext} from 'src/Payment/models/PaymentContext/PaymentContext';
+import type {PaymentMethodType} from '../../form/Payment/constants/paymentMethodsTypes';
+import {PAYMENT_METHODS} from '../../form/Payment/constants/paymentMethodsTypes';
+import PaymentMethodForm from '../../form/Payment/PaymentMethodForm';
 import OrderDetail from '../../orders/OrderDetail';
 import {useDonation, usePaymentWarningModal} from './hooks';
 
 const Checkout = () => {
+  const {order} = useOrderContext();
   const [currencyFormatter] = useFormat();
   const {formDonationIsVisible, donationValue, updateDonationFormVisibility, updateDonationValue} =
     useDonation();
@@ -33,6 +37,12 @@ const Checkout = () => {
     }
 
     const paymentStrategy = selectedMethod?.handleForm(event);
+    const context = new PaymentContext(paymentStrategy);
+    try {
+      context.pay(new PaymentAmount(order.getTotalPrice(), donationValue, 0));
+    } catch (error: unknown) {
+      updateCardWarning((error as Error).message);
+    }
   };
 
   return (

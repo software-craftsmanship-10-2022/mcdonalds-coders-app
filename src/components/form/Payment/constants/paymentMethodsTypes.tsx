@@ -20,7 +20,6 @@ export const PAYMENT_METHODS: PaymentMethodType[] = [
     text: 'Metálico',
     formComponent: () => null,
     handleForm(event: React.FormEvent<HTMLFormElement>) {
-      console.log(event, 'cash');
       const strategy = new CashPaymentStrategy();
       return strategy;
     },
@@ -56,8 +55,8 @@ export const PAYMENT_METHODS: PaymentMethodType[] = [
       const name = target.name.value;
       const iban = target.iban.value;
 
-      const acount = new Account(name, iban);
-      const strategy = new TransferPaymentStrategy(acount);
+      const account = new Account(name, iban);
+      const strategy = new TransferPaymentStrategy(account);
       return strategy;
     },
   },

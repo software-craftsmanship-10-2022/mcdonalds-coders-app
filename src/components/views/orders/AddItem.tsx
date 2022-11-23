@@ -53,7 +53,7 @@ const AddItem = () => {
 
   const onSelectComplement = (product: ProductType) => {
     const newProduct = product.title === selectedComplement?.title ? undefined : product;
-    menuBuilder.withMainComplement(newProduct);
+    menuBuilder.withComplement(newProduct);
     setSelectedComplement(newProduct);
   };
 

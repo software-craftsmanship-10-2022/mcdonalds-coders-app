@@ -10,7 +10,7 @@ export interface MenuBuilderInterface {
   withMainProduct(product: ProductType): MenuBuilderInterface;
   withMainMenu(menu: MenuType): MenuBuilderInterface;
   withDrink(product: ProductType): MenuBuilderInterface;
-  withMainComplement(product: ProductType): MenuBuilderInterface;
+  withComplement(product: ProductType): MenuBuilderInterface;
   withExtra(product: ProductType): MenuBuilderInterface;
   getMenu(): MenuType;
   reset(): void;
@@ -20,7 +20,7 @@ export class MenuBuilder implements MenuBuilderInterface {
   #menu: MenuType;
   #mainProduct: ProductType;
   #drink: ProductType | undefined;
-  #mainComplement: ProductType | undefined;
+  #complement: ProductType | undefined;
   #extra: ProductType | undefined;
 
   constructor() {
@@ -33,7 +33,7 @@ export class MenuBuilder implements MenuBuilderInterface {
     this.#menu = this.buildMenuPlaceholder();
     this.#mainProduct = this.buildMainProductPlaceholder();
     this.#drink = undefined;
-    this.#mainComplement = undefined;
+    this.#complement = undefined;
     this.#extra = undefined;
   }
 
@@ -57,10 +57,10 @@ export class MenuBuilder implements MenuBuilderInterface {
     return this;
   }
 
-  withMainComplement(product: ProductType | undefined): MenuBuilderInterface {
+  withComplement(product: ProductType | undefined): MenuBuilderInterface {
     this.assertMainMenu();
 
-    this.#mainComplement = product;
+    this.#complement = product;
 
     return this;
   }
@@ -83,14 +83,14 @@ export class MenuBuilder implements MenuBuilderInterface {
   getMenu(): MenuType {
     const menu = this.#menu;
 
-    if (menu === undefined) {
-      return this.buildMenuPlaceholder();
+    if (menu.id === '') {
+      throw new Error(ERRORS.mainMenuNoExist);
     }
 
     menu.mainProduct = this.#mainProduct;
     this.addProductToList(this.#drink, menu);
     this.addProductToList(this.#extra, menu);
-    this.addProductToList(this.#mainComplement, menu);
+    this.addProductToList(this.#complement, menu);
 
     this.reset();
 
@@ -109,6 +109,25 @@ export class MenuBuilder implements MenuBuilderInterface {
   }
 
   private addProductToList(product: ProductType | undefined, menu: MenuType): void {
+    const productWithSameCategory = menu.products.find(
+      (menuProduct) => menuProduct.categoryId === product?.categoryId,
+    );
+
+    if (productWithSameCategory) {
+      const newProducts = menu.products.filter(
+        (menuProduct) => menuProduct.id !== productWithSameCategory.id,
+      );
+
+      menu.products.pop();
+      menu.products = newProducts;
+
+      this.pushProduct(product, menu);
+    }
+
+    this.pushProduct(product, menu);
+  }
+
+  private pushProduct(product: ProductType | undefined, menu: MenuType) {
     if (product) {
       menu.products.push(product);
     }
@@ -119,7 +138,7 @@ export class MenuBuilder implements MenuBuilderInterface {
    * @throws Error
    */
   private assertMainMenu(): void {
-    if (this.#menu === undefined) {
+    if (this.#menu === undefined || this.#menu.id === '') {
       throw new Error(ERRORS.mainMenuNoExist);
     }
   }

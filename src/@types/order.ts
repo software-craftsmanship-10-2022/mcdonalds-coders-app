@@ -1,4 +1,6 @@
 import type Order from 'src/api/orders/Order';
+import type {PaymentMethodType} from 'src/components/form/Payment/constants/paymentMethodsTypes';
+import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
 import type {MenuType} from './product.d';
 
 // @types.order.ts
@@ -52,7 +54,8 @@ export type NewOrderType = {
   id: string;
   details: NewOrderAddressDetailsType;
   items: MenuType[];
-  payment: PaymentMethod;
+  payment: PaymentMethodType;
+  paymentAmount: PaymentAmount;
   status: OrderStatus;
 };
 

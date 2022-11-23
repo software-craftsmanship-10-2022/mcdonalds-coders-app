@@ -1,4 +1,6 @@
-import type {NewOrderAddressDetailsType, NewOrderType, PaymentMethod} from '../../@types/order';
+import type {PaymentMethodType} from 'src/components/form/Payment/constants/paymentMethodsTypes';
+import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
+import type {NewOrderAddressDetailsType, NewOrderType} from '../../@types/order';
 import {OrderStatus} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';
 import InProgressState from './OrderStates/InProgressState';
@@ -90,6 +92,20 @@ export default class Order {
     return this.order.items.reduce((total: number, {price}) => total + price, 0);
   }
 
+  /**
+   * Set the payment amount of the items with the donation and other values.
+   */
+  setPaymentAmount(paymentAmount: PaymentAmount): void {
+    this.order.paymentAmount = paymentAmount;
+  }
+
+  /**
+   * Get the payment amount of the items with the donation and other values.
+   */
+  getPaymentAmount(): PaymentAmount {
+    return this.order.paymentAmount;
+  }
+
   getTotalPriceByMenu(menuId: string) {
     return this.order.items
       .filter((item) => item.id === menuId)
@@ -99,7 +115,7 @@ export default class Order {
   /**
    * Get the order payment.
    */
-  getPayment(): PaymentMethod {
+  getPayment(): PaymentMethodType {
     return this.order.payment;
   }
 
@@ -108,7 +124,7 @@ export default class Order {
    *
    * @param newPayment New payment method.
    */
-  setPayment(newPayment: PaymentMethod): void {
+  setPayment(newPayment: PaymentMethodType): void {
     this.order.payment = newPayment;
   }
 

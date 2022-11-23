@@ -1,6 +1,5 @@
-import {OrderStatus, PaymentMethod} from 'src/@types/order';
+import {PaymentMethod} from 'src/@types/order';
 import Order from 'src/api/orders/Order';
-import {STORAGE} from 'src/config';
 import {DONATION_ERRORS, ORDER_ERRORS, PAYMENT_TYPE_ERRORS} from 'src/Payment/errorMessages';
 import Donation from '../Donation/Donation';
 
@@ -40,15 +39,7 @@ class Payment {
     this.checkPaymentType();
     this.checkOrder();
     this.checkDonation();
-    this.order.setStatus(OrderStatus.preparing);
-    localStorage.setItem(
-      STORAGE.orders,
-      JSON.stringify({
-        ...this.order,
-        total: this.order.getTotalPrice() + this.donation.amountValue(),
-        paymentType: this.paymentType,
-      }),
-    );
+    this.order.nextStep();
   }
 }
 

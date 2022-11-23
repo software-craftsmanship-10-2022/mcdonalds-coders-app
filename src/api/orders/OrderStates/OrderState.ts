@@ -1,7 +1,8 @@
 import type Order from '../Order';
+import type {OrderStateType} from './constants';
 
 class OrderState {
-  constructor(protected order: Order, private readonly code: string) {}
+  constructor(protected order: Order, private readonly state: OrderStateType) {}
 
   nextStep() {
     // Do something
@@ -20,7 +21,11 @@ class OrderState {
   }
 
   getCode(): string {
-    return this.code;
+    return this.state.code;
+  }
+
+  getDescription(): string {
+    return this.state.description;
   }
 }
 

@@ -1,6 +1,6 @@
-import type {NewOrderAddressDetailsType, NewOrderType, PaymentMethod} from '../../@types/order';
-import {OrderStatus} from '../../@types/order';
+import type {OrderAddressDetailsType, OrderType, PaymentMethod} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';
+import {ORDER_STATES} from './OrderStates/constants';
 import InProgressState from './OrderStates/InProgressState';
 import type OrderState from './OrderStates/OrderState';
 
@@ -10,7 +10,7 @@ export default class Order {
    * @param order Order to handle
    */
   #state: OrderState;
-  constructor(private order: NewOrderType) {
+  constructor(private order: OrderType) {
     this.#state = new InProgressState(this);
   }
 
@@ -56,10 +56,24 @@ export default class Order {
   }
 
   /**
-   * Get the order Id.
+   * Get the order state instance.
    */
   getState(): OrderState {
     return this.#state;
+  }
+
+  /**
+   * Get the order state code.
+   */
+  getStateCode(): string {
+    return this.getState().getCode();
+  }
+
+  /**
+   * Get the order state description.
+   */
+  getStateDescription(): string {
+    return this.getState().getDescription();
   }
 
   /**
@@ -113,32 +127,16 @@ export default class Order {
   }
 
   /**
-   * Get the status of the order.
-   */
-  getStatus(): OrderStatus {
-    return this.order.status;
-  }
-
-  /**
-   * Sets new order status.
-   *
-   * @param newStatus New status
-   */
-  setStatus(newStatus: OrderStatus): void {
-    this.order.status = newStatus;
-  }
-
-  /**
-   * Check if the order status is not confirmed.
+   * Check if the order state is not confirmed.
    */
   isConfirmed(): boolean {
-    return this.getStatus() !== OrderStatus.noConfirmed;
+    return this.#state.getCode() === ORDER_STATES.confirmedState.code;
   }
 
   /**
    * Get the order details.
    */
-  getDetails(): NewOrderAddressDetailsType {
+  getDetails(): OrderAddressDetailsType {
     return this.order.details;
   }
 
@@ -147,16 +145,8 @@ export default class Order {
    *
    * @param details new Details.
    */
-  setDetails(details: NewOrderAddressDetailsType) {
+  setDetails(details: OrderAddressDetailsType) {
     this.order.details = details;
-  }
-
-  /**
-   * Get a copy of the instance.
-   */
-  clone(): Order {
-    const details: NewOrderAddressDetailsType = {...this.order.details};
-    return new Order({...this.order, details});
   }
 
   changeState(state: OrderState) {
@@ -177,5 +167,10 @@ export default class Order {
 
   reject() {
     this.#state.reject();
+  }
+
+  toOrderType(): OrderType {
+    const {id, details, items, total, payment} = this.order;
+    return {id, details, items, total, payment};
   }
 }

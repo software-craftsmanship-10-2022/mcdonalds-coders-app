@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import type {ComboType} from 'src/@types/combos';
 import type {MenuType, ProductType} from 'src/@types/product';
+import Order from 'src/api/orders/Order';
 import InfoModal from 'src/components/modal/InfoModal';
 import ProductSelector from 'src/components/product-selector/ProductSelector';
 import IngredientList from 'src/components/product/IngredientList/IngredientList';
@@ -101,11 +102,19 @@ const AddItem = () => {
       products: getSelectedProducts(),
     };
 
-    Array.from({length: count}, (_, index) => index).forEach(() => {
-      order.addItem(menu);
+    const newOrder = new Order({
+      id: order.getId(),
+      details: order.getDetails(),
+      items: order.getItems(),
+      total: order.getTotalPrice(),
+      payment: order.getPayment(),
     });
 
-    updateOrder(order);
+    Array.from({length: count}, (_, index) => index).forEach(() => {
+      newOrder.addItem(menu);
+    });
+
+    updateOrder(newOrder);
     navigate(-1);
   };
 

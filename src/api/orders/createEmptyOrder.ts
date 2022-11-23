@@ -1,5 +1,5 @@
-import type {NewOrderAddressDetailsType} from 'src/@types/order';
-import {OrderStatus, PaymentMethod} from 'src/@types/order';
+import type {OrderAddressDetailsType} from 'src/@types/order';
+import {PaymentMethod} from 'src/@types/order';
 import Order from './Order';
 
 /**
@@ -8,7 +8,7 @@ import Order from './Order';
  * @return new order.
  */
 export default function createEmptyOrder(): Order {
-  const details: NewOrderAddressDetailsType = {
+  const details: OrderAddressDetailsType = {
     id: '',
     name: '',
     address: '',
@@ -20,7 +20,7 @@ export default function createEmptyOrder(): Order {
     details,
     id: '123',
     items: [],
+    total: 0,
     payment: PaymentMethod.cash,
-    status: OrderStatus.noConfirmed,
   });
 }

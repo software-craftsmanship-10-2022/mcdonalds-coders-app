@@ -1,5 +1,4 @@
 import type {PaymentStrategy} from 'src/@types/payments';
-import type {PaymentAmount} from '../PaymentAmount/PaymentAmount';
 
 export class PaymentContext {
   #strategy: PaymentStrategy;
@@ -12,8 +11,8 @@ export class PaymentContext {
     this.#strategy = strategy;
   }
 
-  pay(paymentAmount: PaymentAmount) {
-    this.#strategy.pay(paymentAmount.totalAmount());
+  pay(paymentAmount: number) {
+    this.#strategy.pay(paymentAmount);
   }
 }
 

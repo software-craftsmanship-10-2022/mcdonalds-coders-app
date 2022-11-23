@@ -1,7 +1,6 @@
 // <<<<<<< HEAD
 import React, { useState } from 'react';
 import DonationOptions from 'src/components/donation/DonationOptions';
-import type { PaymentMethodType } from 'src/components/form/payment/constants/paymentMethodsTypes';
 import { PAYMENT_METHODS } from 'src/components/form/payment/constants/paymentMethodsTypes';
 import PaymentMethodForm from 'src/components/form/payment/PaymentMethodForm';
 import InfoModal from 'src/components/modal/InfoModal';
@@ -15,7 +14,8 @@ import OrderDetail from '../../orders/OrderDetail';
 import { useDonation, usePaymentWarningModal } from './hooks';
 
 const Checkout = () => {
-  const {order} = useOrderContext();
+  const navigate = useNavigate();
+  const {order, updateOrder} = useOrderContext();
   const [currencyFormatter] = useFormat();
   const {order, updateOrder} = useOrderContext();
   const {paymentMethod, updatePaymentMethod} = usePaymentMethod(PAYMENT_TYPE.cash);
@@ -30,7 +30,9 @@ const Checkout = () => {
     warningModalIsVisible,
     toggleWarningModalVisibility,
   } = usePaymentWarningModal();
-  const [selectedMethod, setSelectedMethod] = useState<PaymentMethodType | undefined>(undefined);
+  const [selectedMethod, setSelectedMethod] = useState<PaymentMethodFormType | undefined>(
+    undefined,
+  );
 
   /*  const operationData = paymentMethod === PAYMENT_TYPE.debit ? cardData : bankData; */
 
@@ -61,7 +63,7 @@ const Checkout = () => {
     setSelectedMethod(method);
   };
 
-  const handlePaymentSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handlePaymentSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!selectedMethod) {
@@ -70,8 +72,15 @@ const Checkout = () => {
 
     const paymentStrategy = selectedMethod?.handleForm(event);
     const context = new PaymentContext(paymentStrategy);
+    const paymentAmount = new PaymentAmount(order.getTotalPrice(), donationValue, 0);
+
     try {
-      context.pay(new PaymentAmount(order.getTotalPrice(), donationValue, 0));
+      context.pay(paymentAmount.totalAmount());
+      order.setStatus(OrderStatus.preparing);
+      order.setPayment(selectedMethod);
+      order.setPaymentAmount(paymentAmount);
+      updateOrder(await saveOrder(order));
+      navigate(URLS.ordersCurrent);
     } catch (error: unknown) {
       updateCardWarning((error as Error).message);
     }

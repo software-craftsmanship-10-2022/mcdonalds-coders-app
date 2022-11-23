@@ -7,14 +7,17 @@ import {TransferPaymentStrategy} from 'src/Payment/models/Transfer/Transfer';
 import DebitPaymentInputs from '../DebitPaymentInputs';
 import TransferPaymentInputs from '../TransferPaymentInputs';
 
-export type PaymentMethodType = {
+export interface PaymentMethodType {
   id: string;
   text: string;
+}
+
+export interface PaymentMethodFormType extends PaymentMethodType {
   formComponent: () => any;
   handleForm: (event: React.FormEvent<HTMLFormElement>) => PaymentStrategy;
-};
+}
 
-export const PAYMENT_METHODS: PaymentMethodType[] = [
+export const PAYMENT_METHODS: PaymentMethodFormType[] = [
   {
     id: 'cash',
     text: 'Metálico',

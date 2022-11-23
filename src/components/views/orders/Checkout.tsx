@@ -72,6 +72,12 @@ const Checkout = () => {
     }
 
     const paymentStrategy = selectedMethod?.handleForm(event);
+    const context = new PaymentContext(paymentStrategy);
+    try {
+      context.pay(new PaymentAmount(order.getTotalPrice(), donationValue, 0));
+    } catch (error: unknown) {
+      updateCardWarning((error as Error).message);
+    }
   };
 
   return (

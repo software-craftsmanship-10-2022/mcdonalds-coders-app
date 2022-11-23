@@ -9,4 +9,4 @@ enum PaymentMethods {
   paypal,
 }
 
-export {PaymentStrategy, PaymentMethods};
+export {type PaymentStrategy, PaymentMethods};

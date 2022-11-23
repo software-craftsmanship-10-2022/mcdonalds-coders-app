@@ -66,31 +66,13 @@ const Checkout = () => {
 
   const handlePaymentSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    selectedMethod?.handleForm(event);
+
+    if (!selectedMethod) {
+      throw new Error();
+    }
+
+    const paymentStrategy = selectedMethod?.handleForm(event);
   };
-  /*  Const operationData = paymentMethod === PAYMENT_TYPE.debit ? cardData : bankData; */
-
-  // order.setStatus(OrderStatus.pending);
-  // order.setPayment(payment.getPaymentType());
-  // updateOrder(await saveOrder(order));
-  // payment.pay();
-  // order.setStatus(OrderStatus.preparing);
-  // localStorage.setItem(
-  //   STORAGE.orders,
-  //   JSON.stringify({
-  //     ...order,
-  //     total: order.getTotalPrice() + donationValue,
-  //     paymentType: payment.getPaymentType(),
-  //   }),
-  // );
-  // navigate(URLS.root);
-
-  const {number, date, cvc} = cardData;
-
-  // Cuando tenemos tipo de pag
-  const paymentStrategy = new DebitPaymentStrategy(new Card(number, date, cvc));
-
-  order.setPayment(paymentMethod);
 
   return (
     <form onSubmit={handlePaymentSubmit}>

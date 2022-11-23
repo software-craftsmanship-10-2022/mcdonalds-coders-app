@@ -116,9 +116,6 @@ describe('Test Checkout component', () => {
       const button = screen.getByText(/Enviar pedido/);
       fireEvent.click(button);
 
-      screen.debug();
-      console.log('DUMmMYYY', dummyOrder);
-
       await waitFor(() => {
         expect(screen.getByText(/The order id is: 1234abc/)).toBeInTheDocument();
       });

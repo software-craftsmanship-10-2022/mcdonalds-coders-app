@@ -63,18 +63,29 @@ figure {
   display: flex;
 }
 
-.state-buttons {
-  display: flex;
-  flex-direction: column;
-}
 .state-buttons > button {
+  width: calc(50% - 20px);
   margin-bottom: 30px;
+  margin-right: 20px;
   background-color: var(--mc-yellow);
   padding: 14px 20px;
   border-radius: 24px;
   border: none;
 }
-
+.state-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 400px;
+}
+.state-buttons > button.reset-btn {
+  background-color: rgba(128, 128, 128, 0.5);
+}
+.state-buttons > button.reject-btn {
+  background-color: rgba(128, 128, 128, 0.5);
+}
+.state-buttons > button.cancel-btn {
+  background-color: rgba(255, 0, 0, 0.65);
+}
 .order-track {
   display: flex;
   flex-direction: column;

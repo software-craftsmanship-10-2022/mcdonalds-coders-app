@@ -1,32 +1,40 @@
-import {mockNewOrder} from '../../mocks/mocks';
-import type Order from '../../Order';
+import {METHOD_NOT_IMPLEMENTED_ERROR} from 'src/api/state/constants';
+import {FakeStateContext} from 'src/api/state/FakeStateContext';
+import type {IStateContext} from 'src/api/state/IStateContext';
 import ConfirmedState from '../ConfirmedState';
 import ReceivedState from '../ReceivedState';
 import RejectedState from '../RejectedState';
 
-describe('Given a ReceivedState class', () => {
-  let order: Order;
+describe('Given an In Received state', () => {
+  let context: IStateContext;
+  let receivedState: ReceivedState;
+  let changeStateSpy: jest.SpyInstance;
 
   beforeEach(() => {
-    order = mockNewOrder();
-    order.changeState(new ReceivedState(order));
+    context = new FakeStateContext();
+    receivedState = new ReceivedState(context);
+    changeStateSpy = jest.spyOn(context, 'changeState');
   });
 
-  it('when an nextState is called order.getState() should return ConfirmedState', () => {
-    order.getState().nextStep();
-    expect(order.getState()).toBeInstanceOf(ConfirmedState);
+  it('when nextStep is called then new state should be Confirmed state', () => {
+    receivedState.nextStep();
+    expect(changeStateSpy).toHaveBeenCalledWith(new ConfirmedState(context));
   });
 
-  it('when an cancelByUser is called order.getState() should return ReceivedState', () => {
-    order.getState().cancelByUser();
-    expect(order.getState()).toBeInstanceOf(ReceivedState);
+  it('when cancelByUser is called then should return an Error', () => {
+    expect(() => {
+      receivedState.cancelByUser();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
-  it('when an cancelByRestaurant is called order.getState() should return ReceivedState', () => {
-    order.getState().cancelByRestaurant();
-    expect(order.getState()).toBeInstanceOf(ReceivedState);
+
+  it('when cancelByRestaurant is called then should return an Error', () => {
+    expect(() => {
+      receivedState.cancelByRestaurant();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
-  it('when an reject is called order.getState() should return RejectedState', () => {
-    order.getState().reject();
-    expect(order.getState()).toBeInstanceOf(RejectedState);
+
+  it('when nextStep is called then new state should be Rejected state', () => {
+    receivedState.reject();
+    expect(changeStateSpy).toHaveBeenCalledWith(new RejectedState(context));
   });
 });

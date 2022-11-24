@@ -1,19 +1,19 @@
-import type Order from '../Order';
+import type {IStateContext} from 'src/api/state/IStateContext';
+import McState from 'src/api/state/McState';
 import ConfirmedState from './ConfirmedState';
 import {ORDER_STATES} from './constants';
-import OrderState from './OrderState';
 import RejectedState from './RejectedState';
-class ReceivedState extends OrderState {
-  constructor(order: Order) {
-    super(order, ORDER_STATES.receivedState);
+class ReceivedState extends McState {
+  constructor(context: IStateContext) {
+    super(context, ORDER_STATES.receivedState);
   }
 
   nextStep() {
-    this.order.changeState(new ConfirmedState(this.order));
+    this.context.changeState(new ConfirmedState(this.context));
   }
 
   reject() {
-    this.order.changeState(new RejectedState(this.order));
+    this.context.changeState(new RejectedState(this.context));
   }
 }
 

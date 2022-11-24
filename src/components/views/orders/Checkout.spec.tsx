@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import {MemoryRouter, Route, Routes, useNavigate} from 'react-router-dom';
 import createEmptyOrder from 'src/api/orders/createEmptyOrder';
 import type Order from 'src/api/orders/Order';
-import saveOrder, * as saveOrderObject from 'src/api/orders/saveOrder';
+import * as saveOrderObject from 'src/api/orders/saveOrder';
 import {STORAGE, URLS} from 'src/config';
 import {OrderProvider, useOrderContext} from 'src/context/OrderContext';
 import useLocalStorage from 'src/hooks/useLocalStorage';
@@ -32,11 +32,7 @@ const ShowOrder: React.FC<{order: Order}> = ({order}) => {
 
 function ComponentWithRouter(): JSX.Element {
   const DummyComponent = () => {
-    const {order, updateOrder} = useOrderContext();
-    const mockConfirmOrder = async () => {
-      const awaitOrder = await saveOrder(order);
-      updateOrder(awaitOrder);
-    };
+    const {order} = useOrderContext();
 
     return (
       <div>

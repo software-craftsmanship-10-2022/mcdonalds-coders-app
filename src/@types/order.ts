@@ -4,12 +4,12 @@ import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount
 import type {MenuType} from './product';
 
 export type OrderType = {
-  paymentAmount: PaymentAmount;
   id: string;
   details: OrderAddressDetailsType;
   items: MenuType[];
   total: number;
   payment: PaymentMethodType;
+  paymentAmount: PaymentAmount;
 };
 
 export enum PaymentMethod {

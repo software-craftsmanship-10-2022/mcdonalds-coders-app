@@ -1,30 +1,38 @@
-import {mockNewOrder} from '../../mocks/mocks';
-import type Order from '../../Order';
+import {METHOD_NOT_IMPLEMENTED_ERROR} from 'src/api/state/constants';
+import {FakeStateContext} from 'src/api/state/FakeStateContext';
+import type {IStateContext} from 'src/api/state/IStateContext';
 import CancelledByRestaurantState from '../CancelledByRestaurantState';
 
-describe('Given a CancelledByRestaurant class', () => {
-  let order: Order;
+describe('Given an Cancelled by Restaurant state', () => {
+  let context: IStateContext;
+  let cancelledByRestaurantState: CancelledByRestaurantState;
 
   beforeEach(() => {
-    order = mockNewOrder();
-    order.changeState(new CancelledByRestaurantState(order));
+    context = new FakeStateContext();
+    cancelledByRestaurantState = new CancelledByRestaurantState(context);
   });
 
-  it('when nextState method is called order.getState() should return CancelledByRestaurantState', () => {
-    order.getState().nextStep();
-    expect(order.getState()).toBeInstanceOf(CancelledByRestaurantState);
+  it('when nextStep is called then should return an Error', () => {
+    expect(() => {
+      cancelledByRestaurantState.nextStep();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
 
-  it('when cancelByUser method is called order.getState() should return CancelledByRestaurantState', () => {
-    order.getState().cancelByUser();
-    expect(order.getState()).toBeInstanceOf(CancelledByRestaurantState);
+  it('when cancelByUser is called then should return an Error', () => {
+    expect(() => {
+      cancelledByRestaurantState.cancelByUser();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
-  it('when cancelByRestaurant method is called order.getState() should return CancelledByRestaurantState', () => {
-    order.getState().cancelByRestaurant();
-    expect(order.getState()).toBeInstanceOf(CancelledByRestaurantState);
+
+  it('when cancelByRestaurant is called then should return an Error', () => {
+    expect(() => {
+      cancelledByRestaurantState.cancelByRestaurant();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
-  it('when reject method is called order.getState() should return CancelledByRestaurantState', () => {
-    order.getState().reject();
-    expect(order.getState()).toBeInstanceOf(CancelledByRestaurantState);
+
+  it('when reject is called then should return an Error', () => {
+    expect(() => {
+      cancelledByRestaurantState.reject();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
 });

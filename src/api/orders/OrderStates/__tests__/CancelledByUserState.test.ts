@@ -1,30 +1,38 @@
-import {mockNewOrder} from '../../mocks/mocks';
-import type Order from '../../Order';
+import {METHOD_NOT_IMPLEMENTED_ERROR} from 'src/api/state/constants';
+import {FakeStateContext} from 'src/api/state/FakeStateContext';
+import type {IStateContext} from 'src/api/state/IStateContext';
 import CancelledByUserState from '../CancelledByUserState';
 
-describe('Given a CancelledByUser class', () => {
-  let order: Order;
+describe('Given an Cancelled by user state', () => {
+  let context: IStateContext;
+  let cancelledByUserState: CancelledByUserState;
 
   beforeEach(() => {
-    order = mockNewOrder();
-    order.changeState(new CancelledByUserState(order));
+    context = new FakeStateContext();
+    cancelledByUserState = new CancelledByUserState(context);
   });
 
-  it('when nextState method is called order.getState() should return CancelledByUserState', () => {
-    order.getState().nextStep();
-    expect(order.getState()).toBeInstanceOf(CancelledByUserState);
+  it('when nextStep is called then should return an Error', () => {
+    expect(() => {
+      cancelledByUserState.nextStep();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
 
-  it('when cancelByUser method is called order.getState() should return CancelledByUserState', () => {
-    order.getState().cancelByUser();
-    expect(order.getState()).toBeInstanceOf(CancelledByUserState);
+  it('when cancelByUser is called then should return an Error', () => {
+    expect(() => {
+      cancelledByUserState.cancelByUser();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
-  it('when cancelByRestaurant method is called order.getState() should return CancelledByUserState', () => {
-    order.getState().cancelByRestaurant();
-    expect(order.getState()).toBeInstanceOf(CancelledByUserState);
+
+  it('when cancelByRestaurant is called then should return an Error', () => {
+    expect(() => {
+      cancelledByUserState.cancelByRestaurant();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
-  it('when reject method is called order.getState() should return CancelledByUserState', () => {
-    order.getState().reject();
-    expect(order.getState()).toBeInstanceOf(CancelledByUserState);
+
+  it('when reject is called then should return an Error', () => {
+    expect(() => {
+      cancelledByUserState.reject();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
 });

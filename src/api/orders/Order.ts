@@ -1,15 +1,17 @@
 import type {OrderAddressDetailsType, OrderType, PaymentMethod} from '../../@types/order';
 import type {MenuType} from '../../@types/product.d';
+import type {IStateContext} from '../state/IStateContext';
+import type {IStateStepsContext} from '../state/IStateStepsContext';
+import type McState from '../state/McState';
 import {ORDER_STATES} from './OrderStates/constants';
 import InProgressState from './OrderStates/InProgressState';
-import type OrderState from './OrderStates/OrderState';
 
-export default class Order {
+export default class Order implements IStateContext, IStateStepsContext {
   // @TODO calisthenics: this.order.items: use first-class collections
   /**
    * @param order Order to handle
    */
-  #state: OrderState;
+  #state: McState;
   constructor(private order: OrderType) {
     this.#state = new InProgressState(this);
   }
@@ -58,7 +60,7 @@ export default class Order {
   /**
    * Get the order state instance.
    */
-  getState(): OrderState {
+  getState(): McState {
     return this.#state;
   }
 
@@ -149,7 +151,7 @@ export default class Order {
     this.order.details = details;
   }
 
-  changeState(state: OrderState) {
+  changeState(state: McState) {
     this.#state = state;
   }
 

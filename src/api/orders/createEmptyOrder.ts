@@ -22,8 +22,6 @@ export default function createEmptyOrder(): Order {
     items: [],
     total: 0,
     payment: {id: '1', text: 'Cash'},
-    confirmed: false,
-    state: 'inProgressState',
     paymentAmount: 100,
   });
 }

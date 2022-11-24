@@ -187,7 +187,7 @@ export default class Order {
   }
 
   toOrderType(): OrderType {
-    const {id, details, items, total, payment, paymentAmount, confirmed, state} = this.order;
-    return {id, details, items, total, payment, paymentAmount, confirmed, state};
+    const {id, details, items, total, payment, paymentAmount} = this.order;
+    return {id, details, items, total, payment, paymentAmount};
   }
 }

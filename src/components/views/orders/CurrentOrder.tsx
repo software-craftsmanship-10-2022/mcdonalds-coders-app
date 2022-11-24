@@ -72,11 +72,11 @@ const CurrentOrder = () => {
         </h1>
         <h3>
           <strong>Método de Pago: </strong>
-          {order.getPayment().text}
+          {order.getPayment()}
         </h3>
         <h3>
           <strong>Total: </strong>
-          {currencyFormatter().format(order.getPaymentAmount().totalAmount())}
+          {currencyFormatter().format(order.getTotalPrice())}
         </h3>
       </div>
       <McButton

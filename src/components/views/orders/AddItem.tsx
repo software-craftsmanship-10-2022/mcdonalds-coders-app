@@ -109,8 +109,6 @@ const AddItem = () => {
       total: order.getTotalPrice(),
       payment: order.getPayment(),
       paymentAmount: order.getPaymentAmount(),
-      state: order.getState(),
-      confirmed: order.isConfirmed(),
     });
 
     Array.from({length: count}, (_, index) => index).forEach(() => {

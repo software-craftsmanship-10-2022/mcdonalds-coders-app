@@ -13,7 +13,5 @@ export const mockNewOrder = () =>
     items: [],
     total: 0,
     payment: {id: '1', text: 'Cash'},
-    confirmed: false,
-    state: 'inProgressState',
     paymentAmount: 100,
   });

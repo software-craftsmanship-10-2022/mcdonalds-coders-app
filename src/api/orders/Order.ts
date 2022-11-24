@@ -34,7 +34,7 @@ export default class Order {
    * Check if the `order.items` list is empty.
    */
   isItemsEmpty(): boolean {
-    return this.order.items.length === 0;
+    return this.order.items?.length === 0;
   }
 
   /**
@@ -43,7 +43,7 @@ export default class Order {
    * @param item new item.
    */
   addItem(item: MenuType): void {
-    this.order.items.push(item);
+    this.order.items?.push(item);
   }
 
   /**
@@ -101,7 +101,7 @@ export default class Order {
    * Get the price total of the items in the `items` list.
    */
   getTotalPrice(): number {
-    return this.order.items.reduce((total: number, {price}) => total + price, 0);
+    return this.order.items?.reduce((total: number, {price}) => total + price, 0);
   }
 
   getTotalPriceByMenu(menuId: string) {

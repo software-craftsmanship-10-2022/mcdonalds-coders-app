@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import type {OrderStateType} from 'src/api/orders/OrderStates/constants';
-import {ORDER_STATES} from 'src/api/orders/OrderStates/constants';
+import {ORDER_STATES, ORDER_STATES_CODES} from 'src/api/orders/OrderStates/constants';
 import {useOrderContext} from '../../../context/OrderContext';
 import useFormat from '../../../hooks/useFormat';
 import './OrderManager.css';
@@ -27,13 +27,13 @@ export const OrderManager = () => {
   };
 
   const STEPS = [
-    'inProgressState',
-    'receivedState',
-    'confirmedState',
-    'preparingState',
-    'readyState',
-    'deliveringState',
-    'finishedState',
+    ORDER_STATES_CODES.inProgressState,
+    ORDER_STATES_CODES.receivedState,
+    ORDER_STATES_CODES.confirmedState,
+    ORDER_STATES_CODES.preparingState,
+    ORDER_STATES_CODES.readyState,
+    ORDER_STATES_CODES.deliveringState,
+    ORDER_STATES_CODES.finishedState,
   ];
 
   const formattedSteps: OrderStateType[] = STEPS.map((stepCode: string) => {

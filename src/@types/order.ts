@@ -10,7 +10,6 @@ export type OrderType = {
   details: OrderAddressDetailsType;
   items: MenuType[];
   total: number;
-  payment: PaymentMethod;
   confirmed: boolean;
   payment: PaymentMethodType;
   state: typeof ORDER_STATES_CODES;

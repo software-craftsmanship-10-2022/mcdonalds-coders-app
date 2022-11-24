@@ -1,11 +1,11 @@
 import {render, screen, waitFor} from '@testing-library/react';
 import React, {useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
-// Import saveOrder from 'src/api/orders/saveOrder';
+import {MemoryRouter, Route, Routes, useNavigate} from 'react-router-dom';
+import createEmptyOrder from 'src/api/orders/createEmptyOrder';
 import type Order from 'src/api/orders/Order';
 import saveOrder, * as saveOrderObject from 'src/api/orders/saveOrder';
 import {STORAGE, URLS} from 'src/config';
-import {useOrderContext} from 'src/context/OrderContext';
+import {OrderProvider, useOrderContext} from 'src/context/OrderContext';
 import useLocalStorage from 'src/hooks/useLocalStorage';
 import {storage} from 'src/utils/localStorage';
 import Checkout from './Checkout';
@@ -41,7 +41,7 @@ function ComponentWithRouter(): JSX.Element {
     return (
       <div>
         <ShowOrder order={order} />
-        <Checkout order={order} confirmOrder={mockConfirmOrder} test-id="test" />
+        <Checkout test-id="test" />
       </div>
     );
   };
@@ -101,22 +101,6 @@ describe('Test Checkout component', () => {
       render(<ComponentWithRouter />);
       await waitFor(() => {
         screen.getByText(/Enviar pedido/);
-      });
-    });
-
-    it('checks the order is saved when it clicks in the button', async () => {
-      const orderId = '1234abc';
-      const dummyOrderWithId = dummyOrder;
-      dummyOrderWithId.setId(orderId);
-      spySaveOrder.mockResolvedValue(dummyOrderWithId);
-
-      render(<ComponentWithRouter />);
-
-      //       const button = screen.getByText(/Enviar pedido/);
-      //       fireEvent.click(button);
-
-      await waitFor(() => {
-        expect(screen.getByText(/The order id is: 1234abc/)).toBeInTheDocument();
       });
     });
   });

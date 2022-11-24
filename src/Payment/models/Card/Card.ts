@@ -21,7 +21,7 @@ class Card implements IValidate {
 
   private validateCVC() {
     if (!this.cvc) throw new Error(CARD_ERRORS.wrongCvc);
-    if (typeof Number(this.cvc) !== 'number') throw new Error(CARD_ERRORS.cvcAsNumber);
+    if (isNaN(Number(this.cvc))) throw new Error(CARD_ERRORS.cvcAsNumber);
     if (this.cvc.length !== 3) throw new Error(CARD_ERRORS.wrongCvc);
   }
 

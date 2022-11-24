@@ -1,4 +1,4 @@
-import {OrderStatus, PaymentMethod} from 'src/@types/order';
+import {OrderStatus} from 'src/@types/order';
 import Order from '../../Order';
 
 export const mockNewOrder = () =>
@@ -12,6 +12,6 @@ export const mockNewOrder = () =>
       isDelivery: false,
     },
     items: [],
-    payment: PaymentMethod.cash,
+    payment: PaymentMethodType.cash,
     status: OrderStatus.noConfirmed,
   });

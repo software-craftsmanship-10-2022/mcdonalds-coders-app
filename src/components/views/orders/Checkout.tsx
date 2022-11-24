@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
-import {OrderStatus} from 'src/@types/order';
+import {ORDER_STATES} from 'src/api/orders/OrderStates/constants';
 import saveOrder from 'src/api/orders/saveOrder';
 import DonationOptions from 'src/components/donation/DonationOptions';
 import InfoModal from 'src/components/modal/InfoModal';
@@ -49,35 +49,7 @@ const Checkout = () => {
 
     try {
       context.pay(paymentAmount.totalAmount());
-      order.setStatus(OrderStatus.preparing);
-      order.setPayment(selectedMethod);
-      order.setPaymentAmount(paymentAmount);
-      updateOrder(await saveOrder(order));
-      navigate(URLS.ordersCurrent);
-    } catch (error: unknown) {
-      updateCardWarning((error as Error).message);
-    }
-  };
-
-  const onSelectPaymentMethod = (methodId: string) => {
-    const method = PAYMENT_METHODS.find((method) => method.id === methodId);
-    setSelectedMethod(method);
-  };
-
-  const handlePaymentSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!selectedMethod) {
-      throw new Error();
-    }
-
-    const paymentStrategy = selectedMethod?.handleForm(event);
-    const context = new PaymentContext(paymentStrategy);
-    const paymentAmount = new PaymentAmount(order.getTotalPrice(), donationValue, 0);
-
-    try {
-      context.pay(paymentAmount.totalAmount());
-      order.setStatus(OrderStatus.preparing);
+      order.setStatus(ORDER_STATES.preparingState);
       order.setPayment(selectedMethod);
       order.setPaymentAmount(paymentAmount);
       updateOrder(await saveOrder(order));

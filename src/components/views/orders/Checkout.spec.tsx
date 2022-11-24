@@ -1,7 +1,7 @@
-import {render, screen, waitFor} from '@testing-library/react';
+import {act, render, screen, waitFor} from '@testing-library/react';
 import {useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
-// Import saveOrder from 'src/api/orders/saveOrder';
+import {MemoryRouter, Route, Routes, useNavigate} from 'react-router-dom';
+import createEmptyOrder from 'src/api/orders/createEmptyOrder';
 import saveOrder, * as saveOrderObject from 'src/api/orders/saveOrder';
 import {STORAGE, URLS} from 'src/config';
 import {OrderProvider, useOrderContext} from 'src/context/OrderContext';

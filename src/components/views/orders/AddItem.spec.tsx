@@ -1,4 +1,4 @@
-import {act, fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {act, fireEvent, render, screen} from '@testing-library/react';
 import {MemoryRouter, Route, Routes} from 'react-router-dom';
 import {URLS} from 'src/config';
 import {OrderProvider, useOrderContext} from 'src/context/OrderContext';
@@ -75,29 +75,6 @@ describe('Test AddItem component', () => {
       fireEvent.click(button);
       fireEvent.click(screen.getByText(/Agregar al pedido/));
       await screen.findAllByText('No has seleccionado una bebida, no queremos que te deshidrates');
-    });
-
-    it('clicks in button after click in the "increment counter" button', async () => {
-      await act(async () => {
-        render(<RenderWithRouter />);
-      });
-
-      const complementButton = screen.getByLabelText('Papas pequeñas: no seleccionado');
-      fireEvent.click(complementButton);
-
-      const drinkButton = screen.getByLabelText('Agua sin gas (500ml): no seleccionado');
-      fireEvent.click(drinkButton);
-
-      const button = screen.getByAltText(/Añadir/).parentNode as HTMLButtonElement;
-      fireEvent.click(button);
-      const addButton = screen.getByText(/Agregar al pedido/);
-      fireEvent.click(addButton);
-
-      await waitFor(() => {
-        const items = screen.getAllByText(/Menú -- McCombo Grand Triple Mc Bacon Grande/);
-        expect(items[0]).toBeInTheDocument();
-        expect(items[1]).toBeInTheDocument();
-      });
     });
   });
 });

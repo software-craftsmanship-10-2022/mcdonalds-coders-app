@@ -1,5 +1,5 @@
 import type {OrderAddressDetailsType} from 'src/@types/order';
-import {PaymentMethod} from 'src/@types/order';
+
 import Order from './Order';
 
 /**
@@ -21,6 +21,9 @@ export default function createEmptyOrder(): Order {
     id: '123',
     items: [],
     total: 0,
-    payment: PaymentMethod.cash,
+    payment: {id: '1', text: 'Cash'},
+    confirmed: false,
+    state: 'inProgressState',
+    paymentAmount: 100,
   });
 }

@@ -1,4 +1,4 @@
-// <<<<<<< HEAD
+
 import React, { useState } from 'react';
 import DonationOptions from 'src/components/donation/DonationOptions';
 import { PAYMENT_METHODS } from 'src/components/form/payment/constants/paymentMethodsTypes';
@@ -76,7 +76,6 @@ const Checkout = () => {
 
     try {
       context.pay(paymentAmount.totalAmount());
-      order.setStatus(OrderStatus.preparing);
       order.setPayment(selectedMethod);
       order.setPaymentAmount(paymentAmount);
       updateOrder(await saveOrder(order));

@@ -1,16 +1,18 @@
 import type Order from 'src/api/orders/Order';
 import type {ORDER_STATES_CODES} from 'src/api/orders/OrderStates/constants';
+import type {PaymentMethodType} from 'src/components/form/Payment/constants/paymentMethodsTypes';
+import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
 import type {MenuType} from './product';
 
-// @types.order.ts
 export type OrderType = {
+  paymentAmount: PaymentAmount;
   id: string;
   details: OrderAddressDetailsType;
   items: MenuType[];
   total: number;
   payment: PaymentMethod;
   confirmed: boolean;
-  paymentType: string;
+  payment: PaymentMethodType;
   state: typeof ORDER_STATES_CODES;
 };
 

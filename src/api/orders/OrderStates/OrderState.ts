@@ -2,7 +2,13 @@ import type Order from '../Order';
 import type {OrderStateType} from './constants';
 
 class OrderState {
-  constructor(protected order: Order, private readonly state: OrderStateType) {}
+  constructor(
+    protected order: Order,
+    private readonly state: OrderStateType,
+    private readonly createdAt: number = Date.now(),
+  ) {
+    createdAt = Date.now();
+  }
 
   nextStep() {
     // Do something
@@ -26,6 +32,10 @@ class OrderState {
 
   getDescription(): string {
     return this.state.description;
+  }
+
+  getCreatedAt(): number {
+    return this.createdAt;
   }
 }
 

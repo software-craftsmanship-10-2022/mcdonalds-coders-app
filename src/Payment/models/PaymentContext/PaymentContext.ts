@@ -15,8 +15,3 @@ export class PaymentContext {
     this.#strategy.pay(paymentAmount);
   }
 }
-
-// Implementation example
-// const defineStrategy = new DebitPaymentStrategy(new Card('123456', '22/11', 234));
-// const payment = new PaymentContext(defineStrategy);
-// payment.pay(100, 20, 50);

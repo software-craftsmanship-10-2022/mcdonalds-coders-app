@@ -77,7 +77,7 @@ const Checkout = () => {
         </div>
         <div className="detail-total">
           <p>Total</p>
-          <p>{currencyFormatter().format(order.getTotalPrice() + donationValue)}</p>
+          <p> {currencyFormatter().format(order.getPaymentAmount().totalAmount())}</p>
         </div>
         <button type="submit" className="McButton fixed">
           Enviar pedido

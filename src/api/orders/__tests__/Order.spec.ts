@@ -1,5 +1,4 @@
 import type {OrderAddressDetailsType} from '../../../@types/order';
-import {PaymentMethod} from '../../../@types/order';
 import type {MenuType} from '../../../@types/product';
 import {mockNewOrder} from '../mocks/mocks';
 import type Order from '../Order';
@@ -123,16 +122,6 @@ describe('Check class Order', () => {
       order.resetItems();
       expect(order.isItemsEmpty()).toBe(true);
     });
-  });
-
-  it('is *cash* payment method', () => {
-    expect(order.getPayment()).toBe(PaymentMethod.cash);
-  });
-
-  it('changes the payment method', () => {
-    expect(order.getPayment()).toBe(PaymentMethod.cash);
-    order.setPayment(PaymentMethod.debit);
-    expect(order.getPayment()).toBe(PaymentMethod.debit);
   });
 
   it('gets order state code', () => {

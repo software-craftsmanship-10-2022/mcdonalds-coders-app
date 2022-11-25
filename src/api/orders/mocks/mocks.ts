@@ -14,5 +14,5 @@ export const mockNewOrder = () =>
     items: [],
     total: 0,
     payment: {id: '1', text: 'Cash'},
-    paymentAmount: new PaymentAmount(100, 0, 0),
+    paymentAmount: new PaymentAmount(100, 0, undefined),
   });

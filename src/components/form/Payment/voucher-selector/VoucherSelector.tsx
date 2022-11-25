@@ -1,8 +1,8 @@
 import {useState} from 'react';
-import type {VoucherApiType} from 'src/@types/payments';
+import type {Voucher} from 'src/Payment/models/Voucher/Voucher';
 
 type VoucherSelectorProps = {
-  selectedVoucher: VoucherApiType;
+  selectedVoucher: Voucher | undefined;
   onClick: (voucherCode: string) => void;
   onClear: () => void;
 };
@@ -18,7 +18,7 @@ const VoucherSelector = ({selectedVoucher, onClick, onClear}: VoucherSelectorPro
 export default VoucherSelector;
 
 type SelectedVoucherCodeProps = {
-  selectedVoucher: VoucherApiType;
+  selectedVoucher: Voucher;
   onClear: () => void;
 };
 
@@ -42,7 +42,7 @@ const VoucherSelectorInput = ({onClick}: VoucherSelectorInputProps) => {
 
   return (
     <div>
-      <label htmlFor="voucher"></label>
+      <label htmlFor="voucher">Discount code</label>
       <input
         id="voucher"
         value={voucherCode}

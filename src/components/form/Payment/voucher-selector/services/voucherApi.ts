@@ -1,12 +1,13 @@
+import type {VoucherApiType} from 'src/@types/payments';
 import {VOUCHERS} from '../../../../../data/voucher';
 
-export const searchVoucherByCode = async (voucherCode: string) => {
+export const searchVoucherByCode = async (voucherCode: string): Promise<VoucherApiType> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       try {
         resolve(getVoucherFromAppData(voucherCode));
       } catch (error) {
-        reject((error as Error).message);
+        reject(error);
       }
     }, 500);
   });

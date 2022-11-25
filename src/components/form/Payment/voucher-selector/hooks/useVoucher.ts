@@ -15,5 +15,9 @@ export const useVoucher = () => {
     }
   };
 
-  return {selectedVoucher, searchVoucher, searchedVoucherError};
+  const clearVoucher = () => {
+    setSelectedVoucher(undefined);
+  };
+
+  return {selectedVoucher, searchVoucher, clearVoucher, searchedVoucherError};
 };

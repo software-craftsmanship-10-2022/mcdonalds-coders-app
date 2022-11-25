@@ -1,7 +1,7 @@
-import type {VoucherApiType} from 'src/@types/payments';
+import {Voucher} from 'src/Payment/models/Voucher/Voucher';
 import {VOUCHERS} from '../../../../../data/voucher';
 
-export const searchVoucherByCode = async (voucherCode: string): Promise<VoucherApiType> => {
+export const searchVoucherByCode = async (voucherCode: string): Promise<Voucher> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       try {
@@ -13,20 +13,20 @@ export const searchVoucherByCode = async (voucherCode: string): Promise<VoucherA
   });
 };
 
-const getVoucherFromAppData = (voucherCode: string) => {
+const getVoucherFromAppData = (voucherCode: string): Voucher => {
   if (typeof voucherCode !== 'string') {
     throw new Error();
   }
 
-  const voucher = VOUCHERS.find((voucher) => voucher.code === voucherCode);
+  const voucherApi = VOUCHERS.find((voucher) => voucher.code === voucherCode);
 
-  if (!voucher) {
+  if (!voucherApi) {
     throw new Error('El código introducido no es correcto');
   }
 
-  if (voucher.expirationDate < new Date()) {
+  if (voucherApi.expirationDate < new Date()) {
     throw new Error('El código introducido está caducado');
   }
 
-  return voucher;
+  return new Voucher(voucherApi);
 };

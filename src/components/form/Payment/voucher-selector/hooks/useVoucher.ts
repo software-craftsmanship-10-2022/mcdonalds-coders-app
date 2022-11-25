@@ -1,9 +1,9 @@
 import {useState} from 'react';
-import type {VoucherApiType} from 'src/@types/payments';
+import type {Voucher} from 'src/Payment/models/Voucher/Voucher';
 import {searchVoucherByCode} from '../services/voucherApi';
 
 export const useVoucher = () => {
-  const [selectedVoucher, setSelectedVoucher] = useState<VoucherApiType | undefined>(undefined);
+  const [selectedVoucher, setSelectedVoucher] = useState<Voucher | undefined>(undefined);
   const [searchedVoucherError, setSearchedVoucherError] = useState<undefined | string>(undefined);
 
   const searchVoucher = async (voucherCode: string) => {

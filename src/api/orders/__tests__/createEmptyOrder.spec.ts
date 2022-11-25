@@ -1,4 +1,3 @@
-import {PaymentMethod} from 'src/@types/order';
 import createEmptyOrder from '../createEmptyOrder';
 import Order from '../Order';
 
@@ -16,7 +15,7 @@ describe('Test function `createEmptyOrder`', () => {
   it('gets an Order it is empty', () => {
     expect(order.getId()).toBe('123');
     expect(order.isItemsEmpty()).toBe(true);
-    expect(order.getPayment()).toBe(PaymentMethod.cash);
+
     expect(order.isConfirmed()).toBe(false);
     expect(order.getDetails()).toEqual({
       id: '',

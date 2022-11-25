@@ -3,7 +3,7 @@ import Order from 'src/api/orders/Order';
 import {clearAll, setItem} from 'src/utils/localStorage';
 import {useOrderStorage} from './useOrderStorage';
 
-const {storageOrderKey, storageStateKey, getOrder, setOrder, removeOrder} = useOrderStorage();
+const {storageOrderKey, getOrder, setOrder, removeOrder} = useOrderStorage();
 
 describe('Manipulate the Order object in cache system', () => {
   let order: Order;

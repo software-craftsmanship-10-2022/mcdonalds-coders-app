@@ -1,13 +1,15 @@
 import type Order from 'src/api/orders/Order';
+import type {PaymentMethodType} from 'src/components/form/Payment/constants/paymentMethodsTypes';
+import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
 import type {MenuType} from './product';
 
-// @types.order.ts
 export type OrderType = {
   id: string;
   details: OrderAddressDetailsType;
   items: MenuType[];
   total: number;
-  payment: PaymentMethod;
+  payment: PaymentMethodType;
+  paymentAmount: PaymentAmount;
 };
 
 export enum PaymentMethod {

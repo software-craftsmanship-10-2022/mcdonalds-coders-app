@@ -26,7 +26,7 @@ const Cart = () => {
 
   return (
     <div className="Cart">
-      {order.getItems()?.map((item, index) => (
+      {order.getItems().map((item, index) => (
         <div className="item" key={index}>
           <img src={IMG_PATH + item.image} alt="" />
           <div className="item-info">

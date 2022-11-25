@@ -28,7 +28,7 @@ const ComboList = () => {
         {!order?.isItemsEmpty() && (
           <NavLink className="view-order-link" to={URLS.ordersCart}>
             <img src={IMG_PATH + 'order-bag.png'} alt="" />
-            <div className="order-qty">{order.getItems()?.length}</div>
+            <div className="order-qty">{order.getItems().length}</div>
           </NavLink>
         )}
       </div>

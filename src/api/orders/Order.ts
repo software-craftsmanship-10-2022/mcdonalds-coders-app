@@ -1,4 +1,7 @@
-import type {OrderAddressDetailsType, OrderType, PaymentMethod} from '../../@types/order';
+import type {PaymentMethodType} from 'src/components/form/Payment/constants/paymentMethodsTypes';
+import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
+import type {OrderAddressDetailsType, OrderType} from '../../@types/order';
+
 import type {MenuType} from '../../@types/product.d';
 import {ORDER_STATES} from './OrderStates/constants';
 import InProgressState from './OrderStates/InProgressState';
@@ -34,7 +37,7 @@ export default class Order {
    * Check if the `order.items` list is empty.
    */
   isItemsEmpty(): boolean {
-    return this.order.items?.length === 0;
+    return this.order.items.length === 0;
   }
 
   /**
@@ -43,7 +46,7 @@ export default class Order {
    * @param item new item.
    */
   addItem(item: MenuType): void {
-    this.order.items?.push(item);
+    this.order.items.push(item);
   }
 
   /**
@@ -101,7 +104,21 @@ export default class Order {
    * Get the price total of the items in the `items` list.
    */
   getTotalPrice(): number {
-    return this.order.items?.reduce((total: number, {price}) => total + price, 0);
+    return this.order.items.reduce((total: number, {price}) => total + price, 0);
+  }
+
+  /**
+   * Set the payment amount of the items with the donation and other values.
+   */
+  setPaymentAmount(paymentAmount: PaymentAmount): void {
+    this.order.paymentAmount = paymentAmount;
+  }
+
+  /**
+   * Get the payment amount of the items with the donation and other values.
+   */
+  getPaymentAmount(): PaymentAmount {
+    return this.order.paymentAmount;
   }
 
   getTotalPriceByMenu(menuId: string) {
@@ -113,7 +130,7 @@ export default class Order {
   /**
    * Get the order payment.
    */
-  getPayment(): PaymentMethod {
+  getPayment(): PaymentMethodType {
     return this.order.payment;
   }
 
@@ -122,7 +139,7 @@ export default class Order {
    *
    * @param newPayment New payment method.
    */
-  setPayment(newPayment: PaymentMethod): void {
+  setPayment(newPayment: PaymentMethodType): void {
     this.order.payment = newPayment;
   }
 
@@ -170,7 +187,7 @@ export default class Order {
   }
 
   toOrderType(): OrderType {
-    const {id, details, items, total, payment} = this.order;
-    return {id, details, items, total, payment};
+    const {id, details, items, total, payment, paymentAmount} = this.order;
+    return {id, details, items, total, payment, paymentAmount};
   }
 }

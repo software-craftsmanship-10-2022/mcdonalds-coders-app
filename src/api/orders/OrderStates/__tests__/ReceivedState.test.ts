@@ -10,6 +10,15 @@ describe('Given an In Received state', () => {
   let receivedState: ReceivedState;
   let changeStateSpy: jest.SpyInstance;
 
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date(2022, 3, 1));
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   beforeEach(() => {
     context = new FakeStateContext();
     receivedState = new ReceivedState(context);

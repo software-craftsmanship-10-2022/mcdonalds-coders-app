@@ -1,4 +1,4 @@
-import {LOCALE, CURRENCY} from '../config';
+import {CURRENCY, LOCALE} from '../config';
 
 const useFormat = () => {
   const currencyFormatter = () =>
@@ -8,8 +8,13 @@ const useFormat = () => {
     });
 
   const dateFormatter = () => new Intl.DateTimeFormat(LOCALE);
+  const hourFormatter = () =>
+    new Intl.DateTimeFormat(LOCALE, {
+      hour: 'numeric',
+      minute: 'numeric',
+    });
 
-  return [currencyFormatter, dateFormatter] as const;
+  return [currencyFormatter, dateFormatter, hourFormatter] as const;
 };
 
 export default useFormat;

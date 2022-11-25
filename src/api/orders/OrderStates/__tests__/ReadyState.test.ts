@@ -10,6 +10,15 @@ describe('Given an Ready state', () => {
   let readyState: ReadyState;
   let changeStateSpy: jest.SpyInstance;
 
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date(2022, 3, 1));
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   beforeEach(() => {
     context = new FakeStateContext();
     readyState = new ReadyState(context);

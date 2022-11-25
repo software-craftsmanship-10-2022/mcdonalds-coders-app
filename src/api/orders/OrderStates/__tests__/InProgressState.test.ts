@@ -9,6 +9,15 @@ describe('Given an In Progress state', () => {
   let inProgressState: InProgressState;
   let changeStateSpy: jest.SpyInstance;
 
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date(2022, 3, 1));
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   beforeEach(() => {
     context = new FakeStateContext();
     inProgressState = new InProgressState(context);

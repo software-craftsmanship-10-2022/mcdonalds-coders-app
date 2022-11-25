@@ -15,13 +15,15 @@ import ComboList from './components/views/orders/ComboList';
 import CurrentOrder from './components/views/orders/CurrentOrder';
 import Order from './components/views/orders/Order';
 /* COMMON COMPONENTS */
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Scroll from './components/common/Scroll';
 import Header from './components/header/Header';
 import InfoModal from './components/modal/InfoModal';
 import Navigation from './components/navbar/Navigation';
-import {OrderProvider} from './context/OrderContext';
-
+import {OrderManager} from './components/views/orders/OrderManager';
 import {URLS} from './config';
+import {OrderProvider} from './context/OrderContext';
 
 const App = () => {
   // Order warning
@@ -34,6 +36,7 @@ const App = () => {
   return (
     <div className="App">
       <OrderProvider>
+        <ToastContainer />
         <Router>
           <Scroll>
             <Header />
@@ -44,6 +47,7 @@ const App = () => {
                 <Route path={URLS.ordersCart} element={<Cart />} />
                 <Route path={URLS.ordersCheckout} element={<CheckoutSwitcher />} />
                 <Route path={URLS.ordersCurrent} element={<CurrentOrder />} />
+                <Route path={URLS.ordersManager} element={<OrderManager />} />
                 <Route path={URLS.ordersAdd} element={<ComboList />} />
                 <Route path={URLS.ordersAdd + ':category/:id'} element={<AddItem />} />
               </Route>

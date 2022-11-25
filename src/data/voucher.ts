@@ -1,5 +1,5 @@
-import type {VoucherApiType} from 'src/@types/payments';
-import {VoucherTypes} from 'src/@types/payments';
+import {VoucherTypes} from 'src/Payment/models/Voucher/VoucherTypes';
+import type {VoucherApiType} from '../@types/payments';
 
 export const VOUCHERS: VoucherApiType[] = [
   {

@@ -1,8 +1,8 @@
-import type {VoucherApiType, VoucherStrategy} from 'src/@types/payments';
-import {VoucherTypes} from 'src/@types/payments';
+import type {VoucherApiType, VoucherStrategy} from '../../../@types/payments';
 import {FixedVoucherStrategy} from './FixedVoucherStrategy';
 import {PercentageVoucherStrategy} from './PercentageVoucherStrategy';
 import {TotalVoucherStrategy} from './TotalVoucherStrategy';
+import {VoucherTypes} from './VoucherTypes';
 
 export class Voucher {
   code: string;

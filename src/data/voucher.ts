@@ -11,7 +11,7 @@ export const VOUCHERS: VoucherApiType[] = [
   {
     code: 'CAD',
     type: VoucherTypes.percentage,
-    discount: 10,
+    discount: 80,
     expirationDate: new Date('2000-01-01T00:00:00'),
   },
   {
@@ -23,7 +23,7 @@ export const VOUCHERS: VoucherApiType[] = [
   {
     code: '10%',
     type: VoucherTypes.percentage,
-    discount: 0,
+    discount: 10,
     expirationDate: new Date('2030-01-01T00:00:00'),
   },
 ];

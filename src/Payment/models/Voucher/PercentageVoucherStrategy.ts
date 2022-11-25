@@ -7,7 +7,12 @@ export class PercentageVoucherStrategy implements VoucherStrategy {
   }
 
   calculateDiscount(amount: number): number {
-    const result = amount - (amount * this.#discount) / 100;
+    const result = (amount * this.#discount) / 100;
+    return result > amount ? amount : result;
+  }
+
+  useDiscount(amount: number): number {
+    const result = amount - this.calculateDiscount(amount);
     return result > 0 ? result : 0;
   }
 }

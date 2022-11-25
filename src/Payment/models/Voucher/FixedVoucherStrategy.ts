@@ -7,7 +7,11 @@ export class FixedVoucherStrategy implements VoucherStrategy {
   }
 
   calculateDiscount(amount: number): number {
-    const result = amount - this.#discount;
+    return this.#discount > amount ? amount : this.#discount;
+  }
+
+  useDiscount(amount: number): number {
+    const result = amount - this.calculateDiscount(amount);
     return result > 0 ? result : 0;
   }
 }

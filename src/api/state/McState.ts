@@ -3,7 +3,11 @@ import {METHOD_NOT_IMPLEMENTED_ERROR} from './constants';
 import type {IStateContext} from './IStateContext';
 
 abstract class McState {
-  constructor(protected context: IStateContext, private readonly state: OrderStateType) {}
+  constructor(
+    protected context: IStateContext,
+    private readonly state: OrderStateType,
+    private readonly createdAt: number = Date.now(),
+  ) {}
 
   getCode(): string {
     return this.state.code;
@@ -27,6 +31,10 @@ abstract class McState {
 
   reject(): void {
     throw new Error(METHOD_NOT_IMPLEMENTED_ERROR);
+  }
+
+  getCreatedAt(): number {
+    return this.createdAt;
   }
 }
 

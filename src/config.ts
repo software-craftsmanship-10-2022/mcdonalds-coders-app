@@ -8,6 +8,7 @@ export const URLS = {
   ordersCart: '/orders/cart/',
   ordersCheckout: '/orders/checkout/',
   ordersCurrent: '/orders/current/',
+  ordersManager: '/orders/admin',
   ordersAdd: '/orders/add/',
   discounts: '/discounts/',
   coupons: '/coupons/',

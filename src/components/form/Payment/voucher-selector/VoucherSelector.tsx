@@ -3,16 +3,22 @@ import type {Voucher} from 'src/Payment/models/Voucher/Voucher';
 
 type VoucherSelectorProps = {
   selectedVoucher: Voucher | undefined;
+  searchedVoucherError: string | undefined;
   onClick: (voucherCode: string) => void;
   onClear: () => void;
 };
 
-const VoucherSelector = ({selectedVoucher, onClick, onClear}: VoucherSelectorProps) => {
+const VoucherSelector = ({
+  selectedVoucher,
+  searchedVoucherError,
+  onClick,
+  onClear,
+}: VoucherSelectorProps) => {
   if (selectedVoucher) {
-    <SelectedVoucherCode selectedVoucher={selectedVoucher} onClear={onClear} />;
+    return <SelectedVoucherCode selectedVoucher={selectedVoucher} onClear={onClear} />;
   }
 
-  return <VoucherSelectorInput onClick={onClick} />;
+  return <VoucherSelectorInput errorMessage={searchedVoucherError} onClick={onClick} />;
 };
 
 export default VoucherSelector;
@@ -24,40 +30,41 @@ type SelectedVoucherCodeProps = {
 
 const SelectedVoucherCode = ({selectedVoucher, onClear}: SelectedVoucherCodeProps) => {
   return (
-    <div>
-      {selectedVoucher.code}
-      <button type="button" onClick={onClear}>
-        X
-      </button>
-    </div>
+    <button type="button" onClick={onClear}>
+      Discount: {selectedVoucher.code}
+    </button>
   );
 };
 
 type VoucherSelectorInputProps = {
+  errorMessage: string | undefined;
   onClick: (voucherCode: string) => void;
 };
 
-const VoucherSelectorInput = ({onClick}: VoucherSelectorInputProps) => {
+const VoucherSelectorInput = ({errorMessage, onClick}: VoucherSelectorInputProps) => {
   const [voucherCode, setVoucherCode] = useState('');
 
   return (
     <div>
-      <label htmlFor="voucher">Discount code</label>
-      <input
-        id="voucher"
-        value={voucherCode}
-        onChange={(e) => {
-          setVoucherCode(e.target.value);
-        }}
-      />
-      <button
-        type="button"
-        onClick={() => {
-          onClick(voucherCode);
-        }}
-      >
-        Usar
-      </button>
+      <div>
+        <label htmlFor="voucher">Discount code</label>
+        <input
+          id="voucher"
+          value={voucherCode}
+          onChange={(e) => {
+            setVoucherCode(e.target.value);
+          }}
+        />
+        <button
+          type="button"
+          onClick={() => {
+            onClick(voucherCode);
+          }}
+        >
+          Usar
+        </button>
+      </div>
+      <span>{errorMessage}</span>
     </div>
   );
 };

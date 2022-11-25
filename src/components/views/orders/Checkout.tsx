@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import saveOrder from 'src/api/orders/saveOrder';
 import DonationOptions from 'src/components/donation/DonationOptions';
 import {useVoucher} from 'src/components/form/Payment/voucher-selector/hooks/useVoucher';
+import VoucherSelector from 'src/components/form/Payment/voucher-selector/VoucherSelector';
 import InfoModal from 'src/components/modal/InfoModal';
 import {URLS} from 'src/config';
 import {useOrderContext} from 'src/context/OrderContext';
@@ -21,7 +22,7 @@ const Checkout = () => {
   const [currencyFormatter] = useFormat();
   const {formDonationIsVisible, donationValue, updateDonationFormVisibility, updateDonationValue} =
     useDonation();
-  const {selectedVoucher} = useVoucher();
+  const {selectedVoucher, searchVoucher, clearVoucher, searchedVoucherError} = useVoucher();
   const {
     modalWarningMessage,
     updateCardWarning,
@@ -70,6 +71,13 @@ const Checkout = () => {
           />
 
           {selectedMethod?.formComponent()}
+
+          <VoucherSelector
+            selectedVoucher={selectedVoucher}
+            searchedVoucherError={searchedVoucherError}
+            onClick={searchVoucher}
+            onClear={clearVoucher}
+          />
 
           <DonationOptions
             formDonationIsVisible={formDonationIsVisible}

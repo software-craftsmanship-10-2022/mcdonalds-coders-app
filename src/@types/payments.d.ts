@@ -9,4 +9,8 @@ enum PaymentMethods {
   paypal,
 }
 
+interface VoucherStrategy {
+  discount(amount: number);
+}
+
 export {type PaymentStrategy, PaymentMethods};

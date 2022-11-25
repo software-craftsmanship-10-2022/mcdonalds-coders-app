@@ -1,6 +1,5 @@
 import {useState} from 'react';
 import type {UserType} from '../../@types/user';
-import {STORAGE} from '../../config';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import McButton from '../buttons/McButton';
 import McInput from '../input/McInput';
@@ -28,28 +27,31 @@ const UserForm = ({setIsValidated}: UserFormProps) => {
   };
 
   const handleValidation = () => {
-    if (!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/.test(formData.email)) {
-      toggleModal('Correo inválido');
-      return;
-    }
-
-    if (!/^([a-zA-Z ]){2,30}$/.test(formData.name)) {
-      toggleModal('Nombre inválido');
-      return;
-    }
-
-    if (!/^\d+$/.test(formData.dni)) {
-      toggleModal('DNI inválido');
-      return;
-    }
-
-    if (!/^(\d{10})+$/.test(formData.phone)) {
-      toggleModal('Teléfono inválido');
-      return;
-    }
-
-    setStorageItem(STORAGE.users, formData);
+    // TODO Quitar linea
     setIsValidated(true);
+
+    // If (!/^[a-z0-9]+@[a-z]+\.[a-z]{2,3}$/.test(formData.email)) {
+    //   toggleModal('Correo inválido');
+    //   return;
+    // }
+
+    // if (!/^([a-zA-Z ]){2,30}$/.test(formData.name)) {
+    //   toggleModal('Nombre inválido');
+    //   return;
+    // }
+
+    // if (!/^\d+$/.test(formData.dni)) {
+    //   toggleModal('DNI inválido');
+    //   return;
+    // }
+
+    // if (!/^(\d{10})+$/.test(formData.phone)) {
+    //   toggleModal('Teléfono inválido');
+    //   return;
+    // }
+
+    // setStorageItem(STORAGE.users, formData);
+    // setIsValidated(true);
   };
 
   return (

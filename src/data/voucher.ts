@@ -3,13 +3,13 @@ import type {VoucherApiType} from '../@types/payments';
 
 export const VOUCHERS: VoucherApiType[] = [
   {
-    code: 'MENOS30',
+    code: '300',
     type: VoucherTypes.fixed,
-    discount: 30,
+    discount: 300,
     expirationDate: new Date('2030-01-01T00:00:00'),
   },
   {
-    code: 'ANTES-MOLABAS',
+    code: 'CAD',
     type: VoucherTypes.percentage,
     discount: 10,
     expirationDate: new Date('2000-01-01T00:00:00'),

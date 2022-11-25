@@ -7,6 +7,7 @@ export const useVoucher = () => {
   const [searchedVoucherError, setSearchedVoucherError] = useState<undefined | string>(undefined);
 
   const searchVoucher = async (voucherCode: string) => {
+    setSearchedVoucherError(undefined);
     try {
       const voucher = await searchVoucherByCode(voucherCode);
       setSelectedVoucher(voucher);
@@ -16,6 +17,7 @@ export const useVoucher = () => {
   };
 
   const clearVoucher = () => {
+    setSearchedVoucherError(undefined);
     setSelectedVoucher(undefined);
   };
 

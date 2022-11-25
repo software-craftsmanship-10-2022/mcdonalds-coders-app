@@ -47,7 +47,7 @@ const Checkout = () => {
 
     const paymentStrategy = selectedMethod?.handleForm(event);
     const context = new PaymentContext(paymentStrategy);
-    const paymentAmount = new PaymentAmount(order.getTotalPrice(), donationValue, selectedVoucher);
+    const paymentAmount = createPaymentAmount();
 
     try {
       context.pay(paymentAmount.totalAmount());
@@ -58,6 +58,10 @@ const Checkout = () => {
     } catch (error: unknown) {
       updateCardWarning((error as Error).message);
     }
+  };
+
+  const createPaymentAmount = () => {
+    return new PaymentAmount(order.getTotalPrice(), donationValue, selectedVoucher);
   };
 
   return (
@@ -87,7 +91,7 @@ const Checkout = () => {
         </div>
         <div className="detail-total">
           <p>Total</p>
-          <p> {currencyFormatter().format(order.getTotalPrice())}</p>
+          <p> {currencyFormatter().format(createPaymentAmount().totalAmount())}</p>
         </div>
         <button type="submit" className="McButton fixed">
           Enviar pedido

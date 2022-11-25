@@ -46,6 +46,11 @@ export const OrderManager = () => {
     setTimestamps({...timeStamps, [stateCode]: timestamp});
   };
 
+  const handleReset = () => {
+    resetOrder();
+    setTimestamps(EMPTY_TIMESTAMPS);
+  };
+
   const cancelOrder = async () => {
     try {
       order.getState().cancelByRestaurant();
@@ -61,10 +66,10 @@ export const OrderManager = () => {
   const rejectOrder = async () => {
     try {
       order.getState().reject();
+      handleReset();
     } catch (e: unknown) {
       handleError(e);
     } finally {
-      await storage.setOrder(order);
       setTimestamps(EMPTY_TIMESTAMPS);
       setUpdateCounter(updateCounter + 1);
     }
@@ -79,11 +84,6 @@ export const OrderManager = () => {
       await storage.setOrder(order);
       setUpdateCounter(updateCounter + 1);
     }
-  };
-
-  const handleReset = () => {
-    resetOrder();
-    setTimestamps(EMPTY_TIMESTAMPS);
   };
 
   const STEPS = [

@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import saveOrder from 'src/api/orders/saveOrder';
 import DonationOptions from 'src/components/donation/DonationOptions';
+import {useVoucher} from 'src/components/form/Payment/voucher-selector/hooks/useVoucher';
+import VoucherSelector from 'src/components/form/Payment/voucher-selector/VoucherSelector';
 import InfoModal from 'src/components/modal/InfoModal';
 import {URLS} from 'src/config';
 import {useOrderContext} from 'src/context/OrderContext';
@@ -20,6 +22,7 @@ const Checkout = () => {
   const [currencyFormatter] = useFormat();
   const {formDonationIsVisible, donationValue, updateDonationFormVisibility, updateDonationValue} =
     useDonation();
+  const {selectedVoucher, searchVoucher, clearVoucher, searchedVoucherError} = useVoucher();
   const {
     modalWarningMessage,
     updateCardWarning,
@@ -44,7 +47,7 @@ const Checkout = () => {
 
     const paymentStrategy = selectedMethod?.handleForm(event);
     const context = new PaymentContext(paymentStrategy);
-    const paymentAmount = new PaymentAmount(order.getTotalPrice(), donationValue, 0);
+    const paymentAmount = createPaymentAmount();
 
     try {
       context.pay(paymentAmount.totalAmount());
@@ -55,6 +58,10 @@ const Checkout = () => {
     } catch (error: unknown) {
       updateCardWarning((error as Error).message);
     }
+  };
+
+  const createPaymentAmount = () => {
+    return new PaymentAmount(order.getTotalPrice(), donationValue, selectedVoucher);
   };
 
   return (
@@ -69,6 +76,13 @@ const Checkout = () => {
 
           {selectedMethod?.formComponent()}
 
+          <VoucherSelector
+            selectedVoucher={selectedVoucher}
+            searchedVoucherError={searchedVoucherError}
+            onClick={searchVoucher}
+            onClear={clearVoucher}
+          />
+
           <DonationOptions
             formDonationIsVisible={formDonationIsVisible}
             updateDonationFormVisibility={updateDonationFormVisibility}
@@ -77,7 +91,7 @@ const Checkout = () => {
         </div>
         <div className="detail-total">
           <p>Total</p>
-          <p> {currencyFormatter().format(order.getTotalPrice())}</p>
+          <p> {currencyFormatter().format(createPaymentAmount().totalAmount())}</p>
         </div>
         <button type="submit" className="McButton fixed">
           Enviar pedido

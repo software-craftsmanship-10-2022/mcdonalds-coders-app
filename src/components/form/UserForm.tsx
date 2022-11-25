@@ -1,6 +1,6 @@
 import {useState} from 'react';
+import {STORAGE} from 'src/config';
 import type {UserType} from '../../@types/user';
-import {STORAGE} from '../../config';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import McButton from '../buttons/McButton';
 import McInput from '../input/McInput';

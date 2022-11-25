@@ -1,4 +1,5 @@
 import type {OrderAddressDetailsType} from 'src/@types/order';
+import {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
 
 import Order from './Order';
 
@@ -22,6 +23,6 @@ export default function createEmptyOrder(): Order {
     items: [],
     total: 0,
     payment: {id: '1', text: 'Cash'},
-    paymentAmount: 100,
+    paymentAmount: new PaymentAmount(100, 0, 0),
   });
 }

@@ -1,3 +1,4 @@
+import {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
 import Order from '../Order';
 
 export const mockNewOrder = () =>
@@ -13,5 +14,5 @@ export const mockNewOrder = () =>
     items: [],
     total: 0,
     payment: {id: '1', text: 'Cash'},
-    paymentAmount: 100,
+    paymentAmount: new PaymentAmount(100, 0, 0),
   });

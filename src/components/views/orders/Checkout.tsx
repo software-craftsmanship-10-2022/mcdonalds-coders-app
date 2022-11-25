@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import saveOrder from 'src/api/orders/saveOrder';
 import DonationOptions from 'src/components/donation/DonationOptions';
+import {useVoucher} from 'src/components/form/Payment/voucher-selector/hooks/useVoucher';
 import InfoModal from 'src/components/modal/InfoModal';
 import {URLS} from 'src/config';
 import {useOrderContext} from 'src/context/OrderContext';
@@ -20,6 +21,7 @@ const Checkout = () => {
   const [currencyFormatter] = useFormat();
   const {formDonationIsVisible, donationValue, updateDonationFormVisibility, updateDonationValue} =
     useDonation();
+  const {selectedVoucher} = useVoucher();
   const {
     modalWarningMessage,
     updateCardWarning,
@@ -44,7 +46,7 @@ const Checkout = () => {
 
     const paymentStrategy = selectedMethod?.handleForm(event);
     const context = new PaymentContext(paymentStrategy);
-    const paymentAmount = new PaymentAmount(order.getTotalPrice(), donationValue, 0);
+    const paymentAmount = new PaymentAmount(order.getTotalPrice(), donationValue, selectedVoucher);
 
     try {
       context.pay(paymentAmount.totalAmount());

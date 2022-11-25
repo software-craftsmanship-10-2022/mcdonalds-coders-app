@@ -10,7 +10,7 @@ enum PaymentMethods {
 }
 
 export interface VoucherStrategy {
-  discount(amount: number);
+  calculateDiscount(amount: number): number;
 }
 
 export enum VoucherTypes {

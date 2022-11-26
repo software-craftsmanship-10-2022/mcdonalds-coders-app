@@ -16,7 +16,6 @@ import CurrentOrder from './components/views/orders/CurrentOrder';
 import Order from './components/views/orders/Order';
 /* COMMON COMPONENTS */
 import {ToastContainer} from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Scroll from './components/common/Scroll';
 import Header from './components/header/Header';
 import InfoModal from './components/modal/InfoModal';
@@ -24,6 +23,7 @@ import Navigation from './components/navbar/Navigation';
 import {OrderManager} from './components/views/orders/OrderManager';
 import {URLS} from './config';
 import {OrderProvider} from './context/OrderContext';
+import './ReactToastify.css';
 
 const App = () => {
   // Order warning

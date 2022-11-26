@@ -120,13 +120,15 @@ const TotalDetail = ({paymentAmount}: TotalDetailProps) => {
   const renderVoucher = () => {
     const voucherString = paymentAmount.getVoucherString();
     if (!voucherString) return null;
-    return <span>{`(-${voucherString})`}</span>;
+    return <span className="total-pay__voucher-discount">{`(-${voucherString})`}</span>;
   };
 
   const renderDonation = () => {
     const donation = paymentAmount.getDonation();
     if (!donation) return null;
-    return <span>{` + ${currencyFormatter().format(donation)}`}</span>;
+    return (
+      <span className="total-pay__donation">{` + ${currencyFormatter().format(donation)}`}</span>
+    );
   };
 
   const renderTotal = () => {

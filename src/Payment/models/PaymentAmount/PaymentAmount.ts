@@ -18,4 +18,20 @@ export class PaymentAmount {
 
     return this.#amount + this.#donation;
   }
+
+  getAmount() {
+    return this.#amount;
+  }
+
+  getDonation() {
+    return this.#donation;
+  }
+
+  getVoucherString() {
+    if (!this.#voucher) {
+      return '';
+    }
+
+    return this.#voucher?.getDiscountString();
+  }
 }

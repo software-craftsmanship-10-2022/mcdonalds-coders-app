@@ -65,7 +65,6 @@ export const OrderManager = () => {
   const rejectOrder = async () => {
     try {
       order.getState().reject();
-      handleReset();
     } catch (e: unknown) {
       handleError(e);
     } finally {
@@ -95,12 +94,26 @@ export const OrderManager = () => {
     ORDER_STATES_CODES.finishedState,
   ];
 
+  const nextStepDisabled =
+    order.getStateCode() === ORDER_STATES_CODES.rejectedState ||
+    order.getStateCode() === ORDER_STATES_CODES.cancelledByRestaurantState ||
+    order.getStateCode() === ORDER_STATES_CODES.cancelledByUserState ||
+    order.getStateCode() === ORDER_STATES_CODES.finishedState;
+
+  const cancelOrderDisabled =
+    nextStepDisabled ||
+    order.getStateCode() === ORDER_STATES_CODES.inProgressState ||
+    order.getStateCode() === ORDER_STATES_CODES.receivedState;
+
+  const rejectOrderDisabled = order.getStateCode() !== ORDER_STATES_CODES.receivedState;
+
   const formattedSteps: OrderStateType[] = STEPS.map((stepCode: string) => {
     return {
       code: ORDER_STATES[stepCode].code,
       description: ORDER_STATES[stepCode].description,
     };
   });
+
   const renderStep = (step: OrderStateType) => {
     let active = false;
     if (STEPS.indexOf(stateCode) >= STEPS.indexOf(step.code)) {
@@ -142,16 +155,16 @@ export const OrderManager = () => {
 
       <section>
         <div className="state-buttons">
-          <button onClick={nextStep} className="next-btn">
+          <button onClick={nextStep} className="next-btn" disabled={nextStepDisabled}>
             Avanzar pedido
           </button>
           <button onClick={handleReset} className="reset-btn">
             Resetear pedido
           </button>
-          <button onClick={cancelOrder} className="cancel-btn">
+          <button onClick={cancelOrder} className="cancel-btn" disabled={cancelOrderDisabled}>
             Cancelar pedido
           </button>
-          <button onClick={rejectOrder} className="reject-btn">
+          <button onClick={rejectOrder} className="reject-btn" disabled={rejectOrderDisabled}>
             Rechazar pedido
           </button>
         </div>

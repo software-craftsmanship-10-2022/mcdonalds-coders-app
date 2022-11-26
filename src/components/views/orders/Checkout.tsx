@@ -19,7 +19,6 @@ import {useDonation, usePaymentWarningModal} from './hooks';
 const Checkout = () => {
   const navigate = useNavigate();
   const {order, updateOrder} = useOrderContext();
-  const [currencyFormatter] = useFormat();
   const {formDonationIsVisible, donationValue, updateDonationFormVisibility, updateDonationValue} =
     useDonation();
   const {selectedVoucher, searchVoucher, clearVoucher, searchedVoucherError} = useVoucher();
@@ -89,10 +88,7 @@ const Checkout = () => {
             updateDonationValue={updateDonationValue}
           />
         </div>
-        <div className="detail-total">
-          <p>Total</p>
-          <p> {currencyFormatter().format(createPaymentAmount().totalAmount())}</p>
-        </div>
+        <TotalDetail paymentAmount={createPaymentAmount()} />
         <button type="submit" className="McButton fixed">
           Enviar pedido
         </button>
@@ -108,3 +104,50 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+type TotalDetailProps = {
+  paymentAmount: PaymentAmount;
+};
+
+const TotalDetail = ({paymentAmount}: TotalDetailProps) => {
+  const [currencyFormatter] = useFormat();
+
+  const renderAmount = () => {
+    const amount = paymentAmount.getAmount();
+    return <span>{currencyFormatter().format(amount)}</span>;
+  };
+
+  const renderVoucher = () => {
+    const voucherString = paymentAmount.getVoucherString();
+    if (!voucherString) return null;
+    return <span className="total-pay__voucher-discount">{`(-${voucherString})`}</span>;
+  };
+
+  const renderDonation = () => {
+    const donation = paymentAmount.getDonation();
+    if (!donation) return null;
+    return (
+      <span className="total-pay__donation">{` + ${currencyFormatter().format(donation)}`}</span>
+    );
+  };
+
+  const renderTotal = () => {
+    const donation = paymentAmount.getDonation();
+    const voucherString = paymentAmount.getVoucherString();
+    if (!donation && !voucherString) return null;
+    const totalAmount = paymentAmount.totalAmount();
+    return <span>{` = ${currencyFormatter().format(totalAmount)}`}</span>;
+  };
+
+  return (
+    <div className="detail-total">
+      <p>Total</p>
+      <p>
+        {renderAmount()}
+        {renderVoucher()}
+        {renderDonation()}
+        {renderTotal()}
+      </p>
+    </div>
+  );
+};

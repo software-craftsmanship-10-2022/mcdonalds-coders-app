@@ -1,0 +1,26 @@
+.voucher-selector__input-group {
+  width: 20rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.voucher-selector__label {
+  opacity: 0.6;
+  font-size: 14px;
+}
+
+.voucher-selector__code-textbox {
+  text-align: center;
+  text-transform: uppercase;
+  border: 1px solid #ddd;
+}
+
+.voucher-selector__code-textbox:focus-visible {
+  outline: 1px solid #888;
+}
+
+.voucher-selector__code-error {
+  margin-top: 10px;
+  color: red;
+  font-size: 12px;
+}

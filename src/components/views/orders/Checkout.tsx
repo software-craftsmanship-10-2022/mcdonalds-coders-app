@@ -75,12 +75,14 @@ const Checkout = () => {
 
           {selectedMethod?.formComponent()}
 
-          <VoucherSelector
-            selectedVoucher={selectedVoucher}
-            searchedVoucherError={searchedVoucherError}
-            onClick={searchVoucher}
-            onClear={clearVoucher}
-          />
+          <div className="voucher-selector-container">
+            <VoucherSelector
+              selectedVoucher={selectedVoucher}
+              searchedVoucherError={searchedVoucherError}
+              onClick={searchVoucher}
+              onClear={clearVoucher}
+            />
+          </div>
 
           <DonationOptions
             formDonationIsVisible={formDonationIsVisible}

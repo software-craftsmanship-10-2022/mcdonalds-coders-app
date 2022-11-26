@@ -156,6 +156,10 @@
   color: blue;
 }
 
+.Detail .voucher-selector-container {
+  margin-bottom: 1rem;
+}
+
 @keyframes click-wave {
   0% {
     height: 40px;

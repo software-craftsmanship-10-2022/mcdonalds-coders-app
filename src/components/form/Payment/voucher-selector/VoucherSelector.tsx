@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import type {Voucher} from 'src/Payment/models/Voucher/Voucher';
+import './VoucherSelector.css';
 
 type VoucherSelectorProps = {
   selectedVoucher: Voucher | undefined;
@@ -30,8 +31,8 @@ type SelectedVoucherCodeProps = {
 
 const SelectedVoucherCode = ({selectedVoucher, onClear}: SelectedVoucherCodeProps) => {
   return (
-    <button type="button" onClick={onClear}>
-      Discount: {selectedVoucher.code}
+    <button type="button" className="McButton" onClick={onClear}>
+      Descuento: {selectedVoucher.code}(-{selectedVoucher.getDiscountString()})
     </button>
   );
 };
@@ -47,24 +48,30 @@ const VoucherSelectorInput = ({errorMessage, onClick}: VoucherSelectorInputProps
   return (
     <div>
       <div>
-        <label htmlFor="voucher">Discount code</label>
-        <input
-          id="voucher"
-          value={voucherCode}
-          onChange={(e) => {
-            setVoucherCode(e.target.value);
-          }}
-        />
-        <button
-          type="button"
-          onClick={() => {
-            onClick(voucherCode);
-          }}
-        >
-          Usar
-        </button>
+        <label htmlFor="voucher" className="voucher-selector__label">
+          Código descuento:
+        </label>
+        <div className="voucher-selector__input-group">
+          <input
+            id="voucher"
+            value={voucherCode}
+            onChange={(e) => {
+              setVoucherCode(e.target.value);
+            }}
+            className="voucher-selector__code-textbox"
+          />
+          <button
+            type="button"
+            className="McButton"
+            onClick={() => {
+              onClick(voucherCode);
+            }}
+          >
+            Usar
+          </button>
+        </div>
       </div>
-      <span>{errorMessage}</span>
+      <span className="voucher-selector__code-error">{errorMessage}</span>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 const PAYPAL_USER_ERRORS = {
-  usernameMandatory: 'Es necesario especificar un nombre de usuario',
-  passwordMandatory: 'Es necesario especificar una contraseña',
+  usernameIsMandatory: 'Es necesario especificar un nombre de usuario',
+  passwordIsMandatory: 'Es necesario especificar una contraseña',
 };
 
 export class PaypalUser {
@@ -19,10 +19,10 @@ export class PaypalUser {
   }
 
   private validateUsername() {
-    if (!this.#username) throw new Error(PAYPAL_USER_ERRORS.usernameMandatory);
+    if (!this.#username) throw new Error(PAYPAL_USER_ERRORS.usernameIsMandatory);
   }
 
   private validatePassword() {
-    if (!this.#password) throw new Error(PAYPAL_USER_ERRORS.passwordMandatory);
+    if (!this.#password) throw new Error(PAYPAL_USER_ERRORS.passwordIsMandatory);
   }
 }

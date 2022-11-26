@@ -1,6 +1,5 @@
 import {useEffect, useState} from 'react';
 import {toast} from 'react-toastify';
-import {PaymentMethod} from 'src/@types/order';
 import {getErrorMessage} from 'src/api/errorHandling/errorHandler';
 import type {OrderStateType} from 'src/api/orders/OrderStates/constants';
 import {ORDER_STATES, ORDER_STATES_CODES} from 'src/api/orders/OrderStates/constants';
@@ -173,7 +172,8 @@ export const OrderManager = () => {
         </div>
         <div className="info">
           <p>Método de Pago:</p>
-          <label>{PaymentMethod[order.getPayment()]}</label>
+          {/* <label>{PaymentMethod[order.getPayment()]}</label> */}
+          <label>{order.getPayment().text}</label>
           <p>Total:</p>
           <label>{currencyFormatter().format(order.getTotalPrice())}</label>
         </div>

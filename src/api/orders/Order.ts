@@ -1,4 +1,7 @@
-import type {OrderAddressDetailsType, OrderType, PaymentMethod} from '../../@types/order';
+import type {PaymentMethodType} from 'src/components/form/Payment/constants/paymentMethodsTypes';
+import type {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
+import type {OrderAddressDetailsType, OrderType} from '../../@types/order';
+
 import type {MenuType} from '../../@types/product.d';
 import type {IStateContext} from '../state/IStateContext';
 import type {IStateStepsContext} from '../state/IStateStepsContext';
@@ -106,6 +109,20 @@ export default class Order implements IStateContext, IStateStepsContext {
     return this.order.items.reduce((total: number, {price}) => total + price, 0);
   }
 
+  /**
+   * Set the payment amount of the items with the donation and other values.
+   */
+  setPaymentAmount(paymentAmount: PaymentAmount): void {
+    this.order.paymentAmount = paymentAmount;
+  }
+
+  /**
+   * Get the payment amount of the items with the donation and other values.
+   */
+  getPaymentAmount(): PaymentAmount {
+    return this.order.paymentAmount;
+  }
+
   getTotalPriceByMenu(menuId: string) {
     return this.order.items
       .filter((item) => item.id === menuId)
@@ -115,7 +132,7 @@ export default class Order implements IStateContext, IStateStepsContext {
   /**
    * Get the order payment.
    */
-  getPayment(): PaymentMethod {
+  getPayment(): PaymentMethodType {
     return this.order.payment;
   }
 
@@ -124,7 +141,7 @@ export default class Order implements IStateContext, IStateStepsContext {
    *
    * @param newPayment New payment method.
    */
-  setPayment(newPayment: PaymentMethod): void {
+  setPayment(newPayment: PaymentMethodType): void {
     this.order.payment = newPayment;
   }
 
@@ -172,7 +189,7 @@ export default class Order implements IStateContext, IStateStepsContext {
   }
 
   toOrderType(): OrderType {
-    const {id, details, items, total, payment} = this.order;
-    return {id, details, items, total, payment};
+    const {id, details, items, total, payment, paymentAmount} = this.order;
+    return {id, details, items, total, payment, paymentAmount};
   }
 }

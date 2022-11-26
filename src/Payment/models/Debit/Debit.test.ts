@@ -1,33 +1,12 @@
-import {mockNewOrder} from 'src/api/orders/mocks/mocks';
 import Card from '../Card/Card';
-import Donation from '../Donation/Donation';
-import Debit from './Debit';
-
-const items = [
-  {
-    quantity: 1,
-    name: 'McCombo Cuarto De Libra Con Queso Grande',
-    img: 'McCOMBOCUARTODELIBRACONQUESOGrande.png',
-    pricePerUnit: 1020,
-  },
-];
-
-const details = {
-  name: 'PEATONAL LOMAS DE ZAMORA',
-  address: 'Peatona Laprida 177 Lomas de Zamora',
-  img: 'indicador.png',
-  isDelivery: false,
-};
+import {DebitPaymentStrategy} from './Debit';
 
 const VALID_CARD_NUMBER = '1299999999999999';
-const validCard = () => new Card(VALID_CARD_NUMBER, '12 / 24', 123);
+const validCard = () => new Card(VALID_CARD_NUMBER, '12 / 24', '123');
 
-describe('Given a Debit class', () => {
+describe('Given a DebitPaymentStrategy class', () => {
   it('should contain a pay method', () => {
-    const card = validCard();
-    const order = mockNewOrder();
-    const donation = new Donation(0);
-    const debit = new Debit(order, donation, card);
+    const debit = new DebitPaymentStrategy(validCard());
     expect(debit.pay).toBeInstanceOf(Function);
   });
 });

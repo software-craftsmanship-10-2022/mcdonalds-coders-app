@@ -1,6 +1,5 @@
 import {QRCode} from 'react-qrcode-logo';
 import {useNavigate} from 'react-router-dom';
-import {PaymentMethod} from 'src/@types/order';
 import {IMG_PATH, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
 import useFormat from '../../../hooks/useFormat';
@@ -72,7 +71,7 @@ const CurrentOrder = () => {
         </h1>
         <h3>
           <strong>Método de Pago: </strong>
-          {PaymentMethod[order.getPayment()]}
+          {order.getPayment().text}
         </h3>
         <h3>
           <strong>Total: </strong>

@@ -1,10 +1,9 @@
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {render, screen, waitFor} from '@testing-library/react';
 import React, {useEffect} from 'react';
 import {MemoryRouter, Route, Routes, useNavigate} from 'react-router-dom';
 import createEmptyOrder from 'src/api/orders/createEmptyOrder';
-// Import saveOrder from 'src/api/orders/saveOrder';
 import type Order from 'src/api/orders/Order';
-import saveOrder, * as saveOrderObject from 'src/api/orders/saveOrder';
+import * as saveOrderObject from 'src/api/orders/saveOrder';
 import {STORAGE, URLS} from 'src/config';
 import {OrderProvider, useOrderContext} from 'src/context/OrderContext';
 import useLocalStorage from 'src/hooks/useLocalStorage';
@@ -33,16 +32,12 @@ const ShowOrder: React.FC<{order: Order}> = ({order}) => {
 
 function ComponentWithRouter(): JSX.Element {
   const DummyComponent = () => {
-    const {order, updateOrder} = useOrderContext();
-    const mockConfirmOrder = async () => {
-      const awaitOrder = await saveOrder(order);
-      updateOrder(awaitOrder);
-    };
+    const {order} = useOrderContext();
 
     return (
       <div>
         <ShowOrder order={order} />
-        <Checkout order={order} confirmOrder={mockConfirmOrder} test-id="test" />
+        <Checkout test-id="test" />
       </div>
     );
   };
@@ -102,22 +97,6 @@ describe('Test Checkout component', () => {
       render(<ComponentWithRouter />);
       await waitFor(() => {
         screen.getByText(/Enviar pedido/);
-      });
-    });
-
-    it('checks the order is saved when it clicks in the button', async () => {
-      const orderId = '1234abc';
-      const dummyOrderWithId = dummyOrder;
-      dummyOrderWithId.setId(orderId);
-      spySaveOrder.mockResolvedValue(dummyOrderWithId);
-
-      render(<ComponentWithRouter />);
-
-      const button = screen.getByText(/Enviar pedido/);
-      fireEvent.click(button);
-
-      await waitFor(() => {
-        expect(screen.getByText(/The order id is: 1234abc/)).toBeInTheDocument();
       });
     });
   });

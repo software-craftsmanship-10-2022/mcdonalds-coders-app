@@ -18,7 +18,9 @@ const getVoucherFromAppData = (voucherCode: string): Voucher => {
     throw new Error();
   }
 
-  const voucherApi = VOUCHERS.find((voucher) => voucher.code === voucherCode);
+  const voucherApi = VOUCHERS.find(
+    (voucher) => voucher.code.toUpperCase() === voucherCode.toUpperCase(),
+  );
 
   if (!voucherApi) {
     throw new Error('El código introducido no es correcto');

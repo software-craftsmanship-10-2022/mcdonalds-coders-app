@@ -8,4 +8,8 @@ export class TotalVoucherStrategy implements VoucherStrategy {
   useDiscount(amount: number): number {
     return 0;
   }
+
+  getDiscountString(): string {
+    return `100%`;
+  }
 }

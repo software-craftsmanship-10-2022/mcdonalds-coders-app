@@ -3,8 +3,11 @@ import Account from 'src/Payment/models/Account/Account';
 import Card from 'src/Payment/models/Card/Card';
 import {CashPaymentStrategy} from 'src/Payment/models/Cash/Cash';
 import {DebitPaymentStrategy} from 'src/Payment/models/Debit/Debit';
+import {PaypalPaymentStrategy} from 'src/Payment/models/Paypal/PaypalPaymentStrategy';
+import {PaypalUser} from 'src/Payment/models/Paypal/PaypalUser';
 import {TransferPaymentStrategy} from 'src/Payment/models/Transfer/Transfer';
 import DebitPaymentInputs from '../DebitPaymentInputs';
+import PaypalPaymentInputs from '../PaypalPaymentInputs';
 import TransferPaymentInputs from '../TransferPaymentInputs';
 
 export interface PaymentMethodType {
@@ -60,6 +63,23 @@ export const PAYMENT_METHODS: PaymentMethodFormType[] = [
 
       const account = new Account(name, iban);
       const strategy = new TransferPaymentStrategy(account);
+      return strategy;
+    },
+  },
+  {
+    id: 'paypal',
+    text: 'Paypal',
+    formComponent: () => <PaypalPaymentInputs />,
+    handleForm(event: React.FormEvent<HTMLFormElement>) {
+      const target = event.target as typeof event.target & {
+        username: {value: string};
+        password: {value: string};
+      };
+      const username = target.username.value;
+      const password = target.password.value;
+
+      const account = new PaypalUser(username, password);
+      const strategy = new PaypalPaymentStrategy(account);
       return strategy;
     },
   },

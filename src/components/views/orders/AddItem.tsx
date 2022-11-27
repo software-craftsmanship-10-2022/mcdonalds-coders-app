@@ -22,6 +22,7 @@ const menuBuilder = new MenuBuilder();
 
 const AddItem = () => {
   const {multipleProductsByCategory, getMultipleProductsByCategory} = useProducts();
+
   const {getComboById} = useCombos();
   const {id} = useParams<{category: string; id: string}>();
   const navigate = useNavigate();
@@ -34,10 +35,11 @@ const AddItem = () => {
   const priceTag = combo ? currencyFormatter().format(combo.price) : '';
   const [selectedComplement, setSelectedComplement] = useState<ProductType | undefined>(undefined);
   const [selectedDrink, setSelectedDrink] = useState<ProductType | undefined>(undefined);
+  const [selectedExtra, setSelectedExtra] = useState<ProductType | undefined>(undefined);
   const [modalConfig, setModalConfig] = useState({visible: false, title: MODAL_TITLE, message: ''});
 
   useEffect(() => {
-    getMultipleProductsByCategory(['drinks', 'complements']);
+    getMultipleProductsByCategory(['drinks', 'complements', 'desserts', 'chicken']);
     if (id) {
       getComboById(id)
         .then((combo: MenuType) => {
@@ -64,11 +66,10 @@ const AddItem = () => {
     setSelectedDrink(newProduct);
   };
 
-  const getSelectedProducts = () => {
-    const products: ProductType[] = [];
-    if (selectedComplement) products.push(selectedComplement);
-    if (selectedDrink) products.push(selectedDrink);
-    return products;
+  const onSelectExtra = (product: ProductType) => {
+    const newProduct = product.title === selectedExtra?.title ? undefined : product;
+    menuBuilder.withExtra(newProduct);
+    setSelectedExtra(newProduct);
   };
 
   const showModal = (message: string) => {
@@ -128,7 +129,6 @@ const AddItem = () => {
           </div>
         )}
       </div>
-
       <p className="price">{priceTag}</p>
       <div className="counter-container">
         <button
@@ -147,7 +147,6 @@ const AddItem = () => {
           <img src={IMG_PATH + 'plus.png'} alt="Añadir" />
         </button>
       </div>
-
       <ProductSelector
         productCategory={multipleProductsByCategory.find(
           (category) => category.id === 'complements',
@@ -155,13 +154,18 @@ const AddItem = () => {
         onSelectProduct={onSelectComplement}
         selectedProductId={selectedComplement?.id}
       />
-
       <ProductSelector
         productCategory={multipleProductsByCategory.find((category) => category.id === 'drinks')}
         onSelectProduct={onSelectDrink}
         selectedProductId={selectedDrink?.id}
       />
+      <h2>Amplia con complementos extras</h2>
 
+      <ProductSelector
+        productCategory={multipleProductsByCategory.find((category) => category.id === 'desserts')}
+        onSelectProduct={onSelectExtra}
+        selectedProductId={selectedExtra?.id}
+      />
       <McButton
         text={'Agregar al pedido'}
         onClick={() => {
@@ -169,7 +173,6 @@ const AddItem = () => {
         }}
         fixed
       />
-
       <InfoModal
         isOpen={modalConfig.visible}
         toggle={closeModal}

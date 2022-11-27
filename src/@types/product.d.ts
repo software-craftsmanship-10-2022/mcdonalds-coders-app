@@ -26,15 +26,14 @@ export type ProductCategoryType = Pick<ProductCategoryApiType, 'id' | 'category'
 };
 
 // New TYPES
-export type MenuType =
-  | {
-      id: string;
-      name: string;
-      image: string;
-      price: number;
-      products: ProductType[];
-    }
-  | undefined;
+export type MenuType = {
+  id: string;
+  name: string;
+  image: string;
+  price: number;
+  mainProduct: ProductType;
+  products: ProductType[];
+};
 
 export type CategoryIds =
   | 'burgers'

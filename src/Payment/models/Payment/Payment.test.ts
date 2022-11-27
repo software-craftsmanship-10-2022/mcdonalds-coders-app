@@ -1,5 +1,5 @@
-import {OrderStatus, PaymentMethod} from 'src/@types/order';
-import Order from 'src/api/orders/Order';
+import {PaymentMethod} from 'src/@types/order';
+import {mockNewOrder} from 'src/api/orders/mocks/mocks';
 import {DONATION_ERRORS, ORDER_ERRORS, PAYMENT_TYPE_ERRORS} from 'src/Payment/errorMessages';
 import Donation from '../Donation/Donation';
 import Payment from './Payment';
@@ -20,20 +20,7 @@ const details = {
   isDelivery: false,
 };
 
-const validOrder = () =>
-  new Order({
-    id: 'a3',
-    details: {
-      id: 'a4',
-      name: 'name 1',
-      address: 'address 1',
-      image: 'image 1',
-      isDelivery: false,
-    },
-    items: [],
-    payment: PaymentMethod.debit,
-    status: OrderStatus.delivering,
-  });
+const validOrder = () => mockNewOrder();
 
 describe('Given a Payment class', () => {
   it('when an instance is created then pay method should be defined', () => {

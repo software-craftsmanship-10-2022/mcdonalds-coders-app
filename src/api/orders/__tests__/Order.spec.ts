@@ -1,26 +1,16 @@
-import type {NewOrderAddressDetailsType} from '../../../@types/order';
-import {OrderStatus, PaymentMethod} from '../../../@types/order';
+import type {OrderAddressDetailsType} from '../../../@types/order';
 import type {MenuType} from '../../../@types/product';
-import Order from '../Order';
+import {mockNewOrder} from '../mocks/mocks';
+import type Order from '../Order';
+import ConfirmedState from '../OrderStates/ConfirmedState';
+import {ORDER_STATES} from '../OrderStates/constants';
 import InProgressState from '../OrderStates/InProgressState';
 
 describe('Check class Order', () => {
   let order: Order;
 
   beforeEach(() => {
-    order = new Order({
-      id: '1a',
-      details: {
-        id: '2a',
-        name: 'user 1',
-        address: '123 Fake street',
-        image: 'avatar',
-        isDelivery: false,
-      },
-      items: [],
-      payment: PaymentMethod.cash,
-      status: OrderStatus.noConfirmed,
-    });
+    order = mockNewOrder();
   });
 
   it('gets the order id', () => {
@@ -134,31 +124,25 @@ describe('Check class Order', () => {
     });
   });
 
-  it('is *cash* payment method', () => {
-    expect(order.getPayment()).toBe(PaymentMethod.cash);
+  it('gets order state code', () => {
+    expect(order.getStateCode()).toBe(ORDER_STATES.inProgressState.code);
   });
 
-  it('changes the payment method', () => {
-    expect(order.getPayment()).toBe(PaymentMethod.cash);
-    order.setPayment(PaymentMethod.debit);
-    expect(order.getPayment()).toBe(PaymentMethod.debit);
+  it('gets order state description', () => {
+    expect(order.getStateDescription()).toBe(ORDER_STATES.inProgressState.description);
   });
 
-  it('gets order status', () => {
-    expect(order.getStatus()).toBe(OrderStatus.noConfirmed);
+  it('goes to next state', () => {
+    order.nextStep();
+    expect(order.getStateCode()).toBe(ORDER_STATES.receivedState.code);
   });
 
-  it('sets new status', () => {
-    order.setStatus(OrderStatus.delivering);
-    expect(order.getStatus()).toBe(OrderStatus.delivering);
-  });
-
-  it('checks the order status is no confirmed', () => {
+  it('checks the order state is no confirmed', () => {
     expect(order.isConfirmed()).toBe(false);
   });
 
-  it('checks the order status is confirmed', () => {
-    order.setStatus(OrderStatus.pending);
+  it('checks the order state is confirmed', () => {
+    order.changeState(new ConfirmedState(order));
     expect(order.isConfirmed()).toBe(true);
   });
 
@@ -173,7 +157,7 @@ describe('Check class Order', () => {
   });
 
   it('set new details object', () => {
-    const details: NewOrderAddressDetailsType = {
+    const details: OrderAddressDetailsType = {
       id: 'a33',
       name: 'New name',
       address: 'New address',
@@ -205,21 +189,5 @@ describe('Check class Order', () => {
     expect(order.getTotalPriceByMenu('a')).toBe(400);
     expect(order.getTotalPriceByMenu('b')).toBe(200);
     expect(order.getTotalPriceByMenu('c')).toBe(800);
-  });
-
-  describe('`clone` function', () => {
-    it('clones an instance of Order', () => {
-      expect(order.clone()).toBeInstanceOf(Order);
-    });
-
-    it('clones an object with the same properties.', () => {
-      expect(order.clone()).toEqual(order);
-    });
-
-    it('clones an object that is not the original object', () => {
-      const clonedOrder = order.clone();
-      expect(clonedOrder).not.toBe(order);
-      expect(clonedOrder.getDetails()).not.toBe(order.getDetails());
-    });
   });
 });

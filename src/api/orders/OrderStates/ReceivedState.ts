@@ -1,11 +1,11 @@
 import type Order from '../Order';
 import ConfirmedState from './ConfirmedState';
-import {MAPPED_ORDER_STATES} from './constants';
+import {ORDER_STATES} from './constants';
 import OrderState from './OrderState';
 import RejectedState from './RejectedState';
 class ReceivedState extends OrderState {
   constructor(order: Order) {
-    super(order, MAPPED_ORDER_STATES.receivedState.code);
+    super(order, ORDER_STATES.receivedState);
   }
 
   nextStep() {

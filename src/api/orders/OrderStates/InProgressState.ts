@@ -1,11 +1,11 @@
 import type Order from '../Order';
-import {MAPPED_ORDER_STATES} from './constants';
+import {ORDER_STATES} from './constants';
 import OrderState from './OrderState';
 import ReceivedState from './ReceivedState';
 
 class InProgressState extends OrderState {
   constructor(order: Order) {
-    super(order, MAPPED_ORDER_STATES.inProgressState.code);
+    super(order, ORDER_STATES.inProgressState);
   }
 
   nextStep() {

@@ -29,5 +29,5 @@ export type ComboType = {
 export type ComboCategoryType = {
   id: string;
   category: string;
-  items: ComboType[];
+  items: MenuType[];
 };

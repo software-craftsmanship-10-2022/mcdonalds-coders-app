@@ -148,6 +148,18 @@
   border-radius: 50%;
 }
 
+.Detail .total-pay__voucher-discount {
+  color: red;
+}
+
+.Detail .total-pay__donation {
+  color: blue;
+}
+
+.Detail .voucher-selector-container {
+  margin-bottom: 1rem;
+}
+
 @keyframes click-wave {
   0% {
     height: 40px;

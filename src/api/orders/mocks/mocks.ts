@@ -1,5 +1,5 @@
-import {OrderStatus, PaymentMethod} from 'src/@types/order';
-import Order from '../../Order';
+import {PaymentAmount} from 'src/Payment/models/PaymentAmount/PaymentAmount';
+import Order from '../Order';
 
 export const mockNewOrder = () =>
   new Order({
@@ -12,6 +12,7 @@ export const mockNewOrder = () =>
       isDelivery: false,
     },
     items: [],
-    payment: PaymentMethod.cash,
-    status: OrderStatus.noConfirmed,
+    total: 0,
+    payment: {id: '1', text: 'Cash'},
+    paymentAmount: new PaymentAmount(100, 0, undefined),
   });

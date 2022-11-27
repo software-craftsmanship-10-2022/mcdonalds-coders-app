@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import type {MenuType, ProductType} from 'src/@types/product';
+import Order from 'src/api/orders/Order';
 import {MenuBuilder} from 'src/api/products/builder';
 import InfoModal from 'src/components/modal/InfoModal';
 import ProductSelector from 'src/components/product-selector/ProductSelector';
@@ -99,11 +100,20 @@ const AddItem = () => {
 
     const menu: MenuType = menuBuilder.getMenu();
 
-    Array.from({length: count}, (_, index) => index).forEach(() => {
-      order.addItem(menu);
+    const newOrder = new Order({
+      id: order.getId(),
+      details: order.getDetails(),
+      items: order.getItems(),
+      total: order.getTotalPrice(),
+      payment: order.getPayment(),
+      paymentAmount: order.getPaymentAmount(),
     });
 
-    updateOrder(order);
+    Array.from({length: count}, (_, index) => index).forEach(() => {
+      newOrder.addItem(menu);
+    });
+
+    updateOrder(newOrder);
     navigate(-1);
   };
 

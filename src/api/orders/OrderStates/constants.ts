@@ -1,4 +1,4 @@
-const ORDER_STATES_CODES = {
+export const ORDER_STATES_CODES = {
   inProgressState: 'inProgressState',
   cancelledByRestaurantState: 'cancelledByRestaurantState',
   cancelledByUserState: 'cancelledByUserState',
@@ -24,44 +24,49 @@ const ORDER_STATES_DESCRIPTIONS = {
   rejectedState: 'Pedido rechazado',
 };
 
-export const MAPPED_ORDER_STATES = {
-  inProgressState: {
+export type OrderStateType = {
+  code: string;
+  description: string;
+};
+
+export const ORDER_STATES = {
+  [ORDER_STATES_CODES.inProgressState]: {
     code: ORDER_STATES_CODES.inProgressState,
     description: ORDER_STATES_DESCRIPTIONS.inProgressState,
   },
-  cancelledByRestaurantState: {
+  [ORDER_STATES_CODES.cancelledByRestaurantState]: {
     code: ORDER_STATES_CODES.cancelledByRestaurantState,
     description: ORDER_STATES_DESCRIPTIONS.cancelledByRestaurantState,
   },
-  cancelledByUserState: {
+  [ORDER_STATES_CODES.cancelledByUserState]: {
     code: ORDER_STATES_CODES.cancelledByUserState,
     description: ORDER_STATES_DESCRIPTIONS.cancelledByUserState,
   },
-  confirmedState: {
+  [ORDER_STATES_CODES.confirmedState]: {
     code: ORDER_STATES_CODES.confirmedState,
     description: ORDER_STATES_DESCRIPTIONS.confirmedState,
   },
-  deliveringState: {
+  [ORDER_STATES_CODES.deliveringState]: {
     code: ORDER_STATES_CODES.deliveringState,
     description: ORDER_STATES_DESCRIPTIONS.deliveringState,
   },
-  finishedState: {
+  [ORDER_STATES_CODES.finishedState]: {
     code: ORDER_STATES_CODES.finishedState,
     description: ORDER_STATES_DESCRIPTIONS.finishedState,
   },
-  preparingState: {
+  [ORDER_STATES_CODES.preparingState]: {
     code: ORDER_STATES_CODES.preparingState,
     description: ORDER_STATES_DESCRIPTIONS.preparingState,
   },
-  readyState: {
+  [ORDER_STATES_CODES.readyState]: {
     code: ORDER_STATES_CODES.readyState,
     description: ORDER_STATES_DESCRIPTIONS.readyState,
   },
-  receivedState: {
+  [ORDER_STATES_CODES.receivedState]: {
     code: ORDER_STATES_CODES.receivedState,
     description: ORDER_STATES_DESCRIPTIONS.receivedState,
   },
-  rejectedState: {
+  [ORDER_STATES_CODES.rejectedState]: {
     code: ORDER_STATES_CODES.rejectedState,
     description: ORDER_STATES_DESCRIPTIONS.rejectedState,
   },

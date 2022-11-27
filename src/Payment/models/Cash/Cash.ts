@@ -1,17 +1,7 @@
-import {PaymentMethod} from 'src/@types/order';
-import type Order from 'src/api/orders/Order';
-import type Donation from '../Donation/Donation';
-import Payment from '../Payment/Payment';
+import type {PaymentStrategy} from 'src/@types/payments';
 
-class Cash extends Payment {
-  constructor(order: Order, donation: Donation) {
-    super(PaymentMethod.cash, order, donation);
-  }
-
-  pay() {
-    super.pay();
-    this.donation.amountValue();
+export class CashPaymentStrategy implements PaymentStrategy {
+  pay(amount: number) {
+    console.log(`Currently paying with cash: ${amount} €`);
   }
 }
-
-export default Cash;

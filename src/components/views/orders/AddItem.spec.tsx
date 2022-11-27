@@ -13,7 +13,7 @@ function ShowOrder(): JSX.Element {
 
   return (
     <ul>
-      {order?.getItems().map((menu, index) => (
+      {order.getItems().map((menu, index) => (
         <li key={`key-${index}`}>Menú -- {menu.name}</li>
       ))}
     </ul>
@@ -90,7 +90,8 @@ describe('Test AddItem component', () => {
 
       const button = screen.getByAltText(/Añadir/).parentNode as HTMLButtonElement;
       fireEvent.click(button);
-      fireEvent.click(screen.getByText(/Agregar al pedido/));
+      const addButton = screen.getByText(/Agregar al pedido/);
+      fireEvent.click(addButton);
 
       await waitFor(() => {
         const items = screen.getAllByText(/Menú -- McCombo Grand Triple Mc Bacon Grande/);

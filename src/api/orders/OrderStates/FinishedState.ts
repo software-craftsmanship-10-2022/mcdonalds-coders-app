@@ -1,9 +1,9 @@
-import type Order from '../Order';
+import type {IStateContext} from 'src/api/state/IStateContext';
+import McState from 'src/api/state/McState';
 import {ORDER_STATES} from './constants';
-import OrderState from './OrderState';
-class FinishedState extends OrderState {
-  constructor(order: Order) {
-    super(order, ORDER_STATES.finishedState);
+class FinishedState extends McState {
+  constructor(context: IStateContext) {
+    super(context, ORDER_STATES.finishedState);
   }
 }
 

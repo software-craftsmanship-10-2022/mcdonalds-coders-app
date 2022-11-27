@@ -1,19 +1,19 @@
-import type Order from '../Order';
+import type {IStateContext} from 'src/api/state/IStateContext';
+import McState from 'src/api/state/McState';
 import CancelledByRestaurantState from './CancelledByRestaurantState';
 import {ORDER_STATES} from './constants';
-import OrderState from './OrderState';
 import ReadyState from './ReadyState';
-class PreparingState extends OrderState {
-  constructor(order: Order) {
-    super(order, ORDER_STATES.preparingState);
+class PreparingState extends McState {
+  constructor(context: IStateContext) {
+    super(context, ORDER_STATES.preparingState);
   }
 
   nextStep() {
-    this.order.changeState(new ReadyState(this.order));
+    this.context.changeState(new ReadyState(this.context));
   }
 
   cancelByRestaurant() {
-    this.order.changeState(new CancelledByRestaurantState(this.order));
+    this.context.changeState(new CancelledByRestaurantState(this.context));
   }
 }
 

@@ -1,30 +1,49 @@
-import {mockNewOrder} from '../../mocks/mocks';
-import type Order from '../../Order';
+import {METHOD_NOT_IMPLEMENTED_ERROR} from 'src/api/state/constants';
+import {FakeStateContext} from 'src/api/state/FakeStateContext';
+import type {IStateContext} from 'src/api/state/IStateContext';
 import InProgressState from '../InProgressState';
 import ReceivedState from '../ReceivedState';
 
-describe('Given a InProgressState class', () => {
-  let order: Order;
+describe('Given an In Progress state', () => {
+  let context: IStateContext;
+  let inProgressState: InProgressState;
+  let changeStateSpy: jest.SpyInstance;
+
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date(2022, 3, 1));
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   beforeEach(() => {
-    order = mockNewOrder();
-    order.changeState(new InProgressState(order));
+    context = new FakeStateContext();
+    inProgressState = new InProgressState(context);
+    changeStateSpy = jest.spyOn(context, 'changeState');
   });
 
-  it('when nextState method is called order.getState() should return ReceivedState', () => {
-    order.getState().nextStep();
-    expect(order.getState()).toBeInstanceOf(ReceivedState);
+  it('when nextStep is called then new state should be Received state', () => {
+    inProgressState.nextStep();
+    expect(changeStateSpy).toHaveBeenCalledWith(new ReceivedState(context));
   });
-  it('when cancelByUser method is called order.getState() should return InProgressState', () => {
-    order.getState().cancelByUser();
-    expect(order.getState()).toBeInstanceOf(InProgressState);
+
+  it('when cancelByUser is called then should return an Error', () => {
+    expect(() => {
+      inProgressState.cancelByUser();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
-  it('when cancelByRestaurant method is called order.getState() should return InProgressState', () => {
-    order.getState().cancelByRestaurant();
-    expect(order.getState()).toBeInstanceOf(InProgressState);
+
+  it('when cancelByRestaurant is called then should return an Error', () => {
+    expect(() => {
+      inProgressState.cancelByRestaurant();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
-  it('when reject method is called order.getState() should return InProgressState', () => {
-    order.getState().reject();
-    expect(order.getState()).toBeInstanceOf(InProgressState);
+
+  it('when reject is called then should return an Error', () => {
+    expect(() => {
+      inProgressState.reject();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
 });

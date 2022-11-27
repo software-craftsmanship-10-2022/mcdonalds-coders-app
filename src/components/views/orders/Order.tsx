@@ -9,9 +9,15 @@ import Map from '../../map/Map';
 import InfoModal from '../../modal/InfoModal';
 import './Order.css';
 
+type HandleStoreSelectType = {
+  title: string;
+  address: string;
+  image: string;
+  isDelivery: boolean;
+};
 type PickupProps = {
   query: string;
-  handleStoreSelect: (title: string, location: string, img: string, isDelivery: boolean) => void;
+  handleStoreSelect: ({title, address, image, isDelivery}: HandleStoreSelectType) => void;
 };
 
 const Pickup = ({query, handleStoreSelect}: PickupProps) => {
@@ -30,7 +36,12 @@ const Pickup = ({query, handleStoreSelect}: PickupProps) => {
             className={'marker'}
             to={URLS.ordersAdd}
             onClick={() => {
-              handleStoreSelect(value.title, value.location, value.img, false);
+              handleStoreSelect({
+                title: value.title,
+                address: value.location,
+                image: value.img,
+                isDelivery: false,
+              });
             }}
           >
             <img src={IMG_PATH + value.img} alt="" />
@@ -47,7 +58,7 @@ const Pickup = ({query, handleStoreSelect}: PickupProps) => {
 
 type DeliveryProps = {
   location?: string;
-  handleStoreSelect: (title: string, location: string, img: string, isDelivery: boolean) => void;
+  handleStoreSelect: ({title, address, image, isDelivery}: HandleStoreSelectType) => void;
 };
 
 const Delivery = ({location, handleStoreSelect}: DeliveryProps) => {
@@ -66,7 +77,13 @@ const Delivery = ({location, handleStoreSelect}: DeliveryProps) => {
       return;
     }
 
-    handleStoreSelect(shortLocation!, location, 'delivery.png', true);
+    // HandleStoreSelect(shortLocation!, location, 'delivery.png', true);
+    handleStoreSelect({
+      title: shortLocation!,
+      address: location,
+      image: 'delivery.png',
+      isDelivery: true,
+    });
 
     navigate(URLS.ordersAdd);
   };
@@ -99,7 +116,7 @@ const Order = ({toggleOrderModal}: OrderProps) => {
   const [mapMarkers, setMapMarkers] = useState(MARKERS);
   const [query, setQuery] = useState('');
   const [location, setLocation] = useState('');
-  const {order, updateOrder} = useOrderContext();
+  const {order, updateOrder, resetOrder} = useOrderContext();
 
   // Set searchbar query from the selected marker
   useEffect(() => {
@@ -119,12 +136,8 @@ const Order = ({toggleOrderModal}: OrderProps) => {
     setMapMarkers(mode ? MARKERS : []);
   };
 
-  const handleStoreSelect = (
-    title: string,
-    address: string,
-    image: string,
-    isDelivery: boolean,
-  ) => {
+  const handleStoreSelect = ({title, address, image, isDelivery}: HandleStoreSelectType) => {
+    resetOrder();
     order.setDetails({
       id: 'a1',
       address,

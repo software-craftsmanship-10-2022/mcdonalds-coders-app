@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import type {MenuType, ProductType} from 'src/@types/product';
+import type {CategoryIds, MenuType, ProductType} from 'src/@types/product';
 import Order from 'src/api/orders/Order';
 import {MenuBuilder} from 'src/api/products/builder';
 import InfoModal from 'src/components/modal/InfoModal';
@@ -14,6 +14,7 @@ import useFormat from '../../../hooks/useFormat';
 import McButton from '../../buttons/McButton';
 import './AddItem.css';
 
+const CATEGORIES: CategoryIds[] = ['drinks', 'complements', 'desserts', 'chicken'];
 const MODAL_TITLE = 'Ups, aún tienes cosas por elegir';
 const MODAL_TEXT_NO_COMPLEMENT =
   'No has seleccionado un acompañamiento, pero no te preocupes estas a tiempo de mejorar tu combo';
@@ -39,7 +40,7 @@ const AddItem = () => {
   const [modalConfig, setModalConfig] = useState({visible: false, title: MODAL_TITLE, message: ''});
 
   useEffect(() => {
-    getMultipleProductsByCategory(['drinks', 'complements', 'desserts', 'chicken']);
+    getMultipleProductsByCategory(CATEGORIES);
     if (id) {
       getComboById(id)
         .then((combo: MenuType) => {

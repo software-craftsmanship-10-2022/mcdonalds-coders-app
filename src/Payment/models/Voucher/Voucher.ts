@@ -20,6 +20,10 @@ export class Voucher {
   useDiscount(amount: number): number {
     return this.#voucherStrategy.useDiscount(amount);
   }
+
+  getDiscountString(): string {
+    return this.#voucherStrategy.getDiscountString();
+  }
 }
 
 const voucherStrategyFactory = (voucherApi: VoucherApiType): VoucherStrategy => {

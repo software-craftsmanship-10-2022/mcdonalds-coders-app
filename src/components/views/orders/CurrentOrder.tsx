@@ -75,7 +75,7 @@ const CurrentOrder = () => {
         </h3>
         <h3>
           <strong>Total: </strong>
-          {currencyFormatter().format(order.getTotalPrice())}
+          {currencyFormatter().format(order.getPaymentAmount().totalAmount())}
         </h3>
       </div>
       <McButton

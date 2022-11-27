@@ -14,4 +14,8 @@ export class FixedVoucherStrategy implements VoucherStrategy {
     const result = amount - this.calculateDiscount(amount);
     return result > 0 ? result : 0;
   }
+
+  getDiscountString(): string {
+    return `${this.#discount}`;
+  }
 }

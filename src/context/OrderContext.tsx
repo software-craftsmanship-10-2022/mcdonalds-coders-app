@@ -1,5 +1,6 @@
 import {createContext, useContext, useEffect, useState} from 'react';
 import createEmptyOrder from 'src/api/orders/createEmptyOrder';
+import InProgressState from 'src/api/orders/OrderStates/InProgressState';
 import type {OrderContextType} from '../@types/order';
 import type Order from '../api/orders/Order';
 import {useOrderStorage} from '../hooks/useOrderStorage';
@@ -24,7 +25,9 @@ export const OrderProvider = ({children}: OrderProviderProps) => {
   }, []);
 
   const resetOrder = async () => {
-    await updateOrder(createEmptyOrder());
+    const newOrder = createEmptyOrder();
+    newOrder.changeState(new InProgressState(newOrder));
+    await updateOrder(newOrder);
   };
 
   const updateOrder = async (order: Order) => {

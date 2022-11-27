@@ -1,50 +1,43 @@
 import {QRCode} from 'react-qrcode-logo';
-import {useNavigate} from 'react-router-dom';
+import {Navigate, useNavigate} from 'react-router-dom';
+import {ORDER_STATES_CODES} from 'src/api/orders/OrderStates/constants';
+import McButton from 'src/components/buttons/McButton';
 import {IMG_PATH, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
 import useFormat from '../../../hooks/useFormat';
-import McButton from '../../buttons/McButton';
 import './CurrentOrder.css';
 
-const TWO_SECONDS = 1000 * 2;
-
 const CurrentOrder = () => {
-  const navigate = useNavigate();
   const {order, resetOrder, updateOrder} = useOrderContext();
-  // Const {setOrderState} = useOrderState();
   const [currencyFormatter] = useFormat();
-
+  const navigate = useNavigate();
   // Restrict access when an order is in place
-  // if (!order?.isConfirmed()) {
-  //   return <Navigate to={URLS.root} replace />;
-  // }
+  if (order?.getStateCode() === ORDER_STATES_CODES.inProgressState) {
+    return <Navigate to={URLS.ordersCart} replace />;
+  }
 
   const details = order.getDetails();
 
-  // UseEffect(() => {
-  //   changeOrderStatus(order.getId(), OrderStatus.preparing, TWO_SECONDS);
-  //   changeOrderStatus(order.getId(), OrderStatus.delivering, TWO_SECONDS * 2);
-  // }, []);
-
-  // const changeOrderState = (orderId: string, state: OrderStateType, time: number) => {
-  //   setTimeout(() => {
-  //     setOrderState(orderId, status)
-  //       .then(() => {
-  //         order.nextStep();
-  //         updateOrder(order);
-  //       })
-  //       .catch((err: Error) => {
-  //         console.log(err);
-  //       });
-  //   }, time);
-  // };
-
   const cancelOrder = () => {
-    resetOrder();
-    navigate(URLS.root);
+    order.getState().cancelByUser();
+    updateOrder(order);
+    navigate(URLS.orders);
   };
 
   const addressTitle = details.isDelivery ? 'Domicilio' : 'Dirección de retiro en el local';
+  const mustResetOrder = () => {
+    const stateCode = order.getStateCode();
+    if (
+      stateCode === ORDER_STATES_CODES.cancelledByUserState ||
+      stateCode === ORDER_STATES_CODES.cancelledByRestaurantState ||
+      stateCode === ORDER_STATES_CODES.rejectedState ||
+      stateCode === ORDER_STATES_CODES.finishedState
+    ) {
+      return true;
+    }
+
+    return false;
+  };
 
   return (
     <div className="CurrentOrder">
@@ -78,14 +71,26 @@ const CurrentOrder = () => {
           {currencyFormatter().format(order.getPaymentAmount().totalAmount())}
         </h3>
       </div>
-      <McButton
-        text={'Cancelar pedido'}
-        color="#da291c"
-        onClick={() => {
-          cancelOrder();
-        }}
-        fixed
-      />
+      {order.getStateCode() === ORDER_STATES_CODES.receivedState && (
+        <McButton
+          text={'Cancelar pedido'}
+          color="#da291c"
+          onClick={() => {
+            cancelOrder();
+          }}
+          fixed
+        />
+      )}
+      {mustResetOrder() && (
+        <McButton
+          text={'Resetear pedido'}
+          color="#25ea60"
+          onClick={() => {
+            resetOrder();
+          }}
+          fixed
+        />
+      )}
     </div>
   );
 };

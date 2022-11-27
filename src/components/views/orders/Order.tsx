@@ -116,7 +116,7 @@ const Order = ({toggleOrderModal}: OrderProps) => {
   const [mapMarkers, setMapMarkers] = useState(MARKERS);
   const [query, setQuery] = useState('');
   const [location, setLocation] = useState('');
-  const {order, updateOrder} = useOrderContext();
+  const {order, updateOrder, resetOrder} = useOrderContext();
 
   // Set searchbar query from the selected marker
   useEffect(() => {
@@ -137,6 +137,7 @@ const Order = ({toggleOrderModal}: OrderProps) => {
   };
 
   const handleStoreSelect = ({title, address, image, isDelivery}: HandleStoreSelectType) => {
+    resetOrder();
     order.setDetails({
       id: 'a1',
       address,

@@ -20,6 +20,7 @@ import Scroll from './components/common/Scroll';
 import Header from './components/header/Header';
 import InfoModal from './components/modal/InfoModal';
 import Navigation from './components/navbar/Navigation';
+import {CartLink} from './components/views/orders/CartLink';
 import {OrderManager} from './components/views/orders/OrderManager';
 import {URLS} from './config';
 import {OrderProvider} from './context/OrderContext';
@@ -38,6 +39,7 @@ const App = () => {
       <OrderProvider>
         <ToastContainer />
         <Router>
+          <CartLink />
           <Scroll>
             <Header />
             <Routes>

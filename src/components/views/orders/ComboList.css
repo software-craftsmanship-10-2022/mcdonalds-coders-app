@@ -69,34 +69,3 @@
   font-size: 10px;
   opacity: 0.6;
 }
-
-.ComboList .view-order-link {
-  position: fixed;
-  bottom: 70px;
-  right: 10px;
-  width: fit-content;
-  height: auto;
-  text-decoration: none;
-}
-
-.ComboList .view-order-link > img {
-  width: 80px;
-  height: auto;
-}
-
-.ComboList .view-order-link > .order-qty {
-  position: absolute;
-  margin-top: -24px;
-  z-index: 4;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  color: var(--mc-yellow);
-  font-size: 16px;
-  font-weight: bold;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--mc-red);
-}

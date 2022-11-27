@@ -1,6 +1,7 @@
 import {METHOD_NOT_IMPLEMENTED_ERROR} from 'src/api/state/constants';
 import {FakeStateContext} from 'src/api/state/FakeStateContext';
 import type {IStateContext} from 'src/api/state/IStateContext';
+import CancelledByUserState from '../CancelledByUserState';
 import ConfirmedState from '../ConfirmedState';
 import ReceivedState from '../ReceivedState';
 import RejectedState from '../RejectedState';
@@ -30,10 +31,9 @@ describe('Given an In Received state', () => {
     expect(changeStateSpy).toHaveBeenCalledWith(new ConfirmedState(context));
   });
 
-  it('when cancelByUser is called then should return an Error', () => {
-    expect(() => {
-      receivedState.cancelByUser();
-    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
+  it('when cancelByUser is called then new state should be Cancelled by user state', () => {
+    receivedState.cancelByUser();
+    expect(changeStateSpy).toHaveBeenCalledWith(new CancelledByUserState(context));
   });
 
   it('when cancelByRestaurant is called then should return an Error', () => {

@@ -1,4 +1,3 @@
-import {NavLink} from 'react-router-dom';
 import {IMG_PATH, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
 import COMBOS from '../../../data/combos';
@@ -25,12 +24,6 @@ const ComboList = () => {
             <Slider items={value.items} showPrice={true} link={URLS.ordersAdd + value.id + '/'} />
           </div>
         ))}
-        {!order?.isItemsEmpty() && (
-          <NavLink className="view-order-link" to={URLS.ordersCart}>
-            <img src={IMG_PATH + 'order-bag.png'} alt="" />
-            <div className="order-qty">{order.getItems().length}</div>
-          </NavLink>
-        )}
       </div>
     </div>
   );

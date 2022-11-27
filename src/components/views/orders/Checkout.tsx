@@ -53,6 +53,7 @@ const Checkout = () => {
       context.pay(paymentAmount.totalAmount());
       order.setPayment(selectedMethod);
       order.setPaymentAmount(paymentAmount);
+      order.getState().nextStep();
       updateOrder(await saveOrder(order));
       navigate(URLS.ordersCurrent);
     } catch (error: unknown) {

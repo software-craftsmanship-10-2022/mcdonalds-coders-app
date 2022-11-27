@@ -44,7 +44,11 @@ export const CartLink = () => {
       {showCartLink && (
         <NavLink className="view-order-link" to={getUrl()}>
           <img src={IMG_PATH + 'order-bag.png'} alt="" />
-          <div className="order-qty">{order.getItems().length}</div>
+          {order.getStateCode() === ORDER_STATES_CODES.inProgressState ? (
+            <div className="order-qty">{order.getItems().length}</div>
+          ) : (
+            <p className="order-in-progress">Pedido en curso</p>
+          )}
         </NavLink>
       )}
     </div>

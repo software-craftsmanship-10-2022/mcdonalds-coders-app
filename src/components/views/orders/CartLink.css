@@ -1,11 +1,16 @@
 .CartLink .view-order-link {
   position: fixed;
-  bottom: 70px;
+  bottom: 60px;
   right: 10px;
   width: fit-content;
   height: auto;
   text-decoration: none;
   z-index: 999;
+  background-color: white;
+  padding: 12px;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  box-shadow: 0 1px 10px 0 rgba(0, 0, 0, 0.1), 0 2px 15px 0 rgba(0, 0, 0, 0.05);
 }
 
 .CartLink .view-order-link > img {
@@ -28,4 +33,11 @@
   justify-content: center;
   align-items: center;
   background-color: var(--mc-red);
+}
+.CartLink .order-in-progress {
+  color: black;
+  width: 80px;
+  font-size: 1rem;
+  text-align: center;
+  margin-top: 10px;
 }

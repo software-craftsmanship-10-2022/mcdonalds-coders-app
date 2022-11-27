@@ -11,14 +11,14 @@
 
 .Cart .item {
   width: 100%;
-  height: 100px;
+  height: 150px;
   border-bottom: 1px solid #ccc;
   display: flex;
   flex-direction: row;
   column-gap: 10px;
   justify-content: flex-start;
   align-items: center;
-  padding: 1em;
+  padding: 2em;
 }
 
 .Cart .item > img {

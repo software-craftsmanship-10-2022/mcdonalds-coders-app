@@ -43,7 +43,7 @@ const CurrentOrder = () => {
     <div className="CurrentOrder">
       <div className="title">
         <img src={IMG_PATH + 'order-bag-nobg.png'} alt="" />
-        Pedido en curso
+        <p>Pedido en curso</p>
       </div>
       <div className="status">
         <h3>
@@ -57,7 +57,7 @@ const CurrentOrder = () => {
         </h3>
         <h3>{details.address.split(',').slice(0, 3).join(', ')}</h3>
       </div>
-      <QRCode value="https://mcdapp.vercel.app" size={256} bgColor={'#ffc72c'} />
+      <QRCode value="https://mcdapp.vercel.app" size={180} bgColor={'#ffc72c'} />
       <div className="info">
         <h1>
           <strong>AM1 - A2T - DKE</strong>

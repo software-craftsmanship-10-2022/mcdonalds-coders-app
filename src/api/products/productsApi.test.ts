@@ -1,11 +1,13 @@
 import type {CategoryIds} from 'src/@types/product';
 import PRODUCTS from 'src/data/products';
 import {
+  getAllProductListFromApi,
   getAllProductsFromApi,
   getMultipleProductsByCategoryFromApi,
   getProductsByCategoryFromApi,
   transformCategoryApiListToCategoryList,
   transformCategoryApiToCategory,
+  transformProductApiToProduct,
 } from './productsApi';
 
 describe('Given productsApi', () => {
@@ -39,5 +41,21 @@ describe('Given productsApi', () => {
     ).map((category) => transformCategoryApiToCategory(category));
 
     await expect(foundProductsByCategoryId).resolves.toEqual(mockedFoundProducts);
+  });
+});
+
+describe('Test `getAllProductListFromApi` function', () => {
+  it('returns a promsie', () => {
+    expect(getAllProductListFromApi()).toBeInstanceOf(Promise);
+  });
+
+  it('gets the list with ALL products', async () => {
+    const mockProducts = PRODUCTS.map(({id, items}) => {
+      return items.map((item) => transformProductApiToProduct(item, id));
+    }).flat();
+
+    expect(await getAllProductListFromApi()).toEqual(
+      Object.fromEntries(mockProducts.map((product) => [product.id, product])),
+    );
   });
 });

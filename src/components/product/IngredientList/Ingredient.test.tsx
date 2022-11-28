@@ -8,7 +8,7 @@ jest.mock('src/data/ingredients', () => [
     title: 'Pan',
     extraPrice: 0,
     img: 'Pan+arriba.png',
-    modifaible: false,
+    modifiable: false,
   },
 ]);
 
@@ -17,7 +17,7 @@ const ingredient: IngredientType = {
   title: 'Pan',
   extraPrice: 0,
   img: 'Pan+arriba.png',
-  modifaible: false,
+  modifiable: false,
 };
 
 describe('Given Ingredient component', () => {

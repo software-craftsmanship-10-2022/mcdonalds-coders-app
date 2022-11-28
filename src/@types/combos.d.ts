@@ -9,10 +9,14 @@ export type ComboApiType = {
 };
 
 export type ComboCategoryApiType = {
-  id: string;
+  id: ComboId;
   category: string;
   items: ComboApiType[];
 };
+
+export type ComboId = UUID;
+
+export type UUID = string;
 
 export type ComboType = {
   id: string;
@@ -25,5 +29,5 @@ export type ComboType = {
 export type ComboCategoryType = {
   id: string;
   category: string;
-  items: ComboType[];
+  items: MenuType[];
 };

@@ -12,6 +12,7 @@ export type ProductApiType = {
 
 export type ProductType = Pick<ProductApiType, 'id' | 'img' | 'title' | 'description'> & {
   ingredients?: IngredientType[];
+  categoryId: CategoryIds;
 };
 
 export type ProductCategoryApiType = {
@@ -30,6 +31,7 @@ export type MenuType = {
   name: string;
   image: string;
   price: number;
+  mainProduct: ProductType;
   products: ProductType[];
 };
 
@@ -40,4 +42,5 @@ export type CategoryIds =
   | 'desserts'
   | 'drinks'
   | 'breakfast'
-  | 'coffee';
+  | 'coffee'
+  | 'extra';

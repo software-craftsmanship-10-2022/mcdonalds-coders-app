@@ -46,6 +46,18 @@
   margin: 0;
 }
 
+.Cart .item .item-info .item-products {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  color: grey;
+}
+
+.Cart .item .item-info .item-products > img {
+  width: 32px;
+  height: 32px;
+}
+
 .delete-btn {
   position: relative;
   float: right;

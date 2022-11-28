@@ -1,10 +1,5 @@
-import type {
-  ComboApiType,
-  ComboCategoryApiType,
-  ComboCategoryType,
-  ComboType,
-} from 'src/@types/combos';
-import type {ProductApiType, ProductType} from 'src/@types/product';
+import type {ComboApiType, ComboCategoryApiType, ComboCategoryType} from 'src/@types/combos';
+import type {CategoryIds, MenuType, ProductApiType, ProductType} from 'src/@types/product';
 import COMBOS from 'src/data/combos';
 import PRODUCTS from 'src/data/products';
 import {transformProductApiToProduct} from '../products/productsApi';
@@ -12,16 +7,17 @@ import {transformProductApiToProduct} from '../products/productsApi';
 const findProductInListById = (
   productList: ProductApiType[],
   productId: string,
+  categoryId: CategoryIds,
 ): ProductType | undefined => {
   const product = productList.find((product) => product.id === productId);
   if (!product) return undefined;
-  return transformProductApiToProduct(product);
+  return transformProductApiToProduct(product, categoryId);
 };
 
 const productById = (productId: string): ProductType => {
   let product: ProductType | undefined;
   PRODUCTS.forEach((category) => {
-    const result = findProductInListById(category.items, productId);
+    const result = findProductInListById(category.items, productId, category.id);
     if (result) {
       product = result;
     }
@@ -30,13 +26,14 @@ const productById = (productId: string): ProductType => {
   return product;
 };
 
-const transformComboApiToCombo = (comboApi: ComboApiType): ComboType => {
-  const comboDetail: ComboType = {
+const transformComboApiToCombo = (comboApi: ComboApiType): MenuType => {
+  const comboDetail: MenuType = {
     id: comboApi.id,
-    title: comboApi.title,
-    img: comboApi.img,
+    name: comboApi.title,
+    image: comboApi.img,
     price: comboApi.price,
     mainProduct: productById(comboApi.mainProductId),
+    products: [],
   };
   return comboDetail;
 };
@@ -48,7 +45,7 @@ const findComboInListById = (
   return comboList.find((combo) => combo.id === comboId);
 };
 
-const comboById = (comboId: string): ComboType => {
+const comboById = (comboId: string): MenuType => {
   let combo;
   COMBOS.forEach((category) => {
     const result = findComboInListById(category.items, comboId);
@@ -78,7 +75,7 @@ const getAllCombosFromApi = async (): Promise<ComboCategoryType[]> => {
   return Promise.resolve(allCombos());
 };
 
-const getComboDetailByIdFromApi = async (comboId: string): Promise<ComboType> => {
+const getComboDetailByIdFromApi = async (comboId: string): Promise<MenuType> => {
   return new Promise((resolve, rejects) => {
     try {
       const combo = comboById(comboId);

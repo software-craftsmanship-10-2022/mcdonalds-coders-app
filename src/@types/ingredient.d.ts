@@ -5,5 +5,5 @@ export type IngredientType = {
   title: string;
   img: string;
   extraPrice: number;
-  modifaible: boolean;
+  modifiable: boolean;
 };

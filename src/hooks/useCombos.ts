@@ -1,5 +1,6 @@
 import {useState} from 'react';
-import type {ComboCategoryType, ComboType} from 'src/@types/combos';
+import type {ComboCategoryType} from 'src/@types/combos';
+import type {MenuType} from 'src/@types/product';
 import {getAllCombosFromApi, getComboDetailByIdFromApi} from '../api/products/combosApi';
 import {getSessionStorageItem, setSessionStorageItem} from './useSessionStorage';
 
@@ -22,7 +23,7 @@ const useCombos = () => {
       .catch(console.error);
   };
 
-  const getComboById = async (comboId: string): Promise<ComboType> => {
+  const getComboById = async (comboId: string): Promise<MenuType> => {
     return getComboDetailByIdFromApi(comboId);
   };
 

@@ -5,6 +5,7 @@ import {useOrderContext} from '../../../context/OrderContext';
 import useFormat from '../../../hooks/useFormat';
 import McButton from '../../buttons/McButton';
 import './Cart.css';
+import {ExtraProducts} from './ExtraProducts';
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -32,19 +33,22 @@ const Cart = () => {
         <div className="item" key={index}>
           <img src={IMG_PATH + item.image} alt="" />
           <div className="item-info">
-            <p>{item.name}</p>
-            <p>{`Cantidad: ${item.price}`}</p>
-            <p>
-              {currencyFormatter().format(item.price)}
-              <button
-                className="delete-btn"
-                onClick={() => {
-                  deleteItem(index);
-                }}
-              >
-                Eliminar
-              </button>
-            </p>
+            <>
+              <p>{item.name}</p>
+              <ExtraProducts products={item.products} />
+              <p>{`Cantidad: ${item.price}`}</p>
+              <p>
+                {currencyFormatter().format(item.price)}
+                <button
+                  className="delete-btn"
+                  onClick={() => {
+                    deleteItem(index);
+                  }}
+                >
+                  Eliminar
+                </button>
+              </p>
+            </>
           </div>
         </div>
       ))}

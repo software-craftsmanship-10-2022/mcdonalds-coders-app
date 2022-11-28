@@ -32,6 +32,7 @@ const ProductList = () => {
           title={value.title}
           description={value.description}
           ingredients={value.ingredients}
+          categoryId={value.categoryId}
         />
       ))}
     </div>

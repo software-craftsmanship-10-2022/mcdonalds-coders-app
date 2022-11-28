@@ -1,32 +1,49 @@
-import {mockNewOrder} from '../../mocks/mocks';
-import type Order from '../../Order';
+import {METHOD_NOT_IMPLEMENTED_ERROR} from 'src/api/state/constants';
+import {FakeStateContext} from 'src/api/state/FakeStateContext';
+import type {IStateContext} from 'src/api/state/IStateContext';
 import CancelledByRestaurantState from '../CancelledByRestaurantState';
 import PreparingState from '../PreparingState';
 import ReadyState from '../ReadyState';
 
-describe('Given a PreparingState class', () => {
-  let order: Order;
+describe('Given an Preparing state', () => {
+  let context: IStateContext;
+  let preparingState: PreparingState;
+  let changeStateSpy: jest.SpyInstance;
+
+  beforeAll(() => {
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date(2022, 3, 1));
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
 
   beforeEach(() => {
-    order = mockNewOrder();
-    order.changeState(new PreparingState(order));
+    context = new FakeStateContext();
+    preparingState = new PreparingState(context);
+    changeStateSpy = jest.spyOn(context, 'changeState');
   });
 
-  it('when nextState method is called order.getState() should return ReadyState', () => {
-    order.getState().nextStep();
-    expect(order.getState()).toBeInstanceOf(ReadyState);
+  it('when nextStep is called then new state should be Ready state', () => {
+    preparingState.nextStep();
+    expect(changeStateSpy).toHaveBeenCalledWith(new ReadyState(context));
   });
 
-  it('when cancelByUser method is called order.getState() should return PreparingState', () => {
-    order.getState().cancelByUser();
-    expect(order.getState()).toBeInstanceOf(PreparingState);
+  it('when cancelByUser is called then should return an Error', () => {
+    expect(() => {
+      preparingState.cancelByUser();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
-  it('when cancelByRestaurant method is called order.getState() should return CancelledByRestaurantState', () => {
-    order.getState().cancelByRestaurant();
-    expect(order.getState()).toBeInstanceOf(CancelledByRestaurantState);
+
+  it('when cancelByRestaurant is called then new state should be Cancelled By Restaurant state', () => {
+    preparingState.cancelByRestaurant();
+    expect(changeStateSpy).toHaveBeenCalledWith(new CancelledByRestaurantState(context));
   });
-  it('when reject method is called order.getState() should return PreparingState', () => {
-    order.getState().reject();
-    expect(order.getState()).toBeInstanceOf(PreparingState);
+
+  it('when reject is called then should return an Error', () => {
+    expect(() => {
+      preparingState.reject();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
 });

@@ -84,6 +84,9 @@
   align-items: center;
   width: 65%;
 }
+.ImageItem > img {
+  max-height: 350px;
+}
 
 .IngredientList {
   width: 100%;

@@ -1,16 +1,10 @@
-import './Home.css';
-import {IMG_PATH, URLS} from '../../../config';
-import Carousel from '../../carousel/Carousel';
-import McButton from '../../buttons/McButton';
-import {useNavigate} from 'react-router-dom';
-import {useOrderContext} from '../../../context/OrderContext';
-import HOME_SLIDES from '../../../data/homeSlides';
+import {IMG_PATH} from '../../../config';
 import HOME_LINKS from '../../../data/homeLinks';
+import HOME_SLIDES from '../../../data/homeSlides';
+import Carousel from '../../carousel/Carousel';
+import './Home.css';
 
 const Home = () => {
-  const navigate = useNavigate();
-  const {order} = useOrderContext();
-
   return (
     <div className="Home">
       <Carousel items={HOME_SLIDES} />
@@ -24,16 +18,6 @@ const Home = () => {
           </div>
         ))}
       </div>
-      {order?.isConfirmed() && (
-        <McButton
-          text={'Pedido en curso >>>'}
-          img={'order-bag-nobg.png'}
-          onClick={() => {
-            navigate(URLS.ordersCurrent);
-          }}
-          fixed
-        />
-      )}
     </div>
   );
 };

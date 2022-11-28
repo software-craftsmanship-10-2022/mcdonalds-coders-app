@@ -1,30 +1,38 @@
-import {mockNewOrder} from '../../mocks/mocks';
-import type Order from '../../Order';
+import {METHOD_NOT_IMPLEMENTED_ERROR} from 'src/api/state/constants';
+import {FakeStateContext} from 'src/api/state/FakeStateContext';
+import type {IStateContext} from 'src/api/state/IStateContext';
 import FinishedState from '../FinishedState';
 
-describe('Given a FinishedState class', () => {
-  let order: Order;
+describe('Given an Finished state', () => {
+  let context: IStateContext;
+  let finishedState: FinishedState;
 
   beforeEach(() => {
-    order = mockNewOrder();
-    order.changeState(new FinishedState(order));
+    context = new FakeStateContext();
+    finishedState = new FinishedState(context);
   });
 
-  it('when nextState method is called order.getState() should return FinishedState', () => {
-    order.getState().nextStep();
-    expect(order.getState()).toBeInstanceOf(FinishedState);
+  it('when nextStep is called then should return an Error', () => {
+    expect(() => {
+      finishedState.nextStep();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
 
-  it('when cancelByUser method is called order.getState() should return FinishedState', () => {
-    order.getState().cancelByUser();
-    expect(order.getState()).toBeInstanceOf(FinishedState);
+  it('when cancelByUser is called then should return an Error', () => {
+    expect(() => {
+      finishedState.cancelByUser();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
-  it('when cancelByRestaurant method is called order.getState() should return FinishedState', () => {
-    order.getState().cancelByRestaurant();
-    expect(order.getState()).toBeInstanceOf(FinishedState);
+
+  it('when cancelByRestaurant is called then should return an Error', () => {
+    expect(() => {
+      finishedState.cancelByRestaurant();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
-  it('when reject method is called order.getState() should return FinishedState', () => {
-    order.getState().reject();
-    expect(order.getState()).toBeInstanceOf(FinishedState);
+
+  it('when reject is called then should return an Error', () => {
+    expect(() => {
+      finishedState.reject();
+    }).toThrow(METHOD_NOT_IMPLEMENTED_ERROR);
   });
 });

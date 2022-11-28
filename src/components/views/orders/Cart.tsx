@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {IMG_PATH, URLS} from '../../../config';
 import {useOrderContext} from '../../../context/OrderContext';
@@ -11,18 +11,20 @@ const Cart = () => {
   const navigate = useNavigate();
   const {order, updateOrder} = useOrderContext();
   const [currencyFormatter] = useFormat();
+  const [updateCounter, setUpdateCounter] = useState(0);
 
   useEffect(() => {
     // Go back if there is nothing no display
     if (order.isItemsEmpty()) {
       navigate(-1);
     }
-  }, [order, navigate]);
+  }, [order, navigate, updateCounter]);
 
   // Delete selected item from the order
   const deleteItem = (item: number) => {
     order.removeItem(item);
     updateOrder(order);
+    setUpdateCounter(updateCounter + 1);
   };
 
   return (

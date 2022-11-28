@@ -1,0 +1,135 @@
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.6);
+  }
+  70% {
+    -webkit-box-shadow: 0 0 0 10px rgba(204, 169, 44, 0);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    -moz-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.6);
+    box-shadow: 0 0 0 0 rgba(204, 169, 44, 0.6);
+  }
+  70% {
+    -moz-box-shadow: 0 0 0 10px rgba(204, 169, 44, 0);
+    box-shadow: 0 0 0 10px rgba(204, 169, 44, 0);
+  }
+  100% {
+    -moz-box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+    box-shadow: 0 0 0 0 rgba(204, 169, 44, 0);
+  }
+}
+
+.OrderManager {
+  margin-top: 80px;
+  margin-bottom: 60px;
+  padding: 0 1rem;
+  padding-top: 2.5rem;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  border-top: 1px dashed blue;
+  justify-content: center;
+}
+section:first-child {
+  min-width: 400px;
+}
+
+h2,
+h4,
+h6 {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+p {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+label {
+  font-size: 1rem;
+  font-weight: 300;
+  display: block;
+  margin-bottom: 10px;
+}
+
+figure {
+  display: flex;
+}
+
+.state-buttons > button {
+  width: calc(50% - 20px);
+  margin-bottom: 30px;
+  margin-right: 20px;
+  background-color: var(--mc-yellow);
+  padding: 14px 20px;
+  border-radius: 24px;
+  border: none;
+}
+.state-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 400px;
+}
+.state-buttons > button.reset-btn {
+  background-color: rgba(128, 128, 128, 0.5);
+}
+.state-buttons > button.reject-btn {
+  background-color: rgba(128, 128, 128, 0.5);
+}
+.state-buttons > button.cancel-btn {
+  background-color: rgba(255, 0, 0, 0.65);
+}
+.order-track {
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s height 0.3s;
+  transform-origin: top center;
+}
+.order-track-step {
+  display: flex;
+  height: 80px;
+}
+
+.order-track-step:last-child > .order-track-status span:last-of-type {
+  display: none;
+}
+.order-track-status {
+  margin-right: 1.5rem;
+  position: relative;
+}
+.order-track-status-dot {
+  display: block;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--mc-yellow);
+}
+.inactive .order-track-status-dot {
+  background: rgb(197, 195, 195);
+}
+.order-track-status-line {
+  display: block;
+  margin: 0 auto;
+  width: 2px;
+  height: 60px;
+  background: var(--mc-yellow);
+}
+.inactive .order-track-status-line {
+  background: rgb(197, 195, 195);
+}
+
+.pulse {
+  box-shadow: 0 0 0 rgba(204, 169, 44, 0.6);
+  animation: pulse 2s infinite;
+}
+
+.trace {
+  background: linear-gradient(var(--mc-yellow), rgb(197, 195, 195), rgb(197, 195, 195));
+}

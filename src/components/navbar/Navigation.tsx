@@ -1,7 +1,7 @@
-import './Navigation.css';
-import {IMG_PATH, URLS} from '../../config';
-import {useState, useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {NavLink, useLocation} from 'react-router-dom';
+import {IMG_PATH, URLS} from '../../config';
+import './Navigation.css';
 
 const NAV_BUTTONS = [
   {text: 'Home', img: 'logo-black.png', path: URLS.root},
@@ -9,6 +9,7 @@ const NAV_BUTTONS = [
   {text: 'Ofertas', img: 'ticket.png', path: URLS.discounts},
   {text: 'Cupones', img: 'coupon.png', path: URLS.coupons},
   {text: 'Menú', img: 'more.png', path: URLS.catalogue},
+  {text: 'OrderManager', img: 'settings.png', path: URLS.ordersManager},
 ];
 
 const Navigation = () => {
